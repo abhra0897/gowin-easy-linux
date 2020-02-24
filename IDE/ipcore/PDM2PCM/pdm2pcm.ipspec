@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="PDM2PCM" id="pdm2pcm" version= "1.0" category="Soft IP Core|Multimedia">PDM2PCM</ip>
+    <target module="PDM2PCM_Top">pdm2pcm</target>
+    <docs>
+        <doc type="summary">/doc/pdm2pcm.html</doc>
+        <doc type="help">/doc/pdm2pcm_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

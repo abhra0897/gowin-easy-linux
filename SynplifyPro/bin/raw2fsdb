@@ -1,0 +1,26 @@
+#!/bin/bash
+# Copyright(C) 2013-2018, Synopsys, Inc.
+# All rights reserved.
+# Launch ../$PLATFORM/$0
+
+x=$0
+y=`expr $x : '\(.\)'`
+if [ "$y" != "/" ] ; then
+    x=`pwd`/$x
+fi
+x=`echo $x | sed "s+/\./+/+g" | sed "s/\/\//\//g"`
+
+SYN_PRGM=`expr $x : ".*/\([^/]*\)"`;                       export   SYN_PRGM;
+SYN_HOMEDIR=`expr $x : "\(.*\)/[^/]*/[^/]*"`;              export   SYN_HOMEDIR;
+
+. $SYN_HOMEDIR/bin/config/platform_set -enable64bit
+
+# To make "package require confpro" work, we need to extend the LD_LIBRARY_PATH right now(!):
+if [ -d $HAPS_INSTALL_DIR ] ; then
+	LD_LIBRARY_PATH=$HAPS_INSTALL_DIR/$PLATFORM:$LD_LIBRARY_PATH
+fi
+
+LD_LIBRARY_PATH=$SYN_HOMEDIR/$PLATFORM:$LD_LIBRARY_PATH; export LD_LIBRARY_PATH;
+PATH=$SYN_HOMEDIR/$PLATFORM:$PATH; export PATH;
+
+. $SYN_HOMEDIR/bin/config/execute

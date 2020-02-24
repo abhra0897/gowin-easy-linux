@@ -1,0 +1,13 @@
+xilinx { Total Luts } { Register bits (Non I/O) } { I/O primitives } { - Estimated Frequency } { Block Rams } { Simple Dual Port Rams (RAM64M) } { DSP48s }
+
+altera { Total Luts } { Packed ALMs } { Register bits } { I/O ATOMs } { - Estimated Frequency } { Total ESB } { M20Ks } { DSP Blocks }
+
+microsemi  {-Total Area }  { - Estimated Frequency } 
+
+lattice {-Total Area } { - Estimated Frequency } 
+
+sbt { Total Luts } { Register bits (Non I/O) } { I/O primitives } { - Estimated Frequency } { Block Rams }
+
+achronix { Total Luts } { Register bits (Non I/O) } { I/O primitives } { - Estimated Frequency } { Block Rams } { Logic Rams }
+
+gowin { Total Luts } { Register bits (Non I/O) } { I/O primitives } { - Estimated Frequency } { Block Rams } 

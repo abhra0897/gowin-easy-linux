@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="MIPI RX" id="mipi_rx" version= "2.1" category="Soft IP Core|Interface and Interconnect">MIPI RX</ip>
+    <target module="DPHY_RX_TOP">DPHY_RX_TOP</target>
+    <docs>
+        <doc type="summary">/doc/mipi_rx.html</doc>
+        <doc type="help">/doc/ip_mipi_rx_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NSE-2C-*</device>
+        <device supported="true">GW1NSER-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="CLKDIV2" id="clock_clkdiv2" version= "1.0" category="Hard Module|CLOCK">CLKDIV2</ip>
+    <target module="Gowin_CLKDIV2">gowin_clkdiv2</target>
+    <docs>
+        <doc type="summary">/doc/clkdiv2.html</doc>
+        <doc type="help">/doc/clkdiv2_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-1-*</device>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW2A-18-*</device>
+        <device supported="true">GW2A-55-*</device>
+        <device supported="true">GW2AR-18-*</device>
+        <device supported="true">GW1NS-2-*</device>
+        <device supported="true">GW1NS-2C-*</device>
+        <device supported="true">GW1NSR-2C-*</device>
+        <device supported="true">GW1NSE-2C-*</device>
+        <device supported="true">GW1NSR-2-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSER-4C-*</device>
+        <device supported="true">GW1NSR-4C-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+        <device supported="true">GW1NZ-1-*</device>
+        <device supported="true">GW1N-1S-*</device>
+        <device supported="true">GW2A-55C-*</device>
+        <device supported="true">GW2A-18C-*</device>
+        <device supported="true">GW2AR-18C-*</device>
+    </devices>
+</ipcore>

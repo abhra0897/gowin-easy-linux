@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Constraint_Commands name="cdc">
+
+  <constraint name="define_directive">
+    <parameter name="syn_black_box" />
+    <parameter name="syn_keep" />
+    <parameter name="syn_noprune" />
+    <parameter name="syn_preserve" />
+    <parameter name="syn_sharing" />
+    <parameter name="syn_rename_module" />
+    <parameter name="syn_unique_inst_module" />
+<!--
+    <parameter name="syn_dspstyle" />
+    <parameter name="syn_multstyle" />
+    <parameter name="syn_ramstyle" />
+    <parameter name="syn_resources" />
+    <parameter name="syn_romstyle" />
+    <parameter name="syn_srlstyle" />
+-->
+  </constraint>
+
+  <constraint name="syn_connect_hrefs">
+    <parameter name="readers " />
+    <parameter name="writer" />
+  </constraint>
+ 
+  <!-- not supported at this point
+  <constraint name="define_global_directive">
+    <parameter name="syn_black_box" />
+    <parameter name="syn_noprune" />
+    <parameter name="syn_preserve" />
+    <parameter name="syn_sharing" />
+    <parameter name="syn_dspstyle" />
+    <parameter name="syn_multstyle" />
+    <parameter name="syn_ramstyle" />
+    <parameter name="syn_resources" />
+    <parameter name="syn_romstyle" />
+    <parameter name="syn_srlstyle" />
+</constraint>
+-->
+</Constraint_Commands>

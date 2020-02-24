@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Gowin_EMPU" id="gowin_empu" version="1.3" category="Soft IP Core|Microprocessor System|Hard-Core-MCU">Gowin_EMPU(GW1NS-2C)</ip>
+    <target module="Gowin_EMPU_Top">gowin_empu</target>
+    <docs>
+        <doc type="summary">/doc/gw1ns2c.html</doc>
+        <doc type="help">/doc/gw1ns2c_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NS-2C-*</device>
+        <device supported="true">GW1NSR-2C-*</device>
+        <device supported="true">GW1NSE-2C-*</device>
+    </devices>
+</ipcore>

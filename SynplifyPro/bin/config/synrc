@@ -1,0 +1,383 @@
+#!/bin/bash
+SYN_ARGS="";
+SYN_TOOL="";
+SYN_PRODUCT="";
+SYN_EXTRA="";
+
+#+-+-+-+-+-+-+-+-    Looking for GUI directory if exists or not   +-+-+-+-+-+-+
+#
+# if scripts can't find $PLATFORM/mbin directory then it can't run GUI or
+# synbatch/certbatch/protobatch so generate the error and exit
+# $Header: //synplicity/ui2019q3p1/unix_scripts/bin/config/synrc#1 $
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+if [ "$PLATFORM" = "linux" ] || [ "$PLATFORM" = "linux_a_64" ]; then
+    if [ ! -d ${SYN_HOMEDIR}/${PLATFORM}/mbin ]; then
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+        echo "Error: Can't find ${PLATFORM} ${VERSION} executables";
+        echo "       ${SYN_HOMEDIR}/${PLATFORM}/mbin directory doesn't exist";
+        echo "       exiting";
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+        exit 2;
+    fi
+fi
+
+#+-+-+-+-+-+-+-+-    Looking for -pro switch                      +-+-+-+-+-+-+
+#
+# if tool is invoked as synplify -pro it should be invoked as synplify_pro
+# a warning message is generated to run as synplify_pro in the future.
+# SYN_PRGM is marked as synplify_pro
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+if [ $SYN_PRGM = "synplify" ] && [ "$1" = "-pro" ]; then
+    SYN_PRGM="synplify_pro";
+    echo " ";
+    echo "****************************************************************";
+    echo " ";
+    echo "Warning: Please invoke synplify pro version as \"synplify_pro\" ";
+    echo "    instead of \"synplify -pro\" invoking \"synplify_pro\"  ... ";
+    echo " ";
+    echo "****************************************************************";
+    echo " ";
+fi
+
+#+-+-+-+-+-+-+-+-    Looking for -batch switch                    +-+-+-+-+-+-+
+#
+# if -batch switch is found and synplify_pro running then SYN_BATCH_ENABLED
+# is set to value 1, so synbatch/certbatch/protobatch will be run instead of the GUI.
+#
+# Added -lcax: switch for synplify_axis, if this switch is not there
+
+SYN_BATCH_ENABLED=0;
+SYN_AXIS_LCAX="-lcax:";
+SYN_HELP_FILE="";
+DEBUG_MODE=0;
+NORLWRAP=1;                                          export   NORLWRAP;
+
+for i in "$@"
+do
+	case $i in 
+		-hideui  |   \
+		-showui  ) 
+
+		SYN_BATCH_ENABLED=0;                         export   SYN_BATCH_ENABLED; 
+		break;
+		;;
+
+		-version | \
+		-help | \
+		-rtl_check  |   \
+		-batch  )
+		
+		SYN_BATCH_ENABLED=1;                         export   SYN_BATCH_ENABLED; 
+		;;
+
+		-shell  )
+
+		SYN_BATCH_ENABLED=1;                         export   SYN_BATCH_ENABLED; 
+		SYN_EXTRA="-shell"
+		NORLWRAP="" # enable rlwrap
+		;;
+
+		-lcax:* ) 
+
+		SYN_AXIS_LCAX="";
+		;;
+
+		-debug ) 
+
+		DEBUG_MODE=1
+		echo "Running under debugger"
+		if [ "${SYN_DEBUGGER:+set}" != "set" ]; then
+			SYN_DEBUGGER="gdb"
+			echo "SYN_DEBUGGER variable not set.  Trying SYN_DEBUGGER: gdb"
+			echo "To override, set environment variable SYN_DEBUGGER=/path/to/debugger/executable"
+		fi
+		if [ -x ${SYN_DEBUGGER} ]; then
+		   echo "Using debugger at: $SYN_DEBUGGER"
+		else
+		   echo "Error: Unable to find debugger executable at: $SYN_DEBUGGER"
+		   exit 2;
+		fi
+		if [ "${SYN_DEBUGGER_ARGS:+set}" != "set" ]; then
+			SYN_DEBUGGER_ARGS=""
+		else
+			echo "SYN_DEBUGGER_ARGS: $SYN_DEBUGGER_ARGS"
+		fi
+		;;
+
+		-noexec)
+		SYN_NOEXEC="1"; export SYN_NOEXEC;;
+
+		-runldd)
+		SYN_RUNLDD="1"; export SYN_RUNLDD;;
+	esac
+done
+
+if [ $SYN_PRGM = "zsHwLeo" ] || [ $SYN_PRGM = "hsprocess" ] || [ $SYN_PRGM = "hcprocess" ] || [ $SYN_PRGM = "ta" ] || [ $SYN_PRGM = "lefencode" ] || [ $SYN_PRGM = "spython" ] || [ $SYN_PRGM = "identify_instrumentor_shell" ] || [ $SYN_PRGM = "identify_debugger_shell" ]; then
+    SYN_BATCH_ENABLED=1;                                      export   SYN_BATCH_ENABLED; 
+fi
+
+if [ $SYN_BATCH_ENABLED = "1" ]; then
+
+        case $SYN_PRGM in
+
+            synplify) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify ";				  export   SYN_ARGS; 
+            ;;
+
+            synplify_pro) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_pro ";            export   SYN_ARGS; 
+            ;;
+
+            synplify_axis) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_pro $SYN_AXIS_LCAX ";    export   SYN_ARGS; 
+            ;;
+
+            synplify_premier) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_premier ";        export   SYN_ARGS; 
+            ;;
+
+            synplify_premier_dp) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_premier_dp ";     export   SYN_ARGS; 
+            ;;
+
+            synplify_premier_urc) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_premier_urc ";    export   SYN_ARGS; 
+            ;;
+
+            phoenix) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product phoenix ";                 export   SYN_ARGS; 
+            ;;
+
+            phoenix_syn) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product phoenix_syn ";                 export   SYN_ARGS; 
+            ;;
+
+            phoenix_pc) 
+                SYN_PRGM="protobatch";                        export   SYN_PRGM;
+                SYN_ARGS="-product phoenix_pc ";              export   SYN_ARGS; 
+            ;;
+
+            synplify_rf) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product synplify_pro -lcrf:";      export   SYN_ARGS; 
+            ;;
+
+            certify) 
+                SYN_PRGM="certbatch";                         export   SYN_PRGM;
+                SYN_ARGS="-certify ";                         export   SYN_ARGS;
+            ;;
+
+            certify_sc) 
+                SYN_PRGM="certbatch";                         export   SYN_PRGM;
+                SYN_ARGS="-certify -sc ";                     export   SYN_ARGS;
+            ;;
+
+            protocompiler) 
+                SYN_PRGM="protobatch";                        export   SYN_PRGM;
+                SYN_ARGS="-product protocompiler ";           export   SYN_ARGS;
+            ;;
+
+            protocompiler_s) 
+                SYN_PRGM="protobatch";                        export   SYN_PRGM;
+                SYN_ARGS="-product protocompiler_s ";         export   SYN_ARGS;
+            ;;
+
+            protocompiler_dx) 
+                SYN_PRGM="protobatch";                        export   SYN_PRGM;
+                SYN_ARGS="-product protocompiler_dx ";        export   SYN_ARGS;
+            ;;
+
+            protocompiler_runtime)
+                CONFTOOL="confprosh";                             export   CONFTOOL;
+                SYN_TOOL="mbin/identify_debugger_shell";          export   SYN_TOOL;
+                SYN_PRODUCT="-product protocompiler_runtime ";    export   SYN_PRODUCT;
+            ;;
+            protocompiler_s_runtime) 
+                CONFTOOL="confprosh";                             export   CONFTOOL;
+                SYN_TOOL="mbin/identify_debugger_shell";          export   SYN_TOOL;
+                SYN_PRODUCT="-product protocompiler_s_runtime ";  export   SYN_PRODUCT;
+            ;;
+            protocompiler_dx_runtime) 
+                CONFTOOL="confprosh";                             export   CONFTOOL;
+                SYN_TOOL="mbin/identify_debugger_shell";          export   SYN_TOOL;
+                SYN_PRODUCT="-product protocompiler_dx_runtime "; export   SYN_PRODUCT;
+            ;;
+            identify_debugger | identify_debugger_shell) 
+                SYN_PRGM="identify_debugger_shell";           export   SYN_PRGM;
+            ;;
+            hsprocess) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product hsprocess ";               export   SYN_ARGS;
+            ;;
+
+            hcprocess) 
+                SYN_PRGM="certbatch";                         export   SYN_PRGM;
+                SYN_ARGS="-product hcprocess ";               export   SYN_ARGS;
+            ;;
+
+            synplify_rtl_check) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-rtl_check ";                       export   SYN_ARGS; 
+            ;;
+
+            zsHwLeo) 
+                SYN_PRGM="synbatch";                          export   SYN_PRGM;
+                SYN_ARGS="-product zshwleo ";                 export   SYN_ARGS; 
+            ;;
+
+        esac
+		
+fi
+
+#+-+-+-+-+-+-+-+- preparing for synplify_pro & synplify_axis case
+#
+# synplify_pro is ran, actually synplify_pro is ran as synplify -pro
+# we do not allow uers to do that because we have to do checking for
+# that and also it should be convinient for user. They don't have to
+# remember to pass -pro with all other arguments.
+#
+# THIS SECTION HAS TO BE AFTER -batch CHECKING . . . 
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+if [ $SYN_BATCH_ENABLED = "0" ]; then
+	if [ "$SYN_NOEXEC" = "" ]; then
+		if [ $SYN_PRGM = "certify_sc" ]; then
+			SYN_PRGM="certify";                                export   SYN_PRGM;
+			SYN_ARGS="-sc ";                                   export   SYN_ARGS;
+		fi
+
+		if [ $SYN_PRGM = "synplify_rtl_check" ]; then
+			SYN_PRGM="synbatch";                               export   SYN_PRGM;
+			SYN_ARGS="-rtl_check ";                            export   SYN_ARGS; 
+		fi  
+		if [ $SYN_PRGM = "protocompiler_runtime" ]; then
+			CONFTOOL="confpro_gui";                            export   CONFTOOL;
+			SYN_TOOL="mbin/identify_debugger";                 export   SYN_TOOL;
+			SYN_PRODUCT="-product protocompiler_runtime ";     export   SYN_PRODUCT;
+		fi
+		if [ $SYN_PRGM = "protocompiler_dx_runtime" ]; then
+			CONFTOOL="confpro_gui";                            export   CONFTOOL;
+			SYN_TOOL="mbin/identify_debugger";                 export   SYN_TOOL;
+			SYN_PRODUCT="-product protocompiler_dx_runtime ";  export   SYN_PRODUCT;
+		fi
+		if [ $SYN_PRGM = "protocompiler_s_runtime" ]; then
+			CONFTOOL="confpro_gui";                            export   CONFTOOL;
+			SYN_TOOL="mbin/identify_debugger";                 export   SYN_TOOL;
+			SYN_PRODUCT="-product protocompiler_s_runtime ";   export   SYN_PRODUCT;
+		fi
+	else 
+		SYN_PRGM="/bin/bash"; export SYN_PRGM;
+	fi 
+fi
+
+#+-+-+-+-+-+-+-+-    preparing for program help                    +-+-+-+-+-+-+
+#
+# SYN_PRGM is changed to assistant with proper help file.
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+SYN_HELP_ARGS="-collectionFile ";                                 export SYN_HELP_ARGS;
+
+if [ "$SYN_PRGM" = "fpga_help" ] || [ "$SYN_PRGM" = "synplify_help" ] || [ "$SYN_PRGM" = "synplify_pro_help" ]; then
+    SYN_PRGM="assistant";                                         export SYN_PRGM;
+    SYN_HELP_FILE="lib/html/fpgahelp.qhc"                         export SYN_HELP_FILE;
+fi
+if [ "$SYN_PRGM" = "certify_help" ]; then
+    SYN_PRGM="assistant";                                         export SYN_PRGM;
+    SYN_HELP_FILE="lib/html/certhelp.qhc"                         export SYN_HELP_FILE;
+fi
+if [ "$SYN_PRGM" = "protocompiler_help" ]; then
+    SYN_PRGM="assistant";                                         export SYN_PRGM;
+    SYN_HELP_FILE="lib/html/pchelp.qhc"                           export SYN_HELP_FILE;
+fi
+if [ "$SYN_PRGM" = "protocompilerdx_help" ]; then
+    SYN_PRGM="assistant";                                         export SYN_PRGM;
+    SYN_HELP_FILE="lib/html/pcdxhelp.qhc"                         export SYN_HELP_FILE;
+fi
+
+#+-+-+-+-+-+-+-+-    DISPLAY Environment Variable    +-+-+-+-+-+-+-+-+-+-+-+-+-
+#
+# Don't need $DISPLAY variable in true batch mode, in all other cases if 
+# DISPLAY is not set warning message is generated
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+if [ $SYN_BATCH_ENABLED = "0" ]; then
+    if [ "${DISPLAY:+set}" != "set" ]; then
+        if [ -x /bin/hostname ] ; then
+            host=`/bin/hostname`;
+        else
+            host=unix;
+        fi
+
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+        echo "Warning: Environment variable DISPLAY is not set."
+        echo "    setting DISPLAY to $host:0"
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+    
+        DISPLAY=$host:0;                             export   DISPLAY;
+
+    fi
+
+	#+-+-+-+-+-+-+-+-    X Redner Support Checking    +-+-+-+-+-+-+
+	if [ "$DISPLAY" != "" ]; then
+		if [ "$PLATFORM" = "linux_a_64" ]; then
+			SYN_XRENDER=0;
+			if [ -f /usr/bin/xdpyinfo ]; then
+				SYN_XRENDER=`/usr/bin/xdpyinfo | grep -c "RENDER"`;
+			fi
+			if [ -f /usr/X11R6/bin/xdpyinfo ]; then
+				SYN_XRENDER=`/usr/X11R6/bin/xdpyinfo | grep -c "RENDER"`;
+			fi
+			export SYN_XRENDER;
+		fi
+	fi
+
+	# on unix in GUI mode LANG set to euro causes BAD_VERSION license error. This is workaround.
+	if [ "$LANG" = "de_DE@euro" ]; then
+	    unset LANG;
+	fi
+fi
+
+# Setup Qt's -graphicssystem
+QT_GRAPHICS_MODE=""
+if [ "$SYN_FORCE_RENDER_MODE" = "1" ]; then
+	QT_GRAPHICS_MODE="-graphicssystem native";
+	echo "Forcing 'native' mode...";
+elif [ "$SYN_FORCE_RENDER_MODE" = "2" ]; then
+	QT_GRAPHICS_MODE="-graphicssystem raster";
+	echo "Forcing 'raster' mode...";
+elif [ "$SYN_FORCE_RENDER_MODE" = "3" ]; then
+	QT_GRAPHICS_MODE="-graphicssystem opengl";
+	echo "Forcing 'opengl' mode...";
+fi
+export QT_GRAPHICS_MODE;
+
+XAPPLRESDIR=$SYN_HOMEDIR/lib/app-defaults;       export   XAPPLRESDIR;
+LC_CTYPE=C;                                      export   LC_CTYPE;
+
+SYN_USER_DIRECTORY=${SYN_USER_DIRECTORY:-false};
+
+LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${ADDLDPATH}";
+export   LD_LIBRARY_PATH;

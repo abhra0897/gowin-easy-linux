@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML doc for Vendor tool tags-->
+<!-- Use only one of following to set the application path
+     Based on the platform, only of these apply    
+    <windows_path></windows_path>
+    <linux_path></linux_path>
+    <solaris_path></solaris_path>
+ -->
+<vendor_tools>
+
+  <tool_tag>
+    <tag_name>System Designer</tag_name>
+    <invocation_mode>shell</invocation_mode>
+    <windows_path>Point this path to the system_designer.exe</windows_path>
+    <linux_path></linux_path>
+    <solaris_path></solaris_path>
+    <proc_name></proc_name>
+    <tool_args></tool_args>
+  </tool_tag>
+
+</vendor_tools>
+

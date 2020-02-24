@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/htmlog.xml2#1 $ -->
+<syntax name="HTML Log Files" extension="htm" hidden="1">
+	<anchor start="&lt;a name=" end="&gt;" fg="#000000" bg="white"/>
+	<link start="&lt;a href=" end="/a&gt;" fg="#0000ff" bg="white"/>
+	
+	<block name="Comment" start="#" fg="#00a000" bg="white"/>
+	<block name="Warning" start="@W:" fg="#b40040" bg="white"/>
+	<block name="Error" start="@E:" fg="#ff0000" bg="white"/>
+	<block name="Note" start="@N:" fg="#000080" bg="white"/>
+	<block name="Info" start="@I:" fg="#00a0a0" bg="white"/>
+	
+	<block name="Chapter" start="@S" fg="#800000" bg="white"/>
+	<block name="ClockRecord" start="@X" fg="#002020" bg="#c0e0e0" bold="1"/>
+</syntax>

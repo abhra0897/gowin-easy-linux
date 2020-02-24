@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<dyndialog>
+
+
+
+<dialog id="Hierarchical Style" text="hierarchical Implementation Style" width="650" height="280">   
+
+	<text>Gowin GW2A55</text>
+
+<tab id="Attributes Ex" text="syn_hier">
+	
+	<hline>
+
+		<hline />
+		
+		<check id="soft_gw" text="Soft" tooltip="Check Soft" >
+		
+			<value>true</value>
+			
+			<on_value>soft_gw=1</on_value>
+			
+			<off_value>soft_gw=0</off_value>
+			
+		</check>
+		
+		<hline />
+		
+		<check id="fixed_gw" text="Fixed" tooltip="Check Fixed">
+		
+			<value>true</value>
+			
+			<on_value>fixed_gw=1</on_value>
+			
+			<off_value>fixed_gw=0</off_value>
+			
+		</check>
+		
+		<hline />
+		
+		<check id="hard_gw" text="Hard" tooltip="Check Hard">
+		
+			<value>true</value>
+			
+			<on_value>hard_gw=1</on_value>
+			
+			<off_value>hard_gw=0</off_value>
+			
+		</check>
+		
+	
+		<hline />
+		
+		<check id="firm_gw" text="Firm" tooltip="Check Firm">
+		
+			<value>true</value>
+			
+			<on_value>firm_gw=1</on_value>
+			
+			<off_value>firm_gw=0</off_value>
+			
+		</check>
+		
+		<hline />
+	
+		
+	</hline>	
+		
+	<line />  
+
+</tab>
+ 
+<lineedit id="work_space" type="directory" text="Working Directory" required="true" tooltip="Specifies the location for the example project"/>
+ 
+<button id="generate1" text="&amp;Generate" action="execute" tooltip="Generate TCL command">	
+	 
+	<command>attribute_example1</command> 
+	
+</button>	
+
+<button id="generate2" text="&amp;Generate-Run" action="execute" tooltip="Generate TCL command">	
+	 
+	<command>attribute_example</command> 
+	
+</button>	
+
+<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog"/>    
+
+<button id="Help" text="&amp;Help..." action="help" helpid="HELPID_IA_HIER" tooltip="Display help for syn_hier" />
+
+
+
+<!-- Start of Tcl script  -->
+<tcl> <![CDATA[
+
+proc attribute_example1 {soft_gw fixed_gw hard_gw firm_gw work_space} {
+
+set attribute_name "syn_hier"
+
+##### i/P - Attribute_name, Technology & attribute_value###############
+
+	regexp {=(.*)} $work_space d1 work_space
+	regexp {=(.*)} $soft_gw d1 soft_gw;		
+	regexp {=(.*)} $fixed_gw d1 fixed_gw;		
+	regexp {=(.*)} $hard_gw d1 hard_gw;	
+	regexp {=(.*)} $firm_gw d1 firm_gw;		
+	set attr_values default
+        set technology gowin
+	if {$soft_gw==1} {;lappend attr_values soft;}
+	if {$fixed_gw==1} {;lappend attr_values fixed;}
+	if {$hard_gw==1} {;lappend attr_values hard;}
+	if {$firm_gw==1} {;lappend attr_values firm;}
+
+#######################################################
+
+####### Declaration - Folder path & Device###############
+
+	set tool_path [installinfo rootdir];
+
+	regsub -all {\\} $tool_path / tool_path
+
+	set source_folder_path "$tool_path/examples/interactive_attribute_current/example_database"
+
+	set xml_path "$tool_path/examples/interactive_attribute_current/demo_attributes/Miscellaneous/"
+
+	array set def_technology [list gowin Gowin]
+
+#########################################################
+
+
+
+
+
+######### verification 1 - Enetered Attribute is supported or Not? ###############
+
+	set attribute_supported [glob -types d $source_folder_path/*]
+
+	if [regexp $attribute_name $attribute_supported] {
+
+	} else { 
+
+		return "Entered Attribute is not supported"
+
+	}
+
+##################################################################################
+
+
+
+	
+
+###########Verification 2 - Enetered Technology for the Attribute is supported or Not? ##############
+
+	set tech_supported [glob -types d $source_folder_path/$attribute_name/*]
+
+	if [regexp $technology $tech_supported] {
+
+		set dd1 [glob -types d $source_folder_path/$attribute_name/$technology/*]
+
+	} else { 
+
+		return "Selected Technology is not supported for this Attribute"
+
+	}
+
+#####################################################################################################	
+
+	
+
+	
+
+########## Extraction - Attribute Value supported for the attribute & technology#############
+
+	set attribute_values $attr_values
+
+	#set attribute_values {}
+
+	#for {set ii 0} {$ii < [llength $dd1]} {incr ii} { 
+
+	#	if [regexp .*$attribute_name\_(.*) [lindex $dd1 $ii] aa1 aa2] {
+
+	#		lappend attribute_values $aa2
+
+	#	}
+
+	#}
+
+#############################################################################################
+
+
+
+
+
+cd $work_space/
+
+set proj_path [pwd];
+
+
+
+
+
+	puts "\n\n#######################################\n\n"	
+
+	puts "creating the project for \"$attribute_name\" with the values \"$attribute_values\" in the folder \"$proj_path\""
+
+	puts "used Technology : $technology"
+
+	puts "\n\n#########################################\n\n"
+
+	
+
+	
+
+################### Project creation - creates the example project with revisions ######################################
+
+	file mkdir $proj_path/$attribute_name
+
+	file copy -force $source_folder_path/$attribute_name/[lindex $technology 0]/$attribute_name\_[lindex $attribute_values 1]/$attribute_name.v $proj_path/$attribute_name/
+
+	
+
+	for {set ii 1} {$ii<[llength $attribute_values]} {incr ii} {
+
+		file copy -force $source_folder_path/$attribute_name/[lindex $technology 0]/$attribute_name\_[lindex $attribute_values $ii]/$attribute_name\_[lindex $attribute_values $ii].fdc $proj_path/$attribute_name/$attribute_name\_[lindex $attribute_values $ii].fdc
+
+	}
+
+	
+
+	
+
+	project -new $proj_path/$attribute_name/example_proj_$attribute_name	
+
+	set_option -technology $def_technology($technology)
+
+	project -addfile $attribute_name/$attribute_name.v 
+
+	impl -add default_rev
+
+	
+
+	project -result_file "./default_rev/example_proj_$attribute_name\_default.edf"
+
+	set revision "{default_rev} " 
+
+	
+
+	for {set ii 1} {$ii<[llength $attribute_values]} {incr ii} {
+
+		impl -add [lindex $attribute_values $ii]_rev default_rev
+
+		lappend revision "[lindex $attribute_values $ii]_rev"
+
+		project -addfile $attribute_name/$attribute_name\_[lindex $attribute_values $ii].fdc
+
+		project -result_file "./[lindex $attribute_values $ii]_rev/example_proj_$attribute_name\_[lindex $attribute_values $ii].edf"
+
+	}
+
+	impl -active default_rev
+
+	project -save
+
+	set proj_file [project -file]
+
+	project -close
+
+	project -load $proj_file
+	
+	return "Interactive Attribute example project for $attribute_name is created"
+	
+}
+	
+	
+####################################################################################################################################################################
+
+proc attribute_example {soft_gw fixed_gw hard_gw firm_gw work_space} {
+
+set attribute_name "syn_hier"
+
+##### i/P - Attribute_name, Technology & attribute_value###############
+
+	regexp {=(.*)} $work_space d1 work_space
+	regexp {=(.*)} $soft_gw d1 soft_gw;		
+	regexp {=(.*)} $fixed_gw d1 fixed_gw;		
+	regexp {=(.*)} $hard_gw d1 hard_gw;		
+	regexp {=(.*)} $firm_gw d1 firm_gw;		
+	set attr_values default
+        set technology gowin
+	if {$soft_gw==1} {;lappend attr_values soft;}
+	if {$fixed_gw==1} {;lappend attr_values fixed;}
+	if {$hard_gw==1} {;lappend attr_values hard;}
+	if {$firm_gw==1} {;lappend attr_values firm;}
+
+####### Declaration - Folder path & Device###############
+
+	set tool_path [installinfo rootdir];
+
+	regsub -all {\\} $tool_path / tool_path
+
+	set source_folder_path "$tool_path/examples/interactive_attribute_current/example_database"
+
+	set xml_path "$tool_path/examples/interactive_attribute_current/demo_attributes/Miscellaneous/"
+
+	array set def_technology [list gowin Gowin]
+
+#########################################################
+
+
+
+
+
+######### verification 1 - Enetered Attribute is supported or Not? ###############
+
+	set attribute_supported [glob -types d $source_folder_path/*]
+
+	if [regexp $attribute_name $attribute_supported] {
+
+	} else { 
+
+		return "Entered Attribute is not supported"
+
+	}
+
+##################################################################################
+
+
+
+	
+
+###########Verification 2 - Enetered Technology for the Attribute is supported or Not? ##############
+
+	set tech_supported [glob -types d $source_folder_path/$attribute_name/*]
+
+	if [regexp $technology $tech_supported] {
+
+		set dd1 [glob -types d $source_folder_path/$attribute_name/$technology/*]
+
+	} else { 
+
+		return "Selected Technology is not supported for this Attribute"
+
+	}
+
+#####################################################################################################	
+
+	
+
+	
+
+########## Extraction - Attribute Value supported for the attribute & technology#############
+
+	set attribute_values $attr_values
+
+	#set attribute_values {}
+
+	#for {set ii 0} {$ii < [llength $dd1]} {incr ii} { 
+
+	#	if [regexp .*$attribute_name\_(.*) [lindex $dd1 $ii] aa1 aa2] {
+
+	#		lappend attribute_values $aa2
+
+	#	}
+
+	#}
+
+#############################################################################################
+
+
+
+
+
+cd $work_space/
+
+set proj_path [pwd];
+
+
+
+
+
+	puts "\n\n#######################################\n\n"	
+
+	puts "creating the project for \"$attribute_name\" with the values \"$attribute_values\" in the folder \"$proj_path\""
+
+	puts "used Technology : $technology"
+
+	puts "\n\n#########################################\n\n"
+
+	
+
+	
+
+################### Project creation - creates the example project with revisions ######################################
+
+	file mkdir $proj_path/$attribute_name
+
+	file copy -force $source_folder_path/$attribute_name/[lindex $technology 0]/$attribute_name\_[lindex $attribute_values 1]/$attribute_name.v $proj_path/$attribute_name/
+
+	
+
+	for {set ii 1} {$ii<[llength $attribute_values]} {incr ii} {
+
+		file copy -force $source_folder_path/$attribute_name/[lindex $technology 0]/$attribute_name\_[lindex $attribute_values $ii]/$attribute_name\_[lindex $attribute_values $ii].fdc $proj_path/$attribute_name/$attribute_name\_[lindex $attribute_values $ii].fdc
+
+	}
+
+	
+
+	
+
+	project -new $proj_path/$attribute_name/example_proj_$attribute_name	
+
+	set_option -technology $def_technology($technology)
+
+	project -addfile $attribute_name/$attribute_name.v 
+
+	impl -add default_rev
+
+	
+
+	project -result_file "./default_rev/example_proj_$attribute_name\_default.edf"
+
+	set revision "{default_rev} " 
+
+	
+
+	for {set ii 1} {$ii<[llength $attribute_values]} {incr ii} {
+
+		impl -add [lindex $attribute_values $ii]_rev default_rev
+
+		lappend revision "[lindex $attribute_values $ii]_rev"
+
+		
+
+	}
+
+	impl -active default_rev
+
+	project -save
+
+	set proj_file [project -file]
+
+	project -close
+
+	project -load $proj_file	
+
+	cd ..
+
+	project -run -fg
+
+	project -save
+
+	
+
+	
+
+############################################################################################################################
+
+
+
+
+
+############# Grep - Extracts the module name from HDL source File ########################
+
+	if {[catch {set rd_file [open ./$attribute_name/$attribute_name.v r+]}]} {
+
+		puts "file could not open rd_file"
+
+	} else {
+
+		set source_file_data [split [read $rd_file] \n];
+
+		}
+
+	close $rd_file
+
+	
+
+	foreach list_element $source_file_data {
+
+		if [regexp {module\ (.*)\(} $list_element d1 module_name] {
+
+			break
+
+		} elseif [regexp {module\ (.*)\ \(} $list_element d1 module_name] {
+
+			break
+
+		} else {
+
+		}
+
+	}
+
+	puts $module_name
+
+#############################################################################################
+
+
+
+############# Grep - Extracts the clock name from clock report File ########################
+
+	set clock_name clk
+
+	if {[catch {set rd_file [open ./$attribute_name/default_rev/example_proj_$attribute_name\_default_scck.rpt r+]}]} {
+
+		puts "file could not open rd_file"
+
+	} else {
+
+		set RPT_file_data [split [read $rd_file] \n];
+
+		}
+
+	close $rd_file
+
+	
+
+	foreach list_element $RPT_file_data {
+
+		if [ regexp {test\|(.*)\     .*MHz} $list_element d1 clock_name] {
+
+			break
+
+		} else {
+
+		}
+
+	}
+
+	puts $clock_name
+
+#############################################################################################
+
+
+
+
+
+########### Log watch - Txt File --> PRD File (Watch window Parameters from text file  to PRD file) ######################
+
+	if {[catch {set rd_file [open $xml_path/watch_log_parameters.txt r]}]} {
+
+		puts "watch_log_parameters.txt file could not open"
+
+	} else {
+
+	set log_watch_data [split [read $rd_file] \n]
+
+		foreach list_element $log_watch_data {
+
+			if [regexp $technology\ (.*) $list_element d1 parameters] {
+
+				break
+
+			}
+
+		}
+
+		close $rd_file
+
+	}
+
+	regsub -all \{\  $parameters \{\ $module_name\  parameters
+
+	regsub -all \{-  $parameters \{\ \  parameters	
+
+	regsub -- \{\ $module_name\ -\ Estimated $parameters \{\ \ $clock_name\ -\ Estimated parameters
+
+	
+
+		
+
+	if {[catch {set wr_file [open ./$attribute_name/example_proj_$attribute_name.prd w+]}]} {
+
+		puts "$attribute_name.prd file could not open "
+
+	} else {
+
+		puts $wr_file "#--  Synopsys, Inc."
+
+		puts $wr_file "#--  Version F-2012.03"
+
+		regsub -all / \\ $proj_path proj_path1
+
+		puts $wr_file "#--  Project file D:\\work\\tcl_project_workspace\\$attribute_name\\example_proj_$attribute_name.prd"
+
+		puts $wr_file "#"
+
+		puts $wr_file "### Watch Implementation type ###"
+
+		puts $wr_file "#"
+
+		puts $wr_file "watch_impl -all"
+
+		#puts $wr_file "watch_impl -name $revision_watch"
+
+		puts $wr_file "#"
+
+		puts $wr_file "### Watch Implementation properties ###"
+
+		puts $wr_file "#"
+
+		puts $wr_file "watch_prop -clear $parameters" 
+
+		close $wr_file
+
+	}
+
+############################################################################################################	
+
+
+
+
+
+	
+
+##### Header - Generating fdc File Header ##############################################
+
+	
+
+	if {[catch {set wr_file [open ./$attribute_name/$attribute_name\_default.fdc w+]}]} {
+
+		puts "file could not open wr_file"
+
+	} else {
+
+		puts $wr_file "###==== BEGIN Clocks - (Populated from tab in SCOPE, do not edit)"
+		
+		puts $wr_file "create_clock  {$clock_name} -period {3.333}"
+		
+		puts $wr_file "\n"
+		
+		puts $wr_file "###==== END Clocks"
+
+		close $wr_file
+
+	}	
+
+####################################################################################
+
+
+
+
+
+
+
+	for {set ii 0} {$ii<[llength $attribute_values]} {incr ii} {	
+
+	########## Implementaion - Synthesis All Revisions ####################################### 	
+
+		impl -active [lindex $attribute_values $ii]_rev 
+
+		project -addfile $attribute_name/$attribute_name\_[lindex $attribute_values $ii].fdc
+
+		project -result_file "./[lindex $attribute_values $ii]_rev/example_proj_$attribute_name\_[lindex $attribute_values $ii].edf"
+
+		project -save
+
+		project -run -fg
+
+		project -save
+
+		puts [lindex $attribute_values $ii]		
+
+		open_file  ./$attribute_name/[lindex $attribute_values $ii]_rev/example_proj_$attribute_name\_[lindex $attribute_values $ii].srm
+
+	#########################################################################################	
+
+}	
+
+
+
+
+
+	project -save
+
+	set proj_file [project -file]
+
+	project -close
+
+	project -load $proj_file
+
+	cd ..
+
+	for {set ii 0} {$ii<[llength $attribute_values]} {incr ii} {
+
+		open_file  ./$attribute_name/[lindex $attribute_values $ii]_rev/example_proj_$attribute_name\_[lindex $attribute_values $ii].srm
+
+	}
+
+	set srs1 [open_file  ./$attribute_name/default_rev/example_proj_$attribute_name\_default.srs]
+
+	select [find * -filter @inst_of==mult]
+
+	tile_window_vertical
+
+	return "Interactive Attribute example for $attribute_name is completed "
+
+}
+
+   ]]> </tcl>
+
+</dialog>
+   
+</dyndialog>
+

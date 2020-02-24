@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="85"
+   height="40"
+   id="svg2429"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="symshape_xor.svg">
+  <metadata
+     id="metadata3353">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10000"
+     gridtolerance="10000"
+     guidetolerance="10000"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     id="namedview3351"
+     showgrid="true"
+     inkscape:zoom="22.627417"
+     inkscape:cx="49.432198"
+     inkscape:cy="20.501021"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g4285"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-grids="true"
+     inkscape:snap-to-guides="true"
+     inkscape:snap-page="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-midpoints="false"
+     inkscape:snap-global="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="false"
+     showborder="true"
+     inkscape:showpageshadow="true"
+     inkscape:snap-nodes="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-others="true"
+     inkscape:object-nodes="false"
+     inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid9175"
+       originy="0"
+       dotted="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2431" />
+  <g
+     transform="translate(-453.7104,-577.4467)"
+     id="layer1">
+    <g
+       transform="translate(-20.824677,8.675599)"
+       id="g4267">
+      <g
+         id="g4285">
+        <g
+           id="g5517">
+          <path
+             inkscape:connector-curvature="0"
+             id="path4917"
+             d="m 490.15086,571.09953 c 9.95323,17.61524 0.36193,35.37977 0.36193,35.37977 l 17.73486,0.14928 0.18097,-35.67833 z"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path3347"
+             d="m 489.75419,571.01326 c 10.13338,17.7761 0.16346,35.55221 0.16346,35.55221"
+             style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <path
+             sodipodi:nodetypes="ccscsccsc"
+             inkscape:connector-curvature="0"
+             id="path2089-8"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:#f6f6ff;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10.43000031;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+             d="m 494.53223,571.12173 11.67649,0 c 4.8652,0 12.80567,2.06943 18.48775,5.87718 5.89142,3.94804 9.69943,9.67927 10.70345,11.75436 -0.98411,2.36464 -5.18636,7.89026 -10.70345,11.75436 -5.5405,3.88052 -12.64952,5.87717 -18.42114,6.0302 l -11.7431,-0.15303 c 0,0 4.86519,-11.53183 4.86519,-17.63153 0,-6.09971 -4.86519,-17.63154 -4.86519,-17.63154 z" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

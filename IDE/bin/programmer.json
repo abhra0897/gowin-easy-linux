@@ -1,0 +1,397 @@
+{
+	"ALL_MODES":
+    [
+	{ 
+		"MODE" : "SRAM Mode",
+		"OPERATIONS":
+        [
+        { 	
+			"OPERATION" : "SRAM Program",
+			"CMD_INDEX": "2",
+			"DESCRIPATION": "Configure SRAM from Programmer(external host).",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 	
+            "OPERATION" : "Reprogram",
+			"CMD_INDEX": "1",
+			"DESCRIPATION": "Reprogram(reconfig) FPGA SRAM from (ex)flash.",
+            "OPTIONS" : []
+		},
+		{ 
+			"OPERATION" : "SRAM Program JTAG 1149",
+			"CMD_INDEX": "16",
+			"DESCRIPATION": "Configure SRAM from Programmer(external host) without compression,encryption and security!",
+            "OPTIONS" :["Programming"] 
+		},
+		{ 	
+			"OPERATION" : "SRAM Erase",
+			"CMD_INDEX": "24",
+			"DESCRIPATION": "SRAM Erase.",
+            "OPTIONS" : []
+		},		
+		{ 	
+			"OPERATION" : "SRAM Program and Verify",
+			"CMD_INDEX": "4",
+			"DESCRIPATION": "Configure SRAM from Programmer(external host) and verify.",
+            "OPTIONS" : ["Programming"]
+		}
+		]
+	},
+	{
+		"MODE" : "Embedded Flash Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "embFlash Erase,Program",
+			"CMD_INDEX": "5",
+			"DESCRIPATION": "Erase and program the embedded flash.\nMake sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 
+			"OPERATION" : "embFlash Erase,Program,Verify",
+			"CMD_INDEX": "6",
+			"DESCRIPATION": "Erase and program the embedded flash and verify,Make sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 
+			"OPERATION" : "embFlash Erase Only",
+			"CMD_INDEX": "7",
+			"DESCRIPATION": "Erase the embedded flash only.",
+            "OPTIONS" : []
+		}
+		]
+	},
+	{
+		"MODE" : "Embedded Flash 2nd Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "embFlash 2nd Erase,Program",
+			"CMD_INDEX": "19",
+			"DESCRIPATION": "Erase and program the embedded the 2nd flash.\nMake sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 
+			"OPERATION" : "embFlash 2nd Erase,Program,Verify",
+			"CMD_INDEX": "20",
+			"DESCRIPATION": "Erase and program the embedded the 2nd flash and verify,Make sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 
+			"OPERATION" : "embFlash 2nd Erase Only",
+			"CMD_INDEX": "21",
+			"DESCRIPATION": "Erase the embedded the 2nd flash only.",
+            "OPTIONS" : []
+		}
+		]
+	},
+	{
+		"MODE" : "Embedded Flash Backgroud Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "emFlash Backgroud Erase,Program",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "Backgroud erase and program the embedded flash.\nMake sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 
+			"OPERATION" : "emFlash Backgroud Erase,Program,Verify",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "Backgroud erase and program the embedded flash and verify,Make sure the config frequency in fs-file is less than 25Mhz.",
+            "OPTIONS" : ["Programming"]
+		},
+		{ 	
+			"OPERATION" : "emFlash Backgroud Erase Only",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "Backgroud erase the embedded flash only.",
+            "OPTIONS" : []
+		}
+		]
+	},
+	{
+		"MODE" : "External Flash Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "exFlash Erase,Program",
+			"CMD_INDEX": "8",
+			"DESCRIPATION": "Erase(with 4K Alignment) and program the external SPI flash.\nMake sure the config mode is \"011\".\nMake sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin ).",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 
+			"OPERATION" : "exFlash Erase,Program,Verify",
+			"CMD_INDEX": "9",
+			"DESCRIPATION": "Erase(with 4K Alignment),program and verify the external SPI flash.\nMake sure the config mode is \"011\".Make sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin ).",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Bulk Erase",
+			"CMD_INDEX": "10",
+			"DESCRIPATION": "Erase the whole external SPI flash.\nMake sure the config mode is \"011\".",
+            "OPTIONS" : ["External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Verify",
+			"CMD_INDEX": "11",
+			"DESCRIPATION": "Verify the external SPI flash.\nMake sure the config mode is \"011\".\nMake sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin ).",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Erase,Program in bscan",
+			"CMD_INDEX": "12",
+			"DESCRIPATION": "Erase(with 4K Alignment) and program the external SPI flash in any config mode.\nMake sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin).",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Erase,Program,Verify in bscan",
+			"CMD_INDEX": "13",
+			"DESCRIPATION": "Erase(with 4K Alignment),program and verify the external SPI flash in any config mode.\nMake sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin).",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Bulk Erase in bscan",
+			"CMD_INDEX": "14",
+			"DESCRIPATION": "Erase the whole external SPI flash in any config mode",
+            "OPTIONS" : ["Programming", "External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash Verify in bscan",
+			"CMD_INDEX": "15",
+			"DESCRIPATION": "Verify the external SPI flash in any config mode.\nMake sure the config frequency in fs-file is less than 60Mhz ( >30Mhz must set FASTREAD_N pin).",
+            "OPTIONS" : ["External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash C Bin Erase,Program",
+			"CMD_INDEX": "31",
+			"DESCRIPATION": "exFlash C Bin Erase(with 4K Alignment),Program",
+            "OPTIONS" : ["External MCU", " External Flash"]
+		},
+		{ 	
+			"OPERATION" : "exFlash C Bin Erase,Program,Verify",
+			"CMD_INDEX": "32",
+			"DESCRIPATION": "exFlash C Bin Erase(with 4K Alignment),Program,Verify",
+            "OPTIONS" : ["External MCU", " External Flash"]
+		}
+		]
+	},
+	{
+		"MODE" : "MCU Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "Connect to JTAG of MCU",
+			"CMD_INDEX": "23",
+			"DESCRIPATION": "Connect to JTAG of MCU.",
+            "OPTIONS" : []
+		},
+		{ 
+			"OPERATION" : "Firmware Erase,Program",
+			"CMD_INDEX": "29",
+			"DESCRIPATION": "Firmware Erase,Program",
+            "OPTIONS" : ["FW"]
+		},
+		{ 
+			"OPERATION" : "Firmware Erase,Program,Verify",
+			"CMD_INDEX": "22",
+			"DESCRIPATION": "Firmware Erase,Program,Verify",
+            "OPTIONS" : ["FW"]
+		},
+		{ 
+			"OPERATION" : "Firmware Erase Only",
+			"CMD_INDEX": "28",
+			"DESCRIPATION": "Firmware Erase Only",
+            "OPTIONS" : []
+		}
+		]
+	},
+	{
+		"MODE" : "SecureFPGA Mode",
+		"OPERATIONS":[
+		{ 	
+			"OPERATION" : "Connect to JTAG of MCU.",
+			"CMD_INDEX": "23",
+			"DESCRIPATION": "Connect to JTAG of MCU.",
+            "OPTIONS" : []
+		},
+		{ 
+			"OPERATION" : "Firmware Erase,Program,Verify Securely(OTP)",
+			"CMD_INDEX": "27",
+			"DESCRIPATION": "Firmware Erase,Program,Verify with Security(One Time Programmable For Key Authentication Code)",
+            "OPTIONS" : ["FW"]
+		},
+		{ 
+			"OPERATION" : "Authentication Code Erase,Program,Verify",
+			"CMD_INDEX": "25",
+			"DESCRIPATION": "Authentication Code Erase,Program into flash Securely.",
+            "OPTIONS" : ["Sec."]
+		},
+		{ 
+			"OPERATION" : "Authentication Code Read",
+			"CMD_INDEX": "26",
+			"DESCRIPATION": "Authentication Code Read back from GW1NS-2C",
+            "OPTIONS" : ["output"]
+		}
+		]
+	},
+	{
+		"MODE" : "Slave SPI Mode",
+		"OPERATIONS":[
+		{ 	"OPERATION" : "Slave SPI Read ID Code",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "",
+            "OPTIONS" : []
+		},
+		{ 
+			"OPERATION" : "Slave SPI Scan exFlash",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "",
+            "OPTIONS" : []
+		},
+		{ 
+			"OPERATION" : "Slave SPI Program SRAM",
+			"CMD_INDEX": "-1",
+			"DESCRIPATION": "",
+            "OPTIONS" : ["Programming"]
+		}
+		]
+	},
+    {
+        "MODE" : "General JTAG",
+        "OPERATIONS": [ 
+        {
+            "OPERATION" : "Bypass",
+            "CMD_INDEX" : "-1",
+            "DESCRIPATION" : "",
+            "OPTIONS" : []
+        } 
+        ]
+    }
+	],	
+	"DEVICE_CONFIG":
+    [	
+    {
+        "DEVICE":"JTAG_NOP",
+		"IDCODE":"",
+		"ACCESS_MODES":["General JTAG"]
+    },
+	{	"DEVICE":"GW1N-1",
+		"IDCODE":"0900281B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-1S",
+		"IDCODE":"0900381B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-2",
+		"IDCODE":"0100181B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-2B",
+		"IDCODE":"1100181B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-4B",
+		"IDCODE":"1100381B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-4",
+		"IDCODE":"0100381B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-6",
+		"IDCODE":"1100481B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1N-9",
+		"IDCODE":"1100581B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NZ-1",
+		"IDCODE":"0100681B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NS-2",
+		"IDCODE":"0300081B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NS-2C",
+		"IDCODE":"0300181B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+	},
+    {
+        "DEVICE":"GW1NS-4",
+	    "IDCODE":"0100881B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]          
+    },
+	{	"DEVICE":"GW1NSR-2",
+		"IDCODE":"0300081B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NSR-2C",
+		"IDCODE":"0300181B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+	},
+    {	"DEVICE":"GW1NSR-4",
+		"IDCODE":"0100881B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+	},
+    {
+        "DEVICE":"GW1NSR-4C",
+		"IDCODE":"0100981B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+    },
+	{	"DEVICE":"GW1NSE-2C",
+		"IDCODE":"0300181B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "SecureFPGA Mode"]
+	},
+	{	"DEVICE":"GW1NR-4B",
+		"IDCODE":"1100381B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash Backgroud Mode",  "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NR-4",
+		"IDCODE":"0100381B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW1NR-9",
+		"IDCODE":"1100581B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+    {
+        "DEVICE":"GW1NRF-4B",
+        "IDCODE":"1100381B",
+        "ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash Backgroud Mode",  "External Flash Mode", "Slave SPI Mode"]
+    },
+	{	"DEVICE":"GW2A-55",
+		"IDCODE":"0000281B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW2A-18",
+		"IDCODE":"0000081B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW2AR-18",
+		"IDCODE":"0000081B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW2A-55C",
+		"IDCODE":"0000281B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW2A-18C",
+		"IDCODE":"0000081B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+	{	"DEVICE":"GW2AR-18C",
+		"IDCODE":"0000081B",
+		"ACCESS_MODES":["SRAM Mode", "External Flash Mode", "Slave SPI Mode"]
+	},
+    {
+        "DEVICE":"GW1NSER-4C",
+		"IDCODE":"0100981B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+
+	},
+    {
+        "DEVICE":"GW1NS-4C",
+		"IDCODE":"0100981B",
+		"ACCESS_MODES":["SRAM Mode", "Embedded Flash Mode", "Embedded Flash 2nd Mode", "Embedded Flash Backgroud Mode", "External Flash Mode", "MCU Mode","Slave SPI Mode"]
+
+    }
+	]
+}

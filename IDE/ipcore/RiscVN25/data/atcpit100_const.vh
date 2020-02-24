@@ -1,0 +1,29 @@
+`ifndef ATCPIT100_CONST_VH
+`define ATCPIT100_CONST_VH
+
+`include "ae250_config.vh"
+`include "ae250_const.vh"
+
+`ifdef ATCPIT100_NUM_CHANNEL_2
+	`define ATCPIT100_NUM_CHANNEL 3'h2
+    `define ATCPIT100_CH1_SUPPORT
+`else
+`ifdef ATCPIT100_NUM_CHANNEL_3
+	`define ATCPIT100_NUM_CHANNEL 3'h3
+    `define ATCPIT100_CH1_SUPPORT
+    `define ATCPIT100_CH2_SUPPORT
+`else
+`ifdef ATCPIT100_NUM_CHANNEL_4
+	`define ATCPIT100_NUM_CHANNEL 3'h4
+    `define ATCPIT100_CH1_SUPPORT
+    `define ATCPIT100_CH2_SUPPORT
+    `define ATCPIT100_CH3_SUPPORT
+`else
+	`define ATCPIT100_NUM_CHANNEL 3'h1
+`endif
+`endif
+`endif
+
+`define ATCPIT100_PRODUCT_ID        32'h03031003
+
+`endif

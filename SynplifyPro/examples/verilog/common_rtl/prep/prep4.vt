@@ -1,0 +1,139 @@
+//----------------------------------------------------------
+// Benchmark Circuit #3: Memory Map (one instance)
+//
+`timescale 100 ps/100 ps
+module test;
+
+reg clk, rst;
+reg [7:0] in;
+wire [7:0] out;
+
+prep4 inst1 (.CLK(clk), .RST(rst), .I(in), .O(out)) ;
+
+parameter numvecs =14; // actual number of vectors
+
+reg [7:0]  invec  [0:numvecs-1];  // inputs (cond)
+reg [7:0]   outvec [0:numvecs-1]; // outputs
+integer i;
+integer numerrors;
+
+`define st0_outs  8'b00000000
+`define st1_outs  8'b00000110
+`define st2_outs  8'b00011000
+`define st3_outs  8'b01100000
+
+`define st4_outs  8'b1zzzzzz0
+`define st5_outs  8'bz1zzzz0z
+
+`define st6_outs  8'b00011111
+`define st7_outs  8'b00111111
+`define st8_outs  8'b01111111
+`define st9_outs  8'b11111111
+
+`define st10_outs  8'bz1z1z1z1
+`define st11_outs  8'b1z1z1z1z
+
+`define st12_outs  8'b11111101
+`define st13_outs  8'b11110111
+`define st14_outs  8'b11011111
+`define st15_outs  8'b01111111
+
+initial
+begin
+	// sequential test patterns entered at neg edge clk
+	// inputs;		 	outputs before next test pattern applied;
+	invec[0] =8'h0;     		 outvec[0] = `st0_outs; // st0 -> st0
+	invec[1] =8'h1;       	 	 outvec[1] = `st1_outs; // st0 -> st1
+	invec[2] =8'b00000011;       	 outvec[2] = `st0_outs; // st1 -> st0
+	invec[3] =8'h04;       	 	 outvec[3] = `st2_outs; // st0 -> st2
+	invec[4] =8'h1f;      	 	 outvec[4] = `st3_outs;  // st2 -> st3
+	invec[5] =8'hAA;       		 outvec[5] = `st5_outs;  // st3 -> st5
+	invec[6] =8'b01010100;     	 outvec[6] = `st5_outs;  // st5 -> st5
+	invec[7] =8'h01;      	 	 outvec[7] = `st7_outs;   // st5 -> st7
+	invec[8] =8'b11000000;     	 outvec[8] = `st4_outs; //st7 -> st4
+	invec[9] =8'b11101010;   	 outvec[9] = `st6_outs; // s4 -> s6
+	invec[10] =8'b10001011;      	 outvec[10] = `st9_outs;  // s6 -> s9
+	invec[11] =8'h01;      		 outvec[11] = `st11_outs; // s9-> s11
+	invec[12] =8'd64;     		 outvec[12] = `st15_outs; // s11 -> s15
+	invec[13] =8'b10111111;    	 outvec[13] = `st0_outs; // s15 -> s0
+//	invec[14] =8'h55;      		 outvec[14] = 8'h08; // SC -> SD
+//	invec[15] =8'h66;   	   	 outvec[15] = 8'h80;  // SD -> SG
+//	invec[16] =8'h77;      		 outvec[16] = 8'h01;  // SG -> START
+//	invec[17] =8'h3B;      	 	 outvec[17] = 8'h00;  // START -> START
+//	invec[18] =8'h3C;	  	 outvec[18] = 8'h82;  // START -> SA  
+	
+end
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+initial
+begin
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+	in = 0;
+	// test asynchronous reset
+	#500 rst = 1; // assert reset at 50 ns
+	#500 if (out !== 8'h00)	// check outputs 50 ns later
+		begin 
+			$display("Error. Asynchronous reset is not working. Output should be 0. Actual:  %h", out);
+			numerrors = numerrors + 1;
+		end
+	rst = 0;
+	in = 8'bx;
+
+	//skip first rising edge
+	// @(posedge clk);
+	for (i = 0; i <= numvecs-1; i = i + 1)
+	begin
+		@(negedge clk);
+		// apply test pattern at neg edge
+		in = invec[i];
+		@(posedge clk) #4500; //450 ns later
+		// check result at posedge + 450 ns
+			//$display(    
+			// "\tpattern#%d t%d: inputs = %h  Expected outputs: %b;  Actual outputs %b", 
+			// i, $stime, invec[i], outvec[i], out);
+		casez(out)
+		  outvec[i] : ;
+		  default:	
+				// no match! even for wild cards ?
+				begin
+		   		$display(    
+				"\t\t ERROR pattern#%d t%d: inputs = %h  Expected outputs: %b;  Actual outputs %b", 
+				i, $stime, invec[i], outvec[i], out);
+				numerrors = numerrors + 1;
+				end
+		endcase
+		// if ( out !== outvec[i] )
+		// begin
+		//    $display(    
+		//  "\t\t ERROR pattern#%d t%d: inputs = %h  Expected outputs: %h;  Actual outputs %h", 
+		// i, $stime, invec[i], outvec[i], out);
+		// 	numerrors = numerrors + 1;
+		// end
+	end
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+	
+	#1000 $finish; // after 100 ns later
+end
+
+endmodule

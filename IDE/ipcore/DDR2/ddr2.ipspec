@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="DDR2 Memory Interface" id="ddr2" version= "1.2" category="Soft IP Core|Memory Control">DDR2 Memory Interface</ip>
+    <target module="DDR2_Memory_Interface_Top">ddr2_memory_interface</target>
+    <docs>
+        <doc type="summary">/doc/ddr2.html</doc>
+        <doc type="help">/doc/ddr2_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

@@ -1,0 +1,231 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>IP FIFO Help</title>
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+            
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+    
+    <body>            
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>FIFO</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>FIFO</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>The Gowin FIFO IP is a fully verified, asynchronous first-in first-out memory queue. The structure of the IP can be customized by the user including the write depth, the write width, the read width, memory type, almost empty and full flags and so on.</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+    
+                <table class="summary_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td class="label">Block Ram</td>
+                        <td>The memory type used to implement the FIFO is block ram.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Distributed Ram</td>
+                        <td>The memory type used to implement the FIFO is distributed ram.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LUT</td>
+                        <td>The memory type used to implement the FIFO is registers.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Write Depth</td>
+                        <td>Specify the number of the address locations for input.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Write Data Width</td>
+                        <td>Specify the data width of the input data.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Read Depth</td>
+                        <td>Specify the number of the address locations for output.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Read Data Width</td>
+                        <td>Specify the data width for the output data.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Write Data Num</td>
+                        <td>This enables the data count output, which is synchronized with write clock and shows the number of words in the FIFO. The changes due to read show a few cycles later since it is synchronized with the write clock.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Read Data Num</td>
+                        <td>This enables the data count output, which is synchronized with read clock and shows the number of words in the FIFO. The changes due to write show a few cycles later since it is synchronized with the read clock.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">En_Reset</td>
+                        <td>Enable the separate write reset and read reset.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Reset_Synchronization</td>
+                        <td>Enable the common reset for write and read.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Almost Full Flag</td>
+                        <td>Enable the almost full flag.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Full-Single Threshold Constant Parameter</td>
+                        <td>A single threshold is set at the time of the IP generation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Full-Dual Threshold Constant Parameters</td>
+                        <td>Dual thresholds are set at the time of the IP generation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Full-Single Threshold Input Parameter</td>
+                        <td>A single threshold is input from the additional port to allow changing the threshold during operation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Full-Dual Threshold Input Parameters</td>
+                        <td>Dual thresholds are input from the additional ports to allow changing the thresholds during operation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Set</td>
+                        <td>The threshold of setting the almost full flag to 1.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Clear</td>
+                        <td>The threshold of clearing the almost empty flag to 0.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Almost Empty Flag</td>
+                        <td>Enable the almost empty flag.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Empty-Single Threshold Constant Parameter</td>
+                        <td>A single threshold is set at the time of the IP generation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Empty-Dual Threshold Constant Parameters</td>
+                        <td>Dual thresholds are set at the time of the IP generation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Empty-Single Threshold Input Parameter</td>
+                        <td>A single threshold is input from the additional port to allow changing the threshold during operation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Empty-Dual Threshold Input Parameter</td>
+                        <td>Dual thresholds are input from the additional ports to allow changing the thresholds during operation.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Set</td>
+                        <td>The threshold of setting the almost empty flag to 1.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Clear</td>
+                        <td>The threshold of clearing the almost empty flag to 0.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">ECC Selected</td>
+                        <td>Allow error correction of single error and error detection of double errors. This is not supported for data widths greater than 64 bits, and only supported for block ram and read data width equal to write data width.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Output Register Selected</td>
+                        <td>Registers are used for the output data, which can't aspect the flag signal.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Controlled by RdEn</td>
+                        <td>The Registers for the output data are controlled by RdEn, and the last data can't be output.</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Disable I/O Insertion</td>
+                        <td>Suppress automatic insertion of I/Os into the design.</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Read Write check on RAM</td>
+                        <td>Inserts bypass logic around RAMs to prevent simulation mismatch when read or write conflicts exist.</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

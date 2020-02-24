@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OptionDef>
+    <SingleChoiceOption id="MP00" label="Download Mode" default="1">
+        <Description></Description>
+        <Choice label="JTAG" cmd="set DOWNLOAD_MODE = JTAG"/>
+        <Choice label="JTAG with AUTO BOOT" cmd="set DOWNLOAD_MODE = JTAG_AUTO_BOOT"/>
+        <Choice label="JTAG with DUAL BOOT" cmd="set DOWNLOAD_MODE = JTAG_DUAL_BOOT"/>
+        <Choice label="JTAG with SSPI" cmd="set DOWNLOAD_MODE = JTAG_SSPI"/>
+        <Choice label="JTAG with MSPI" cmd="set DOWNLOAD_MODE = JTAG_MSPI"/>
+        <Choice label="JTAG with SERIAL" cmd="set DOWNLOAD_MODE = JTAG_SERIAL"/>
+        <Choice label="JTAG with CPU" cmd="set DOWNLOAD_MODE = JTAG_CPU"/>
+        <Choice label="SSPI" cmd="set DOWNLOAD_MODE = SSPI"/>
+        <Choice label="MSPI" cmd="set DOWNLOAD_MODE = MSPI"/>
+        <Choice label="SERIAL" cmd="set DOWNLOAD_MODE = SERIAL"/>
+        <Choice label="CPU" cmd="set DOWNLOAD_MODE = CPU"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="MP01" label="Use JTAG as Regular IO" default="1">
+        <Description></Description>
+        <Choice label="True" cmd="set JTAG regular_io = true"/>
+        <Choice label="False" cmd="set JTAG regular_io = false"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="MP02" label="Use MSPI as Regular IO" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set MSPI regular_io = true"/>
+        <Choice label="False" cmd="set MSPI regular_io = false"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="MP03" label="Use SSPI as Regular IO" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set SSPI regular_io = true"/>
+        <Choice label="False" cmd="set SSPI regular_io = false"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="MP04" label="Use READY as Regular IO" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set READY regular_io = true"/>
+        <Choice label="False" cmd="set READY regular_io = false"/>
+    </SingleChoiceOption>
+    <!--
+    <SingleChoiceOption id="MP05" label="Use JTAGSELN as Regular IO" default="1">
+    <Description></Description>
+    <Choice label="True" cmd="set JTAGSELN regular_io = true"/>
+    <Choice label="False" cmd="set JTAGSELN regular_io = false"/>
+    </SingleChoiceOption>
+    -->
+    <SingleChoiceOption id="MP06" label="Use DONE as Regular IO" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set DONE regular_io = true"/>
+        <Choice label="False" cmd="set DONE regular_io = false"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="MP07" label="Use RECONFIG_N as Regular IO" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set RECONFIG_N regular_io = true"/>
+        <Choice label="False" cmd="set RECONFIG_N regular_io = false"/>
+    </SingleChoiceOption>
+</OptionDef>

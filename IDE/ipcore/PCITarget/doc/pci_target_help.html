@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>PCI Target</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>PCI Target</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>PCI Target</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>The Gowin PCI Target Local Bus is a high performance 32bit bus with multiplexed address and data lines. The bus is intended for use as an interconnect mechanism between highly integrated peripheral controller components, peripheral add-in boards, and processor/memory systems.</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td colspan="2" class="head">Bus Definition</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">PCI Data Bus Size</td>
+                        <td>PCI Data Bus Width.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Local Data Bus Size</td>
+                        <td>Local Data Bus Width.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">PCI Bus Speed</td>
+                        <td>The System Clock frequency of PCI BUS.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">ID</td>
+                    </tr>
+
+                    <tr>
+                        <td class="head">Vendor ID</td>
+                        <td>The Vendor ID is used to identify the manufacturer of product. This register is 16-bit and read-only.</td> 
+                    </tr>
+					
+                    <tr>
+                        <td class="head">Device ID</td>
+                        <td>The Device ID is defined by the manufacturer. It is used to uniquely identify a particular product or model. This register is 16-bit, read-only.</td> 
+                    </tr>
+					
+                    <tr>
+                        <td class="head">Subsystem Vendor ID</td>
+                        <td>The Subsystem Vendor ID is used to further identify the manufacturer of the expansion board or subsystem. This register is 16-bit, read-only.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Subsystem ID</td>
+                        <td>The Subsystem ID is used to further identify the particular device. This register is 16-bit, read-only.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Revision ID</td>
+                        <td>The Revision ID is a device-specific field that is set using the REVISION_ID parameter. This register is 8-bit, read-only.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Class Code</td>
+                        <td>The Class Code is a register and is used to identify the generic functionality of a device. This register is 24-bit, read-only.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Options</td>
+                    </tr>
+
+                    <tr>
+                        <td class="head">Devsel Timing</td>
+                        <td>These bits indicate the slowest time for all device accesses   to assert the pci_devsel_l signal except the configuration.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Fast Back to Back</td>
+                        <td>This is a read-only bit that indicates if the device is capable of handling fast back-to-back transactions. </td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Interrupt Pin</td>
+                        <td>It is used to indicate which of the four interrupts that the PCI IP core uses.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">BARs</td>
+                    </tr>
+
+                    <tr>
+                        <td class="head">Number of BARs</td>
+                        <td>0：No base region enable<br>1：BAR0 enable<br>2：BAR0、BAR1 enable<br>3：BAR0、BAR1、BAR2 enable<br>4：BAR0、BAR1、BAR2、BAR3 enable<br>5：BAR0、BAR1、BAR2、BAR3、BAR4 enable<br>6：BAR0、 BAR1、 BAR2、 BAR3、 BAR4 、BAR5 enable.</td> 
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="head">BAR0 To BAR5 Configuration Options</td>
+                    </tr>
+
+                    <tr>
+                        <td class="head">BAR width</td>
+                        <td>The size of BAR register. It is only 32 in size.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">BAR Type</td>
+                        <td>IO Read/Write or Memory Read/Write.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">BAR Address Space Size</td>
+                        <td>The size of BAR Address Space. The range of BAR Address Space Size is 16 – 2G bytes.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">BAR Prefetching</td>
+                        <td>This option determines if the memory mapped by this BAR support prefetching operation.</td> 
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

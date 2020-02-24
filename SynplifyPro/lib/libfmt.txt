@@ -1,0 +1,658 @@
+/*
+ * libfmt.txt
+ * Describes format of Synopsys lib file.
+ *
+ * This file is organized in "groups".  Each group is a collection object
+ * in the synopsys library.  The library itself is a group of groups and simple
+ * properties.
+ *
+ * Simple properties are specified in this file as a pair of the name of the
+ * property and a string which specifies the format of the property.
+ *
+ * In the string, punctuation characters stand for themselves.  This includes
+ *    :,;()
+ * Data is specified with a format sequence introduced with % .
+ * Valid format sequences are:
+ *    %s - string
+ *    %S - multiple strings divided by ','
+ *    %n - name
+ *    %i - integer
+ *    %f - float
+ *
+ * Choice lists are introduced with a vertical bar | and ended with a
+ * doubled vertical bar ||.
+ * |true|false||
+ *
+ * We perform checks for duplicate properties at the library level.
+ * For some property, this check is not necessary. So all such properties
+ * start with X:.
+ * An example format string is ":%f;"
+ *
+ * Properties not present in this file are parsed with a default property
+ * parser and are not checked as the the types of the data.
+ *
+ *
+ * $Header: //synplicity/mapgw/converters/lib2syn/libfmt.txt#5 $
+ */
+
+/* top level group */
+
+library {
+	bus_naming_style ":%s;"
+	comment ":%s;"
+	current_unit ":%s;"
+	date ":%s;"
+	delay_model ":%s;"
+	in_place_swap_mode ":|match_footprint|no_swapping||;"
+	leakage_power_unit ":%s;"
+	nom_process ":%n;"
+	nom_temperature ":%n;"
+	nom_voltage ":%n;"
+	piece_type ":|piece_length|piece_wire_cap|piece_pin_cap|piece_total_cap||;"
+	prefered_output_pad_slew_rate_control ":%s;" /* high, medium, low, none */
+	prefered_output_pad_voltage ":%s;" /* ref voltage group */
+	prefered_input_pad_voltage ":%s;"  /* ref voltage group */
+	pulling_resistance_unit ":%s;" /* 1ohm, 10ohm, 100ohm, 1kohm */
+	reference_capacitance ":%f;"
+	revision ":%s;"
+	simulation ":|true|false||;"
+	time_unit ":%s;" /* 1ps, 10ps, 100ps, 1ns */
+	voltage_unit ":%s;" /* 1mV, 10mV, 100mV, 1V */
+
+	/* defaults go here */
+
+	capacitive_load_unit "(%f,|ff|pf||);"
+	define "X(%n,%n,|string|integer|float||);"
+	define_cell_area "X(%n,|pad_slots|pad_driver_sites|pad_input_driver_sites|pad_output_driver_sites||);"
+	library_features "X(%S);"
+	piece_define "X(%s);"
+	routing_layers "X(%s);"
+	technology "X(%n);" /* must be first */
+
+	/* scaling attributes */
+
+	k_process_cell_rise	":%f;"
+	k_process_cell_fall	":%f;"
+	k_process_cell_leakage_power	":%f;"
+	k_process_drive_current	":%f;"
+	k_process_drive_fall	":%f;"
+	k_process_drive_rise	":%f;"
+	k_process_fall_delay_intercept	":%f;"
+	k_process_fall_pin_resistance	":%f;"
+	k_process_fall_propagation	":%f;"
+	k_process_fall_transition	":%f;"
+	k_process_hold_fall	":%f;"
+	k_process_hold_rise	":%f;"
+	k_process_internal_power	":%f;"
+	k_process_intrinsic_fall	":%f;"
+	k_process_intrinsic_rise	":%f;"
+	k_process_min_period	":%f;"
+	k_process_min_pulse_width_high	":%f;"
+	k_process_min_pulse_width_low	":%f;"
+	k_process_nochange_fall	":%f;"
+	k_process_nochange_rise	":%f;"
+	k_process_pin_cap	":%f;"
+	k_process_recovery_fall	":%f;"
+	k_process_recovery_rise	":%f;"
+	k_process_removal_fall	":%f;"
+	k_process_removal_rise	":%f;"
+	k_process_rise_delay_intercept	":%f;"
+	k_process_rise_pin_resistance	":%f;"
+	k_process_rise_propagation	":%f;"
+	k_process_rise_transition	":%f;"
+	k_process_setup_fall	":%f;"
+	k_process_setup_rise	":%f;"
+	k_process_skew_fall	":%f;"
+	k_process_skew_rise	":%f;"
+	k_process_slope_fall	":%f;"
+	k_process_slope_rise	":%f;"
+	k_process_wire_cap	":%f;"
+	k_process_wire_res	":%f;"
+
+	k_temp_cell_rise	":%f;"
+	k_temp_cell_fall	":%f;"
+	k_temp_cell_leakage_power	":%f;"
+	k_temp_drive_current	":%f;"
+	k_temp_drive_fall	":%f;"
+	k_temp_drive_rise	":%f;"
+	k_temp_fall_delay_intercept	":%f;"
+	k_temp_fall_pin_resistance	":%f;"
+	k_temp_fall_propagation	":%f;"
+	k_temp_fall_transition	":%f;"
+	k_temp_hold_fall	":%f;"
+	k_temp_hold_rise	":%f;"
+	k_temp_internal_power	":%f;"
+	k_temp_intrinsic_fall	":%f;"
+	k_temp_intrinsic_rise	":%f;"
+	k_temp_min_period	":%f;"
+	k_temp_min_pulse_width_high	":%f;"
+	k_temp_min_pulse_width_low	":%f;"
+	k_temp_nochange_fall	":%f;"
+	k_temp_nochange_rise	":%f;"
+	k_temp_pin_cap	":%f;"
+	k_temp_recovery_fall	":%f;"
+	k_temp_recovery_rise	":%f;"
+	k_temp_removal_fall	":%f;"
+	k_temp_removal_rise	":%f;"
+	k_temp_rise_delay_intercept	":%f;"
+	k_temp_rise_pin_resistance	":%f;"
+	k_temp_rise_propagation	":%f;"
+	k_temp_rise_transition	":%f;"
+	k_temp_setup_fall	":%f;"
+	k_temp_setup_rise	":%f;"
+	k_temp_skew_fall	":%f;"
+	k_temp_skew_rise	":%f;"
+	k_temp_slope_fall	":%f;"
+	k_temp_slope_rise	":%f;"
+	k_temp_wire_cap	":%f;"
+	k_temp_wire_res	":%f;"
+
+	k_volt_cell_rise	":%f;"
+	k_volt_cell_fall	":%f;"
+	k_volt_cell_leakage_power	":%f;"
+	k_volt_drive_current	":%f;"
+	k_volt_drive_fall	":%f;"
+	k_volt_drive_rise	":%f;"
+	k_volt_fall_delay_intercept	":%f;"
+	k_volt_fall_pin_resistance	":%f;"
+	k_volt_fall_propagation	":%f;"
+	k_volt_fall_transition	":%f;"
+	k_volt_hold_fall	":%f;"
+	k_volt_hold_rise	":%f;"
+	k_volt_internal_power	":%f;"
+	k_volt_intrinsic_fall	":%f;"
+	k_volt_intrinsic_rise	":%f;"
+	k_volt_min_period	":%f;"
+	k_volt_min_pulse_width_high	":%f;"
+	k_volt_min_pulse_width_low	":%f;"
+	k_volt_nochange_fall	":%f;"
+	k_volt_nochange_rise	":%f;"
+	k_volt_pin_cap	":%f;"
+	k_volt_recovery_fall	":%f;"
+	k_volt_recovery_rise	":%f;"
+	k_volt_removal_fall	":%f;"
+	k_volt_removal_rise	":%f;"
+	k_volt_rise_delay_intercept	":%f;"
+	k_volt_rise_pin_resistance	":%f;"
+	k_volt_rise_propagation	":%f;"
+	k_volt_rise_transition	":%f;"
+	k_volt_setup_fall	":%f;"
+	k_volt_setup_rise	":%f;"
+	k_volt_skew_fall	":%f;"
+	k_volt_skew_rise	":%f;"
+	k_volt_slope_fall	":%f;"
+	k_volt_slope_rise	":%f;"
+	k_volt_wire_cap	":%f;"
+	k_volt_wire_res	":%f;"
+
+	/* cmos attributes */
+
+	default_cell_leakage_power	":%f;"
+	default_connection_class	":%n;"
+	default_edge_rate_breakpoint_f0	":%f;" /* cmos2 only */
+	default_edge_rate_breakpoint_f1	":%f;" /* cmos2 only */
+	default_edge_rate_breakpoint_r0	":%f;" /* cmos2 only */
+	default_edge_rate_breakpoint_r1	":%f;" /* cmos2 only */
+	default_fall_delay_intercept	":%f;" /* piecewise model only */
+	default_fall_pin_resistance	":%f;" /* piecewise model only */
+	default_fanout_load	":%f;"
+	default_hold_coefficient ":%f;"    /* cmos2 only */
+	default_inout_pin_cap	":%f;"
+	default_inout_pin_fall_res	":%f;"
+	default_inout_pin_rise_res	":%f;"
+	default_input_pin_cap	":%f;"
+	default_intrinsic_fall	":%f;"
+	default_intrinsic_rise	":%f;"
+	default_max_capacitance	":%f;"
+	default_max_fanout	":%f;"
+	default_max_transition	":%f;"
+	default_max_utilization	":%f;"
+	default_min_porosity	":%f;"
+	default_operating_conditions	":%n;"
+	default_output_pin_cap	":%f;"
+	default_output_pin_fall_res	":%f;"
+	default_output_pin_rise_res	":%f;"
+	default_rc_fall_coefficient	":%f;" /* cmos2 only */
+	default_rc_rise_coefficient	":%f;" /* cmos2 only */
+	default_reference_capacitance	":%f;" /* cmos2 only */
+	default_rise_delay_intercept	":%f;" /* piecewise model only */
+	default_rise_pin_resistance	":%f;"     /* piecewise model only */
+	default_setup_coefficient ":%f;"       /* cmos2 only */
+	default_slope_fall	":%f;"
+	default_slope_rise	":%f;"
+	default_wire_load	":%n;"
+	default_wire_load_area	":%f;"
+	default_wire_load_capacitance	":%f;"
+	default_wire_load_mode	":|top|segmented|enclosed||;"
+	default_wire_load_resistance	":%f;"
+	default_wire_load_selection	":%n;"
+
+	/* groups */
+	input_voltage "(%n){}"
+	lu_table_template "(%n){}"
+	cell "(%n){}"
+	scaled_cell "(%n, %n){}"
+	scaling_factors "(%s){}"
+	operating_conditions "(%n){}"
+	timing_range "X(%n){}"
+	power_lut_template "(%n){}"
+	power_supply "(%n){}"
+	type "(%n){}"
+	output_voltage "(%n){}"
+	rise_transition_degradation "(%n){}"
+	fall_transition_degradation "(%n){}"
+
+	wire_load "(%n){}"
+	wire_load_selection "(%n){}"
+	wire_load_table "(%n){}"
+
+	default_operating_conditions	":%n;"
+}
+
+
+/* Vol1 pg 1-38 */
+input_voltage {
+	vil  ":%e;"
+	vih  ":%e;"
+	vimin  ":%e;"
+	vimax  ":%e;"
+}
+
+/* Vol1 pg 1-41 */
+lu_table_template {
+	variable_1 ":%n;"
+	variable_2 ":%n;"
+	variable_3 ":%n;"
+	index_1 ":%s;"
+	index_2 ":%s;"
+	index_3 ":%s;"
+}
+
+/* Vol1 pg 1-43 */
+operating_conditions {
+	process ":%n;"
+	temperature ":%n;"
+	tree_type ":|best_case_tree|balanced_tree|worst_case_tree||;"
+	voltage ":%n;"
+	power_rail "(%s,%f);"
+}
+
+/* Vol1 pg 1-45 */
+output_voltage {
+	vol  ":%e;"
+	voh  ":%e;"
+	vomin  ":%e;"
+	vomax  ":%e;"
+}
+
+/* Vol1 pg 1-48 */
+power_lut_template {
+	variable_1 ":%n;"
+	variable_2 ":%n;"
+	variable_3 ":%n;"
+	index_1 ":%s;"
+	index_2 ":%s;"
+	index_3 ":%s;"
+}
+
+/* Vol1 pg 1-53 */
+power_supply {
+	default_power_rail ":%s;"
+	power_rail "(%n,%f);"
+}
+
+/* Vol1 pg 1-58 */
+rise_transition_degradation {
+	index_1 "(%s);"
+	index_2 "(%s);"
+	values "(%S);"
+}
+
+/* Vol1 pg 1-58 */
+fall_transition_degradation {
+	index_1 "(%s);"
+	index_2 "(%s);"
+	values "(%S);"
+}
+
+/* Vol1 pg 1-59 */
+scaled_cell {
+	area ":%f;"
+	auxiliary_pad_cell ":|true|false||;"
+	bus_naming_style ":%s;"
+	cell_footprint ":%n;"
+	cell_leakage_power ":%f;"
+	dont_fault ":|sa0|sa1|sa01||;"
+	dont_touch ":|true|false||;"
+	dont_use ":|true|false||;"
+	handle_negative_constraint ":|true|false||;"
+	interface_timing ":|true|false||;"
+	map_only ":|true|false||;"
+	pad_cell ":|true|false||;"
+	pad_type ":|clock||;"
+	preferred ":|true|false||;"
+	scaling_factors ":%n;"
+	scan_group ":%s;"
+	vhdl_name ":%s;"
+	pin_equal "(%s);"
+	pin_opposite "(%s,%s);"
+
+	/* groups */
+	bundle "(%n){}"
+	bus "(%n){}"
+	ff "(%n, %n){}"
+	ff_bank "(%n, %n, %i){}"
+	latch "(%n, %n){}"
+	latch_bank "(%n, %n, %i){}"
+	leakage_power "(){}"
+	lut "(%n){}"
+	memory "(){}"
+	pin "(%N)}{}"
+	statetable "(%s,%s){}"
+	test_cell "(){}"
+	type "(%n){}"
+}
+
+/* Vol1 pg 1-62 */
+scaling_factors {
+	/* TODO: vol1 pg 1-62 */
+}
+
+/* Vol1 pg 1-62 */
+timing_range {
+	faster_factor ":%f;"
+	slower_factor ":%f;"
+}
+
+/* Vol1 pg 1-62 */
+type {
+	base_type ":|array||;"
+	bit_from ":%i;"
+	bit_to ":%i;"
+	bit_width ":%i;"
+	data_type ":|bit||;"
+	downto ":|true|false||;"
+}
+
+/* Vol1 pg 1-65 */
+wire_load {
+	area ":%f;"
+	capacitance ":%f;"
+	resistance ":%f;"
+	slope ":%f;"
+	fanout_length "*" /* pg 1-66 */
+}
+
+/* Vol1 pg 1-67 */
+wire_load_selection {
+	wire_load_from_area "(%i,%i,%n)"
+}
+
+/* Vol1 pg 1-67 */
+wire_load_table {
+	fanout_area "(%i,%f);"
+	fanout_capacitance "(%i,%f);"
+	fanout_length "(%i,%f);"
+	fanout_resistance "(%i,%f);"
+}
+
+/* Vol1 pg 2-1 */
+cell {
+	area ":%f;"
+	auxiliary_pad_cell ":|true|false||;" /* 2-12 */
+	bus_naming_style ":%s;"
+	cell_footprint ":%n;"
+	cell_leakage_power ":%f;"
+	contention_condition ":%s;"
+	dont_fault ":|sa0|sa1|sa01||;"
+	dont_touch ":|true|false||;"
+	dont_use ":|true|false||;"
+	geometry_print ":%s;"
+	handle_negative_constraint ":|true|false||;"  /* 2-10 */
+	interface_timing ":|true|false||;"  /* 2-10 */
+	is_clock_gating_cell ":|true|false||;" /* 2-11 */
+	map_only ":|true|false||;"  /* 2-12 */
+	pad_cell ":|true|false||;" /* 2-12 */
+	pad_type ":|clock||;" /* 2-13 */
+	preferred ":|true|false||;" /* 2-14 */
+	scaling_factors ":%n;" /* 2-15 */
+	scan_group ":%s;" /* 2-16 */
+	single_bit_degenerate ":%n;" /* 2-18 */
+	vhdl_name ":%s;"     /* 2-19 */
+	pin_equal "(%s);" /* 2-20 */
+	pin_opposite "(%s,%s);" /* 2-21 */
+	rail_connection "(%n,%n)" /* 2-22 */
+
+	/* groups */
+	bundle "(%n){}"
+	bus "(%n){}"
+	ff "(%n, %n){}"
+	ff_bank "(%n, %n, %i){}"
+	latch "(%n, %n){}"
+	latch_bank "(%n, %n, %i){}"
+	leakage_power "(){}"
+	lut "(%n){}"
+	memory "(){}"
+	memory_read "(){}"
+	memory_write "(){}"
+	pin "(%N)}{}"
+	routing_track "(%n){}"
+	statetable "(%s,%s){}"
+	test_cell "(){}"
+	type "(%n){}"
+}
+
+pin {
+	/* attributes to be included in pin, bundle and bus */
+	capacitance ":%f;"
+	clock ":|true|false||;"
+	connection_class ":%s;"
+	direction ":|input|output|inout|internal||;"
+	dont_fault ":|sa0|sa1|sa01||;"
+	drive_current	":%f;"
+	driver_type ":|\
+		pull_up|\
+		pull_down|\
+		open_drain|\
+		open_source|\
+		bus_hold|\
+		resistive|\
+		resistive_0|\
+		resistive_1||;"
+	edge_rate_breakpoint_f0 ":%f;"
+	edge_rate_breakpoint_f1 ":%f;"
+	edge_rate_breakpoint_r0 ":%f;"
+	edge_rate_breakpoint_r1 ":%f;"
+	edge_rate_fall ":%f;"
+	edge_rate_load_fall ":%f;"
+	edge_rate_load_rise ":%f;"
+	edge_rate_rise ":%f;"
+	fall_current_slope_after_threshold ":%f;"
+	fall_current_slope_before_threshold ":%f;"
+	fall_time_after_threshold ":%f;"
+	fall_time_before_threshold ":%f;"
+	fanout_load ":%f;"
+	function ":%s;"
+	hysteresis ":|true|false||;"
+	input_map ":%s;"
+	input_signal_level ":%s;"
+	input_voltage ":%s;"
+	internal_node ":%s;" /* state table cells */
+	inverted_output ":%s;" /* state table cells */
+	is_pad ":|true|false||;"
+	max_capacitance ":%f;"
+	max_fanout ":%f;"
+	max_transition ":%f;"
+	min_capacitance ":%f;"
+	min_fanout ":%f;"
+	min_period ":%f;"
+	min_pulse_width_high ":%f;"
+	min_pulse_width_low ":%f;"
+	min_transition ":%f;"
+	multicell_pad_pin ":|true|false||;"
+	nextstate_type ":|date|preset|clear|load|scan_in|scan_enable||;"
+	output_signal_level ":%s;"
+	output_voltage ":%s;"
+	pin_func_type ":|\
+		clock_enable|\
+		active_high|\
+		active_low|\
+		active_rising|\
+		active_falling||;"
+	prefer_tied ":%s;" /* "0" or "1" */
+	primary_output ":|true|false||;"
+	pulling_current ":%f;"
+	pulling_resistance ":%f;"
+	reference_capacitance ":%f;"
+	rise_current_slope_after_threshold ":%f;"
+	rise_current_slope_before_threshold ":%f;"
+	rise_time_after_threshold ":%f;"
+	rise_time_before_threshold ":%f;"
+	signal_type ":|\
+		test_scan_in|\
+		test_scan_in_inverted|\
+		test_scan_out|\
+		test_scan_out_inverted|\
+		test_scan_enable|\
+		test_scan_enable_inverted|\
+		test_scan_clock|\
+		test_scan_clock_a|\
+		test_scan_clock_b|\
+		test_clock||;"
+	slew_control ":|none|low|medium|high||;"
+	state_function ":%s;"
+	test_output_only ":|true|false||;"
+	three_state ":%s;" /* function */
+	vhdl_name ":%s;"
+	x_function ":%s;"  /* function */
+
+	min_pulse_width "(){}"
+}
+
+min_pulse_width {
+}
+
+
+bundle {
+	members "(%N);"
+	/* include simple pin attributes */
+}
+
+bus {
+	bit_width ":%i;"
+	capacitance ":%f;"
+}
+
+
+ff {
+}
+
+ff_bank {
+}
+
+latch {
+}
+
+latch_bank {
+}
+
+leakage_power {
+	when ":%s;"
+	values "(%S);"
+	value ":%f;"
+}
+
+lut {
+	input_pins ":%s;"
+}
+memory {
+}
+memory_read {
+}
+memory_write {
+}
+
+timing {
+	edge_rate_sensitivity_f0 ":%f;"
+	edge_rate_sensitivity_f1 ":%f;"
+	edge_rate_sensitivity_r0 ":%f;"
+	edge_rate_sensitivity_r1 ":%f;"
+	fall_resistance ":%f;"
+	intrinsic_fall ":%f;"
+	intrinsic_rise ":%f;"
+	related_bus_pins ":%s;"
+	related_output_pin ":|
+		related_out_total_output_net_capacitance|\
+		related_out_output_net_length|\
+		related_out_output_net_wire_cap|\
+		related_out_output_net_pin_cap||;"
+	related_pin ":%n;" /* really a name list */
+	rise_resistance ":%f;"
+	sdf_cond ":%s;"
+	sdf_cond_end ":%s;"
+	sdf_cond_start ":%s;"
+	sdf_edges ":%s;"
+	slope_fall ":%f;"
+	slope_rise ":%f;"
+	timing_sense ":|positive_unate|negative_unate|non_unate||;"
+	timing_type ":|\
+		combinational|\
+		combinational_fall|\
+		combinational_rise|\
+		min_pulse_width|\
+		three_state_disable|\
+		three_state_enable|\
+		rising_edge|\
+		falling_edge|\
+		preset|\
+		clear|\
+		hold_rising|\
+		hold_falling|\
+		setup_rising|\
+		setup_falling|\
+		recovery_rising|\
+		recovery_falling|\
+		skew_rising|\
+		skew_falling|\
+		removal_rising|\
+		removal_falling|\
+		min_pulse_width_high|\
+		min_pulse_width_low|\
+		non_seq_setup_rising|\
+		non_seq_setup_falling|\
+		non_seq_hold_rising|\
+		non_seq_hold_falling|\
+		nochange_high_high|\
+		nochange_high_low|\
+		nochange_low_high|\
+		nochange_low_low||;"
+	when ":%s;"
+	when_end ":%s;"
+	when_start ":%s;"
+
+	/* complex attributes */
+	fall_delay_intercept "(%i,%f);"
+	fall_pin_resistance  "(%i,%f);"
+	rise_delay_intercept "(%i,%f);"
+	rise_pin_resistance  "(%i,%f);"
+
+	/* groups */
+	cell_degradation  "(){}"
+	cell_fall         "(){}"
+	cell_rise         "(){}"
+	fall_constraint   "(){}"
+	fall_propagation  "(){}"
+	fall_transition   "(){}"
+	rise_constraint   "(){}"
+	rise_propagation  "(){}"
+	rise_transition   "(){}"
+}
+
+test_cell {
+	ff "(%n,%n){}"
+	ff_bank "(%n,%n,%i){}"
+	latch "(%n,%n){}"
+	latch_bank "(%n,%n){}"
+	pin "(%N){}"
+	statetable "(%s,%s){}"
+}

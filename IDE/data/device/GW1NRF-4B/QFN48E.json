@@ -1,0 +1,346 @@
+{
+  "NAME": "QFN48E",
+  "PKG_TYPE": "QUAD",
+  "HEIGHT": 12,
+  "PIN_DATA": [
+    {
+      "INDEX": "1",
+      "NAME": "VCCO0/VCCO3",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "2",
+      "NAME": "GPIO10",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "3",
+      "NAME": "IOL3A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "JTAGSEL_N/LPLL_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOL3B"
+    },
+    {
+      "INDEX": "4",
+      "NAME": "GPIO9",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "5",
+      "NAME": "IOL10B/GPIO8",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TCK",
+      "DIFF": "N",
+      "PAIR": "IOL10A"
+    },
+    {
+      "INDEX": "6",
+      "NAME": "IOL10D",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TDI",
+      "DIFF": "N",
+      "PAIR": "IOL10C"
+    },
+    {
+      "INDEX": "7",
+      "NAME": "IOL10A/GPIO11",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TMS",
+      "DIFF": "P",
+      "PAIR": "IOL10B"
+    },
+    {
+      "INDEX": "8",
+      "NAME": "IOL10E",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TDO",
+      "DIFF": "P",
+      "PAIR": "IOL10F"
+    },
+    {
+      "INDEX": "9",
+      "NAME": "XOUT",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "10",
+      "NAME": "XIN",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "11",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "12",
+      "NAME": "ANT",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "13",
+      "NAME": "VBAT2",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "14",
+      "NAME": "ENABLE",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "15",
+      "NAME": "LF_XIN",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "16",
+      "NAME": "LF_XOUT",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "17",
+      "NAME": "IOB19A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKT_5",
+      "DIFF": "P",
+      "PAIR": "IOB19B"
+    },
+    {
+      "INDEX": "18",
+      "NAME": "IOB19B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKC_5",
+      "DIFF": "N",
+      "PAIR": "IOB19A"
+    },
+    {
+      "INDEX": "19",
+      "NAME": "IOB20A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKT_4",
+      "DIFF": "P",
+      "PAIR": "IOB20B",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "20",
+      "NAME": "IOB20B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKC_4",
+      "DIFF": "N",
+      "PAIR": "IOB20A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "21",
+      "NAME": "IOB26A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "DIFF": "P",
+      "PAIR": "IOB26B",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "22",
+      "NAME": "IOB26B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "DIFF": "N",
+      "PAIR": "IOB26A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "23",
+      "NAME": "IOB32A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "DIFF": "P",
+      "PAIR": "IOB32B",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "24",
+      "NAME": "IOB32B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "DIFF": "N",
+      "PAIR": "IOB32A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "25",
+      "NAME": "VCCO1/VCCO2",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "26",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "27",
+      "NAME": "MCUVCC",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "28",
+      "NAME": "VCCGPIO",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "29",
+      "NAME": "VBAT1",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "30",
+      "NAME": "SW_DCDC",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "31",
+      "NAME": "IOR11B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKC_3",
+      "DIFF": "N",
+      "PAIR": "IOR11A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "32",
+      "NAME": "IOR11A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_3",
+      "DIFF": "P",
+      "PAIR": "IOR11B",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "33",
+      "NAME": "IOR9A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_2",
+      "DIFF": "P",
+      "PAIR": "IOR9B"
+    },
+    {
+      "INDEX": "34",
+      "NAME": "GPIO5",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "35",
+      "NAME": "IOR3A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "RPLL_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOR3B"
+    },
+    {
+      "INDEX": "36",
+      "NAME": "VCCX",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "37",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "38",
+      "NAME": "GPIO6",
+      "TYPE": "BLE"
+    },
+    {
+      "INDEX": "39",
+      "NAME": "IOT34A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT34B"
+    },
+    {
+      "INDEX": "40",
+      "NAME": "IOT30B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT30A"
+    },
+    {
+      "INDEX": "41",
+      "NAME": "IOT30A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT30B"
+    },
+    {
+      "INDEX": "42",
+      "NAME": "IOT24B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT24A"
+    },
+    {
+      "INDEX": "43",
+      "NAME": "IOT24A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT24B"
+    },
+    {
+      "INDEX": "44",
+      "NAME": "IOT16B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT16A"
+    },
+    {
+      "INDEX": "45",
+      "NAME": "IOT16A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT16B"
+    },
+    {
+      "INDEX": "46",
+      "NAME": "IOT9B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT9A"
+    },
+    {
+      "INDEX": "47",
+      "NAME": "IOT9A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT9B"
+    },
+    {
+      "INDEX": "48",
+      "NAME": "GPIO7",
+      "TYPE": "BLE"
+    }
+  ]
+}

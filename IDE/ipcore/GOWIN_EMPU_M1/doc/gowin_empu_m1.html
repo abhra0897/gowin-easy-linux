@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IP Summary</title>
+<style type="text/css">
+/* position set begin */
+html, body { height: 100%; margin: 0; padding: 0; }
+#main_wrapper { min-height: 100%; }
+#main {
+    overflow:auto;
+    padding-bottom: 22px; /* must be same height as the footer */
+}
+#footer_wrapper {
+    position: relative;
+    margin-top: -22px; /* negative value of footer height */
+    height: 22px;
+    clear:both;
+}
+/* position set end */
+
+body {
+    font-family: Verdana, Arial;
+    font-size: 14px;
+}
+
+div#main_wrapper, div#footer_wrapper  {
+    width: 80%;
+    min-width: 600px;
+    max-width: 998px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#footer {
+    background-color: #3091F1;
+    color: white;
+    height: 100%;
+}
+
+p#copyright {
+    padding: 0;
+    margin: 0;
+    line-height: 22px;
+    font-size: 10px;
+}
+
+h2 {
+    text-align: left;
+    color: #3091F1
+}
+
+table#info td{
+    text-align: left;
+    vertical-align: top;
+    line-height: 150%;
+}
+
+</style>
+</head>
+<body>
+
+<div id="main_wrapper">
+<div id="main">
+<h1>Gowin EMPU M1</h1>
+<hr/>
+<h2>Information</h2>
+
+<table id="info">
+<tr><td>Type:</td><td>Gowin_EMPU_M1</td></tr>
+<!--<tr><td>Version:</td><td>1.0</td></tr>-->
+<tr><td>Vendor:</td><td>GOWIN Semiconductor</td></tr>
+<tr>
+<td>Summary:&nbsp;&nbsp;</td>
+<td>
+Gowin_EMPU_M1 includes Cortex-M1 and AHB-Lite interface.
+<p>Cortex-M1 is intended for deeply embedded applications that are integrated into GOWIN FPGA. Cortex-M1 is ARM architecture v6-M, supports thumb instruction set architecture. There is an operating system extension option, if this option is implemented, functionality within the processor is enable that is capable of running an operating system. Data endianness is configurable. Instructions and system control registers, debug resources and debugger accesses are always little-endian. The nested vectored interrupt controller is closely integrated with the processor to achieve low latency interrupt processing. The debug can be configured to full or reduced mode. Full debug includes four breakpoint units and two data watchpoint units, reduced debug includes two breakpoint units and one data watchpoint units. Cortex-M1 supports 32-bit hardware multiplier, users can choose either the standard multiplier or a smaller, lower performance multiplier implementation.</P>
+<p>AHB-Lite interface is a bus interface suitable for high-performance synthesizable designs. It defines the interface between components, such as masters, interconnects, and slaves. Gowin extends AHB-Lite to AHB bus and APB bus. AHB bus includes AHB1 and AHB2, AHB1 loads GPIO, CAN, Ethernet, DDR3, PSRAM, SPI-Flash and AHB2 is for user to design AHB peripherals. APB bus includes APB1 and APB2, APB bus loads UART0, UART1, Timer0, Timer1, Watch Dog, RTC, DualTimer, TRNG, I2C, SPI, SD-Card and APB2 is for user to design APB peripherals.<p>
+
+</tr>
+</table>
+
+</div>
+</div>
+
+<div id="footer_wrapper">
+<div id="footer">
+<p id="copyright"></p>
+<script>
+var year = new Date().getFullYear();
+document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+</script>
+</div>
+</div>
+
+</body>
+</html>

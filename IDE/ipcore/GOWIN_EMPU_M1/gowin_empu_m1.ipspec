@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Gowin_EMPU_M1" id="gowin_empu_m1" version="1.4" category="Soft IP Core|Microprocessor System|Soft-Core-MCU">Gowin_EMPU_M1</ip>
+    <target module="Gowin_EMPU_M1">gowin_empu_m1</target>
+    <docs>
+        <doc type="summary">/doc/gowin_empu_m1.html</doc>
+        <doc type="help">/doc/gowin_empu_m1_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW2A-18-*</device>
+        <device supported="true">GW2AR-18-*</device>
+        <device supported="true">GW2A-55-*</device>
+        <device supported="true">GW2A-55C-*</device>
+        <device supported="true">GW2A-18C-*</device>
+        <device supported="true">GW2AR-18C-*</device>
+    </devices>
+</ipcore>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="I2C MASTER" id="i2c_master" version= "1.0" category="Soft IP Core|Interface and Interconnect">I2C MASTER</ip>
+    <target module="I2C_MASTER_Top">i2c_master</target>
+    <docs>
+        <doc type="summary">/doc/i2cmaster.html</doc>
+        <doc type="help">/doc/i2cmaster_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NZ-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>
+

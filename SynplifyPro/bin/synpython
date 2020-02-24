@@ -1,0 +1,12 @@
+#!/bin/bash
+x=$0
+y=`expr $x : '\(.\)'`
+if [ "$y" != "/" ] ; then
+    x=`pwd`/$x
+fi
+x=`echo $x | sed "s+/\./+/+g"`
+SYN_PRGM=`expr $x : ".*/\([^/]*\)"`;                       export   SYN_PRGM;
+SYN_HOMEDIR=`expr $x : "\(.*\)/[^/]*/[^/]*"`;              export   SYN_HOMEDIR;
+
+LD_LIBRARY_PATH="$SYN_HOMEDIR/linux_a_64/:$LD_LIBRARY_PATH"
+exec $SYN_HOMEDIR/lib/cmlp/bin/python3 $*

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="DDR Memory Interface" id="ddr1" version= "1.3" category="Soft IP Core|Memory Control">DDR Memory Interface</ip>
+    <target module="DDR_Memory_Interface_Top">ddr_memory_interface</target>
+    <docs>
+        <doc type="summary">/doc/ddr1.html</doc>
+        <doc type="help">/doc/ddr1_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-9-*</device>
+    </devices>
+</ipcore>

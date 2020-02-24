@@ -1,0 +1,1133 @@
+<?xml version="1.0"?>
+<dyndialog>
+
+<dialog id="ipdesign_addnsub" text="AddnSub Wizard" width="850" height="650">
+
+
+   	 
+    <graph_def id="graph_def1" fgcolor="white" bgcolor="#909090">
+      
+   	 <text x="60" y="180">ADDnSUB</text>
+
+   
+         <in name="PortA"                     width="4" color="blue" />
+         <in name="PortCEA"                   width="2" color="blue" enabled_if="X9_PORTA_ENABLE"/>
+         <in name="PortRstA"                  width="2" color="blue" enabled_if="X10_PORTA_RESET"/>
+	     
+         <in name="" width="0" color="#909090"/> <!-- Adds a blank line -->
+
+         <in name="PortB"                     width="4" color="blue" enabled_if="X12_ENABLE_PORT_B"/>
+         <in name="PortCEB"                   width="2" color="blue" enabled_if="X15_PORTB_ENABLE"/>
+         <in name="PortRstB"                  width="2" color="blue" enabled_if="X16_PORTB_RESET"/>
+	     
+         <in name="" width="0" color="#909090"/> <!--  Adds a blank line -->
+	     
+
+         <in name="PortCEOut"                 width="2" color="blue" enabled_if="X19_PORTOUT_ENABLE"/>
+         <in name="PortRstOut"                width="2" color="blue" enabled_if="X20_PORTOUT_RESET"/>
+	     
+         <in name="" width="0" color="#909090"/> <!-- Adds a blank line -->
+
+	     <in name="PortADDnSUB"		          width="2" color="blue" enabled_if="X6_ADDSUB"/>
+         <in name="PortClk"                   width="2" color="blue" enabled_if="X8_PORTA_PIPELINE_STAGE or X14_PORTB_PIPELINE_STAGE or X18_PORTOUT_PIPELINE_STAGE" />
+         <in name="PortCarryIn"               width="2" color="blue"  />
+	  
+         <out name="PortOut"                  width="4" color="blue" />	 
+   </graph_def>
+
+   
+      <!-- GUI Design -->
+<tab id="parameters" text="ADDnSUB Parameters">
+
+      <hline> 
+
+      <graph id="graph1" def="graph_def1" text="SynCore ADDnSUB" width="350" height="550">
+      </graph>     
+      
+  <!-- Start of Page 1 -->
+      
+      <page id="page1" text="AddnSub Compiler">
+  
+  <!-- Component feild -->
+  
+      <lineedit id="X1_COMPONENT" text="Component Name" required="true">
+      </lineedit>        
+  
+      <line /> <!-- This is to add an line separator -->
+  
+   
+  <!-- Directory feild -->
+ 
+      <lineedit id="X2_DIRECTORY" type="directory" text="Directory" required="true" tooltip="Spaces in Directory path not supported">   
+ 
+     </lineedit>	
+     <line />   <!-- This is to add an line separator -->
+
+ <!-- Filename feild -->
+  
+     <lineedit id="X3_FILENAME" type="save_file" text="File Name" required="true" tooltip="Filename should not be with .v extension"> 
+     </lineedit>	
+
+ <line /> <!-- This is to add an line separator -->
+ <!-- Adder Type Configuration Field -->
+
+	<group text="Configure the Mode of Operation">
+               <radio id="X4_ADD" text="Adder"  >	   
+			        <on_value>ADD_N_SUB=0</on_value> 	      
+	      	   </radio>	         
+              
+	      	   <radio id="X5_SUB" text="Subtractor" >	   
+			   	     <on_value>ADD_N_SUB=1</on_value> 	      
+	      	   </radio>	         
+	      	   
+	      	   <radio id="X6_ADDSUB" text="Adder/Subtractor" >	   
+			       <on_value>ADD_N_SUB=2</on_value> 	      
+	      	  </radio>	         
+            
+    </group>
+     
+        
+ <line /> <!-- This is to add an line separator -->
+       
+    
+ </page> <!-- End of Page 1 -->
+
+<page id="page2">    
+  <group text="Input and Output Ports Configurations" >
+ 	
+ 	<!-- Port A Configuration Field -->
+	<group text="Configure Port A" >
+		<lineedit id="X7_PORT_A_WIDTH" text="Port A Width" type="int"  required="true"> 
+				<value></value> 
+				<min_value>0</min_value> 
+				<max_value>100000</max_value> 
+		</lineedit>
+		<check id="X8_PORTA_PIPELINE_STAGE"  text="Register Input A" level="1">
+			    <value>false</value>
+				<on_value>X8_PORTA_PIPELINE_STAGE=1</on_value>
+				<off_value>X8_PORTA_PIPELINE_STAGE=0</off_value>
+		</check>
+		<hline>
+		<check id="X9_PORTA_ENABLE"  text="Clock Enable for Register A"  level="2"  unchecked_if="!X8_PORTA_PIPELINE_STAGE" enabled_if="X8_PORTA_PIPELINE_STAGE">
+			    <value>false </value>
+				<on_value>X9_PORTA_ENABLE=1</on_value>
+				<off_value>X9_PORTA_ENABLE=0</off_value>
+		</check>
+		<check id="X10_PORTA_RESET"  text="Reset for Register A"  unchecked_if="!X8_PORTA_PIPELINE_STAGE" enabled_if="X8_PORTA_PIPELINE_STAGE">
+			    <value>false </value>
+				<on_value>X10_PORTA_RESET=1</on_value>
+				<off_value>X10_PORTA_RESET=0</off_value>
+		</check>		
+		</hline>
+		</group>
+		            
+    <!-- Port B Configuration Field -->
+
+	<group text="Configure Port B" >
+
+		<hline>
+	         <check id="X11_CONSTANT_PORT"  text="Constant Value Input"  checked_if="!X12_ENABLE_PORT_B" unchecked_if="X12_ENABLE_PORT_B">
+			    <value>true </value>
+                    <on_value>X11_CONSTANT_PORT=1</on_value>
+                    <off_value>X11_CONSTANT_PORT=0</off_value>
+		     </check>
+		     
+		     <check id="X12_ENABLE_PORT_B" text=" Enable Port B"  checked_if="!X11_CONSTANT_PORT" unchecked_if="X11_CONSTANT_PORT">
+		          <value>false</value>
+		             <on_value>X12_ENABLE_PORT_B=1</on_value>
+		             <off_value>X12_ENABLE_PORT_B=0</off_value>
+		     </check>
+		               
+           </hline>		
+		
+		<line/>	
+                 	  
+        <lineedit id="X13_PORT_B_WIDTH" text="Constant Value/Port B Width" type="int" required="true" enabled_if="X11_CONSTANT_PORT or X12_ENABLE_PORT_B" tooltip="Constant value or Width of Port B">
+						
+		</lineedit>
+		
+	    <check id="X14_PORTB_PIPELINE_STAGE"  text="Register Input B" level="1" enabled_if="X12_ENABLE_PORT_B" unchecked_if="!X12_ENABLE_PORT_B" >
+		    	<value>false </value>
+				<on_value>X14_PORTB_PIPELINE_STAGE=1</on_value>
+				<off_value>X14_PORTB_PIPELINE_STAGE=0</off_value>
+		</check>
+		<hline>
+				<check id="X15_PORTB_ENABLE"  text="Clock Enable for Register B" level="2" enabled_if="X14_PORTB_PIPELINE_STAGE and X12_ENABLE_PORT_B" unchecked_if="!X14_PORTB_PIPELINE_STAGE" >
+			    		<value>false </value>
+						<on_value>X15_PORTB_ENABLE=1</on_value>
+						<off_value>X15_PORTB_ENABLE=0</off_value>
+				</check>
+		
+				<check id="X16_PORTB_RESET"  text="Reset for Register B"  enabled_if="X14_PORTB_PIPELINE_STAGE and X12_ENABLE_PORT_B" unchecked_if="!X14_PORTB_PIPELINE_STAGE">
+			    		<value>false </value>
+						<on_value>X16_PORTB_RESET=1</on_value>
+						<off_value>X16_PORTB_RESET=0</off_value>
+				</check>			
+		</hline>
+        
+
+    </group>
+   
+<!-- Output Port Configuration Field -->
+     <group text="Configure Output Port">
+	  		<lineedit id="X17_PORT_OUT_WIDTH" text="Output port Width" type="int"  required="true"> 
+				<value></value> 
+				<min_value>0</min_value> 
+				<max_value>100000</max_value> 
+			 </lineedit>
+         
+      		<check id="X18_PORTOUT_PIPELINE_STAGE"  text="Register output PortOut" level="1">
+		   		<value>false</value>
+				<on_value>X18_PORTOUT_PIPELINE_STAGE=1</on_value>
+				<off_value>X18_PORTOUT_PIPELINE_STAGE=0</off_value>
+			</check>
+			<hline>
+			<check id="X19_PORTOUT_ENABLE"  text="Clock Enable for Register PortOut"  level="2" unchecked_if="!X18_PORTOUT_PIPELINE_STAGE" enabled_if="X18_PORTOUT_PIPELINE_STAGE">
+			    <value>false </value>
+				<on_value>X19_PORTOUT_ENABLE=1</on_value>
+				<off_value>X19_PORTOUT_ENABLE=0</off_value>
+			</check>
+			
+			<check id="X20_PORTOUT_RESET"  text="Reset for Register PortOut"  unchecked_if="!X18_PORTOUT_PIPELINE_STAGE"  enabled_if="X18_PORTOUT_PIPELINE_STAGE">
+			    <value>false </value>
+				<on_value>X20_PORTOUT_RESET=1</on_value>
+				<off_value>X20_PORTOUT_RESET=0</off_value>
+			</check>		
+			</hline>
+		
+   </group>
+ </group>
+      
+          <group  text="Configure Reset type for all Reset Signals" >
+            <hline>
+		<radio id="X21_RESET_TYPE" text="Synchronous Reset" level="1" enabled_if="X10_PORTA_RESET or X20_PORTOUT_RESET or X16_PORTB_RESET" >	   
+	 	    <on_value> X21_RESET_TYPE=0 </on_value> 	      
+	      </radio>
+	      <radio id="X21_RESET_TYPE" text="Asynchronous Reset" level="1" enabled_if="X10_PORTA_RESET or X20_PORTOUT_RESET or X16_PORTB_RESET" >
+	 	    	<on_value> X21_RESET_TYPE=1 </on_value> 	      
+	    	</radio>	         	         
+            </hline>
+          </group>
+
+</page>
+
+</hline>
+</tab>
+
+
+ <tab id="overview" text="Core Overview">      
+      
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synopsys, Inc.</value>
+         </lineedit>
+         
+         <lineedit id="creation_date" text="Creation Date:" readonly="true">
+            <value>May 28, 2008</value>
+         </lineedit>
+         
+         <lineedit id="core_type" text="Core Type:" readonly="true">
+            <value>SYNCORE Parameterizable</value>
+         </lineedit>
+         
+	        
+         <lineedit id="info" readonly="true" stretch="true" src="../../lib/html/doc1.html">
+            <value type="html">
+
+<![CDATA[
+<h2>SYNCORE ADDSUB COMPILER</h2>
+The SYNCORE AddnSub compiler helps designers create Adder/Subtractor models for their designs.<br>
+These AddnSub models are written out in HDL and can be synthesized as well as simulated.<br>
+A testbench is provided for the AddnSub models created by the SYNCORE AddnSub compiler.<br><br>
+
+For detailed information on the SYNCORE AddnSub compiler and its various options, click the ADDnSUB Info button at the bottom of this window. <br>
+
+If you have any questions or issues, please contact support at www.solvnet.com .
+
+]]>
+         </value>
+         </lineedit>
+
+</tab>
+
+<!-- Removing the Contact tab untill we get proper information for Documentation Group -->
+<!--  
+<tab id="contact" text="Contact">
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synplicity, Inc.</value>
+         </lineedit>
+         <lineedit id="address" text="Address:" readonly="true">
+            <value>
+600 W.California Ave.
+Sunnyvale, CA 94086
+            </value>
+         </lineedit>
+         <lineedit id="phone" text="Phone:" readonly="true">
+            <value>(408) 215-0000</value>
+         </lineedit>
+   
+         <lineedit id="Description" readonly="true" stretch="true">
+ <value>
+Synplicity, Inc. is a leading supplier of innovative synthesis, verification, and physical implementation software solutions that enable the rapid and effective design and verification of semiconductors. Synplicity's high-quality, high-performance tools significantly reduce costs and time-to-market for FPGA designers. The company's underlying Behavior Extracting Synthesis Technology (BEST), which is embedded in its logical, physical, and verification tools, is responsible for Synplicity's top position in FPGA synthesis. The company's fast, easy-to-use products support industry standard design languages (VHDL and Verilog) and run on popular platforms. Synplicity employs over 280 people in its 20 facilities worldwide. Synplicity is headquartered in Sunnyvale, California.
+   
+            </value>
+         </lineedit>
+      </tab>
+-->	  
+     
+    <button id="generate" text="&amp;Generate" action="execute" tooltip="Generate AddnSub Core ">
+            <!-- <command>generate_tcl_command</command> -->
+        <command>addnsub_proc</command> 
+    </button>
+    
+       	<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog" />      	
+       	<button id="AddnSubInfo" text="&amp;ADDnSUB Info..." width="700" height="400" action="info" filename="addnsub_compiler_new.html" tooltip="Display Syncore AddnSub info" />
+-->
+<!-- Start of Tcl script  -->
+
+
+<tcl> <![CDATA[
+
+
+proc addnsub_proc {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18} {
+set COMPONENT               [lindex [split [lindex $0] = ] 1 ]
+set DIRECTORY     	        [lindex [split [lindex $1] = ] 1 ]
+
+set FILENAME                    [lindex [split [lindex $2] = ] 1 ] 
+
+#### Extract extension of the the FILENAME #########
+set FNAME_EXT [file extension $FILENAME]  
+
+##### Check if extension of filename is any of {.v,.sv } and if not add ".v" extension #################
+
+if {[string match {.v} $FNAME_EXT  ] ==0  && [string match {.sv} $FNAME_EXT  ] ==0   } {    
+	  set FILENAME "$FILENAME.v"
+   }
+###############################   
+
+set ADD_N_SUB               [lindex [split [lindex $3] = ] 1 ]
+
+set ADD 0
+set SUB 0
+set ADDSUB 0
+
+if { $ADD_N_SUB == 0 } {
+    set ADD 1
+   } 
+   
+if { $ADD_N_SUB == 1 } {
+   set SUB 1
+   }
+   
+if {$ADD_N_SUB  == 2 } {
+   set ADDSUB 1
+   }
+   
+
+set PORT_A_WIDTH     	    [lindex [split [lindex $4] = ] 1 ]
+set PORTA_PIPELINE_STAGE    [lindex [split [lindex $5] = ] 1 ]
+set PORTA_ENABLE	        [lindex [split [lindex $6] = ] 1 ]
+set PORTA_RESET		        [lindex [split [lindex $7] = ] 1 ]
+
+set CONSTANT_PORT     	    [lindex [split [lindex $8] = ] 1 ]
+set ENABLE_PORT_B     	    [lindex [split [lindex $9] = ] 1 ]
+
+set PORT_B_WIDTH     	    [lindex [split [lindex $10] = ] 1 ]
+set PORTB_PIPELINE_STAGE    [lindex [split [lindex $11] = ] 1 ]
+set PORTB_ENABLE	        [lindex [split [lindex $12] = ] 1 ]
+set PORTB_RESET		        [lindex [split [lindex $13] = ] 1 ]
+
+
+
+set PORT_OUT_WIDTH 	        [lindex [split [lindex $14] = ] 1 ]
+set PORTOUT_PIPELINE_STAGE  [lindex [split [lindex $15] = ] 1 ]
+set PORTOUT_ENABLE	        [lindex [split [lindex $16] = ] 1 ]
+set PORTOUT_RESET	        [lindex [split [lindex $17] = ] 1 ]
+
+set RESET_TYPE     	        [lindex [split [lindex $18] = ] 1 ]
+
+
+
+#####set install_dir [pwd]
+global LIB
+
+
+set install_dir $LIB/syncore/xml/arithmetic/addnsub
+
+file mkdir $DIRECTORY
+file copy -force $install_dir/../../../models/arithmetic/addnsub/syncore_addnsub.v $DIRECTORY/syncore_addnsub.v
+file copy -force $install_dir/../../../models/arithmetic/addnsub/readme.txt $DIRECTORY/readme.txt
+
+
+
+##----------------------------------------------------------------------------------------------------
+### Some Basic Evaluations
+
+### Check if Reset type is required to be specified
+
+   	if { (($PORTA_PIPELINE_STAGE ==1) && ($PORTA_RESET == 1))  || (($ENABLE_PORT_B ==1 ) && ($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1)) || (($PORTOUT_PIPELINE_STAGE ==1 ) && ($PORTOUT_RESET == 1 )) } {
+	   	    set SPECIFY_RESET_TYPE 1
+   		}  else {
+	   		set SPECIFY_RESET_TYPE 0
+        }
+###USe this variable RESET_TYPE_SPECIFY wherever it is required to check if the reset type has to be specified or not
+
+    
+##----------------------------------------------------------------------------------------------------
+
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for  generate options file generation
+## ----------------------------------------------------------------------------------------------
+
+set cf [open $DIRECTORY/options.txt w+]
+
+    puts $cf "COMPONENT = $COMPONENT" 
+	puts $cf "DIRECTORY = $DIRECTORY"
+	puts $cf "FILENAME = $FILENAME"
+
+ 	if { $ADD == 1 } {
+         puts $cf "ADD = $ADD"
+ 	   }
+ 	if { $SUB == 1 } {
+	     puts $cf " SUB = $SUB"
+ 		}
+ 	if { $ADDSUB == 1 } {
+         puts $cf "ADDSUB = $ADDSUB"
+ 	   }
+ 	  
+ 	
+ 	#PORTA Options#
+ 	
+	puts $cf "PORT_A_WIDTH = $PORT_A_WIDTH"
+
+ 	if { $PORTA_PIPELINE_STAGE == 1 } {
+	          puts $cf "PORTA_PIPELINE_STAGE = $PORTA_PIPELINE_STAGE"
+ 	     if { $PORTA_ENABLE == 1 } {
+	          puts $cf "PORTA_ENABLE = $PORTA_ENABLE"
+ 	         }
+ 	     if { $PORTA_RESET == 1 } {
+	         puts $cf "PORTA_RESET = $PORTA_RESET"
+ 	        }
+ 	 }
+ 	
+ 	#PORTB Options#
+ 	
+ 	if { $CONSTANT_PORT == 1 } {
+	          puts $cf "CONSTANT_PORT = 1"
+	          puts $cf "CONSTANT_VALUE = $PORT_B_WIDTH"
+ 	    }
+ 	    
+ 	if { $ENABLE_PORT_B == 1 } {
+	         puts $cf "CONSTANT_PORT = 0"
+ 	         puts $cf "PORT_B_WIDTH = $PORT_B_WIDTH"
+		
+		if { $PORTB_PIPELINE_STAGE == 1 } {
+		        puts $cf "PORTB_PIPELINE_STAGE = $PORTB_PIPELINE_STAGE"
+ 	    		if { $PORTB_ENABLE == 1 } {
+			          puts $cf "PORTB_ENABLE = $PORTB_ENABLE"
+ 	        	 }
+ 	     		if { $PORTB_RESET == 1 } {
+ 	         	     puts $cf "PORTB_RESET = $PORTB_RESET"
+ 	        	 }
+ 	       }
+ 	   }
+ 	   
+ 	    
+ 	 #PORTOUT Options#
+    puts $cf "PORT_OUT_WIDTH = $PORT_OUT_WIDTH"
+ 	if { $PORTOUT_PIPELINE_STAGE == 1 } {
+             puts $cf "PORTOUT_PIPELINE_STAGE = $PORTOUT_PIPELINE_STAGE"
+             
+ 	     if { $PORTOUT_ENABLE == 1 } {
+	         puts $cf "PORTOUT_ENABLE = $PORTOUT_ENABLE"
+ 	        }
+ 	     if { $PORTOUT_RESET == 1 } {
+	         puts $cf "PORTOUT_RESET = $PORTOUT_RESET"
+ 	        }
+ 	    }
+ 	    
+   	if { $SPECIFY_RESET_TYPE == 1 } {
+	       puts $cf "RESET_TYPE = $RESET_TYPE"
+ 	   }
+close $cf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for Instantiation file generation
+## ----------------------------------------------------------------------------------------------
+
+set vf [open $DIRECTORY/instantiation_file.vin w+]
+ 
+    puts $vf "// The following must be inserted into your Verilog file for this"
+    puts $vf "// core to be instantiated. Change the instance name and port connections"
+    puts $vf "// (in parentheses) to your own signal names."
+    puts $vf "\n"
+    puts $vf "//----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG"
+    puts $vf "\n"
+    
+    puts $vf "$COMPONENT <InstanceName> ( "
+    puts $vf "                         // Output Ports"
+    
+   	puts $vf "                          .PortOut(PortOut), "
+
+   	puts $vf "                         // Input  Ports"
+   	   
+    if { ($PORTA_PIPELINE_STAGE == 1) || ( ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1)) || ( $PORTOUT_PIPELINE_STAGE == 1) } {
+    puts $vf "                          .PortClk(PortClk), "
+    }
+    
+    ### PORTA ########
+    
+    puts $vf "                          .PortA(PortA), "
+    
+    if { ($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_ENABLE == 1) } {
+    puts $vf "                          .PortCEA(PortCEA), "
+    }
+    
+    if { ($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_RESET == 1) } {
+    puts $vf "                          .PortRSTA(PortRSTA), "
+    }
+    
+    ### PORTA ########
+    
+    if { $ENABLE_PORT_B == 1 } {
+     puts $vf "                          .PortB(PortB),"
+    }
+    
+    if { ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_ENABLE == 1) } {
+    puts $vf "                          .PortCEB(PortCEB), "
+    }
+    
+    if { ( $ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1) } {
+    puts $vf "                          .PortRSTB(PortRSTB), "
+    }
+    
+    #### PORTOUT ############
+        
+    if { ($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_ENABLE == 1) } {
+    puts $vf "                          .PortCEOut(PortCEOut), "
+    }
+    
+    if { ($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_RESET == 1) } {
+    puts $vf "                          .PortRSTOut(PortRSTOut), "
+    }
+
+    if { $ADDSUB == 1 } {
+    puts $vf "                          .PortADDnSUB(PortADDnSUB), "
+    }
+        
+    puts $vf "                          .PortCarryIn(PortCarryIn) "
+    puts $vf "                         ); "
+    	 
+ close $vf
+## ----------------------------------------------------------------------------------------------
+
+## ----------------------------------------------------------------------------------------------
+## Code for wrapper file generation
+## ----------------------------------------------------------------------------------------------
+
+if { [string match [file dirname  $FILENAME] "." ] } { 	    ### The FILENAME has just the file name
+    set WFILENAME "$DIRECTORY/$FILENAME"
+  } else {                                              	### The FILENAME has a directory/filename structure
+	file mkdir [file dirname $FILENAME]
+	set WFILENAME "$FILENAME"
+}
+
+set wf [open $WFILENAME w+ ]
+
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// --- "
+    puts $wf "// ---                 (C) COPYRIGHT 2001-2010 SYNOPSYS, INC. "
+    puts $wf "// ---                           ALL RIGHTS RESERVED "
+    puts $wf "// --- "
+    puts $wf "// --- This software and the associated documentation are confidential and "
+    puts $wf "// --- proprietary to Synopsys, Inc.  Your use or disclosure of this "
+    puts $wf "// --- software is subject to the terms and conditions of a written "
+    puts $wf "// --- license agreement between you, or your company, and Synopsys, Inc. "
+    puts $wf "// --- "
+    puts $wf "// --- The entire notice above must be reproduced on all authorized copies. "
+    puts $wf "// --- "
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// "
+    puts $wf " "
+    puts $wf "`timescale 1ns/100ps"
+    puts $wf "module $COMPONENT # ("
+    #######PARAMETERS ################
+    puts $wf "                     parameter    PORT_A_WIDTH = $PORT_A_WIDTH,"
+    puts $wf "                     parameter    PORTA_PIPELINE_STAGE = $PORTA_PIPELINE_STAGE," 
+    
+
+    if { $ENABLE_PORT_B == 1 } {
+    puts $wf "                     parameter    PORT_B_WIDTH = $PORT_B_WIDTH,"
+    puts $wf "                     parameter    PORTB_PIPELINE_STAGE 	= $PORTB_PIPELINE_STAGE,"
+    }
+
+    
+    puts $wf "                     parameter    CONSTANT_PORT = $CONSTANT_PORT,"
+    if { $CONSTANT_PORT == 1 } {
+        puts $wf "                     parameter    CONSTANT_VALUE = $PORT_B_WIDTH,"
+    }
+
+    if { $ADD == 1} {
+    puts $wf "                     parameter    ADD_N_SUB = \"ADD\" ," 
+    }
+    if { $SUB == 1} {
+    puts $wf "                     parameter    ADD_N_SUB = \"SUB\" ," 
+    }
+    if { $ADDSUB == 1} {
+    puts $wf "                     parameter    ADD_N_SUB = \"DYNAMIC\"," 
+    }
+	
+    if {$SPECIFY_RESET_TYPE == 1 } {
+    puts $wf "                     parameter    RESET_TYPE = $RESET_TYPE ,"
+    }
+	
+    puts $wf "                     parameter    PORT_OUT_WIDTH = $PORT_OUT_WIDTH ,"
+
+    puts $wf "                     parameter 	PORTOUT_PIPELINE_STAGE 	= $PORTOUT_PIPELINE_STAGE"
+
+    puts $wf "                     )"
+    puts $wf "                     "
+    puts $wf "                     ("
+    puts $wf {                       // Output Ports}
+  	
+    puts $wf "                       output \[PORT_OUT_WIDTH -1 : 0\] PortOut, "		
+    
+    puts $wf {                       // Input Ports}
+    
+    if { ($PORTA_PIPELINE_STAGE == 1) || ( ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1)) || ( $PORTOUT_PIPELINE_STAGE == 1) } {
+    puts $wf "                       input PortClk,"
+    }
+    
+    ### PORTA ###########
+    
+ 	puts $wf "                       input \[PORT_A_WIDTH -1 : 0\]PortA,"
+ 	
+    if { ($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_ENABLE == 1) } {
+    puts $wf "                       input PortCEA,"
+    }
+    
+    
+    if { ($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_RESET == 1) } {
+    puts $wf "                       input PortRSTA,"
+    }
+    
+    ##### PORTB ############
+    
+    if { $ENABLE_PORT_B == 1 } {
+     puts $wf "                       input \[PORT_B_WIDTH -1 : 0\]PortB,"
+    }
+    
+    if { ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_ENABLE == 1) } {
+    puts $wf "                       input PortCEB,"
+    }
+    
+    if { ( $ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1) } {
+    puts $wf "                       input PortRSTB,"
+    }
+    
+    #####  PORTOUT ###############
+    
+    if { ($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_ENABLE == 1) } {
+    puts $wf "                       input PortCEOut, "
+    }
+    
+    if { ($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_RESET == 1) } {
+    puts $wf "                       input PortRSTOut, "
+    }
+    
+    if { $ADDSUB == 1 } {
+    puts $wf "                       input PortADDnSUB,"
+    
+    }
+    
+    puts $wf "                       input PortCarryIn"
+    
+    puts $wf "                     );"
+    puts $wf "                     "
+    
+    #Instantiating the CoreName 
+      	
+   	puts $wf "Syncore_ADDnSUB             #( "
+   	
+   	puts $wf "                              .PORT_A_WIDTH(PORT_A_WIDTH), "
+   	puts $wf "                              .PORTA_PIPELINE_STAGE(PORTA_PIPELINE_STAGE), "
+   	
+   	
+   	if { $ENABLE_PORT_B == 1 } {
+   	puts $wf "                              .PORT_B_WIDTH(PORT_B_WIDTH), "
+   	puts $wf "                              .PORTB_PIPELINE_STAGE(PORTB_PIPELINE_STAGE),"
+   	}
+    
+   	puts $wf "                              .CONSTANT_PORT(CONSTANT_PORT), "
+   	if { $CONSTANT_PORT == 1 } {
+       	puts $wf "                              .CONSTANT_VALUE(CONSTANT_VALUE), "
+   	}
+   	
+   	puts $wf "                              .PORT_OUT_WIDTH(PORT_OUT_WIDTH),"
+   	puts $wf "                              .PORTOUT_PIPELINE_STAGE(PORTOUT_PIPELINE_STAGE), "
+
+   	  	
+   	if { $SPECIFY_RESET_TYPE == 1 } {
+    puts $wf "                              .RESET_TYPE(RESET_TYPE), "
+	}
+	
+    puts $wf "                              .ADD_N_SUB(ADD_N_SUB)"	 
+
+	
+    puts $wf "                              ) "
+	
+    puts $wf "SynCoreAddnSub_ins1           ( "
+    
+    puts $wf "                               // Output Ports"
+    
+   	puts $wf "                               .PortOut(PortOut), "
+   
+    puts $wf "                              // Input  Ports"
+    
+
+	if { ($PORTA_PIPELINE_STAGE == 1) || ( ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1)) || ( $PORTOUT_PIPELINE_STAGE == 1) } {
+    puts $wf "                               .PortClk(PortClk), "
+    }
+    
+    puts $wf "                               .PortA(PortA), "	
+
+   if { $PORTA_PIPELINE_STAGE == 1  } {
+         if { $PORTA_ENABLE == 1 } {
+            puts $wf "                               .PortCEA(PortCEA), "
+            } else {
+            puts $wf "                               .PortCEA(1'b1), "
+            }
+    	 
+         if { $PORTA_RESET == 1 } {
+    	   	 puts $wf "                               .PortRSTA(PortRSTA), "
+    	   } else {
+    	   	 puts $wf "                               .PortRSTA(1'b0), "
+    	    }
+    	    
+       }
+    
+    
+    if { $ENABLE_PORT_B == 1 } {
+     puts $wf "                               .PortB(PortB), "
+    }
+    
+    if { ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) } {
+          if {$PORTB_ENABLE == 1 } {
+               puts $wf "                               .PortCEB(PortCEB), "
+             } else {
+               puts $wf "                               .PortCEB(1'b1), "
+             }
+    	  if { $PORTB_RESET == 1 } {
+    		    puts $wf "                               .PortRSTB(PortRSTB), "
+    	  	} else {
+    		    puts $wf "                               .PortRSTB(1'b0), "
+    	 	}
+		
+	   }
+	   
+	   
+   if { $PORTOUT_PIPELINE_STAGE == 1 } {
+        	if { $PORTOUT_ENABLE == 1 } {
+        		puts $wf "                               .PortCEOut(PortCEOut), "
+    	       } else {
+    		    puts $wf "                               .PortCEOut(1'b1), "
+               }
+    
+            if { $PORTOUT_RESET == 1 } {
+    		   puts $wf "                               .PortRSTOut(PortRSTOut), "
+    		   } else {
+    		   puts $wf "                               .PortRSTOut(1'b0), "
+    		   }
+    }
+   
+     
+    
+    
+    if { $ADDSUB == 1 } {
+    puts $wf "                               .PortADDnSUB(PortADDnSUB), "
+    }
+        
+    puts $wf "                               .PortCarryIn(PortCarryIn) "
+
+   	
+    puts $wf "                              ); "
+	
+	puts $wf " "	 
+    puts $wf "endmodule "
+    
+    close $wf
+
+## ----------------------------------------------------------------------------------------------
+
+## ----------------------------------------------------------------------------------------------
+## Code for TestBench Generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "."] } {  
+    ### The FILENAME has just the filename
+	set TBFILE "$DIRECTORY/tb_$FILENAME" 
+} else {
+    ### The FILENAME has a directory/filename structure
+    set FDIR [file dirname $FILENAME]
+    set FNAME [file tail $FILENAME]
+	set TBFILE "$FDIR/tb_$FNAME"
+}
+
+set tf [open $TBFILE w+]
+
+
+  puts $tf " `timescale 1ns/1ps " 
+  puts $tf " \n " 
+  puts $tf " module tb_syncore_addnsub (); " 
+  puts $tf " \n " 
+  puts $tf " //UUT parameters " 
+
+  ## parameter definition in test bench -----------------------------------------------------------
+
+  puts $tf " parameter  PORT_A_WIDTH           =  $PORT_A_WIDTH ; "
+  
+  if { $CONSTANT_PORT == 0 } {
+  puts $tf " parameter  PORT_B_WIDTH           =  $PORT_B_WIDTH ; "
+  }
+  
+  if { $CONSTANT_PORT == 1 } {
+  puts $tf " parameter  CONSTANT_PORT          =  $CONSTANT_PORT ; "
+  puts $tf " parameter  CONSTANT_VALUE         =  $PORT_B_WIDTH ; "
+  }
+  puts $tf " parameter  PORT_OUT_WIDTH         =  $PORT_OUT_WIDTH ; "
+  
+  if { $ADD == 1 } {
+  puts $tf { parameter  ADD_N_SUB              =  "ADD" ; }
+  }
+
+  if { $SUB == 1 } {
+  puts $tf { parameter  ADD_N_SUB              =  "SUB" ; }
+  }
+
+  if { $ADDSUB == 1 } {
+  puts $tf { parameter  ADD_N_SUB              =  "DYNAMIC" ; }
+  }
+
+  if { $SPECIFY_RESET_TYPE == 1} {
+  puts $tf " parameter  RESET_TYPE             =  $RESET_TYPE ; "
+  }
+  
+  if { $PORTA_PIPELINE_STAGE == 1 } {
+  puts $tf " parameter  PORTA_PIPELINE_STAGE   =  $PORTA_PIPELINE_STAGE ; "
+  }
+  
+  if { $PORTB_PIPELINE_STAGE == 1 } {
+  puts $tf " parameter  PORTB_PIPELINE_STAGE   =  $PORTB_PIPELINE_STAGE ; "
+  }
+  
+  if { $PORTOUT_PIPELINE_STAGE == 1 } {
+  puts $tf " parameter  PORTOUT_PIPELINE_STAGE =  $PORTOUT_PIPELINE_STAGE ; "
+  }
+
+  puts $tf "   "
+  
+  
+  
+  
+  
+  puts $tf " \n " 
+  puts $tf " //UUT signals " 
+  
+  
+
+
+
+  ## internal signal definition ------------------------------------------------------------------------------------
+
+  puts $tf { reg  [PORT_A_WIDTH - 1 : 0]   PortA ; }
+  
+  if { $CONSTANT_PORT == 0 } {
+        puts $tf { reg  [PORT_B_WIDTH - 1 : 0]   PortB ; }
+  }
+  puts $tf { wire [PORT_OUT_WIDTH - 1 : 0] PortOut ; }
+
+  ##if {  (($PORTA_PIPELINE_STAGE == 1) || ($PORTB_PIPELINE_STAGE == 1) || ( $PORTOUT_PIPELINE_STAGE == 1)) } {
+  puts $tf " reg                            PortClk ;"
+  ##}
+  
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_ENABLE == 1)) } {
+       puts $tf " reg                            PortCEA ; "
+  }
+  
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_ENABLE == 1)) } {
+       puts $tf " reg                            PortCEB ; "
+  }
+  
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_ENABLE == 1)) } {
+       puts $tf " reg                            PortCEOut ; "
+  }
+
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_RESET == 1)) } {
+       puts $tf " reg                            PortRSTA ; "
+  }
+  
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1)) } {
+       puts $tf " reg                            PortRSTB ; "
+  }
+  
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_RESET == 1)) } {
+       puts $tf " reg                            PortRSTOut ; "
+  }
+  
+  puts $tf " reg                            PortCarryIn ; "
+  
+  if { $ADDSUB == 1 } {
+       puts $tf " reg                            PortADDnSUB ; "
+  }
+
+  puts $tf "//TB parameters " 
+  puts $tf "parameter CLOCK_PERIOD = 200; " 
+  
+  ## DUT Instantiation in testbench ------------------------------------------------------------------------
+
+  puts $tf " $COMPONENT #( "
+  puts $tf "                 .PORT_A_WIDTH(PORT_A_WIDTH), "
+  if { $ENABLE_PORT_B == 1 } {
+  puts $tf "                 .PORT_B_WIDTH(PORT_B_WIDTH), "
+  }
+  if { $CONSTANT_PORT == 1 } {
+  puts $tf "                 .CONSTANT_PORT(CONSTANT_PORT), "
+  puts $tf "                 .CONSTANT_VALUE(CONSTANT_VALUE), "
+  }
+   	
+  puts $tf "                 .PORT_OUT_WIDTH(PORT_OUT_WIDTH), "
+ 	 
+  if { $SPECIFY_RESET_TYPE == 1 } {
+  puts $tf "                 .RESET_TYPE(RESET_TYPE), "
+  }
+
+  if { $PORTA_PIPELINE_STAGE == 1 } {   
+  puts $tf "                 .PORTA_PIPELINE_STAGE(PORTA_PIPELINE_STAGE), "
+  }
+
+  if { ($ENABLE_PORT_B == 1) && ($PORTB_PIPELINE_STAGE == 1) } {
+  puts $tf "                 .PORTB_PIPELINE_STAGE(PORTB_PIPELINE_STAGE),"
+  }
+
+  if { $PORTOUT_PIPELINE_STAGE == 1 } {
+  puts $tf "                 .PORTOUT_PIPELINE_STAGE(PORTOUT_PIPELINE_STAGE), "
+  }
+
+  puts $tf "                 .ADD_N_SUB(ADD_N_SUB) "
+  
+  puts $tf "           )"
+  puts $tf " uut       ("
+  
+ puts $tf "                .PortOut(PortOut), "
+
+  if { ($PORTA_PIPELINE_STAGE == 1) || ( ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1)) || ( $PORTOUT_PIPELINE_STAGE == 1) } {
+  puts $tf "                .PortClk(PortClk), "
+  }
+
+  puts $tf "                .PortA(PortA), "
+    
+  
+ 	
+  if { $PORTA_PIPELINE_STAGE == 1  } {
+       if { $PORTA_ENABLE == 1 } {
+       puts $tf "                .PortCEA(PortCEA), "
+       } 
+      if { $PORTA_RESET == 1 } {
+    	   	 puts $tf "                .PortRSTA(PortRSTA), "
+       } 
+  }
+    
+    
+  if { $ENABLE_PORT_B == 1 } {
+     puts $tf "                .PortB(PortB), "
+  }
+    
+  if { ($ENABLE_PORT_B == 1 ) && ($PORTB_PIPELINE_STAGE == 1 ) } {
+        if {$PORTB_ENABLE == 1 } {
+            puts $tf "                .PortCEB(PortCEB), "
+        } 
+       if { $PORTB_RESET == 1 } {
+   	    puts $tf "                .PortRSTB(PortRSTB), "
+	   } 
+
+  }
+          
+  if { $PORTOUT_PIPELINE_STAGE == 1 } {
+       if { $PORTOUT_ENABLE == 1 } {
+    	    puts $tf "                .PortCEOut(PortCEOut), "
+          }
+      if { $PORTOUT_RESET == 1 } {
+      	     puts $tf "                .PortRSTOut(PortRSTOut), "
+       } 
+       
+  }
+
+ if { $ADDSUB == 1 } {
+    puts $tf "                .PortADDnSUB(PortADDnSUB), "
+  }
+    
+ puts $tf "                .PortCarryIn(PortCarryIn)"
+
+ puts $tf "	         ); "
+	
+ puts $tf " "
+  ## Clock Generation --------------------------------------------------------------------------
+  #puts $tf "  "
+  #puts $tf "  initial begin "
+  #puts $tf "    forever #100 PortClk = ~PortClk ; "
+  #puts $tf "  end "
+  #puts $tf "  "
+  
+  puts $tf "//clock generation " 
+  puts $tf "always @ (*) begin " 
+  puts $tf "   PortClk <= #(CLOCK_PERIOD/2) ~PortClk; " 
+  puts $tf "end " 
+  puts $tf "\n " 
+
+ 
+ 
+  ## Initialization of signals ---------------------------------------------------------------------------
+
+  puts $tf " initial begin "
+  puts $tf "   PortClk     <= 0; " 
+  puts $tf "    PortA <= 1 ; "
+  
+  if { $CONSTANT_PORT == 0 } {
+  puts $tf "    PortB <= 1 ; "
+  }
+  ##if {  (($PORTA_PIPELINE_STAGE == 1) || ($PORTB_PIPELINE_STAGE == 1) || ( $PORTOUT_PIPELINE_STAGE == 1)) } {
+  puts $tf "    PortClk <= 0 ; "
+  ##}
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_ENABLE == 1)) } {
+  puts $tf "    PortCEA <= 0 ; "
+  }
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_ENABLE == 1)) } {
+  puts $tf "    PortCEB <= 0 ; "
+  }
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_ENABLE == 1)) } {
+  puts $tf "    PortCEOut <= 0 ; "
+  }
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_RESET == 1)) } {
+  puts $tf "    PortRSTA <= 1 ; "
+  }
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1)) } {
+  puts $tf "    PortRSTB <= 1 ; "
+  }
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_RESET == 1)) } {
+  puts $tf "    PortRSTOut <= 1 ; "
+  }
+  puts $tf "    PortCarryIn <= 0 ; "
+  if { $ADDSUB == 1 } {
+  puts $tf "    PortADDnSUB <= 0 ; "
+  }
+  puts $tf "  end "
+
+
+  if { ($PORTA_PIPELINE_STAGE == 1 ) || ( $PORTB_PIPELINE_STAGE == 1 ) || ($PORTOUT_PIPELINE_STAGE == 1) } {
+ 
+  ## Reset and enable generation --------------------------------------------------------------
+
+  puts $tf "  initial begin "
+  puts $tf "    #1000 ; "
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_ENABLE == 1)) } {
+  puts $tf "    PortCEA <= 1 ; "
+  }
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_ENABLE == 1)) } {
+  puts $tf "    PortCEB <= 1 ; "
+  }
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_ENABLE == 1)) } {
+  puts $tf "    PortCEOut <= 1 ; "
+  }
+  if { (($PORTA_PIPELINE_STAGE == 1 ) && ($PORTA_RESET == 1)) } {
+  puts $tf "    PortRSTA <= 0 ; "
+  }
+  if { (($PORTB_PIPELINE_STAGE == 1 ) && ($PORTB_RESET == 1)) } {
+  puts $tf "    PortRSTB <= 0 ; "
+  }
+  if { (($PORTOUT_PIPELINE_STAGE == 1 ) && ($PORTOUT_RESET == 1)) } {
+  puts $tf "    PortRSTOut <= 0 ; "
+  }
+  puts $tf "  end "
+  }
+  puts $tf "  "
+
+  ## input generation -------------------------------------------------------------------------------------
+
+  puts $tf "  initial "
+  puts $tf "  begin "
+  puts $tf "     #1005 "
+  puts $tf "        Generate_Input ; "
+  puts $tf {     $stop ; }
+  puts $tf "  end "
+
+  puts $tf "  "
+  puts $tf "  "
+  puts $tf "  task Generate_Input ; "
+  puts $tf "  begin "
+  puts $tf "        repeat(100) "
+  puts $tf "        begin "
+  puts $tf {              PortA <= $random ; }
+  if { $CONSTANT_PORT == 0 } {
+  puts $tf {              PortB <= $random ; }
+  }
+  puts $tf {              PortCarryIn <= $random ; }
+  if { $ADDSUB == 1 } {
+  puts $tf {              PortADDnSUB <= $random ; }
+  } 
+  puts $tf {              @(negedge PortClk) ; }
+  puts $tf "        end "
+  puts $tf "  end "
+  puts $tf "  endtask "
+
+  puts $tf "  "
+
+  puts $tf " endmodule "
+
+  close $tf
+  
+## ----------------------------------------------------------------------------------------------
+## Syncore Generated files list
+## ----------------------------------------------------------------------------------------------
+
+## Filelist Generation
+
+set lf [open $DIRECTORY/filelist.txt w+]
+ puts $lf "filelist.txt                -- Contains list of files written out by SynCore"
+ puts $lf "options.txt                 -- Contains all the options selected in SynCore"
+ puts $lf "readme.txt                  -- Contains brief description and known issues"
+ puts $lf "syncore_addnsub.v           -- Verilog library file required to generate Core Model" 
+ 
+ if { [ string match [file dirname  $FILENAME] "." ] } {
+ puts $lf "tb_$FILENAME              -- Verilog testbench file to simulate Core Model"
+ } else {
+ puts $lf "$TBFILE                   -- Verilog testbench file to simulate Core Model"
+ }
+
+ puts $lf "$FILENAME                 -- Core Model wrapper file"
+ puts $lf "instantiation_file.vin      -- Core Model wrapper instantiation information"
+close $lf
+
+## ----------------------------------------------------------------------------------------------
+
+ cd $install_dir
+
+}
+   ]]> </tcl>
+
+
+ </dialog>
+   
+</dyndialog>
+
+
+

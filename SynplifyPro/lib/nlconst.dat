@@ -1,0 +1,1267 @@
+# $Header: //synplicity/mapgw/misc/nlconst.dat#10 $
+#
+# FILE: nlconst.dat 
+#
+# An asterisk (#) means comment to the end of the line
+#
+#
+#  CONS{$consName {
+#        PARAM{$paramName {
+#            TYPE{$paramType}
+#            TARG{$paramTarget}
+#            COND{$paramCond}
+#            CONDEXCL{$paramExcl}
+#        }
+#        COND{$consCond}
+#        CONDEXCL{$consExcl}
+#        CONDPAIR{$consPair}
+#		 TYPE{$consType}
+#    }
+#
+#    $consName       the constraint name
+#    $paramName      the parameter name; can be a switch which is
+#                    required from the user to define the param
+#                    (e.g. -from, -to) or implied (e.g.
+#                    clock_object).
+#    $paramType      type of paramter; one of the following: INT,
+#                    FLOAT, STRING, FLAG, ENUM, LIST, LIST_INT,
+#                    LIST_FLOAT.  for ENUM type, the possible
+#                    values must be specified (e.g. ENUM{a b c})
+#    $paramTarget    the type of netlist object this param is to
+#                    apply on; any of the following: CELL, VIEW,
+#                    CLOCK, PORT, INST, PIN, NET (e.g. TARG{CLOCK
+#                    INST NET})
+#    $paramCond      condition information for this param val; use
+#                    the keyword $par to refer to the param value
+#                    (e.g. $par >= 0)
+#    $paramExcl      exclusive conditions for parameter (at most
+#                    one can be true)
+#    $consCond       condition(s) where a constraint is deemed as
+#                    complete and/or valid (e.g. param(PARAM1)
+#                    && !param(PARAM2)); each condition statement
+#                    must be an AND or parametersl; to imply an
+#                    OR, define additional COND() statements.
+#    $consExcl       mutually exclusive conditions (at most one 
+#                    can be true)
+# 	 $consPair		 second parameter can only be used if first is used
+#	 $consType		 type for constaint: dc means standard SDC
+#
+#    TOKENS
+#
+#    PAR{$param}     will return the value of a param.  NIL if
+#                    undefined.  if no argument is passed, then
+#                    the current parameter is used.
+#    LEN{$param}     will return the length of a list param. if
+#                    not a list, returns 1.  0 if undefined.
+#
+#
+CONS{bus_dimension_separator_style
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+}
+CONS{bus_naming_style
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+}
+CONS{create_clock
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+ 	PARAM{-haps_constraint			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-proxy_name			TYPE{STRING}}
+	PARAM{-proxy_invert			TYPE{FLAG}}
+	PARAM{-add				TYPE{FLAG}}
+	PARAM{-force_sync_all_clocks		TYPE{FLAG}}
+	PARAM{-name				TYPE{STRING}}
+	PARAM{-period				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-waveform				TYPE{LIST}			COND{LEN==2 && PAR0>=0 && PAR0<PAR1}}
+	PARAM{-priority				TYPE{INT} MSG{INTERNAL}}
+	PARAM{-freq				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{object				TYPE{LIST}		TARG{PORT INST PIN NET}}
+	COND{PAR{-period} PAR{object}}
+	COND{PAR{-period}}
+	CONDLE{PAR{-waveform} PAR{-period}}
+	CONDPAIR{PAR{-name} PAR{-proxy_name}}
+	CONDPAIR{PAR{-proxy_name} PAR{-proxy_invert}}
+	TYPE{dc}
+}
+CONS{create_generated_clock
+	PARAM{-quiet				TYPE{FLAG}}
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable		TYPE{STRING} MSG{INTERNAL}}
+ 	PARAM{-haps_constraint		TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-add					TYPE{FLAG}}
+	PARAM{-name					TYPE{STRING}}
+	PARAM{-proxy_name			TYPE{STRING}}
+	PARAM{-proxy_invert			TYPE{FLAG}}
+	PARAM{-source				TYPE{LIST}		COND{LEN==1} TARG{PORT PIN NET}}
+	IFXDC{
+		PARAM{-edges			TYPE{LIST_INT}		COND{LEN==3 && PAR0>0 && PAR1>PAR0 && PAR2>PAR1} MSG{101}}
+	} 
+	IFNXDC{
+		PARAM{-edges			TYPE{LIST_INT}		COND{LEN==3 && PAR0>0 && PAR1>=PAR0 && PAR2>=PAR1} MSG{101}}
+	}
+	PARAM{-edge_shift			TYPE{LIST_FLOAT}	COND{LEN==3}}
+	PARAM{-divide_by			TYPE{INT}			COND{PAR>0} MSG{103}}
+	PARAM{-multiply_by			TYPE{INT}			COND{PAR>0}}
+	PARAM{-duty_cycle			TYPE{FLOAT}			COND{PAR>0 && PAR<100}  }
+	PARAM{-invert				TYPE{FLAG}}
+	PARAM{-master_clock			TYPE{LIST} COND{LEN==1} TARG{CLOCK}}
+	PARAM{-preinvert			TYPE{FLAG}}
+	PARAM{-combinational			TYPE{FLAG}}
+	PARAM{-phase				TYPE{FLOAT}}
+	PARAM{-offset				TYPE{FLOAT}}
+	PARAM{-priority				TYPE{INT} MSG{INTERNAL}}
+	PARAM{-force_sync_all_clocks		TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}			TARG{PORT INST PIN NET}}
+	CONDEXCL{PAR{-edges} PAR{-divide_by}}
+	CONDEXCL{PAR{-edges} PAR{-multiply_by}}
+	CONDPAIR{PAR{-edges} PAR{-edge_shift}}
+	CONDPAIR{PAR{-source} PAR{-edges}}
+	CONDPAIR{PAR{-source} PAR{-edge_shift}}
+	CONDPAIR{PAR{-source} PAR{-divide_by}}
+	CONDPAIR{PAR{-source} PAR{-multiply_by}}
+	CONDPAIR{PAR{-source} PAR{-invert}}
+	CONDPAIR{PAR{-source} PAR{-preinvert}}
+	CONDPAIR{PAR{-source} PAR{-combinational}}
+	CONDPAIR{PAR{-source} PAR{-phase}}
+	CONDPAIR{PAR{-source} PAR{-offset}}
+	IFXDC{
+		CONDPAIR{PAR{-master_clock} PAR{-add}}
+	}
+	CONDPAIR{PAR{-name} PAR{-proxy_name}}
+	CONDPAIR{PAR{-proxy_name} PAR{-proxy_invert}}
+	TYPE{dc}
+}
+
+CONS{create_generated_budget_clock
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-add				TYPE{FLAG}}
+	PARAM{-proxy_name			TYPE{STRING}}
+	PARAM{-proxy_invert			TYPE{FLAG}}
+	PARAM{-name				TYPE{STRING}}
+	PARAM{-source				TYPE{LIST} COND{LEN==1}	TARG{PORT PIN NET}}
+	IFXDC{
+		PARAM{-edges			TYPE{LIST_INT}		COND{LEN==3 && PAR0>0 && PAR1>=PAR0 && PAR2>=PAR1} MSG{101}}
+	} 
+	IFNXDC{
+		PARAM{-edges			TYPE{LIST_INT}		COND{LEN==3 && PAR0>0 && PAR1>PAR0 && PAR2>PAR1}   MSG{101}}
+	}
+	PARAM{-edge_shift			TYPE{LIST_FLOAT}	COND{LEN==3}}
+	PARAM{-divide_by			TYPE{INT}			COND{PAR>0} MSG{103}}
+	PARAM{-multiply_by			TYPE{INT}			COND{PAR>0}}
+	PARAM{-duty_cycle			TYPE{FLOAT}			COND{PAR>0 && PAR<100}  }
+	PARAM{-invert				TYPE{FLAG}}
+	PARAM{-master_clock			TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{-preinvert			TYPE{FLAG}}
+	PARAM{-combinational			TYPE{FLAG}}
+	PARAM{-phase				TYPE{FLOAT}}
+	PARAM{-offset				TYPE{FLOAT}}
+	PARAM{-priority				TYPE{INT} MSG{INTERNAL}}
+	PARAM{object				TYPE{LIST}			TARG{PORT INST PIN NET}}
+	CONDEXCL{PAR{-edges} PAR{-divide_by}}
+	CONDEXCL{PAR{-edges} PAR{-multiply_by}}
+	CONDPAIR{PAR{-edges} PAR{-edge_shift}}
+	IFXDC{
+		CONDPAIR{PAR{-master_clock} PAR{-add}}
+	}
+	CONDPAIR{PAR{-name} PAR{-proxy_name}}
+	CONDPAIR{PAR{-proxy_name} PAR{-proxy_invert}}
+	TYPE{dc}
+}
+
+CONS{derive_clocks
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-period				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-waveform				TYPE{LIST}			COND{LEN==2 && PAR0>=0 && PAR0<PAR1}} 
+	PARAM{-priority				TYPE{INT} MSG{INTERNAL}}
+	COND{PAR{-period}}
+}
+CONS{set_bus_skew
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-datapath_only			TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_clock_groups
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-asynchronous			TYPE{FLAG}}
+	PARAM{-derive				TYPE{FLAG}}
+	PARAM{-exclusive			TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-logically_exclusive		TYPE{FLAG}}
+	PARAM{-physically_exclusive		TYPE{FLAG}}
+	PARAM{-allow_paths			TYPE{FLAG}}
+	PARAM{-name				TYPE{STRING}}
+	PARAM{-group				TYPE{LIST}			TARG{CLOCK}}
+	COND{PAR{-group}}
+	TYPE{dc}
+}
+CONS{set_disable_timing
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{STRING}}
+	PARAM{-to				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}			TARG{INST PIN CELL}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{set_dont_touch
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}			TARG{INST PIN CELL VIEW}}
+	PARAM{value				TYPE{ENUM{true false}}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{set_false_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	CONDEXCL{PAR{-setup} PAR{-hold}}
+	TYPE{dc}
+}
+CONS{set_hierarchy_separator
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	TYPE{dc}
+}
+CONS{set_input_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+ 	PARAM{-haps_constraint			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{-clock_fall			TYPE{FLAG}}
+	PARAM{-add_delay			TYPE{FLAG}}
+	PARAM{-level_sensitive			TYPE{FLAG}}
+	PARAM{-reference_pin	TYPE{LIST}		TARG{PORT PIN NET}}
+	PARAM{value				TYPE{FLOAT}  MSG{102}}
+	PARAM{object				TYPE{LIST}			TARG{PORT PIN}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+	CONDPAIR{PAR{-clock} PAR{-clock_fall}}
+	TYPE{dc}
+}
+CONS{set_output_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+ 	PARAM{-haps_constraint			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{-clock_fall			TYPE{FLAG}}
+	PARAM{-add_delay			TYPE{FLAG}}
+	PARAM{-level_sensitive			TYPE{FLAG}}
+	PARAM{-reference_pin	TYPE{LIST}		TARG{PORT PIN NET}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST}			TARG{PORT PIN}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_max_time_borrow
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value					TYPE{FLOAT} 		COND{PAR>=0}}
+	PARAM{object				TYPE{LIST}			TARG{CLOCK INST PIN}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_rtl_ff_names
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	TYPE{dc}
+}
+CONS{set_max_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-datapath_only			TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_datapathonly_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	IFXDC{
+		COND{PAR{-from} PAR{-rise_from} PAR{-fall_from}}
+	}
+	COND{PAR{value}}
+}
+CONS{set_min_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_min_pulse_width
+	PARAM{-disable			TYPE{FLAG}}
+	PARAM{-low				TYPE{FLAG}}
+	PARAM{-high				TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object			TYPE{LIST}		TARG{CLOCK PIN}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_multicycle_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN} MSG{UNIQ}}
+	PARAM{-rise_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-rise_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}			TARG{CLOCK}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-start				TYPE{FLAG}}
+	PARAM{-end				TYPE{FLAG}}
+	PARAM{-fa_modify			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{INT}}
+	COND{PAR{-from} PAR{-rise_from} PAR{-fall_from} PAR{-through} PAR{-to} PAR{-rise_to} PAR{-fall_to}}
+	CONDEXCL{PAR{-setup} PAR{-hold}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_clock_latency
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-source				TYPE{FLAG}}
+	PARAM{-early				TYPE{FLAG}}
+	PARAM{-late				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-clock				TYPE{LIST}		TARG{CLOCK}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST}		TARG{CLOCK PORT PIN NET}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+	COND{PAR{-source}}
+	TYPE{dc}
+}
+CONS{set_clock_uncertainty
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-fall_from			TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-rise_from			TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-to				TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-fall_to				TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-rise_to				TYPE{LIST}		TARG{CLOCK}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST}		TARG{CLOCK PORT PIN NET}}
+	COND{PAR{value}}
+	COND{PAR{object} PAR{-from} PAR{-fall_from} PAR{-rise_from} PAR{-to} PAR{-fall_to} PAR{-rise_to}}
+	CONDEXCL{PAR{-to} PAR{-rise_to}}
+	CONDEXCL{PAR{-to} PAR{-fall_to}}
+	CONDEXCL{PAR{-to} PAR{object}}
+	CONDEXCL{PAR{-rise_to} PAR{-fall_to}}
+	CONDEXCL{PAR{-rise_to} PAR{object}}
+	CONDEXCL{PAR{-from} PAR{-rise_from}}
+	CONDEXCL{PAR{-from} PAR{-fall_from}}
+	CONDEXCL{PAR{-from} PAR{object}}
+	CONDEXCL{PAR{-rise_from} PAR{-fall_from}}
+	CONDEXCL{PAR{-rise_from} PAR{object}}
+	CONDEXCL{PAR{-setup} PAR{-hold}}
+	TYPE{dc}
+}
+CONS{set_view_separator
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	COND{PAR{value}}
+}
+CONS{set_io
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{LIST} COND{LEN==1}	TARG{PORT}}
+	PARAM{-fixed				TYPE{ENUM{yes no}}}
+	PARAM{-iostd				TYPE{STRING}}
+	PARAM{-pinname				TYPE{STRING}}
+	PARAM{-register				TYPE{ENUM{yes no}}}
+	PARAM{-out_drive			TYPE{INT}}
+	PARAM{-out_load				TYPE{INT}}
+	PARAM{-res_pull				TYPE{ENUM{yes none}}}
+	PARAM{-skew				TYPE{ENUM{on off}}}
+	PARAM{-slew				TYPE{ENUM{high low}}}
+}
+
+CONS{define_attribute
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}		TARG{CELL VIEW CLOCK PORT INST PIN NET}}
+	PARAM{attribute				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	COND{PAR{object}}
+	COND{PAR{attribute}}
+	COND{PAR{value}}
+}
+CONS{define_clock
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-add				TYPE{FLAG}}
+	PARAM{-proxy_name			TYPE{STRING}}
+	PARAM{-proxy_invert			TYPE{FLAG}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-virtual				TYPE{FLAG}}
+	PARAM{-period				TYPE{FLOAT}			COND{PAR>=0} MSG{104}}
+	PARAM{-freq				TYPE{FLOAT}			COND{PAR>=0} MSG{104}}
+	PARAM{-clockgroup			TYPE{STRING}}
+	PARAM{-duty_pct				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-uncertainty			TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-rise				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-fall				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-ref_rise				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-ref_fall				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-name				TYPE{STRING}}
+	PARAM{-priority				TYPE{INT} MSG{INTERNAL}}
+	PARAM{-force_sync_all_clocks		TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}		TARG{PORT INST PIN NET}}
+	COND{PAR{-period} PAR{-freq}}
+	COND{PAR{-name} PAR{object}}
+	CONDPAIR{PAR{-name} PAR{-proxy_name}}
+	CONDPAIR{PAR{-proxy_name} PAR{-proxy_invert}}
+	# -virtual and object cannot be used together, 
+	# but we allow for -name without -virtual or -object
+	
+}
+CONS{define_clock_gating_check
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-setup				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-hold				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-high				TYPE{FLAG}}
+	PARAM{-low				TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}			TARG{CELL VIEW CLOCK PORT INST PIN NET}}
+	COND{PAR{object}}
+}
+CONS{define_clock_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{STRING}}
+	PARAM{-fall				TYPE{STRING}}
+	PARAM{-false				TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+}
+CONS{define_domain_toggle_rate
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-percentage			TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-default				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	COND{PAR{-percentage}}
+	COND{PAR{-default} PAR{-clock}}
+}
+CONS{define_clock_latency
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{object				TYPE{LIST} TARG{CLOCK}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_clock_uncertainty
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{STRING}}
+	PARAM{-to				TYPE{STRING}}
+	PARAM{-from_edge			TYPE{ENUM{rise fall}}}
+	PARAM{-to_edge				TYPE{ENUM{rise fall}}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{object				TYPE{LIST} TARG{CLOCK}}
+	COND{PAR{value}}
+	COND{PAR{-from} PAR{-to}}
+	COND{PAR{object}}
+}
+CONS{define_clock_transition
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{object				TYPE{LIST} TARG{CLOCK}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_compile_point
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-type				TYPE{ENUM{locked fixed}}}
+	PARAM{-cpfile				TYPE{STRING}}
+	PARAM{object				TYPE{LIST} COND{LEN==1}	TARG{VIEW}}
+	COND{PAR{object}}
+}
+CONS{define_current_design
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-top 				TYPE{FLAG}}
+	PARAM{object				TYPE{LIST} COND{LEN==1}	TARG{VIEW}}
+	COND{PAR{-top} PAR{object}}
+}
+CONS{define_current_instance
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-top 				TYPE{FLAG}}
+	PARAM{object				TYPE{LIST} COND{LEN==1}	TARG{INST}}
+}
+CONS{define_disable_timing
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{STRING}}
+	PARAM{-to				TYPE{STRING}}
+	PARAM{object				TYPE{LIST} TARG{CELL INST}}
+	COND{PAR{object}}
+	COND{PAR{-from}}
+	COND{PAR{-to}}
+}
+CONS{define_clock_domain_toggle_rate
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-percentage			TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-default				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	COND{PAR{-percentage}}
+	COND{PAR{-default} PAR{-clock}}
+}
+CONS{define_driving_cell
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-library				TYPE{STRING}}
+	PARAM{-lib_cell				TYPE{STRING}}
+	PARAM{-pin				TYPE{STRING}}
+	PARAM{object				TYPE{LIST} TARG{PORT}}
+	COND{PAR{-lib_cell}}
+}
+CONS{define_false_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+}
+CONS{define_fanout_load
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_global_attribute
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-disable_constraint_forward_annotation	TYPE{FLAG}} 
+	PARAM{attribute				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	COND{PAR{attribute}}
+	COND{PAR{value}}
+}
+CONS{define_input_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-rise				TYPE{FLOAT}}
+	PARAM{-fall				TYPE{FLOAT}}
+	PARAM{-max_rise				TYPE{FLOAT}}
+	PARAM{-max_fall				TYPE{FLOAT}}
+	PARAM{-min_rise				TYPE{FLOAT}}
+	PARAM{-min_fall				TYPE{FLOAT}}
+	PARAM{-rslope				TYPE{FLOAT}}
+	PARAM{-fslope				TYPE{FLOAT}}
+	PARAM{-ref				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	PARAM{value				TYPE{FLOAT} MSG{102}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_input_transition
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLOAT}}
+	PARAM{-fall				TYPE{FLOAT}}
+	PARAM{-min_rise				TYPE{FLOAT}}
+	PARAM{-min_fall				TYPE{FLOAT}}
+	PARAM{-ref				TYPE{STRING}}
+	PARAM{-ref_fall				TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+	COND{PAR{-ref}}
+}
+CONS{define_haps_io
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	PARAM{-haps_io 				TYPE{STRING}}
+	PARAM{-add_clock_deskew			TYPE{STRING}}
+	PARAM{attribute				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	COND{PAR{object}}
+	COND{PAR{-haps_io}}
+}
+CONS{define_haps_fpga
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-type				TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-location				TYPE{STRING}}	
+}
+CONS{define_io_standard
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-default_input			TYPE{FLAG}}
+	PARAM{-default_output			TYPE{FLAG}}
+	PARAM{-default_bidir			TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	PARAM{-delay_type			TYPE{STRING}}
+	PARAM{syn_pad_type			TYPE{STRING}}
+	PARAM{syn_io_slew			TYPE{STRING}}
+	PARAM{syn_io_termination		TYPE{STRING}}
+	PARAM{syn_io_drive			TYPE{STRING}}
+	PARAM{syn_io_dv2			TYPE{STRING}}
+	PARAM{syn_io_dci			TYPE{STRING}}
+	PARAM{attribute				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	PARAM{att0				TYPE{STRING}}
+	PARAM{val0				TYPE{STRING}}
+	PARAM{att1				TYPE{STRING}}
+	PARAM{val1				TYPE{STRING}}
+	PARAM{att2				TYPE{STRING}}
+	PARAM{val2				TYPE{STRING}}
+	PARAM{att3				TYPE{STRING}}
+	PARAM{val3				TYPE{STRING}}
+	PARAM{att4				TYPE{STRING}}
+	PARAM{val4				TYPE{STRING}}
+	PARAM{att5				TYPE{STRING}}
+	PARAM{val5				TYPE{STRING}}
+	PARAM{att6				TYPE{STRING}}
+	PARAM{val6				TYPE{STRING}}
+	PARAM{att7				TYPE{STRING}}
+	PARAM{val7				TYPE{STRING}}
+	PARAM{att8				TYPE{STRING}}
+	PARAM{val8				TYPE{STRING}}
+	PARAM{att9				TYPE{STRING}}
+	PARAM{val9				TYPE{STRING}}
+}
+CONS{define_load
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-load				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-min_load				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-input_default			TYPE{FLAG}}
+	PARAM{-output_default			TYPE{FLAG}}
+	PARAM{object				TYPE{LIST} TARG{PORT}}
+}
+CONS{define_macro_power_consumption
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-macro				TYPE{STRING}}
+	PARAM{-power				TYPE{FLOAT}			COND{PAR>=0}}
+	COND{PAR{-macro}}
+	COND{PAR{-power}}
+}
+CONS{define_max_capacitance
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{object				TYPE{LIST} TARG{PORT}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_max_fanout
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST} TARG{PORT}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_max_transition
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}}
+	PARAM{object				TYPE{LIST} TARG{PORT}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_max_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-max				TYPE{FLOAT}}
+	PARAM{-min				TYPE{FLOAT}}		# this isn't used, it's just a placeholder to avoid errors
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+	COND{PAR{value}	PAR{-max}}
+}
+CONS{define_min_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority		TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-max				TYPE{FLOAT}}		# this isn't used, it's just a placeholder to avoid errors
+	PARAM{-min				TYPE{FLOAT}}
+	PARAM{value				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+	COND{PAR{value}	PAR{-min}}
+}
+CONS{define_multicycle_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-internal				TYPE{INT}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority				TYPE{FLAG}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-start				TYPE{FLAG}}
+	PARAM{-end				TYPE{FLAG}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{value				TYPE{INT}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+	COND{PAR{value}}
+}
+CONS{define_output_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-rise				TYPE{FLOAT}}
+	PARAM{-fall				TYPE{FLOAT}}
+	PARAM{-max_rise				TYPE{FLOAT}}
+	PARAM{-max_fall				TYPE{FLOAT}}
+	PARAM{-min_rise				TYPE{FLOAT}}
+	PARAM{-min_fall				TYPE{FLOAT}}
+	PARAM{-rslope				TYPE{FLOAT}}
+	PARAM{-fslope				TYPE{FLOAT}}
+	PARAM{-ref				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{object				TYPE{LIST}			TARG{PORT}}
+	PARAM{value				TYPE{FLOAT} MSG{102}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{define_path_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-fa_keep				TYPE{FLAG}}
+	PARAM{-high_priority				TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-max				TYPE{FLOAT}}
+	PARAM{-min				TYPE{FLOAT}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+	COND{PAR{-max} PAR{-min}}
+}
+# is this implemented?
+CONS{define_propagated_clock
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{STRING}}
+	COND{PAR{object}}
+}
+CONS{define_region_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{region_from			TYPE{STRING}}
+	PARAM{region_to				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	COND{PAR{region_from}}
+	COND{PAR{region_to}}
+	COND{PAR{value}}
+}
+CONS{define_report_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+}
+CONS{define_reset_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+}
+CONS{reset_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-through				TYPE{LIST}			TARG{NET PIN PORT}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	COND{PAR{-from} PAR{-through} PAR{-to}}
+	CONDEXCL{PAR{-setup} PAR{-hold}}
+	TYPE{dc}
+}
+CONS{define_watch_path
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-from				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-setup				TYPE{FLAG}}
+	PARAM{-to				TYPE{LIST}			TARG{CLOCK PORT INST PIN}}
+	COND{PAR{-from}}
+	COND{PAR{-to}}
+}
+CONS{define_route_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{STRING}}
+	PARAM{region				TYPE{STRING}}
+	PARAM{value				TYPE{FLOAT}			COND{PAR>=0}}
+	COND{PAR{object}}
+	COND{PAR{region}}
+	COND{PAR{value}}
+}
+CONS{define_scope_collection
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{collection			TYPE{STRING}}
+	PARAM{command				TYPE{STRING}}
+	COND{PAR{collection}}
+	COND{PAR{command}}
+}
+CONS{define_test_attribute
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{object				TYPE{STRING}}
+	PARAM{attribute				TYPE{STRING}}
+	PARAM{value				TYPE{STRING}}
+	COND{PAR{object}}
+	COND{PAR{attribute}}
+	COND{PAR{value}}
+}
+# TODO
+CONS{define_test_chain
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+}
+# TODO
+CONS{define_test_default_port
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+}
+CONS{define_threshold_library
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{lib				TYPE{STRING}}
+	COND{PAR{lib}}
+}
+CONS{define_reg_input_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-default				TYPE{FLAG}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-clock				TYPE{STRING}}
+	PARAM{-ref				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}		TARG{INST}}
+	PARAM{value				TYPE{FLOAT}}
+}
+CONS{set_reg_input_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-default				TYPE{FLAG}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-clock				TYPE{STRING}}
+	PARAM{-ref				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}		TARG{INST}}
+	PARAM{value				TYPE{FLOAT}}
+}
+CONS{define_reg_output_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-default				TYPE{FLAG}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-clock				TYPE{STRING}}
+	PARAM{-ref				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}		TARG{INST}}
+	PARAM{value				TYPE{FLOAT}}
+}
+CONS{set_reg_output_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-default				TYPE{FLAG}}
+	PARAM{-improve				TYPE{FLOAT}			COND{PAR>=0}}
+	PARAM{-route				TYPE{FLOAT}}
+	PARAM{-clock				TYPE{STRING}}
+	PARAM{-ref				TYPE{STRING}}
+	PARAM{object				TYPE{LIST}		TARG{INST}}
+	PARAM{value				TYPE{FLOAT}}
+}
+CONS{define_waveform_order 
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{value				TYPE{LIST}}
+	COND{PAR{value}}
+}
+CONS{derive_pll_clocks
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-use_tan_name			TYPE{FLAG}}
+}
+CONS{set_timing_derate
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-hold				TYPE{FLAG}}
+	PARAM{-clock				TYPE{FLAG}}
+	PARAM{-data				TYPE{FLAG}}
+	PARAM{-net_delay			TYPE{FLAG}}
+	PARAM{-cell_delay			TYPE{FLAG}}
+	PARAM{-cell_check			TYPE{FLAG}}
+	PARAM{value				TYPE{FLOAT}}
+        CONDEXCL{PAR{-clock} PAR{-data}}
+       	CONDEXCL{PAR{-net_delay} PAR{-cell_delay} PAR{-cell_check}}
+	CONDEXCL{PAR{-hold}}
+	COND{PAR{value}}
+	TYPE{dc}
+}
+CONS{set_case_analysis
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{STRING}}
+	PARAM{object				TYPE{LIST} TARG{PIN PORT}}
+	COND{PAR{value}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{set_logic_dc
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{object           			TYPE{LIST} TARG{PIN PORT}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{set_logic_one
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{object           			TYPE{LIST} TARG{PIN PORT}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{set_logic_zero
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{object           			TYPE{LIST} TARG{PIN PORT}}
+	COND{PAR{object}}
+	TYPE{dc}
+}
+CONS{get_current_design
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-instance				TYPE{FLAG}}
+	PARAM{-print				TYPE{FLAG}}
+	PARAM{-view				TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+}
+CONS{get_current_instance
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-print				TYPE{FLAG}}
+	PARAM{-view				TYPE{FLAG}}
+	PARAM{-comment				TYPE{STRING}}
+}
+CONS{set_clock_route_delay 
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{value				TYPE{FLOAT}		COND{PAR>=0}}
+	PARAM{object				TYPE{LIST}	TARG{CLOCK}}
+	COND{PAR{object}}
+	COND{PAR{value}}
+}
+CONS{remove_input_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{-clock_fall			TYPE{FLAG}}
+	PARAM{-level_sensitive			TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}			TARG{PORT PIN}}
+	COND{PAR{object}}
+	CONDPAIR{PAR{-clock} PAR{-clock_fall}}
+	TYPE{dc}
+}
+CONS{remove_output_delay
+	PARAM{-disable				TYPE{FLAG}}
+	PARAM{-syn_tdm				TYPE{STRING} MSG{INTERNAL}} 
+ 	PARAM{-syn_fa_disable			TYPE{STRING} MSG{INTERNAL}}
+	PARAM{-comment				TYPE{STRING}}
+	PARAM{-rise				TYPE{FLAG}}
+	PARAM{-fall				TYPE{FLAG}}
+	PARAM{-max				TYPE{FLAG}}
+	PARAM{-min				TYPE{FLAG}}
+	PARAM{-clock				TYPE{LIST} COND{LEN==1}	TARG{CLOCK}}
+	PARAM{-clock_fall			TYPE{FLAG}}
+	PARAM{-level_sensitive			TYPE{FLAG}}
+	PARAM{object				TYPE{LIST}			TARG{PORT PIN}}
+	COND{PAR{object}}
+	TYPE{dc}
+}

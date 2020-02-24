@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="MULT" id="dsp_mult" version= "1.0" category="Hard Module|DSP">MULT</ip>
+    <target module="GW_MULT">gw_mult</target>
+    <docs>
+        <doc type="summary">/doc/dsp_mult.html</doc>
+        <doc type="help">/doc/dsp_mult_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW2A-18-*</device>
+        <device supported="true">GW2A-55-*</device>
+        <device supported="true">GW2AR-18-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSER-4C-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+        <device supported="true">GW1NSR-4C-*</device>
+        <device supported="true">GW2A-55C-*</device>
+        <device supported="true">GW2A-18C-*</device>
+        <device supported="true">GW2AR-18C-*</device>
+    </devices>
+</ipcore>

@@ -1,0 +1,10 @@
+
+************* Sample TCL FIND command **********************
+
+Open the prep2_2.prj file under <install>/examples/verilog/altera
+Change the implementation to Virtex4.
+Run.
+Open the technology view.
+To find all the LUT3 instances in the mapped netlist, you can use the following TCL command in the TCl window:
+
+c_print [find -hier -inst * -filter @view == LUT3*] -prop view

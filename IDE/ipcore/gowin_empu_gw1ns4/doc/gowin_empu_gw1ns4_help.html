@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Gowin EMPU Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>Gowin EMPU</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>Gowin_EMPU</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>Gowin_EMPU is a System-on-Chip FPGA device that embeds MCU hard core, Gowin FPGA Fabric as well as other standard peripherals and featured hard cores, including 32K-Byte FLASH and configurable 2K-Byte or 4K-Byte or 8K-Byte or 16K-Byte SRAM. The MCU contains a low power, low cost and high-performance ARM Cortex-M3 32-bit RISC. The flexible FPGA Fabric serves as user programmable peripherals, or soft-core IPs.
+    <p>All internal block and sub-block functions of the Gowin_EMPU, including the MCU(with supporting AHB/APB Bus System/Extension Ports and Standard Peripherals – GPIO/UART/Timer/RTC/Watch-Dog), FPGA Fabric (with BSRAM, User Flash, Sub-Memory Controller, rich clock and flexible Logic Resources) and JTAG Config-Core are all designed around the ARM Cortex-M3 processor core. The ARM Cortex-M3 processor provides the core for high-performance, low-cost platform that meets the needs of minimal memory implementation, reduced pin count, and low-power consumption, while delivering outstanding computational performance and exceptional system response to interrupts.</p>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Sram Size</td>
+                        <td>Sram Size 2KB, 4KB or 8KB configuration, default is 8KB</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable UART0</td>
+                        <td>Enable Universal Asynchronous Receiver/Transmitter 0</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Enable UART1</td>
+                        <td>Enable Universal Asynchronous Receiver/Transmitter 1</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable GPIO</td>
+                        <td>Enable General Purpose I/O</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable TPIU</td>
+                        <td>Enable Trace Port Interface Unit</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable USER_INT_0</td>
+                        <td>Enable user interrupt 0</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable USER_INT_1</td>
+                        <td>Enable user interrupt 1</td> 
+                    </tr>
+                                        <tr>
+                        <td class="head">Enable USER_INT_2</td>
+                        <td>Enable user interrupt 2</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable USER_INT_3</td>
+                        <td>Enable user interrupt 3</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable USER_INT_4</td>
+                        <td>Enable user interrupt 4</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable USER_INT_5</td>
+                        <td>Enable user interrupt 5</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable RTC</td>
+                        <td>Enable Real Timer Clock</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable SPI</td>
+                        <td>Enable Serial Peripheral Interface</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable I2C</td>
+                        <td>Enable I2C</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable APB2 Master 1</td>
+                        <td>Enable APB2 Master 1</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable APB2 Master 2</td>
+                        <td>Enable APB2 Master 2</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 3</td>
+                        <td>Enable APB2 Master 3</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 4</td>
+                        <td>Enable APB2 Master 4</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 5</td>
+                        <td>Enable APB2 Master 5</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 6</td>
+                        <td>Enable APB2 Master 6</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 7</td>
+                        <td>Enable APB2 Master 7</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 8</td>
+                        <td>Enable APB2 Master 8</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 9</td>
+                        <td>Enable APB2 Master 9</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 10</td>
+                        <td>Enable APB2 Master 10</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 11</td>
+                        <td>Enable APB2 Master 11</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Enable APB2 Master 12</td>
+                        <td>Enable APB2 Master 12</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable AHB2 Master</td>
+                        <td>Enable AHB2 Master</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable AHB2 Slave</td>
+                        <td>Enable AHB2 Slave</td> 
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

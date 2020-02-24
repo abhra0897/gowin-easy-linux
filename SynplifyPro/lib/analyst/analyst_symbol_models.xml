@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+  <!--This file defines graphic symbols for Analyst-->
+  <!--Symbol attributes:-->
+  <!---->
+  <!--symbol_name:      view name that identifies symbol-->
+  <!--show_pin_labels:  draw pin labels. Can be overrode by  pin  "show_label-->
+  <!--pin_style:        dot | stub  default=dot - how pins are drawn-->
+  <!--graphic_shape:    box | mux   default=box - how symbol box is drawn-->
+  <!--graphic_svg_ref:  name used to derive svg filename containing svg graphic symbol.-->
+  <!--                  svgfile = <install>/lib/analyst/symshape_<graphic_svg_ref>.svg-->
+  <!---->
+  <!--symbol_pins  attributes:-->
+  <!---->
+  <!--name: pin name-->
+  <!--multi_port:     pin that represents a group of pins. e.g name="B", pin B0 B1 B2.-->
+  <!--                Each multipin name defines a pin group that will match on <name> *. e.g name="B", pin B0 B1 B2-->
+  <!--dir:            in | out | bidir-->
+  <!--pin_graphic:    clock | bubble  defines a pin graphic-->
+  <!---->
+  <!--y_policy:   top|bottom|top_wire|bottom_wire|midpoint-->
+  <!--            top: pins in this pin-group go on top-->
+  <!--            bottom: pins in this pin-group go on bottom-->
+  <!--            top_wire/bottom_wire: special pin draw as e.g. dff SET/RESET that come into top/bottom of symbol box-->
+  <!--midpoint:   pin in this group centered in middle, after top before bottom groups.-->
+  <!--            If more that 1 group with same y_policy they will be adjoining groups.-->
+  <!--x/y: offset values added to pin placement-->
+  <!--Bus Mapping-->
+  <!-- pin name="D0[0]" label="CLK0" To show scalar name-->
+  <!--pin name="D0[1]" label="W[1]"  to show bit name-->
+  <!--pin name="D0[10:2]" label="WADDR0[11:3]" to show bus mapping-->
+  <!--          conditional label alias e.g.  label=":%NAME=*[0]?E%n"  -->
+  <!--          If pinname contains [0], show alias E%n[0]. %n resolves to pin number. e.g D3[0] show E3 -->
+  <!--bus_grouping:   Defined on pin to indicate if pin inputs should be grouped in a bus. -->
+  <!--                If more than 1, then that many pins must be in the group before a tap is created -->
+
+
+<symbol_data>
+  <!-- =========================================================================================== -->
+  <!--                    -->
+  <!--                    -->
+  <!-- =========================================================================================== -->
+
+  <graphic_items>
+    <graphic name="pinout" >
+      <move_to x="0" y="-1" />
+      <line_to x="2" y="-1" />
+      <line_to x="2" y="1" />
+      <line_to x="0" y="1" />
+    </graphic>
+    <graphic name="pinin" >
+      <move_to x="0" y="-1" />
+      <line_to x="-2" y="-1" />
+      <line_to x="-2" y="1" />
+      <line_to x="0" y="1" />
+    </graphic>
+    <graphic name="hierport" >
+      <move_to x="0" y="0" />
+      <line_to x="-3.5" y="-3" />
+      <line_to x="-14" y="-3" />
+      <line_to x="-14" y="3" />
+      <line_to x="-3.5" y="3" />
+    </graphic>
+  </graphic_items>
+
+  <symbol_models>
+	<symbol name="and" description="And Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="and"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint" bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="andv" description="And Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="and"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint" bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+	<symbol name="or" description="Or Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="or"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint" bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="orv" description="Or Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="or"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint" bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="xor" description="Xor Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="xor"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint"  bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="xorv" description="Xor Gate" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="xor"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="80" y="0" />
+        <pin name="I" show_label="0" dir="in" y_policy="midpoint" bus_grouping="2" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffse" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffrs" description="Set Reset" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffrse" description="Set Reset Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sdffrs" description="Set Reset" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sdffs" description="Set" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sdffrse" description="Set Reset Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sdffse" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="dffe" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffre" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="60" h="120"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+
+    <symbol name="sdffre" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sdffpatr" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" label="R-PAT" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffpatre" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="R" label="R-PAT" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="nram" description="RAM" pin_style="dot" show_pin_labels="1" sort_pins="0" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="RADDR" dir="in" y_policy="top" x="0" y="0" />
+        <pin name="D0[0]" dir="in" y_policy="top" multi_port="0" x="0" y="10" />
+        <pin name="D0[1]" dir="in" y_policy="top" multi_port="0" x="0" y="0" />
+        <pin name="D0[10:2]" dir="in" y_policy="top" x="0" y="0" />
+        <pin name="D0[26:11]" dir="in" y_policy="top" x="0" y="0" />
+        <pin name="D1[0]" dir="in" y_policy="top" multi_port="0" x="0" y="10" />
+        <pin name="D1[1]" dir="in" y_policy="top" multi_port="0" x="0" y="0" />
+        <pin name="D1[10:2]" dir="in" y_policy="top" x="0" y="0" />
+        <pin name="D1[26:11]" dir="in" y_policy="top" x="0" y="0" />
+        <pin name="DOUT" dir="out" y_policy="top" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="sdffpatre" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="E" dir="in" y_policy="bottom"  multi_port="0" x="0" y="10" />
+        <pin name="R" label="R-PAT" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="dff" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="dffs" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="S" dir="in" y_policy="top_wire" multi_port="0" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" bus_grouping="1" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="sdffr" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="dffr" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top" multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" dir="in" y_policy="bottom_wire" multi_port="0" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="dffpatr" description="Register Enabled" pin_style="dot" show_pin_labels="1" >
+      <symbol_graphics>
+        <graphic_shape type="box" x="0" y="0"/>
+        <shape_bounds x="0" y="0" w="80" h="80"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="C" dir="in" y_policy="top"  multi_port="0" pin_graphic="clock" x="0" y="0" />
+        <pin name="D" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+        <pin name="R" label="R-PAT" dir="in" multi_port="0" y_policy="bottom_wire" x="0" y="0" />
+        <pin name="Q" dir="out" y_policy="midpoint" x="80" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="eq" description="Comparator" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="eq"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out" y_policy="midpoint" x="80" y="0" />
+        <pin name="A" show_label="0" dir="in" y_policy="top" bus_grouping="1" x="0" y="0" />
+        <pin name="B" show_label="0" dir="in" y_policy="bottom" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="lt" description="LessThan" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="lt"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="A" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="B" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="gt" description="GreaterThan" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="gt"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="A" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="B" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="slt" description="LessThan" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="slt"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="A" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="B" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="sgt" description="GreaterThan" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="sgt"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="A" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="B" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="add" description="Adder" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="adder"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="D" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="lsh" description="LeftShift" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="lsh"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="r" show_label="1" dir="out"  y_policy="midpoint" x="100" y="0" />
+        <pin name="d" show_label="1" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="s" show_label="1" dir="in" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="rsh" description="RightShift" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="rsh"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="r" show_label="1" dir="out"  y_policy="midpoint" x="100" y="0" />
+        <pin name="d" show_label="1" dir="in" bus_grouping="1" x="0" y="0" />
+        <pin name="s" show_label="1" dir="in" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="mult" description="Multiplier" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="mult"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="D" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+	<symbol name="smult" description="Signed Multiplier" pin_style="dot" y_pin_placement_offset="10">
+      <symbol_graphics>
+        <graphic_svg_ref name="smult"  x="0" y="0" />
+        <graphic_shape type="box" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="D" show_label="0" dir="in" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	
+    <symbol name="pmux" description="Multiplexer" pin_style="dot" show_pin_labels="1" y_pin_placement_offset="20">
+      <symbol_graphics>
+        <graphic_shape type="mux" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="D" label=":%NAME=*[0]?E%n" dir="in" y_policy="top" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="primux" description="Multiplexer" pin_style="dot" show_pin_labels="1" y_pin_placement_offset="20">
+      <symbol_graphics>
+        <graphic_shape type="mux" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="D" label=":%NAME=*[0]?E%n" dir="in" y_policy="top" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+    <symbol name="mux" description="Multiplexer" pin_style="dot" show_pin_labels="1" y_pin_placement_offset="20" >
+      <symbol_graphics>
+        <graphic_shape type="mux" x="0" y="0"/>
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="A" label="0" dir="in" y_policy="top" bus_grouping="1" x="0" y="0" />
+        <pin name="B" label="1" dir="in" y_policy="bottom"  bus_grouping="1" x="0" y="20" />
+        <pin name="SEL" dir="in" y_policy="bottom_wire" x="0" y="10" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="buf" description="Buffer" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint"  bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="keepbuf" description="Buffer" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="keepbuf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="bufg" description="Buffer" pin_style="stub" show_view_label="1" >
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="BUFG" description="Buffer" pin_style="stub" show_view_label="1">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint" x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="IBUFG" description="Buffer" pin_style="stub" show_view_label="1">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="IBUF" description="Buffer" pin_style="stub"  show_view_label="1">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="OBUFG" description="Buffer" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="OBUF" description="Buffer" pin_style="stub" show_view_label="1">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="O" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+    <symbol name="inv" description="Inverter" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="inv"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+	<symbol name="INV" description="Inverter" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="inv"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="OUT" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+        <pin name="I" show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+    <symbol name="tri" description="TriState Buffer" pin_style="stub">
+      <symbol_graphics>
+        <graphic_svg_ref name="buf"  x="0" y="0" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="E"   show_label="0" dir="in"  y_policy="top_wire"  hide_pin_graphic="0" multi_port="0" x="0" y="14" />
+        <pin name="OUT" show_label="0" dir="out" y_policy="midpoint"  x="60" y="0" />
+        <pin name="I"   show_label="0" dir="in"  y_policy="midpoint" bus_grouping="1" x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+    <symbol name="syn_hyper_connect" description="Hyper Connect" pin_style="dot" show_instance_label="0">
+      <symbol_graphics>
+        <graphic_svg_ref name="hyperconnect"  x="0" y="0" select_indicator_color="0.0.254" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="out1" show_label="0" dir="out"  y_policy="midpoint"  x="60" y="0" />
+      </symbol_pins>
+    </symbol>
+    <symbol name="syn_hyper_source" description="Hyper Source" pin_style="dot" show_instance_label="0">
+      <symbol_graphics>
+        <graphic_svg_ref name="hypersource"  x="0" y="0" select_indicator_color="0.0.254" />
+      </symbol_graphics>
+      <symbol_pins>
+        <pin name="in" show_label="0" dir="in"  y_policy="midpoint"  x="0" y="0" />
+      </symbol_pins>
+    </symbol>
+
+  </symbol_models>
+
+</symbol_data>

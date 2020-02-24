@@ -1,0 +1,91 @@
+//--------------------------------------------------------------------
+
+`timescale 100 ps/100 ps
+module test;
+
+reg [15:0] d;
+reg rst, clk;
+wire [15:0] q;
+
+prep6 inst1 (.CLK(clk),.RST( rst),.D(d), .Q( q));
+
+parameter numvecs = 13; // actual number of vectors
+reg cntl          [0:numvecs-1];  // rst
+reg [15:0] invec  [0:numvecs-1];   // d
+reg [15:0] outvec [0:numvecs-1];    // q (q (n-1) + d)
+integer i;
+integer numerrors;
+
+initial
+begin
+	// sequential test patterns entered at neg edge clk
+	// rst;			d;	               		q new (after clocked in!)
+	cntl[0] = 	1;	invec[0] =16'd20;     		 	outvec[0] = 16'd0; //resetting
+	cntl[1] = 	1;	invec[1] =16'd10;       		outvec[1] = 16'd0; //resetting
+	cntl[2] = 	0;	invec[2] =16'd5;        		outvec[2] = 16'd5;  // reset off
+	cntl[3] = 	0;	invec[3] =16'd7;      	          	outvec[3] = 16'd12;
+	cntl[4] = 	0;	invec[4] =16'd80;       		outvec[4] = 16'd92; 	
+	cntl[5] = 	0;	invec[5] =16'd1003;       		outvec[5] = 16'd1095;   
+	cntl[6] = 	0;	invec[6] =16'd1;          		outvec[6] = 16'd1096;   
+	cntl[7] = 	1;	invec[7] =16'd25;       		outvec[7] = 16'd0;   // resetting
+	cntl[8] = 	0;	invec[8] =16'd80;       		outvec[8] = 16'd80;   
+	cntl[9] = 	0;	invec[9] =16'd0;       			outvec[9] = 16'd80;  
+	cntl[10] = 	0;	invec[10] =16'd65535;      		outvec[10] = 16'd79;  
+	cntl[11] = 	0;	invec[11] =16'd18;      		outvec[11] = 16'd97;  
+	cntl[12] = 	0;	invec[12] =16'd500;      		outvec[12] = 16'd597;  
+	
+end
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+
+reg invec_temp;
+
+initial
+begin
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+
+	//skip first rising edge
+	@(posedge clk);
+	for (i = 0; i <= numvecs-1; i = i + 1)
+	begin
+		@(negedge clk);
+		// apply test pattern at neg edge
+		rst = cntl[i];
+		d = invec[i];
+		@(posedge clk) #4500; //450 ns later
+		// check result at posedge + 450 ns
+		if ( q !== outvec[i] )
+		begin
+		   $display(    
+		"\t\t ERROR pattern#%d t%d: rst=%b d= %d Expected q: %d;  Actual q: %d", 
+		i, $stime, rst,  invec[i], outvec[i], q);
+			numerrors = numerrors + 1;
+		end
+	end
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+	
+	#1000 $finish; // after 100 ns later
+end
+
+endmodule

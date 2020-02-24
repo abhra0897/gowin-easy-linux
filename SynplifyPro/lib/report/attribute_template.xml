@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file contains the table of contents with project settings
+     from runoption.txt 
+     
+     display_name - attribute/option label to be shown     
+     always_on - if true, even after we collapse the table, these contents 
+     will be there
+     disabled - if true, will not shown in the table
+     changed_from_default - true means these options show only if the values are changed
+     from the default value
+-->
+
+<project_attribute_list name="Project Settings">
+  <attribute name="project_name" display_name="Project Name" always_on="true"/>
+  <attribute name="device_name" display_name="Device Name" always_on="true"/>
+  <attribute name="impl_name" display_name="Implementation Name" always_on="true"/>  
+  <attribute name="top_module" display_name="Top Module" always_on="true"/>  
+  <attribute name="frequency" disabled="true"/>  
+  <attribute name="pipe"/>
+  <attribute name="retiming"/>    
+  <attribute name="resource_sharing"/>
+  <attribute name="use_fsm_explorer" changed_from_default="true"/>
+  <attribute name="par_use_xflow" changed_from_default="true"/>
+  <attribute name="maxfan" changed_from_default="true"/>
+  <attribute name="disable_io_insertion" changed_from_default="true"/>
+  <attribute name="no_sequential_opt" changed_from_default="true"/>
+  <attribute name="fix_gated_and_generated_clocks" changed_from_default="true"/>
+  <attribute name="par_use_xilinx_partition" changed_from_default="true"/>
+  <attribute name="symbolic_fsm_compiler" changed_from_default="true"/>
+</project_attribute_list>

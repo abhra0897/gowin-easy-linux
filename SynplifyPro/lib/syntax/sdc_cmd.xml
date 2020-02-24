@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Constraint_Commands name="fdc" extension="sdc fdc">
+
+  <constraint name="bus_dimension_separator_style">
+   <parameter name="value" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="bus_naming_style">
+  <parameter name="value" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="create_clock" scope_view="Clocks" helpid="HELPID_SCOPE_FDC_CLOCKS">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5"/>
+    <parameter name="-name" type="string" scope_column="Name" scope_init_width="15" help_info="clockName" />
+    <parameter_list name="object" type="string" target="CLOCK" scope_column="Object" scope_default="Virtual Clock" scope_init_width="20" scope_default_to_column="Name" />
+    <parameter name="-period" type="float" cond="param1&gt;0" scope_column="Period" required="true" />
+    <parameter_list name="-waveform" type="string" len="3" cond="param1&gt;-1 param1&lt;param2" scope_column="Waveform" />
+    <parameter name="-add" type="bool" scope_column="Add" />
+    <parameter name="-comment" type="string" scope_hidden_column="Comment" />
+  </constraint>
+
+  <constraint name="create_generated_clock" scope_view="Generated Clocks" helpid="HELPID_SCOPE_FDC_GENERATED_CLOCK" >
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" />
+    <parameter name="-name" type="string" scope_column="Name" scope_init_width="15" />
+    <parameter_list name="-source" type="string" target= "CLOCK" required="true" scope_column="Source" scope_init_width="20" />
+    <parameter_list name="object" type="string" target="CLOCK" required="true" scope_column="Object" scope_init_width="20" scope_default_to_column="Name"/>
+    <parameter name="-master_clock" type="string" target="CLOCK_ALIAS" scope_column="Master Clock" scope_init_width="20" />
+    <parameter name="generate_type" type="string" target="GENERATED_CLOCK_TYPE" scope_column="Generate Type" scope_split_parameter="Generate Parameters" hide_help="1" />
+    <parameter name="generate_parameters" type="string" scope_column="Generate Parameters" scope_split="1" hide_help="1" />
+    <parameter name="generate_modifier" type="string" target="GENERATED_CLOCK_MODIFIER" scope_column="Generate Modifier" scope_split_parameter="Modifier Parameters" hide_help="1" />
+    <parameter name="generate_modifier_value" type="string" scope_column="Modifier Parameters" scope_split="1" hide_help="1" />
+    <parameter name="-invert" type="bool" scope_column="Invert"/>
+    <parameter name="-combinational" type="bool" />
+    <parameter name="-add" type="bool" scope_column="Add" />
+    <parameter name="-comment" type="string" scope_column="Comment" />
+    <parameter_list name="-edges" type="int" cond="param1&gt;0; param1&lt;param2 param2&lt;param3" len="3" msg="101" scope_mapped_column="Generate Type" scope_split_parameter="Generate Parameters"/>
+    <parameter_list name="-edge_shift" type="float" len="3" scope_mapped_column="Generate Modifier"  scope_split_parameter="Modifier Parameters"/>
+    <parameter name="-divide_by" type="int" cond="parm1&gt;0" scope_mapped_column="Generate Type" scope_split_parameter="Generate Parameters"/>
+    <parameter name="-multiply_by" type="int" cond="parm1&gt;0" scope_mapped_column="Generate Type" scope_split_parameter="Generate Parameters"/>
+    <parameter name="-duty_cycle" type="float" cond="param1&gt;0 param1&lt;100" scope_mapped_column="Generate Modifier" scope_split_parameter="Modifier Parameters"/>
+    <parameter name="-preinvert" type="bool" hide_help="1"/>
+    <condition property="exclusiveor">
+      -divide_by
+      -edges
+    </condition>
+  </constraint>
+
+  <constraint name="set_clock_groups" scope_view="Clocks" scope_aggregate_command="1" scope_aggregate_arguments="-derive -asynchronous">
+    <parameter name="-disable" type="bool" inverted_bool="1"/>
+    <parameter name="-asynchronous"/>
+    <parameter name="-exclusive"/>
+    <parameter name="-logically_exclusive"/>
+    <parameter name="-physically_exclusive"/>
+    <parameter name="type" type="string" hide_help="1"/>
+    <parameter name="-derive" type="bool"/>
+    <parameter name="-name" type="string" scope_column="Clock Group" scope_group_by_column="1" scope_default="default"/>
+    <parameter_list name="-group" type="string" target="CLOCK CLOCK_ALIAS"  required="true" scope_aggregate_column="Name|Object" scope_forced_prefix="c:"/>
+    <parameter name="-comment" type="string" />
+    <condition property="exclusiveor">
+      -asynchronous
+      -exclusive
+      -logically_exclusive
+      -physically_exclusive
+    </condition>
+  </constraint>
+
+  <constraint name="set_false_path" scope_view="Delay Paths" helpid="HELPID_SCOPE_FDC_PATH_DELAYPANE">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAYPATHTYPE" scope_column="Delay Type" scope_value="False" hide_help="1"/>
+    <parameter_list name="-from" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST COLLECTION" scope_column="From" />
+    <parameter_list name="-rise_from" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter name="-setup" type="bool" scope_column="Setup" />
+    <parameter_list name="-fall_from" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-through" type="productofsums" scope_column="Through"/>
+    <parameter_list name="-to" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST COLLECTION" scope_column="To" />
+    <parameter_list name="-rise_to" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-fall_to" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter name="-comment" type="string" scope_hidden_column="Comment" />
+    <condition property="value">
+      -from
+      -rise_from
+      -fall_from
+      -through
+      -to
+      -rise_to
+      -fall_to
+    </condition>
+  </constraint>
+
+  <constraint name="set_hierarchy_separator">
+    <parameter name="value" type="char" required="true"/>
+  </constraint>
+  
+  <constraint name="set_input_delay" scope_view="Inputs/Outputs" helpid="HELPID_SCOPE_FDC_INOUT">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" />
+    <parameter name="" type="string" target="DELAY_TYPE" scope_column="Delay Type" scope_value="input" hide_help="1"/>
+    <parameter_list name="object" type="string" target="PORT COLLECTION" required="true" scope_column="Port" scope_init_width="20" tclcmd_order="1" />
+    <parameter name="-rise" type="bool" scope_column="Rise"/>
+    <parameter name="-fall" type="bool" scope_column="Fall"/>
+    <parameter name="-max" type="bool" scope_column="Max"/>
+    <parameter name="-min" type="bool" scope_column="Min"/>
+    <parameter name="-clock" type="string" target="CLOCK CLOCK_ALIAS" scope_column="Clock" scope_init_width="20" />
+    <parameter name="-clock_fall" type="bool" scope_column="Clock Fall"/>
+    <parameter name="-add_delay" type="bool" scope_column="Add Delay"/>
+    <parameter name="" type="float" required="true" scope_column="Value"/>
+    <parameter name="-comment" type="string" scope_column="Comment" />
+    <condition property="value">
+      object
+      value
+    </condition>
+  </constraint>
+
+  <constraint name="set_output_delay" scope_view="Inputs/Outputs">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAY_TYPE" scope_column="Delay Type" scope_value="output" hide_help="1"/>
+    <parameter_list name="object" type="string" target="PORT COLLECTION" required="true" scope_column="Port" tclcmd_order="1" />
+    <parameter name="-rise" type="bool" scope_column="Rise"/>
+    <parameter name="-fall" type="bool" scope_column="Fall"/>
+    <parameter name="-max" type="bool" scope_column="Max"/>
+    <parameter name="-min" type="bool" scope_column="Min"/>
+    <parameter name="-clock" type="string" target="CLOCK_ALIAS" scope_column="Clock"/>
+    <parameter name="-clock_fall" type="bool" scope_column="Clock Fall"/>
+    <parameter name="-add_delay" type="bool" scope_column="Add Delay"/>
+    <parameter name="" type="float" required="true" scope_column="Value"/>
+    <parameter name="-comment" type="string" scope_column="Comment" />
+    <condition property="value">
+      object
+      value
+    </condition>
+  </constraint>
+ 
+  <constraint name="set_rtl_ff_names">
+    <parameter name="value" type="string" required="true"/>
+    <condition property="value">
+      value
+    </condition>
+  </constraint>
+
+  <constraint name="set_max_delay" scope_view="Delay Paths">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAYPATHTYPE" scope_column="Delay Type" scope_value="Max Delay" hide_help="1"/>
+    <parameter_list name="-from" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="From"/>
+    <parameter_list name="-rise_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-through" type="productofsums" scope_column="Through"/>
+    <parameter_list name="-to" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="To"/>
+    <parameter_list name="-rise_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter name="value" type="float" required="true" scope_column="Max Delay"/>
+    <parameter name="-comment" type="string" scope_hidden_column="Comment" />
+    <condition property="value">
+      -from
+      -rise_from
+      -fall_from
+      -through
+      -to
+      -rise_to
+      -fall_to
+      value
+    </condition>
+  </constraint>
+
+  <constraint name="set_datapathonly_delay" scope_view="Delay Paths">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAYPATHTYPE" scope_column="Delay Type" scope_value="Datapath Only" hide_help="1"/>
+    <parameter_list name="-from" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="From"/>
+    <parameter_list name="-rise_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-through" type="productofsums" scope_column="Through"/>
+    <parameter_list name="-to" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="To"/>
+    <parameter_list name="-rise_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter name="value" type="float" required="true" scope_column="Max Delay"/>
+    <parameter name="-comment" type="string" scope_hidden_column="Comment" />
+    <condition property="value">
+      -from
+      -rise_from
+      -fall_from
+      -through
+      -to
+      -rise_to
+      -fall_to
+      value
+    </condition>
+  </constraint>
+
+  <constraint name="set_multicycle_path" scope_view="Delay Paths">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAYPATHTYPE" scope_column="Delay Type" scope_value="Multicycle" hide_help="1"/>
+    <parameter_list name="-from" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="From"/>
+    <parameter_list name="-rise_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_from" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-through" type="productofsums" scope_column="Through"/>
+    <parameter_list name="-to" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION" scope_column="To"/>
+    <parameter_list name="-rise_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter_list name="-fall_to" type="string" target="CLOCK CLOCK_ALIAS"/>
+    <parameter name="-setup" type="bool" scope_column="Setup"/>
+    <parameter name="-hold" type="bool" scope_column="Hold"/>
+    <parameter name="" type="string" scope_column="Start/End" target="STARTEND" scope_mapped_arguments="1" hide_help="1"/>
+    <parameter name="-start" type="bool" scope_map_to_column="Start/End" hide_help="1"/>
+    <parameter name="-end" type="bool" scope_map_to_column="Start/End" hide_help="1"/>
+    <parameter name="value" type="int" scope_column="Cycles"/>
+    <parameter name="-comment" type="string" scope_column="Comment" />
+    <condition property="value">
+      -from
+      -rise_from
+      -fall_from
+      -through
+      -to
+      -rise_to
+      -fall_to
+      value
+    </condition>
+  </constraint>
+
+  <constraint name="set_clock_latency" scope_view="Clocks" scope_parent_parameters="Name|Object" scope_parent_forced_prefix="c:">
+    <parameter name="-source" required="true" type="float" scope_column="Latency"/>
+    <parameter name="-rise" />
+    <parameter name="-fall" />
+    <parameter name="-clock" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter name="value" type="float" required="true"/>
+    <parameter_list name="object" type="string" target="CLOCK CLOCK_ALIAS PORT" required="true" />
+  </constraint>
+
+  <constraint name="set_clock_uncertainty" scope_view="Clocks" scope_parent_parameters="Name|Object" scope_parent_forced_prefix="c:">
+    <parameter_list name="-from" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-fall_from" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-rise_from" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-to" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-fall_to" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter_list name="-rise_to" type="string" target="CLOCK CLOCK_ALIAS" />
+    <parameter name="-setup" type="float"/>
+    <parameter name="value" type="float" required="true" scope_column="Uncertainty"/>
+    <parameter name="clock" type="string" required="true" />
+    <parameter name="-comment" type="string" scope_column="Comment" />
+  </constraint>
+
+  <constraint name="reset_path" scope_view="Delay Paths">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAYPATHTYPE" scope_column="Delay Type" scope_value="Reset Path" hide_help="1"/>
+    <parameter_list name="-from" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION"  scope_column="From"/>
+    <parameter name="-hold" />
+    <parameter name="-setup" />
+    <parameter_list name="-through" type="productofsums" scope_column="Through"/>
+    <parameter_list name="-to" type="string" target="CLOCK_EDGE CLOCK_ALIAS PORT SEQUENTIAL_INST PIN COLLECTION"  scope_column="To"/>
+    <parameter name="-comment" type="string" scope_hidden_column="Comment" />
+  </constraint>
+  
+  <constraint name="read_sdc" >
+    <parameter name="file_name" type="string" required="true" />
+  </constraint>
+
+  <constraint name="define_scope_collection" scope_view="Collections" helpid="HELPID_SCOPE_COLLECTIONS">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" />
+    <parameter name="" type="string" scope_column="Name" tclcmd_order="1" scope_init_width="20" hide_help="1"/>
+    <parameter name="" type="string" scope_column="Command" tclcmd_order="2" scope_init_width="40" hide_help="1" />
+    <parameter name="-comment" type="string" scope_column="Comment" />
+  </constraint>
+
+  <constraint name="define_attribute" scope_view="Attributes" helpid="HELPID_SCOPE_ATTRIB" scope_convert_command="define_global_attribute" scope_convert_column="Object">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" tclcmd_order="1"/>
+    <parameter name="" type="string" target="ATTRIBUTETYPE" scope_column="Object Type" hidden="1" scope_default="any" hide_help="1"/>
+    <parameter name="object" type="string" target="ATTRIBUTEOBJECT COLLECTION" scope_column="Object" scope_default="Global" scope_init_width="20" tclcmd_order="3"/>
+    <parameter name="attribute" type="string" target="ATTRIBUTE" scope_column="Attribute" scope_init_width="20" tclcmd_order="4"/>
+    <parameter name="value" type="string" target="ATTRIBUTEVALUE" scope_column="Value" tclcmd_order="5"/>
+    <parameter name="" type="string" scope_column="Value Type" scope_read_only_target="ATTRIBUTEVALUETYPE" hide_help="1"/>
+    <parameter name="" type="string" scope_column="Description" scope_read_only_target="ATTRIBUTEDESCRIPTION" scope_init_width="20" hide_help="1" />
+    <parameter name="-comment" type="string" scope_column="Comment" tclcmd_order="2"/>
+  </constraint>
+
+  <constraint name="define_global_attribute" scope_view="Attributes">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" tclcmd_order="1"/>
+    <parameter name="" type="string" target="ATTRIBUTETYPE" scope_column="Object Type" hidden="1" hide_help="1"/>
+    <parameter name="" type="string" target="ATTRIBUTEOBJECT COLLECTION" scope_column="Object" scope_value="&lt;Global&gt;" scope_exclusive_value="1" hide_help="1"/>
+    <parameter name="attribute" type="string" target="ATTRIBUTE" scope_column="Attribute" tclcmd_order="3"/>
+    <parameter name="value" type="string" target="ATTRIBUTEVALUE" scope_column="Value" tclcmd_order="4"/>
+    <parameter name="" type="string" scope_column="Value Type" scope_read_only_target="ATTRIBUTEVALUETYPE" hide_help="1"/>
+    <parameter name="" type="string" scope_column="Description" scope_read_only_target="ATTRIBUTEDESCRIPTION" hide_help="1" />
+    <parameter name="-comment" type="string" scope_column="Comment" tclcmd_order="2" />
+  </constraint>
+
+  <constraint name="define_io_standard" scope_view="I/O Standards" helpid="HELPID_SCOPE_IO_STANDARD">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" tclcmd_order="1"/>
+    <parameter name="" type="string" target="PORT COLLECTION" scope_column="Port" scope_init_width="20"  tclcmd_order="3" hide_help="1"/>
+    <parameter name="-default_bidir" type="bool" scope_column="Port" scope_default="default_bidir" scope_map_to="&lt;default_bidir&gt;"  tclcmd_order="4"/>
+    <parameter name="-default_output" type="bool" scope_column="Port" scope_default="default_output" scope_map_to="&lt;default_output&gt;"  tclcmd_order="5"/>
+    <parameter name="-default_input" type="bool" scope_column="Port" scope_default="default_input" scope_map_to="&lt;default_input&gt;"  tclcmd_order="6"/>
+    <parameter name="-delay_type" type="string" target="DELAY_TYPE" scope_column="Type"/>
+    <parameter name="syn_pad_type" type="string" target="IO_STANDARD" scope_column="I/O Standard" scope_force_write="1" scope_init_width="20"  tclcmd_order="7"/>
+    <parameter name="dynamic columns" scope_column="IOSTD_DYNAMIC_COLUMNS" hide_help="1"/>    <!-- Dynamic columns for the I/O Standards view are added here -->
+    <parameter name="syn_io_slew" type="string" scope_force_write="1" scope_hidden_column="Slew Rate"/>
+    <parameter name="syn_io_drive" type="string" scope_force_write="1" scope_hidden_column="Drive Strength"/>
+    <parameter name="syn_io_termination" type="string" scope_force_write="1" scope_hidden_column="Termination"/>
+    <parameter name="syn_io_schmitt" type="string" scope_force_write="1" scope_hidden_column="Schmitt"/>
+    <parameter name="syn_io_power" type="string" scope_force_write="1" scope_hidden_column="Power"/>
+    <parameter name="syn_io_dci" type="string" scope_force_write="1" scope_hidden_column="DCI"/>
+    <parameter name="syn_io_dv2" type="string" scope_force_write="1" scope_hidden_column="DV2"/>
+    <parameter name="" type="string" scope_column="Description" scope_read_only_target="IOSTANDARDDESCRIPTION" hide_help="1"/>
+    <parameter name="-comment" type="string" scope_column="Comment" tclcmd_order="2" />
+  </constraint>
+
+  <constraint name="define_compile_point" scope_view="Compile Points" helpid="HELPID_SCOPE_COMPILEPOINT">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" />
+    <parameter name="module" type="string" target="VIEW" scope_column="View" scope_init_width="20" />
+    <parameter name="-type" type="string" target="COMPILE_POINT_TYPE" scope_column="Type" scope_init_width="15" />
+    <parameter name="-comment" type="string" scope_column="Comment" />
+    <parameter name="-cpfile" type="string" />
+  </constraint>
+
+  <constraint name="define_haps_io">
+    <parameter name="object" type="string" target="PORT" required="true"/>
+    <parameter_list name="haps_io" type="string" target="PIN PORT"required="true"/>    
+    <parameter name="-comment" type="string" />
+  </constraint>
+
+  
+  <constraint name="set_clock_route_delay" >
+    <parameter_list name="object" type="string" target="CLOCK CLOCK_ALIAS" required="true"/>
+    <parameter name="value" type="float" required="true"/>
+  </constraint>
+    
+  <constraint name="set_reg_input_delay" scope_view="Registers" helpid="HELPID_SCOPE_FDC_REGISTERS">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable" scope_init_width="5" />
+    <parameter name="" type="string" target="DELAY_TYPE" scope_column="Delay Type" scope_value="input" hide_help="1"/>
+    <parameter_list name="object" type="string" target="REGISTER COLLECTION" required="true" scope_column="Register" scope_init_width="20" tclcmd_order="1" />
+    <parameter name="-route" type="float" required="true" scope_column="Route"/>
+    <parameter name="-comment" type="string" scope_column="Comment" />
+  </constraint>
+
+  <constraint name="set_reg_output_delay" scope_view="Registers">
+    <parameter name="-disable" type="bool" inverted_bool="1" scope_column="Enable"/>
+    <parameter name="" type="string" target="DELAY_TYPE" scope_column="Delay Type" scope_value="output" hide_help="1"/>
+    <parameter_list name="object" type="string" target="REGISTER COLLECTION" required="true" scope_column="Register" tclcmd_order="1" />
+    <parameter name="-route" type="float" required="true" scope_column="Route"/>
+    <parameter name="-comment" type="string" scope_column="Comment" />
+  </constraint>
+
+  
+  <constraint name="get_cells" default_hightlight="true">
+    <parameter name="-hierarchical" />
+    <parameter name="-nocase" />
+    <parameter name="-regexp"/>
+    <parameter name="-filter" type="string"/>
+    <parameter name="value" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="get_clocks" default_hightlight="true">
+    <parameter name="-include_generated_clocks" />
+    <parameter name="-nocase" />
+    <parameter name="-regexp"/>
+    <parameter name="-filter" type="string"/>
+    <parameter_list name="&lt;pattern&gt; |-of_objects" type="string" target="NET PIN" />
+    <parameter name="value" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="get_nets" default_hightlight="true">
+    <parameter name="-hierarchical" />
+    <parameter name="-nocase" />
+    <parameter name="-regexp | -exact"/>
+    <parameter name="-filter" type="string"/>
+    <parameter_list name="&lt;pattern&gt; |-of_objects" type="string" target="NET PIN PORT CELL" />
+    <parameter name="value" type="string" required="true"/>
+  </constraint>
+  
+  <constraint name="get_pins" default_hightlight="true">
+    <parameter name="-hierarchical" />
+    <parameter name="-nocase" />
+    <parameter name="-regexp | -exact"/>
+    <parameter name="-filter" type="string"/>
+    <parameter name="value" type="string" required="true"/>
+    <parameter_list name="&lt;pattern&gt;|[-leaf] -of_objects" type="string" target="NET CELL" />
+  </constraint>
+  
+  <constraint name="get_ports" default_hightlight="true">
+    <parameter name="-nocase" />
+    <parameter name="-regexp"/>
+    <parameter name="-filter" type="string"/>
+    <parameter name="value" type="string" required="true"/>
+  </constraint>
+  
+  <constraint name="all_clocks" default_hightlight="true"/>
+
+  <constraint name="all_inputs" default_hightlight="true">
+    <parameter name="-clock" type="string"/>
+  </constraint>
+
+  <constraint name="all_outputs" default_hightlight="true">
+    <parameter name="-clock" type="string"/>
+  </constraint>
+
+  <constraint name="all_registers" default_hightlight="true">
+    <parameter name="-clock" type="string"/>
+    <parameter name="-rise_clock" type="string"/>
+    <parameter name="-fall_clock" type="string"/>
+    <parameter name="-cells" />
+    <parameter name="-data_pins" />
+    <parameter name="-clock_pins" />
+    <parameter name="-output_pins" />
+    <parameter name="-no_hierarchy" />
+  </constraint> 
+  
+</Constraint_Commands>
+                  

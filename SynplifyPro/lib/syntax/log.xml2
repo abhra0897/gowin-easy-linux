@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/log.xml2#1 $ -->
+<syntax name="Log Files" extension="log srr tah">
+	<block name="Comment" start="#" fg="#00a000" bg="white"/>
+
+	<block name="Warning" start="@W:" fg="#b40040" bg="white"/>
+	<block name="Error" start="@E:" fg="#ff0000" bg="white"/>
+	<block name="Note" start="@N:" fg="#0000ff" bg="white"/>
+	<block name="Info" start="@I:" fg="#00a0a0" bg="white"/>
+	
+	<block name="Chapter" start="@S" fg="#800000" bg="white"/>
+	<block name="ClockRecord" start="@X" fg="#002020" bg="#c0e0e0" bold="1"/>
+</syntax>

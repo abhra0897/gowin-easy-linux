@@ -1,0 +1,745 @@
+<?xml version="1.0"?>
+<dyndialog>
+
+<dialog id="ipdesign_counter" text="Counter Wizard" width="850" height="650">
+
+
+   	 
+    <graph_def id="graph_def1" fgcolor="white" bgcolor="#909090"> 
+   	 <icon src="abc.png" x="4" y="4" name="test1" />  
+  
+   	 <text x="60" y="180">COUNTER</text>
+
+   
+         <in name="PortClk"                   width="2" color="blue" />
+         <in name="PortCE"                    width="2" color="blue" />
+         <in name="" width="0" color="#909090" />
+         <in name="PortRst"                  width="2" color="blue" />
+         <in name="" width="0" color="#909090" />
+         <in name="PortUp_n_Down"              width="2" color="blue" enabled_if="X8_UPDOWN"/>
+         <in name="" width="0" color="#909090" />
+         <in name="PortLoad"                  width="2" color="blue" enabled_if="X9_ALLOW_LOAD"/>
+         <in name="PortLoadValue"             width="2" color="blue" enabled_if="X9_ALLOW_LOAD and X12_DYNAMIC_LOAD"/>
+         
+         <out name="PortCount"                  width="6" color="blue" />	 
+   </graph_def>
+
+   
+      <!-- GUI Design -->
+<tab id="parameters" text="COUNTER Parameters">
+
+      <hline> 
+
+      <graph id="graph1" def="graph_def1" text="SynCore COUNTER" width="350" height="550">
+      </graph>     
+      
+  <!-- Start of Page 1 -->
+      
+      <page id="page1" text="Counter Compiler">
+  
+  <!-- Component field -->
+  
+      <lineedit id="X1_COMPONENT" text="Component Name" required="true">
+       <value> </value>
+      </lineedit>        
+  
+      <line /> <!-- This is to add an line separator -->
+  
+   
+  <!-- Directory field -->
+ 
+      <lineedit id="X2_DIRECTORY" type="directory" text="Directory" required="true" tooltip="Spaces in Directory path not supported">   
+        <value> </value>
+     </lineedit>	
+     <line />   <!-- This is to add an line separator -->
+
+ <!-- Filename field -->
+  
+     <lineedit id="X3_FILENAME" type="save_file" text="File Name" required="true" tooltip="Filename should not be with .v extension"> 
+       <value> </value>
+
+     </lineedit>	
+     
+ 	     <group  text="Configure the Counter Parameters" >
+         <lineedit id="X4_COUNT_WIDTH" type="int" text=" Width of Counter" required="true" >
+                  <value></value>
+                  <min_value>1</min_value>
+                  <max_value>10000</max_value>
+         </lineedit>
+         
+         <lineedit id="X5_STEP" type="int" text="Counter Step Value"  required="true" >
+                  <value></value>
+                  <min_value>1</min_value>
+                  <max_value>100000</max_value>
+         </lineedit>
+         </group>
+         
+         <group text="Configure the Mode of Counter" >
+     
+         <radio id ="X6_UP" text="Up Counter"   >
+                   <on_value>CMODE=1</on_value>
+		           
+		 </radio>
+         <radio id ="X7_DOWN" text="Down Counter"  >
+                   <on_value>CMODE=2</on_value>
+		           
+		 </radio>
+		 <radio id ="X8_UPDOWN" text="UpDown Counter" >
+                   <on_value>CMODE=3</on_value>
+		           
+		 </radio>
+		
+		 </group>
+	
+ <line /> <!-- This is to add an line separator -->
+       
+    
+ </page> <!-- End of Page 1 -->
+
+<page id="page2">    
+ <group text="Additional Configurations" >
+ 	  <group text="Configure Load options" >
+
+ 	        <check id="X9_ALLOW_LOAD" text="Enable Load option" >
+ 	        		<value>false</value>
+                   <on_value>X9_ALLOW_LOAD=1</on_value>
+		           <off_value>X9_ALLOW_LOAD=0</off_value>
+
+		    </check>
+               
+
+		   <group text="Configure Load Value" >
+		   			<check id="X10_CONSTANT_LOAD" text="Load Constant Value" enabled_if="X9_ALLOW_LOAD" checked_if="X9_ALLOW_LOAD and !X12_DYNAMIC_LOAD" unchecked_if="!X9_ALLOW_LOAD or X9_ALLOW_LOAD and X12_DYNAMIC_LOAD">
+ 	        			<value>false</value>
+                   		<on_value>X10_CONSTANT_LOAD=1</on_value>
+		           		<off_value>X10_CONSTANT_LOAD=0</off_value>
+		            </check>
+		            <lineedit id="X11_LOAD_VALUE" text="Load Value for constant load option" level="2" required_if="X9_ALLOW_LOAD and X10_CONSTANT_LOAD" enabled_if="X9_ALLOW_LOAD and X10_CONSTANT_LOAD" >
+		            			<value>1</value>
+		            			
+                    </lineedit>
+					<check id="X12_DYNAMIC_LOAD" text="Use the port PortLoadValue to load Value" enabled_if="X9_ALLOW_LOAD"  checked_if="X9_ALLOW_LOAD and !X10_CONSTANT_LOAD" unchecked_if="!X9_ALLOW_LOAD or X9_ALLOW_LOAD and X10_CONSTANT_LOAD">
+ 	        			<value>false</value>
+                   		<on_value>X12_DYNAMIC_LOAD=1</on_value>
+		           		<off_value>X12_DYNAMIC_LOAD=0</off_value>
+		            </check>
+		    </group>
+
+		    
+	 </group>
+	 
+	 <group  text="Configure Reset type" >
+            <hline>
+			<radio id="X13_RESET_TYPE" text="Synchronous Reset" level="1" >	   
+	 	    <on_value> X13_RESET_TYPE=0 </on_value> 	      
+	      </radio>
+	      <radio id="X13_RESET_TYPE" text="Asynchronous Reset" level="1" >	   
+	 	    	<on_value> X13_RESET_TYPE=1 </on_value> 	      
+	    	</radio>	         	         
+            </hline>
+    </group>
+  </group>
+</page> <!-- End of Page 2 -->
+		  
+</hline>
+</tab>
+
+
+ <tab id="overview" text="Core Overview">      
+      
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synopsys, Inc.</value>
+         </lineedit>
+         
+         <lineedit id="creation_date" text="Creation Date:" readonly="true">
+            <value>December 31, 2007</value>
+         </lineedit>
+         
+         <lineedit id="core_type" text="Core Type:" readonly="true">
+            <value>SYNCORE Parameterizable</value>
+         </lineedit>
+         
+	      
+         <lineedit id="info" readonly="true" stretch="true" src="../../lib/html/doc1.html">
+            <value type="html">
+
+<![CDATA[
+<h2>SYNCORE COUNTER COMPILER</h2>
+The SYNCORE Counter compiler helps designers create counter models for their designs.<br>
+These Counter models are written out in HDL and can be synthesized as well as simulated.<br>
+A testbench is provided for the Counter models created by the SYNCORE Counter compiler.<br><br>
+
+For detailed information on the SYNCORE Counter compiler and its various options, click the COUNTER Info button at the bottom of this window.<br>
+
+If you have any questions or issues, please contact support at www.solvnet.com .
+
+]]>
+         </value>
+         </lineedit>
+
+</tab>
+
+<!-- Removing the Contact tab untill we get proper information for Documentation Group -->
+<!--
+    <tab id="contact" text="Contact">
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synplicity, Inc.</value>
+         </lineedit>
+         <lineedit id="address" text="Address:" readonly="true">
+            <value>
+600 W.California Ave.
+Sunnyvale, CA 94086
+            </value>
+         </lineedit>
+         <lineedit id="phone" text="Phone:" readonly="true">
+            <value>(408) 215-0000</value>
+         </lineedit>
+   
+         <lineedit id="Description" readonly="true" stretch="true">
+ <value>
+Synplicity, Inc. is a leading supplier of innovative synthesis, verification, and physical implementation software solutions that enable the rapid and effective design and verification of semiconductors. Synplicity's high-quality, high-performance tools significantly reduce costs and time-to-market for FPGA designers. The company's underlying Behavior Extracting Synthesis Technology (BEST), which is embedded in its logical, physical, and verification tools, is responsible for Synplicity's top position in FPGA synthesis. The company's fast, easy-to-use products support industry standard design languages (VHDL and Verilog) and run on popular platforms. Synplicity employs over 280 people in its 20 facilities worldwide. Synplicity is headquartered in Sunnyvale, California.
+   
+            </value>
+         </lineedit>
+      </tab>
+-->	  
+    <button id="generate" text="&amp;Generate" action="execute" tooltip="Generate Counter Core">
+            <!-- <command>generate_tcl_command</command> -->
+        <command>counter_proc</command> 
+    </button>
+    
+    	<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog" />      	
+       	<button id="CounterInfo" text="&amp;COUNTER Info..." width="700" height="400" action="info" filename="counter_compiler_new.html" tooltip="Display Syncore Counter info" />
+            	
+-->
+<!-- Start of Tcl script  -->
+
+
+<tcl> <![CDATA[
+
+	
+proc counter_proc {0 1 2 3 4 5 6 7 8 9 10 } {
+
+set COMPONENT    	 			[lindex [split $0 = ] 1 ]
+set DIRECTORY                   [lindex [split $1 = ] 1 ]
+set FILENAME                    [lindex [split $2 = ] 1 ] 
+
+#### Extract extension of the the FILENAME #########
+set FNAME_EXT [file extension $FILENAME]  
+
+##### Check if extension of filename is any of {.v,.sv } and if not add ".v" extension #################
+
+if {[string match {.v} $FNAME_EXT  ] ==0  && [string match {.sv} $FNAME_EXT  ] ==0   } {    
+	  set FILENAME "$FILENAME.v"
+   }
+###############################   
+	
+    
+set COUNT_WIDTH  				[lindex [split $3 = ] 1 ]
+set STEP     				    [lindex [split $4 = ] 1 ]
+set CMODE                       [lindex [split $5 = ] 1 ]
+set ALLOW_LOAD					[lindex [split $6 = ] 1 ]
+set CONSTANT_LOAD				[lindex [split $7 = ] 1 ]
+set LOAD_VALUE				    [lindex [split $8 = ] 1 ]
+set DYNAMIC_LOAD				[lindex [split $9 = ] 1 ]
+set RESET_TYPE				    [lindex [split $10 = ] 1 ]
+
+
+if { $CMODE == 1} {
+set UP 1
+} else {
+set UP 0
+}
+
+if { $CMODE == 2} {
+set DOWN 1 
+} else {
+set DOWN 0
+}      	
+
+if { $CMODE == 3} {
+set UPDOWN 1 
+} else {
+set UPDOWN 0
+}      	
+######################################################
+
+
+#### If SYN_TCL_HOOKS is set and it changes the pwd, this fails 
+####  set install_dir [pwd]
+
+#### So Using the alternate command $LIB to set the variable
+global LIB
+
+set install_dir $LIB/syncore/xml/arithmetic/counter
+
+file mkdir $DIRECTORY
+
+file copy -force $install_dir/../../../models/arithmetic/counter/syncore_counter.v $DIRECTORY/syncore_counter.v 
+file copy -force $install_dir/../../../models/arithmetic/counter/readme.txt $DIRECTORY/readme.txt
+
+## Set local params depending on inputs from XML params
+
+if {$UP == 1} {
+  set MODE \"Up\"
+}
+if {$DOWN == 1} {
+  set MODE \"Down\"
+}
+if {$UPDOWN == 1} {
+  set MODE \"Dynamic\"
+}
+
+#configuring local param LOAD
+
+if {$ALLOW_LOAD == 1} {
+
+  if {$CONSTANT_LOAD == 1} {
+      
+     set LOAD 1
+
+  } elseif {$DYNAMIC_LOAD ==1} {
+  
+     set LOAD 2
+  }
+
+} else  {
+
+  set LOAD 0
+
+}
+
+
+#cd  $DIRECTORY
+
+## ----------------------------------------------------------------------------------------------
+## Code for  generate options file generation
+## ----------------------------------------------------------------------------------------------
+
+set cf [open $DIRECTORY/options.txt w+]
+
+ puts $cf "#### Result Directory Options#####"
+ puts $cf "COMPONENT        =   $COMPONENT"
+ puts $cf "DIRECTORY        =   $DIRECTORY"
+ puts $cf "FILENAME         =   $FILENAME"
+
+ puts $cf "#### Implementation Options#####"
+ puts $cf "COUNT_WIDTH      =   $COUNT_WIDTH"
+ puts $cf "STEP             =   $STEP"
+ puts $cf "RESET_TYPE       =   $RESET_TYPE" 
+ puts $cf "MODE             =   $MODE"
+ 
+ puts $cf "LOAD             =   $LOAD"
+  
+ if {$ALLOW_LOAD == 1} {
+   if {$CONSTANT_LOAD == 1} {
+        puts $cf "LOAD_VALUE             =   $LOAD_VALUE"
+       }
+    }
+
+ close $cf
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for Instantiation file generation
+## ----------------------------------------------------------------------------------------------
+
+set vf [open $DIRECTORY/instantiation_file.vin w+]
+ 
+   puts $vf "// The following must be inserted into your Verilog file for this"
+   puts $vf "// core to be instantiated. Change the instance name and port connections"
+   puts $vf "// (in parentheses) to your own signal names."
+   puts $vf "\n"
+   puts $vf "//----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG"
+   puts $vf "\n"
+   puts $vf "$COMPONENT             #( "
+   puts $vf "                            .COUNT_WIDTH(COUNT_WIDTH),"
+   puts $vf "                            .STEP(STEP),"
+   puts $vf "                            .LOAD(LOAD),"
+   
+   if {$ALLOW_LOAD == 1} {
+       if {$CONSTANT_LOAD == 1} {
+            puts $vf "                            .LOAD_VALUE(LOAD_VALUE),"
+            }
+    }
+    
+   puts $vf "                            .RESET_TYPE(RESET_TYPE)"
+    
+   puts $vf "	                     ) "
+   
+   puts $vf "<InstanceName>          ( "
+   puts $vf "                         // Output Ports"
+   puts $vf "                         .PortCount(PortCount),"
+
+   puts $vf "                         // Input  Ports"
+   puts $vf "                         .PortClk(PortClk),"
+   puts $vf "                         .PortRST(PortRST),"
+    
+   if {$UPDOWN == 1} {
+     puts $vf "                         .PortUp_nDown(PortUp_nDown),"
+	}
+   
+    if {$ALLOW_LOAD == 1} {
+     puts $vf "                         .PortLoad(PortLoad),"
+     
+     if {$DYNAMIC_LOAD == 1} {
+         puts $vf "                         .PortLoadValue(PortLoadValue),"
+        }		
+	}
+
+    
+  
+   puts $vf "                         .PortCE(PortCE)"
+   puts $vf "	                     ); "
+
+   close $vf
+
+## ----------------------------------------------------------------------------------------------
+
+   
+## ----------------------------------------------------------------------------------------------
+## Code for wrapper file generation
+## ----------------------------------------------------------------------------------------------
+
+if { [string match [file dirname  $FILENAME] "." ] } { 	    ### The FILENAME has just the file name
+    set WFILENAME "$DIRECTORY/$FILENAME"
+  } else {                                              	### The FILENAME has a directory/filename structure
+	file mkdir [file dirname $FILENAME]
+	set WFILENAME "$FILENAME"
+}
+
+set wf [open $WFILENAME w+ ]
+  
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// --- "
+    puts $wf "// ---                 (C) COPYRIGHT 2001-2010 SYNOPSYS, INC. "
+    puts $wf "// ---                           ALL RIGHTS RESERVED "
+    puts $wf "// --- "
+    puts $wf "// --- This software and the associated documentation are confidential and "
+    puts $wf "// --- proprietary to Synopsys, Inc.  Your use or disclosure of this "
+    puts $wf "// --- software is subject to the terms and conditions of a written "
+    puts $wf "// --- license agreement between you, or your company, and Synopsys, Inc. "
+    puts $wf "// --- "
+    puts $wf "// --- The entire notice above must be reproduced on all authorized copies. "
+    puts $wf "// --- "
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// "
+    puts $wf " "
+
+  puts $wf "`timescale 1ns/100ps"
+  puts $wf "\n"
+  puts $wf "module  $COMPONENT   #("
+  puts $wf "                         parameter COUNT_WIDTH  = $COUNT_WIDTH,"
+  puts $wf "                         parameter STEP         = $STEP,"
+  puts $wf "                         parameter RESET_TYPE   = $RESET_TYPE,"
+  puts $wf "                         parameter LOAD         = $LOAD,"
+
+
+  if {$ALLOW_LOAD == 1} {
+      if {$CONSTANT_LOAD == 1} {
+           puts $wf "                         parameter LOAD_VALUE   = $LOAD_VALUE,"
+      }
+  }
+
+  puts $wf "                         parameter MODE         = $MODE"
+  puts $wf "                      ) "
+  puts $wf "                      ( "
+
+  puts $wf {                       // Output Ports}
+  puts $wf {                         output wire [COUNT_WIDTH-1:0] PortCount,}
+  puts $wf {                       // Input  Ports}
+  puts $wf {                         input  wire                   PortClk,}
+  puts $wf {                         input  wire                   PortRST,}
+   
+   if {$UPDOWN == 1} {
+    puts $wf {                         input  wire                   PortUp_nDown,}
+   }
+  
+   if {$ALLOW_LOAD == 1} {
+    puts $wf {                         input  wire                   PortLoad,}
+   
+      if {$DYNAMIC_LOAD == 1} {
+       puts $wf {                         input  wire [COUNT_WIDTH-1:0] PortLoadValue,}
+      }		
+   }
+   
+  puts $wf {                         input  wire                   PortCE}
+  puts $wf {                      ); }
+
+
+
+  puts $wf {};
+ # SynCoreCounter
+   
+  puts $wf "SynCoreCounter       #("
+  puts $wf "                         .COUNT_WIDTH(COUNT_WIDTH),"
+  puts $wf "                         .STEP(STEP),"
+  puts $wf "                         .RESET_TYPE(RESET_TYPE),"
+  puts $wf "                         .LOAD(LOAD),"
+
+   if {$ALLOW_LOAD == 1} {
+  	if {$CONSTANT_LOAD == 1} {
+       puts $wf "                         .LOAD_VALUE(LOAD_VALUE),"
+      }
+
+   }
+  puts $wf "                         .MODE(MODE)"
+  puts $wf "                      ) "
+   
+  puts $wf "SynCoreCounter_ins1   ( "
+  puts $wf "                         .PortCount(PortCount),"
+
+  puts $wf "                         .PortClk(PortClk),"
+  puts $wf "                         .PortRST(PortRST),"
+    
+    if {$UPDOWN == 1} {
+     puts $wf "                         .PortUp_nDown(PortUp_nDown),"
+	}
+   
+    if {$ALLOW_LOAD == 1} {
+     puts $wf "                         .PortLoad(PortLoad),"
+
+       if {$DYNAMIC_LOAD == 1} {
+        puts $wf "                         .PortLoadValue(PortLoadValue),"
+        }	
+    }	
+  
+  puts $wf "                         .PortCE(PortCE)"
+  puts $wf "                       ); "
+  
+  puts $wf {};
+
+  puts $wf "endmodule "
+
+  close $wf
+## ----------------------------------------------------------------------------------------------
+
+  
+## ----------------------------------------------------------------------------------------------
+## Code for TestBench Generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "."] } {  ### The FILENAME has just the filename
+	set TBFILE "$DIRECTORY/tb_$FILENAME" 
+} else {                                               ### The FILENAME has a directory/filename structure
+    set FDIR [file dirname $FILENAME]
+    set FNAME [file tail $FILENAME]
+	set TBFILE "$FDIR/tb_$FNAME"
+}
+
+set tf [open $TBFILE w+]
+
+puts $tf "`timescale 1ns/1ps " 
+puts $tf "\n " 
+puts $tf "module tb_syncore_counter (); " 
+puts $tf "\n " 
+puts $tf "//UUT parameters " 
+puts $tf "parameter COUNT_WIDTH 	= $COUNT_WIDTH; " 
+puts $tf "parameter STEP 		= $STEP; " 
+puts $tf "parameter MODE 		= $MODE; "
+ puts $tf "parameter LOAD 		= $LOAD; " 
+ 
+if {$ALLOW_LOAD == 1} {
+   if {$CONSTANT_LOAD == 1} {
+     puts $tf "parameter LOAD_VALUE 	= $LOAD_VALUE; " 
+   }
+}
+
+puts $tf "parameter RESET_TYPE 	= $RESET_TYPE; " 
+puts $tf "\n " 
+puts $tf "//UUT signals " 
+puts $tf "reg	PortClk; " 
+puts $tf "reg	PortRST; " 
+if {$UPDOWN == 1} {
+  puts $tf "reg	PortUp_nDown; " 
+}
+
+puts $tf "reg	PortCE; " 
+
+if {$ALLOW_LOAD == 1} {
+  puts $tf "reg	PortLoad; " 
+  if {$DYNAMIC_LOAD == 1} {
+  puts $tf "reg \[COUNT_WIDTH-1:0\] PortLoadValue; "
+  }
+}
+
+
+
+puts $tf "\n " 
+puts $tf "wire \[COUNT_WIDTH-1:0\]PortCount; "
+puts $tf "\n " 
+puts $tf "//TB parameters " 
+puts $tf "parameter CLOCK_PERIOD = 20; " 
+puts $tf "//TB signals " 
+puts $tf "\n " 
+puts $tf "\n " 
+puts $tf "$COMPONENT     #("
+puts $tf "                   .COUNT_WIDTH(COUNT_WIDTH), "
+puts $tf "                   .STEP(STEP), "
+puts $tf "                   .RESET_TYPE(RESET_TYPE),"
+puts $tf "                   .LOAD(LOAD), " 
+if {$ALLOW_LOAD == 1} {
+     if {$CONSTANT_LOAD == 1} {
+    puts $tf "                   .LOAD_VALUE(LOAD_VALUE), " 
+   }
+}
+
+puts $tf "                   .MODE(MODE) " 
+puts $tf "                )" 
+puts $tf " \n "
+puts $tf "            uut (" 
+puts $tf " 	                 .PortClk(PortClk), "
+puts $tf " 	                 .PortRST(PortRST), "
+
+if {$UPDOWN == 1} {
+  puts $tf " 	                 .PortUp_nDown(PortUp_nDown), " 
+}
+
+puts $tf " 	                 .PortCE(PortCE), "
+
+if {$ALLOW_LOAD == 1} {
+  puts $tf " 	                 .PortLoad(PortLoad), "
+  if {$DYNAMIC_LOAD == 1} {
+  puts $tf " 	                 .PortLoadValue(PortLoadValue), "
+  }
+}
+
+
+
+puts $tf " 	                 .PortCount(PortCount)"
+puts $tf "                );" 
+puts $tf "\n " 
+puts $tf "//clock generation " 
+puts $tf "always @ (*) begin " 
+puts $tf "   PortClk <= #(CLOCK_PERIOD/2) ~PortClk; " 
+puts $tf "end " 
+puts $tf "\n " 
+puts $tf "//Initilization " 
+puts $tf "initial begin " 
+puts $tf "   PortClk     <= 0; " 
+
+if {$UPDOWN == 1} {
+  puts $tf "	PortUp_nDown  <= 1; " 
+}
+
+puts $tf "	PortCE 	  <= 0; " 
+
+if {$DYNAMIC_LOAD == 1} {
+  puts $tf "	PortLoadValue <= 0; " 
+}
+
+if {$ALLOW_LOAD == 1} {
+  puts $tf "	PortLoad	  <= 0; " 
+}
+puts $tf "	PortRST       <= 0; " 
+puts $tf "	#100; " 
+puts $tf "	PortRST       <= 1; " 
+puts $tf "   #100; " 
+puts $tf "	PortRST       <= 0; " 
+puts $tf "	#200; " 
+puts $tf "	Generate_Input; " 
+puts $tf "	#500; " 
+puts $tf "	\$stop; " 
+puts $tf "\n " 
+puts $tf "end " 
+puts $tf "\n " 
+puts $tf "task Generate_Input; " 
+puts $tf "begin " 
+puts $tf "	PortCE 	 	<= 1;"
+puts $tf "	repeat (10) "
+puts $tf "   @ (posedge PortClk);"
+puts $tf "	PortCE 	 	<= 0;"
+puts $tf "	@ (negedge PortClk);"
+
+if {$UPDOWN == 1} {
+  puts $tf "	 PortUp_nDown  	<= 0; "
+}
+
+ if {$ALLOW_LOAD == 1} {
+   puts $tf "	 PortLoad		<= 1; " 
+   
+   if {$DYNAMIC_LOAD == 1} {
+   puts $tf "	 PortLoadValue	<= $COUNT_WIDTH'd50  ; " 
+   }
+   
+   puts $tf "	@(negedge PortClk);"
+   puts $tf "	 PortCE 	 	<= 1;"
+ }
+
+ puts $tf "	@ (negedge PortClk); " 
+
+ if {$UPDOWN == 1} {
+ puts $tf "    PortUp_nDown  	<= 0; " 
+ }
+
+ if {$ALLOW_LOAD == 1} {
+ puts $tf "    PortLoad		<= 0; " 
+ 
+    if {$DYNAMIC_LOAD == 1} {
+     puts $tf "    PortLoadValue	<= 0; " 
+    }
+ }
+ puts $tf "	PortCE 	 	<= 1;"
+ puts $tf "\n " 
+ puts $tf "	repeat (10) " 
+ puts $tf "     @ (posedge PortClk); " 
+ puts $tf "\n " 
+
+ # end for UPDOWN == 1
+
+puts $tf "end " 
+puts $tf "endtask " 
+puts $tf "\n " 
+puts $tf "endmodule " 
+
+
+
+close $tf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Syncore Generated files list
+## ----------------------------------------------------------------------------------------------
+
+## Filelist Generation
+
+ set lf [open $DIRECTORY/filelist.txt w+]
+ puts $lf "filelist.txt             -- Contains list of files written out by SynCore"
+ puts $lf "options.txt              -- Contains all the options selected in SynCore"
+ puts $lf "readme.txt               -- Contains brief description and known issues"
+ puts $lf "syncore_counter.v        -- Verilog library file required to generate Core Model" 
+ 
+ if { [ string match [file dirname  $FILENAME] "." ] } {
+	 puts $lf "tb_$FILENAME         -- Verilog testbench file to simulate Core Model"
+ } else {
+     puts $lf "$TBFILE              -- Verilog testbench file to simulate Core Model"
+ }
+
+ puts $lf "$FILENAME 		        -- Core Model wrapper file"
+ puts $lf "instantiation_file.vin 	-- Core Model wrapper instantiation information"
+ close $lf
+
+## ----------------------------------------------------------------------------------------------
+
+ cd $install_dir
+
+
+}
+   ]]> </tcl>
+
+
+ </dialog>
+   
+</dyndialog>
+
+
+

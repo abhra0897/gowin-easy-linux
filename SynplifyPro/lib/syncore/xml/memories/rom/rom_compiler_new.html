@@ -1,0 +1,1186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>SYNCore ROM Compiler</title>
+  </head>
+
+  <body>
+
+
+<center><font face="Arial, Helvetica, sans-serif" size="2"></center>
+
+<a name="wp1361166"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="6">
+SYNCore ROM Compiler
+</font></div></h1>
+
+
+<a name="wp1428859"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP wizard helps you generate Verilog code for your ROM implementation requirements. You can find the following information here:
+</font></p>
+<ul>
+
+<a name="wp1428862"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a></font></li>
+
+<a name="wp1428867"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428677">Port List</a></font></li>
+
+<a name="wp1428868"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428748">Specifying Parameters</a></font></li>
+
+<a name="wp1428869"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428459">SYNCore ROM Parameters</a></font></li>
+
+<a name="wp1428863"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428939">SYNCore ROM Functional Overview</a></font></li>
+</ul>
+
+<a name="wp1428857"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying ROMs with SYNCore
+</font></h3>
+<a name="wp1428609"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to generate Verilog code for a ROM using the SYNCore IP wizard. Note that the SYNCore ROM model uses Verilog 2001. When adding a ROM model to a Verilog-95 design, be sure to enable the <b>Verilog 2001</b> check box on the Verilog tab of the Implementation Options dialog box or include a <b>set_option -vlog_std v2001</b> statement in your project file to prevent a syntax error.
+
+</font></p>
+<ol type="1">
+
+<a name="wp1428610"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard. </font></li>
+<ul>
+
+<a name="wp1428611"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the FPGA synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon_qt.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard. </font></li>
+<a name="wp1428618"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_mainwin_96.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428619"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the window that opens, select <b>rom_model</b> and click <b>Ok</b> to open page 1 of the wizard. </font></li>
+<a name="wp1428623"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_rom_model.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp1428624"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the parameters you need in the wizard. For details about the parameters, see <a  href="rom_compiler_new.html#wp1428748">Specifying Parameters</a>. The ROM symbol on the left reflects any parameters you set. </font></li>
+
+<a name="wp1428628"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">After you have specified all the parameters you need, click the <b>Generate</b> button in the lower left corner. The tool displays a confirmation message (<b>TCL execution successful!</b>) and writes the required files to the directory you specified on page 1 of the wizard. The HDL code is in Verilog. </font></li>
+
+<a name="wp1428629"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+SYNCore also generates a testbench for the ROM. The testbench covers a limited set of vectors.
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428630"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now close the SYNCore ROM Compiler.
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428631"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the ROM files if necessary. If you want to use the synchronous ROMs available in the target technology, make sure to register either the read address or the outputs. </font></li>
+
+<a name="wp1428632"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Add the ROM you generated to your design. </font></li>
+<ul>
+
+<a name="wp1428633"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated and the <b>syncore_rom.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard. </font></li>
+<a name="wp1428634"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.vin</b> template file. This file is located in the same output files directory. Copy the lines that define the ROM, and paste them into your top-level module. The following figure shows a template file (in red text) inserted into a top-level module.</font></li>
+<a name="wp1428656"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="rom_html_source10.png" height="280" width="553" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428657"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.</font></li>
+<a name="wp1428676"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="rom_html_source11.png" height="278" width="550" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp1428677"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Port List
+</font></h3>
+<a name="wp1428678"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+PortA interface signals are applicable for both single-port and dual-port configurations; PortB signals are applicable for dual-port configuration only.
+</font></p>
+
+<a name="wp1428746"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428681"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+ Name
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428683"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Type
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428685"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428687"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ClkA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428689"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428691"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock input for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428693"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>EnA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428695"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428697"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable input for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428699"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>AddrA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428701"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428703"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read address for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428705"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ResetA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428707"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428709"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset or interface disable pin for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428711"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>DataA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428713"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Output
+</font></div>
+</td>
+    <td>
+<a name="wp1428715"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read data output for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428717"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ClkB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428719"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428721"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock input for Port B
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428723"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>EnB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428725"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428727"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable input for Port B
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428729"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>AddrB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428731"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428733"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read address for Port B
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428735"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ResetB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428737"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428739"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset or interface disable pin for Port B
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428741"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>DataB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428743"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Output
+</font></div>
+</td>
+    <td>
+<a name="wp1428745"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read data output for Port B
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428748"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Parameters
+</font></h3>
+<a name="wp1428749"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+If you are creating a single-port ROM with the SYNCore IP wizard, you need to specify a single read address and a single clock, and you only need to configure the Port A parameters on page 2 . If you are creating a dual-port ROM, you must additionally configure the Port B parameters on page 3. The following procedure lists what you need to specify. For descriptions of each parameter, refer to <a  href="rom_compiler_new.html#wp1428459">SYNCore ROM Parameters</a>.
+</font></p>
+<ol type="1">
+
+<a name="wp1428755"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore ROM wizard, as described in <a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a>. </font></li>
+
+<a name="wp1428757"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 1 of the ROM wizard: </font></li>
+<ul>
+
+<a name="wp1428758"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Component Name</b>, specify a name for the memory. Do not use spaces. </font></li>
+<a name="wp1428759"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Directory</b>, specify a directory where you want the output files to be written. Do not use spaces. </font></li>
+<a name="wp1428760"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Filename</b>, specify a name for the Verilog file that will be generated with the ROM specifications. Do not use spaces. </font></li>
+<a name="wp1428761"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter values for <b>Read Data width</b> and <b>ROM address width (</b>minimum depth value is 2; maximum depth of the memory is limited to 2^256).</font></li>
+<a name="wp1428762"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select<b> Single Port Rom</b> to indicate that you want to generate a single-port ROM or select <b>Dual Port Rom</b> to generate a dual-port ROM.</font></li>
+<a name="wp1428763"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens page 2 where you set parameters for Port A.</font></li>
+<a name="wp1428764"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The ROM symbol dynamically updates to reflect any parameters you set.
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp1428765"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 2 (<b>Configuring Port A</b>) of the RAM wizard: </font></li>
+<ul>
+
+<a name="wp1428766"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">For synchronous ROMs, select <b>Register address bus AddrA</b> and/or <b>Register output data bus DataA</b> to register the read address and/or the outputs. Selecting either checkbox enables the <b>Enable for Port A</b> checkbox which is used to select the <b>Enable</b> level. </font></li>
+<a name="wp1428767"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set the <b>Configure Reset Options</b>. Enabling the checkbox enables the type of reset (asynchronous or synchronous) and allows an output data pattern (all 1's or a specified pattern) to be defined on page 4.</font></li></ul>
+
+<a name="wp1428768"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are generating a dual-port ROM, set the port B parameters on page 3 (the page 3 parameters are only enabled when <b>Dual Port Rom</b> is selected on page 1). </font></li>
+
+<a name="wp1428769"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">On page 4, specify the location of the ROM initialization file and the data format (<b>Hexadecimal</b> or <b>Binary</b>). ROM initialization is supported using memory-coefficient files. The data format is either binary or hexadecimal with each data entry on a new line in the memory-coefficient file (specified by parameter <b>INIT_FILE</b>). Supported file types are .txt, .mem, .dat, and .init (recommended).</font></li>
+
+<a name="wp1428772"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Generate the ROM by clicking <b>Generate</b>, as described in <a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a> and add it to your design. All output files are in the directory you specified on page 1 of the wizard. </font></li>
+
+<a name="wp1428776"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For timing diagrams, see <a  href="rom_compiler_new.html#wp1428154">Single-Port Read Operation</a> and <a  href="rom_compiler_new.html#wp1428171">Dual-Port Read Operation</a>.
+</font></p>
+<p>&nbsp;</p></ol>
+
+<a name="wp1428459"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore ROM Parameters
+</font></h3>
+<a name="wp1428460"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describe the parameters you can set in the ROM wizard, which opens when you select <b>rom_model</b>:
+</font></p>
+<ul>
+
+<a name="wp1428464"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428474">SYNCore ROM Parameters Page 1</a></font></li>
+
+<a name="wp1428468"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428518">SYNCore ROM Parameters Pages 2 and 3</a></font></li>
+
+<a name="wp1428472"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428580">SYNCore ROM Parameters Page 4</a></font></li>
+</ul>
+
+<a name="wp1428474"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore ROM Parameters Page 1
+</b></font></h5>
+
+<a name="wp1428478"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_rom_pg1.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428516"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428481"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428483"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the component. This is the name that you instantiate in your design file to create an instance of the SYNCore ROM in your design. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428485"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428487"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the directory where the generated files are stored. Do not use spaces. The following files are created:
+</font></div>
+
+<a name="wp1428488"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>filelist.txt</b> - lists files written out by SYNCore
+</font></div>
+
+<a name="wp1428489"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>options.txt</b> - lists the options selected in SYNCore
+</font></div>
+
+<a name="wp1428490"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>readme.txt</b> - contains a brief description and known issues
+</font></div>
+
+<a name="wp1428491"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>syncore_rom.v </b>- Verilog library file required to generate ROM model
+</font></div>
+
+<a name="wp1428492"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>testbench.v</b> - Verilog testbench file for testing the ROM model
+</font></div>
+
+<a name="wp1428493"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>instantiation_file.vin</b> - describes how to instantiate the wrapper file
+</font></div>
+
+<a name="wp1428494"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<i>component</i><b>.v</b> - ROM model wrapper file generated by SYNCore
+</font></div>
+
+<a name="wp1428495"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Note that running the ROM wizard in the same directory overwrites the existing files.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428497"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>File Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428499"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the compiled ROM. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428501"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read Data Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428503"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the read data width of the ROM. The unit used is the number of bits and ranges from 2 to 256. Default value is 8. The read data width is common to both Port A and Port B. The corresponding file parameter is <b>DATA_WIDTH=</b><i>n</i>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428505"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ROM address width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428507"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the address depth for the memory. The unit used is the number of bits. Default value is 10. The corresponding file parameter is <b>ADD_WIDTH=</b><i>n</i>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428509"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Port Rom</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428511"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a single-port ROM. The corrsponding file parameter is <b>CONFIG_PORT=&quot;single&quot;</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428513"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Dual Port Rom</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428515"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a dual-port ROM. The corrsponding file parameter is <b>CONFIG_PORT=&quot;dual&quot;</b>.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428518"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore ROM Parameters Pages 2 and 3
+</b></font></h5>
+
+<a name="wp1428519"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The port implementation parameters on pages 2 and 3 are the same; page 2 applies to Port A (single- and dual-port configurations), and page 3 applies to Port B (dual-port configurations only).
+</font></p>
+
+<a name="wp1428523"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_rom_pg2.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428557"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428526"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register address bus AddrA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428528"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Used with synchronous ROM configurations to register the read address. When checked, also allows chip enable to be configured.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428530"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register output data bus DataA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428532"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Used with synchronous ROM configurations to register the data outputs. When checked, also allows chip enable to be configured.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428534"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Asynchronous Reset</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428536"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the type of reset to asynchronous (<b>Configure Reset Options</b> must be checked). Configuring reset also allows the output data pattern on reset to be defined. The corresponding file parameter is <b>RST_TYPE_A=1</b>/<b>RST_TYPE_B=1</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428538"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Synchronous Reset</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428540"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the type of reset to synchronous (<b>Configure Reset Options</b> must be checked). Configuring reset also allows the output data pattern on reset to be defined.The corresponding file parameter is <b>RST_TYPE_A=0</b>/<b>RST_TYPE_B=0</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428542"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active High Enable</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428544"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the level of the chip enable to high for synchronous ROM configurations. The corresponding file parameter is <b>EN_SENSE_A=1/EN_SENSE_B=1</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428546"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active Low Enable</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428548"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the level of the chip enable to low for synchronous ROM configurations. The corresponding file parameter is <b>EN_SENSE_A=0/EN_SENSE_B=0</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428550"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Default value of &#39;1&#39; for all bits</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428552"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an output data pattern of all 1's on reset. The corresponding file parameter is <b>RST_DATA_A={</b><i>n</i><b>{1&#39;b1}&#160;}/RST_DATA_B={</b><i>n</i><b>{1&#39;b1}&#160;}</b><b>.</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428554"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specify reset value for DataA/DataB
+</font></div>
+</td>
+    <td>
+<a name="wp1428556"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a user-defined output data pattern on reset. The pattern is defined in the adjacent field. The corresponding file parameter is <b>RST_TYPE_A=</b><i>pattern</i><b>/RST_TYPE_B=</b><i>pattern</i><b>.</b>
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428580"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore ROM Parameters Page 4
+</b></font></h5>
+
+<a name="wp1428584"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_rom_pg4.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428598"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428587"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Binary</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428589"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies binary-formated initialization file.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428591"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Hexadecimal</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428593"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies hexadecimal-formatted inintial file.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428595"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Initialization File</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428597"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies path and filename of initialization file. The corresponding file parameter is <b>INIT_FILE=&quot;</b><i>filename</i><b>&quot;</b>.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428939"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore ROM Functional Overview
+</font></h3>
+<a name="wp1428105"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore ROM Compiler generates Verilog code for your ROM implementation. This section describes the following:
+</font></p>
+<ul>
+
+<a name="wp1428113"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428140">Functional Description</a></font></li>
+
+<a name="wp1428944"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428154">Single-Port Read Operation</a></font></li>
+
+<a name="wp1428117"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428171">Dual-Port Read Operation</a></font></li>
+
+<a name="wp1428121"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428187">Parameter List</a></font></li>
+
+<a name="wp1428125"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428313">Clock Latency</a></font></li>
+</ul>
+
+<a name="wp1428126"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For further information, refer to the following:
+</font></p>
+<ul>
+
+<a name="wp1428130"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a>, for information about using the wizard to generate ROMs</font></li>
+</ul>
+
+<a name="wp1428140"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Functional Description
+</b></font></h5>
+
+<a name="wp1428945"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore ROM component supports ROM implementations using block ROM or logic memory. For each configuration, design optimizations are made for optimum usage of core resources. Both single- and dual-port memory configurations are supported. Single-port ROM allows read access to memory through a single port, and dual-port ROM allows read access to memory through two ports. The following figure illustrates the supported signals for both configurations.
+</font></p>
+
+<a name="wp1428146"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="rom_html_sourcea.png" height="463" width="1037" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428147"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In the single-port (Port A) configuration, signals are synchronized to <b>ClkA</b>; <b>ResetA</b> can be synchronous or asynchronous depending on parameter selection. The read address (<b>AddrA</b>) and/or data output (<b>DataA</b>) can be registered to increase memory performance and improve timing. Both the read address and data output are subject to clock latency based on the ROM configuration (see <a  href="rom_compiler_new.html#wp1428313">Clock Latency</a>). In the dual-port configuration, all Port A signals are synchronized to <b>ClkA</b>, and all PortB signals are synchronized to <b>ClkB</b>. <b>ResetA</b> and <b>ResetB</b> can be synchronous or asynchronous depending on parameter selection, and both data outputs can be registered and are subject to the same clock latencies. Registering the data output is recommended.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp1428151"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When the data output is unregistered, the data is immediately set to its prefined reset value concurrent with an active reset signal.
+</font></p>
+<hr>
+
+<a name="wp1428154"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Single-Port Read Operation
+</b></font></h5>
+
+<a name="wp1428157"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For single-port ROM, it is only necessary to configure Port A (see <a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a>). The following diagram shows the read timing for a single-port ROM.
+</font></p>
+
+<a name="wp1428159"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+On every active edge of the clock when there is a change in address with an active enable, data will be valid on the same clock or next clock (depending on latency parameter values). When enable is inactive, any address change is ignored, and the data port maintains the last active read value. An active reset ignores any change in input address and forces the output data to its predefined initialization value. The following waveform shows the functional behavior of control signals in single-port mode.
+</font></p>
+
+<a name="wp1428163"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="rom_html_source2.png" height="87" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428164"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When reset is active, the output data holds the initialization value (i.e., 255). When reset goes inactive (and enable is active), data is read form the addressed location of ROM. Reset has priority over enable and always sets the output to the predefined initialization value. When both enable and reset are inactive, the output holds its previous read value.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp1428165"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In the above timing diagram, reset is synchronous. Clock latency varies according to the implementation and parameters as described in <a  href="rom_compiler_new.html#wp1428313">Clock Latency</a>.
+</font></p>
+<hr>
+
+<a name="wp1428171"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dual-Port Read Operation
+</b></font></h5>
+
+<a name="wp1428172"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dual-port ROMs allow read access to memory through two ports. For dual-port ROM, both port A and port B must be configured (see <a  href="rom_compiler_new.html#wp1428857">Specifying ROMs with SYNCore</a>). The following diagram shows the read timing for a dual-port ROM.
+</font></p>
+
+<a name="wp1428179"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="rom_html_source3.png" height="160" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428180"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When either reset is active, the corresponding output data holds the initialization value (i.e., 255). When a reset goes inactive (and its enable is active), data is read form the addressed location of ROM. Reset has priority over enable and always sets the output to the predefined initialization value. When both enable and reset are inactive, the output holds its previous read value.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp1428181"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In the above timing diagram, reset is synchronous. Clock latency varies according to the implementation and parameters as described in <a  href="rom_compiler_new.html#wp1428313">Clock Latency</a>.
+</font></p>
+<hr>
+
+<a name="wp1428187"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter List
+</b></font></h5>
+
+<a name="wp1428188"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following table lists the file entries corresponding to the ROM wizard parameters.
+</font></p>
+
+<a name="wp1428310"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428191"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+ Name
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428193"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428195"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Default Value
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428197"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Range
+</b></font></div></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428199"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ADD_WIDTH</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428201"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+ROM address width value. Default value is 10
+</font></div>
+</td>
+    <td>
+<a name="wp1428203"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+10
+</font></div>
+</td>
+    <td>
+<a name="wp1428205"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+--
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428207"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>DATA_WIDTH</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428209"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read Data width, common to both Port A and Port B
+</font></div>
+</td>
+    <td>
+<a name="wp1428211"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+8
+</font></div>
+</td>
+    <td>
+<a name="wp1428213"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 to 256
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428215"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>CONFIG_PORT</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428217"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Parameter to select Single/Dual configuration
+</font></div>
+</td>
+    <td>
+<a name="wp1428219"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+dual (Dual Port)
+</font></div>
+</td>
+    <td>
+<a name="wp1428221"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+dual (Dual), single (Single).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428223"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RST_TYPE_A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428225"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port A reset type selection (synchronous, asynchronous)
+</font></div>
+</td>
+    <td>
+<a name="wp1428227"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 - asynchronous
+</font></div>
+</td>
+    <td>
+<a name="wp1428229"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1( asyn), 0 (sync)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428231"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RST_TYPE_B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428233"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port B reset type selection (synchronous, asynchronous)
+</font></div>
+</td>
+    <td>
+<a name="wp1428235"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 - asynchronous
+</font></div>
+</td>
+    <td>
+<a name="wp1428237"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 (asyn), 0 (sync)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428239"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RST_DATA_A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428241"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Default data value for Port A on active Reset
+</font></div>
+</td>
+    <td>
+<a name="wp1428243"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+`1' for all data bits
+</font></div>
+</td>
+    <td>
+<a name="wp1428245"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 - 2^DATA_WIDTH - 1
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428247"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RST_DATA_B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428249"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Default data value for Port A on active Reset
+</font></div>
+</td>
+    <td>
+<a name="wp1428251"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+`1' for all data bits
+</font></div>
+</td>
+    <td>
+<a name="wp1428253"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 - 2^DATA_WIDTH - 1
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428255"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>EN_SENSE_A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428257"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port A enable sense
+</font></div>
+</td>
+    <td>
+<a name="wp1428259"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 - active high
+</font></div>
+</td>
+    <td>
+<a name="wp1428261"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 - active low, 1- active high
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428263"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>EN_SENSE_B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428265"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port B enable sense
+</font></div>
+</td>
+    <td>
+<a name="wp1428267"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 - active high
+</font></div>
+</td>
+    <td>
+<a name="wp1428269"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 - active low, 1- active high
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428271"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ADDR_LTNCY_A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428273"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional address register select Port A
+</font></div>
+</td>
+    <td>
+<a name="wp1428275"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1- address registered
+</font></div>
+</td>
+    <td>
+<a name="wp1428277"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1(reg), 0(no reg)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428279"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+ADDR_LTNCY_B
+</font></div>
+</td>
+    <td>
+<a name="wp1428281"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional address register select Port B
+</font></div>
+</td>
+    <td>
+<a name="wp1428283"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1- address registered
+</font></div>
+</td>
+    <td>
+<a name="wp1428285"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1(reg), 0(no reg)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428287"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A
+</font></div>
+</td>
+    <td>
+<a name="wp1428289"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional data register select Port A
+</font></div>
+</td>
+    <td>
+<a name="wp1428291"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1- data registered
+</font></div>
+</td>
+    <td>
+<a name="wp1428293"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1(reg), 0(no reg)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428295"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_B
+</font></div>
+</td>
+    <td>
+<a name="wp1428297"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional data register select Port B
+</font></div>
+</td>
+    <td>
+<a name="wp1428299"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1- data registered
+</font></div>
+</td>
+    <td>
+<a name="wp1428301"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1(reg), 0(no reg)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428303"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+INIT_FILE
+</font></div>
+</td>
+    <td>
+<a name="wp1428305"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Initial values file name
+</font></div>
+</td>
+    <td>
+<a name="wp1428307"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+init.txt
+</font></div>
+</td>
+    <td>
+<a name="wp1428309"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+--
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428313"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Clock Latency
+</b></font></h5>
+
+<a name="wp1428314"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Clock latency varies with both the implementation and latency parameter values according to the following table. Note that the table reflects the values for Port A - the same values apply for Port B in dual-port configurations.
+</font></p>
+
+<a name="wp1428364"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428317"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Implementation Type/Target
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428319"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter Value
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp1428321"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Latency
+</b></font></div></div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="1" rowspan="3">
+<a name="wp1428323"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>block_rom</b> (Xilinx)<br><b>block_rom</b> (Altera)
+</font></div>
+</td>
+    <td>
+<a name="wp1428325"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 0 ADDR_LTNCY_A = 1
+</font></div>
+</td>
+    <td>
+<a name="wp1428327"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 ClkA cycle
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428331"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 1 ADDR_LTNCY_A = 0
+</font></div>
+</td>
+    <td>
+<a name="wp1428333"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 ClkA cycle
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428337"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 1 ADDR_LTNCY_A = 1
+</font></div>
+</td>
+    <td>
+<a name="wp1428339"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 ClkA cycles
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="1" rowspan="4">
+<a name="wp1428341"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>logic</b> (Xilinx) <br><b>logic</b> (Altera)
+</font></div>
+</td>
+    <td>
+<a name="wp1428343"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 0 ADDR_LTNCY_A = 0
+</font></div>
+</td>
+    <td>
+<a name="wp1428345"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 ClkA cycles
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428349"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 0 ADDR_LTNCY_A = 1
+</font></div>
+</td>
+    <td>
+<a name="wp1428351"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 ClkA cycle
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428355"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 1 ADDR_LTNCY_A = 0
+</font></div>
+</td>
+    <td>
+<a name="wp1428357"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 ClkA cycle
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428361"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DATA_LTNCY_A = 1 ADDR_LTNCY_A = 1
+</font></div>
+</td>
+    <td>
+<a name="wp1428363"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 ClkA cycles
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1409549"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+    <hr>
+    <hr>
+<p><font size="1"><b>&copy; Copyright 2008 Synopsys, Inc.</b></font><br></p>
+  </body>
+</html>

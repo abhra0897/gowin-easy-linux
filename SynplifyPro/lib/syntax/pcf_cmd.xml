@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Constraint_Commands name="pcf">
+
+  <constraint name="assign_port">
+    <parameter name="-soft" type="bool" />
+    <parameter name="-constrain_connections" type="bool" />
+    <parameter_list name="-trace" type="string"/>
+    <parameter_list name="-pin" type="string"/>
+    <parameter_list name="port_bus_name_list" type="string" required="true"/>
+    <parameter_list name="bin_group_name_list" type="string"/>
+    <!--
+      Anything else ...
+    -->
+  </constraint>
+
+  <constraint name="assign_cell">
+    <parameter name="-soft" type="bool" />
+    <parameter_list name="name_list" type="string" required="true"/>
+    <parameter_list name="bin_group_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="abstract_tss">
+    <parameter name="-clear_fpga_traces" type="bool" />
+    <parameter name="-add_port_bin" type="string"/>
+    <parameter_list name="-add_trace_group" type="string"/>
+    <parameter name="-fpga" type="string"/>
+    <parameter name="-name" type="string" />    
+    <parameter name="-locked" type="bool" />    
+    <parameter name="-width" type="int"/>    
+    <parameter name="-function" type="string"/>
+  </constraint>
+
+  <constraint name="report_control">
+    <parameter name="-direct_nets" type="bool" />
+    <parameter name="-multi_hop_nets" type="bool" />
+    <parameter name="-unconstrained" type="string"/>
+    <parameter name="-timing_paths" type="int"/>
+    <parameter name="-unrouted_nets" type="int"/>    
+  </constraint>
+
+  <constraint name="tdm_control">
+    <parameter name="-hstdm_reset_trace" type="string"/>
+    <parameter name="-acpm_fast_clock_trace" type="string" />
+    <parameter name="-acpm_fast_clock_freq" type="string" />
+    <parameter name="-hstdm_bit_rate" type="string"/>
+    <parameter name="-type" type="string"/>
+    <parameter name="-min_ratio" type="float" />
+    <parameter name="-max_ratio" type="float" />
+    <parameter_list name="-allowed_modules" type="string"/>
+    <parameter name="-qualification_mode" type="string"/>
+    <parameter name="-tdm_fast_default_factor" type="string" />
+  </constraint>
+  
+  <constraint name="trace_group_attribute">
+    <parameter name="-connection_model" type="string"/>
+    <parameter_list name="-function" type="string"/>
+    <parameter name="-from" type="string" />
+    <parameter name="-hard" type="bool"/>
+    <parameter name="trace_group_name" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="tss_list_bins">
+    <parameter name="-type" type="string" />
+    <parameter name="-trace" type="string"/>
+    <parameter name="-name" type="string" />
+    <parameter name="-locked" type="bool" />
+  </constraint>
+
+  <constraint name="tss_list_functions">
+    <parameter name="-name" type="string" />    
+  </constraint>
+
+  <constraint name="tss_list_pins">
+    <parameter name="-bin" type="string" />
+    <parameter name="-trace" type="string"/>
+    <parameter name="-name" type="string" />
+  </constraint>
+
+  <constraint name="tss_list_properties">
+    <parameter name="-type" type="string" />
+    <parameter name="-trace" type="string"/>
+    <parameter name="-pin" type="bool" />
+    <parameter name="-trace_group" type="string" />
+  </constraint>
+
+  <constraint name="tss_list_trace_groups">
+    <parameter name="-name" type="string" />
+  </constraint>
+  
+  <constraint name="tss_list_traces">
+    <parameter name="-name" type="string" />
+    <parameter name="-connections" type="string" />
+    <parameter name="-bins" type="string"/>
+    <parameter name="-function" type="string" />
+    <parameter name="-trace_group" type="string" />
+  </constraint>
+  
+  <constraint name="reserve_trace">
+    <parameter_list name="trace_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="cluster">
+    <parameter name="-soft" type="bool" />
+    <parameter_list name="cell_name_list" type="string" required="true"/>
+  </constraint>
+  
+  <constraint name="port_attribute">
+    <parameter name="-ignore" type="bool" />
+    <parameter_list name="port_bus_name_list" type="string" required="true"/>
+</constraint>
+
+  <constraint name="cell_attribute">
+    <parameter name="-dissolve" type="bool" />
+    <parameter name="-auto_replicate" type="bool" />
+    <parameter_list name="cell_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="cluster_port">
+    <parameter name="-soft" type="bool" />
+    <parameter_list name="port_bus_name_list" type="string" required="true"/>
+  </constraint>
+  
+  <constraint name="cluster_net">
+    <parameter name="-hard" type="bool" />
+    <parameter_list name="cluster_name" type="string" required="true"/>
+    <parameter_list name="net_name_list" type="string" required="true"/>
+  </constraint>
+   
+  <constraint name="replicate_cell">
+    <parameter name="all_bins" type="string" />
+    <parameter name="constrain_outputs" type="bool" />
+    <parameter name="-force" type="bool" />
+    <parameter_list name="cell_name_list" type="string" required="true"/>
+    <parameter_list name="bin_group_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="assign_global_net">
+    <parameter name="net_name" type="string" required="true"/>
+    <parameter name="gclk_name" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="bin_attribute">
+    <parameter name="-locked" type="bool" />
+    <parameter_list name="bin_group_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="bin_utilization">
+    <parameter_list name="-bin" type="string"/>
+    <parameter name="-all_bins" type="bool" />
+    <parameter_list name="-resource" type="string"/>
+    <parameter_list name="-resource_ratio" type="string"/>
+  </constraint>
+  
+  <constraint name="cell_utilization">
+    <parameter name="-cell" type="string"/>
+    <parameter name="-top" type="string"/>
+    <parameter_list name="-bin" type="string"/>    
+    <parameter_list name="-resource" type="string"/>
+    <parameter_list name="-resource_ratio" type="string"/>
+  </constraint>
+  
+  <constraint name="clock_gate_replication_control">
+    <parameter name="-post_process" type="string"/>
+    <parameter_list name="-unlock" type="string"/>
+  </constraint>
+
+  <constraint name="design_list_cells">
+    <parameter name="-cell" type="string"/>
+    <parameter name="-name" type="string"/>
+    <parameter name="-assigned" type="string"/>
+    <parameter name="-unassigned" type="bool"/>
+    <parameter name="-type" type="string"/>
+    <parameter name="-filter" type="string"/>
+  </constraint>
+
+  <constraint name="design_list_ports">
+    <parameter name="-bins" type="string"/>
+    <parameter name="-name" type="string"/>
+    <parameter name="-assigned" type="string"/>
+    <parameter name="-connections" type="string"/>
+  </constraint>
+
+  <constraint name="design_list_nets">
+    <parameter name="-bidir" type="string"/>
+    <parameter name="-clock" type="string"/>
+    <parameter name="-async" type="string"/>
+    <parameter name="-interconnect" type="string"/>
+    <parameter name="-top_io" type="string"/>
+    <parameter name="-buses" type="string"/>
+    <parameter name="-bins" type="string"/>
+    <parameter name="-connections" type="string"/>
+    <parameter name="-name" type="string"/>
+    <parameter name="-assigned" type="string"/>
+  </constraint>
+  
+  <constraint name="design_list_properties">
+    <parameter name="-cells" type="string"/>
+    <parameter name="-net" type="string"/>
+    <parameter name="-port" type="string"/>    
+  </constraint>
+
+  <constraint name="dissolve_control">
+    <parameter name="-ref_bin" type="string"/>
+    <parameter name="-max" type="string"/>
+    <parameter name="-max" type="string"/>
+    <parameter name="-random_logic" type="string"/>
+    <parameter name="-max_ratio" type="string"/>
+    <parameter name="-min_ratio" type="string"/>
+    <parameter name="-random_logic_ratio" type="string"/>
+    <parameter name="-local_logic_ratio" type="string"/>
+  </constraint>
+
+  <constraint name="net_attribute">
+    <parameter name="-function" type="string"/>
+    <parameter name="-replicate" type="bool"/>
+    <parameter name="-diffsingle" type="bool" />
+    <parameter name="-differential " type="string"/>
+    <parameter name="-is_clock" type="string"/>
+    <parameter name="-is_bidir" type="string"/>
+    <parameter name="-tdm_qualified" type="string"/>
+    <parameter name="-feedthrough_allowed" type="string"/>
+    <parameter name="-tdm_group " type="string"/>
+    <parameter name="-routing_priority" type="string"/>
+    <parameter_list name="net_name_list" type="string" required="true"/>
+  </constraint>
+
+  <constraint name="net_route">
+    <parameter name="-from" type="string"/>
+    <parameter name="-to" type="bool"/>
+    <parameter name="-through" type="bool" />
+    <parameter name="-using_trace " type="string"/>
+    <parameter name="-tdm_module" type="string"/>
+    <parameter name="-tdm_inst_name" type="string"/>
+    <parameter name="-tdm_net_name" type="string"/>
+    <parameter_list name="net_name_list" type="string" required="true"/>
+    <parameter name="value" type="string"/>
+  </constraint>
+  
+  <constraint name="hierarchical_super_bin">
+    <parameter name="-name" type="bool" />
+    <parameter_list name="bin_name_list" type="string" required="true"/>
+  </constraint>
+  
+</Constraint_Commands>

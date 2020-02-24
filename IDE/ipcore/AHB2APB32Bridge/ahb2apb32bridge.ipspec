@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="AHB to APB 32 Bridge" id="ahb_to_apb_32_bridge" version= "1.0" category="Soft IP Core|Microprocessor System|Bus Bridge">AHB to APB 32 Bridge</ip>
+    <target module="AHB_to_APB_32_Bridge_Top">ahb_to_apb_32_bridge</target>
+    <docs>
+        <doc type="summary">/doc/ahb2apb32bridge.html</doc>
+        <doc type="help">/doc/ahb2apb32bridge_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW*</device>
+    </devices>
+</ipcore>

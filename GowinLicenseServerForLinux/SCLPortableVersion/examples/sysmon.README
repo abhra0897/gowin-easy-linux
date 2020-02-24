@@ -1,0 +1,42 @@
+Script	:	sysmon.sh
+
+Desc	:	sysmon.sh is an utility script that is intended to aid 
+		in identifying configuration issues that result in Licensing 
+		errors. On running the tool, it collects a variety of 
+		information from the system and logs it into a 
+		file. The type of information collected includes:
+		1. Hardware Information (# of CPUs, CPU Speed, Available 
+		   Ram, Swap etc)
+		2. Network configuration (tcp parameters, network 
+		   interfaces etc)
+		3. Network statistics (tcp, udp counters)
+
+Usage	:	Script can be run in two ways:
+		1. sysmon.sh -p <port> -s -r <loopInterval> [-l logfile]
+			-p Specify the snpslmd daemon port 
+			-c Specify client hostname. Socket connections
+			   between host and client will be printed.
+			-s Print only socket summary. No other information
+			    is collected
+			-r option allows the script to run infinitely, while
+			   sampling the system state periodically.
+			-l logfile  -- Log output to user defined file
+
+		2. sysmon.sh -p <port> [-l logfile]
+		   This can be used to log the system state at any instant
+
+Log	:	Output of this file will be saved under /tmp in the
+		following format:
+			sysmon_DDMonYY:HHMM_$pid.log
+
+Env	:	Uses SNPSLMD_PATH to locate FLEXlm bianries. The binaries
+		are used to determine the release versions for lmgrd and
+		Synopsys daemon. The path should refer to the root install
+		directory and should contain lmutil, lmgrd, snpslmd and whatscl
+		binaries.
+
+Supported Platforms: The following platforms are currently supported:
+	1. Solaris
+	2. Linux (All Flavors)
+	3. HP-UX
+	4. AIX

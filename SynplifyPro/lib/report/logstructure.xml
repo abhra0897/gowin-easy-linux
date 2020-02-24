@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Log Navigation report will have following skelton with non valid ones specific to device or implementation 
+will not be shown. This will be the replacement for html_link_config.tcl file. 
+log_group - it willbe grouped based in the "name"
+            based in the "type" some are get replicated in source code. The "pnr" type is getting replicated
+            as many as number of p&r implementations
+log_header - holds the actual link to the report if the link file has "log_title" tag or contains within the file
+      
+-->
+<log_structures>
+  <log_structure name="synplify_pro">
+    <log_group name="Synthesis" type="IMPL" >
+      <log_header name="@E:" display_name="Error in report!" tag="error" log_file="IMPL/&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>@E:</log_title>
+        <log_title>@E|</log_title>
+      </log_header>
+      <log_header name="Compiler Constraint Processor" display_name="Compiler Constraint Processor" file_link="1" log_file="synlog/&lt;RESULT_BASE&gt;_cdc_processor.srr" />        
+      <log_header name="Synopsys HDL Compiler" display_name="Compiler Report" tag="compilerReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys HDL Compiler</log_title>
+        <log_title>Synopsys VHDL Compiler</log_title>
+        <log_title>Synopsys Verilog Compiler</log_title>
+        <log_title>Start of Compile</log_title>
+      </log_header>
+      <log_header name="Synopsys Netlist Linker" display_name="Compiler Constraint Applicator"tag="compilerReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true"/>        
+      <log_header name="Synopsys Pre-mapping Report" display_name="Pre-mapping Report" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Pre-mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Pre-mapping</log_title>
+        <log_title>Synopsys Intel FPGA Technology Pre-mapping</log_title>
+        <log_title>Synopsys Xilinx Technology Pre-mapping</log_title>
+        <log_title>Synopsys Generic Technology Pre-mapping</log_title>
+        <log_title>Synopsys Actel Technology Pre-mapping</log_title>
+        <log_title>Synopsys Microsemi Technology Pre-mapping</log_title>
+        <log_title>Synopsys Achronix Technology Pre-mapping</log_title>
+        <log_title>Synopsys Lattice Technology Pre-mapping</log_title>
+        <log_title>Synopsys SiliconBlue Technology Pre-mapping</log_title>
+        <log_title>Synopsys Pango Technology Pre-mapping</log_title>
+        <log_header name="Clock Summary"	display_name="Clock Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF PREMAP CLOCK OPTIMIZATION REPORT"	display_name="Clock Conversion" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="Synopsys Altera Technology Constraint Extraction" display_name="Property Extraction" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;">
+        <log_title>Synopsys Altera Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Xilinx Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Intel FPGA Technology Constraint Extraction</log_title>
+      </log_header>
+      <log_header name="Synopsys Mapping Report" tag="mapperReport" display_name="Mapper Report" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Mapper</log_title>
+        <log_title>Synopsys Intel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Xilinx Technology Mapper</log_title>
+        <log_title>Synopsys Generic Technology Mapper</log_title>
+        <log_title>Synopsys CPLD Technology Mapper</log_title>
+        <log_title>Synopsys Atmel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys QuickLogic Technology Mapper</log_title>
+        <log_title>Synopsys Actel Technology Mapper</log_title>
+        <log_title>Synopsys Microsemi Technology Mapper</log_title>
+        <log_title>Synopsys Proasic Technology Mapper</log_title>
+        <log_title>Synopsys Achronix Technology Mapper</log_title>
+        <log_title>Synopsys Lattice Technology Mapper</log_title>
+        <log_title>Synopsys Lattice ORCA FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Lattice FPGA Technology Mapper</log_title>
+        <log_title>Synopsys SiliconBlue Technology Mapper</log_title>
+        <log_title>Synopsys Pango Technology Mapper</log_title>
+        <log_header name="Summary of Compile Points :" display_name="Compile Point Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF CLOCK OPTIMIZATION REPORT"	display_name="Clock Conversion" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF TIMING REPORT"			display_name="Timing Report" tag="timingReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+          <log_header name="Performance Summary"		display_name="Performance Summary" tag="performanceSummary" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Clock Relationships"		display_name= "Clock Relationships" tag="clockRelationships" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Interface Information"		    display_name="Interface Information" tag="interfaceInfo" log_file="&lt;DESIGN_SRR_FILE&gt;">
+            <log_header name="Input Ports:"	display_name="Input Ports" tag="inputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+            <log_header name="Output Ports:"	display_name="Output Ports" tag="outputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          </log_header>
+          <log_header name="HeaderDetailedClocks" display_name="Detailed Report for Clocks" display_only="true">
+            <log_header name="Detailed Report" display_name="Clock:%s" tag="clockReport" dynamic_title="1" log_file="&lt;DESIGN_SRR_FILE&gt;">
+              <log_header name="Starting Points" display_name="Starting Points with Worst Slack" tag="startingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+              <log_header name="Ending Points" display_name="Ending Points with Worst Slack" tag="endingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+              <log_header name="Worst Path Information" display_name="Worst Path Information" tag="worstPaths" xprobe="View Worst Path in Analyst" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+            </log_header>
+          </log_header>
+        </log_header>
+        <log_header name="Resource Usage"		  display_name="Resource Utilization" tag="resourceUsage" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF AREA REPORT"		  display_name="Resource Utilization" tag="areaReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="Report for cell"		  display_name="Resource Utilization" tag="cellReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="High Reliability Report" display_name="High Reliability Report" file_link="1" log_file="synlog/report/highrel.rpt"/>
+      <log_header name="Synopsys Constraint Checker" display_name="Constraint Checker Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cck.rpt" />
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>
+      <log_header name="Hierarchical Area Report" display_name="Hierarchical Area Report(&lt;VIEW_BASE&gt;)" file_link="1" log_file="rpt_&lt;RESULT_BASE&gt;.areasrr"/>
+    </log_group>
+    <!--
+  <log_group name="Misc Reports" type="MISC">    
+    <log_header name="Hierarchical Area Report" display_name="Hierarchical Area Report(&lt;VIEW_BASE&gt;)" file_link="1" log_file="rpt_*.areasrr"/>
+    </log_group>
+  -->
+
+    <log_group name="Place and Route" type="pnr">
+      <log_header name="Xilinx PAR P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1" tag="pnr" log_file="xflow_par.log"/>
+      <log_header name="Timing Report"	display_name="Timing Report" file_link="1" log_file="&lt;RESULT_BASE&gt;.twr"/>
+      <log_header name="Quartus P&amp;R Report" display_name="Quartus P&amp;R Report" file_link="1" tag="pnr"  par_only="1" log_file="quartus.log"/>
+      <log_header name="Quartus Timing Report" display_name="Quartus Timing Report"  file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.sta.rpt"/>
+      <log_header name="Lattice iCE P&amp;R Report" display_name="Lattice iCE P&amp;R Report" file_link="1"  tag="pnr"  par_only="1" log_file="sbt_par.log"/>
+      <log_header name="Quartus Flow Report" display_name="Quartus Flow Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.flow.rpt"/>
+      <log_header name="Quartus Fit Report" display_name="Quartus Fit Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.fit.rpt"/>
+      <log_header name="Quartus Map Report" display_name="Quartus Map Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.map.rpt"/>
+      <log_header name="Xilinx P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1"  tag="pnr"  log_file="xflow.log"/>
+      <log_header name="Xilinx Vivado P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1"  tag="pnr"  log_file="vivado.log"/>
+      <log_header name="Initial Placement Report" display_name="Initial Placement Report" file_link="1"  tag="pnr"  log_file="xflow_gp.log"/>
+      <log_header name="Backannotation Report" display_name="Backannotation Report"  file_link="1" tag="pnr" par_only="1" log_file="&lt;RESULT_BASE&gt;.srr"/>
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1"  tag="pnr" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>
+    </log_group>
+
+    <log_header name="stdout" display_name="Session Log"  file_link="1" log_file="stdout.log"/>
+
+  </log_structure>
+
+	<log_structure name="spyglass">
+		<log_group name="SpyGlass" type="IMPL">
+      <!--       <log_header name="spyglass_rpt %filename" display_name="%filename" file_link="1"  tag="spyglass" log_file="*.rpt;log;out"/>      -->
+      <log_header name="spyglass_rpt %filename" display_name="%filename" file_link="1"  tag="spyglass" log_file="*.*"/>
+		</log_group>
+	</log_structure>
+	
+	<log_structure name="rtl_partition_flow">
+    <log_group name="Synthesis" type="IMPL" >
+      <log_header name="@E:" display_name="Error in report!" tag="error" log_file="IMPL/&lt;DESIGN_SRR_FILE&gt;">
+        <log_title>@E:</log_title>
+        <log_title>@E|</log_title>
+      </log_header>
+      <log_header name="Synopsys HDL Compiler" display_name="Compiler Report" tag="compilerReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys HDL Compiler</log_title>
+        <log_title>Start of Compile</log_title>
+      </log_header>
+      <log_header name="Synopsys Pre-mapping Report" display_name="Pre-mapping Report" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Pre-mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Pre-mapping</log_title>
+        <log_title>Synopsys Intel FPGA Technology Pre-mapping</log_title>
+        <log_title>Synopsys Xilinx Technology Pre-mapping</log_title>
+        <log_title>Synopsys Generic Technology Pre-mapping</log_title>
+        <log_title>Synopsys Actel Technology Pre-mapping</log_title>
+        <log_title>Synopsys Microsemi Technology Pre-mapping</log_title>
+        <log_title>Synopsys Achronix Technology Pre-mapping</log_title>
+        <log_title>Synopsys Lattice Technology Pre-mapping</log_title>
+        <log_title>Synopsys SiliconBlue Technology Pre-mapping</log_title>
+        <log_title>Synopsys Pango Technology Pre-mapping</log_title>
+        <log_header name="Clock Summary"	display_name="Clock Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="Synopsys Altera Technology Constraint Extraction" display_name="Property Extraction" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Altera Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Xilinx Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Intel FPGA Technology Constraint Extraction</log_title>        
+      </log_header>
+      <log_header name="Synopsys Mapping Report" tag="mapperReport" display_name="Mapper Report" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Mapper</log_title>
+        <log_title>Synopsys Intel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Xilinx Technology Mapper</log_title>
+        <log_title>Synopsys Generic Technology Mapper</log_title>
+        <log_title>Synopsys CPLD Technology Mapper</log_title>
+        <log_title>Synopsys Atmel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys QuickLogic Technology Mapper</log_title>
+        <log_title>Synopsys Actel Technology Mapper</log_title>
+        <log_title>Synopsys Microsemi Technology Mapper</log_title>
+        <log_title>Synopsys Proasic Technology Mapper</log_title>
+        <log_title>Synopsys Achronix Technology Mapper</log_title>
+        <log_title>Synopsys Lattice Technology Mapper</log_title>
+        <log_title>Synopsys Lattice ORCA FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Lattice FPGA Technology Mapper</log_title>
+        <log_title>Synopsys SiliconBlue Technology Mapper</log_title>
+        <log_title>Synopsys Pango Technology Mapper</log_title>
+        <log_header name="Summary of Compile Points :" display_name="Compile Point Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF CLOCK OPTIMIZATION REPORT"	display_name="Clock Conversion" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF TIMING REPORT"			display_name="Timing Report" tag="timingReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+          <log_header name="Performance Summary"		display_name="Performance Summary" tag="performanceSummary" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Clock Relationships"		display_name= "Clock Relationships" tag="clockRelationships" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Interface Information"		    display_name="Interface Information" tag="interfaceInfo" log_file="&lt;DESIGN_SRR_FILE&gt;">
+            <log_header name="Input Ports:"	display_name="Input Ports" tag="inputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+            <log_header name="Output Ports:"	display_name="Output Ports" tag="outputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          </log_header>
+          <log_header name="HeaderDetailedClocks" display_name="Detailed Report for Clocks" display_only="true">
+        <log_header name="Detailed Report" display_name="" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;">
+          <log_header name="Starting Points" display_name="Starting Points with Worst Slack" tag="startingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Ending Points" display_name="Ending Points with Worst Slack" tag="endingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Worst Path Information" display_name="Worst Path Information" tag="worstPaths" xprobe="View Worst Path in Analyst" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        </log_header>
+        </log_header>        
+        </log_header>
+        <log_header name="Resource Usage"		  display_name="Resource Utilization" tag="resourceUsage" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF AREA REPORT"		  display_name="Resource Utilization" tag="areaReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="Report for cell"		  display_name="Resource Utilization" tag="cellReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="Constraint Checker Report" display_name="Constraint Checker Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cck.rpt" />
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>
+      <log_header name="Hierarchical Area Report" display_name="Hierarchical Area Report(&lt;VIEW_BASE&gt;)" file_link="1" log_file="rpt_&lt;RESULT_BASE&gt;.areasrr"/>
+      <log_header name="Area Report" display_name="Area Report"  file_link="1" log_file="&lt;RESULT_BASE&gt;_area_est.srr"/>
+      <log_header name="Estimate Timing Report" display_name="Estimate Timing Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_time_est.srr" />
+      <log_header name="Estimate CPM Timing Report" display_name="Estimate CPM Timing Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpmtime_est.srr" />
+      <log_header name="Estimate CPM Clock Frequency Report" display_name="Estimate CPM Clock Frequency Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpmfclk_est.srr" />
+      <log_header name="Timing Analysis Report" display_name="Timing Analysis Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpm_ann.srr" />
+      <log_header name="SLP Generation Report" display_name="SLP Generation Report" file_link="1" tag="slpGenReport" log_file="syntmp/&lt;RESULT_BASE&gt;_slpgen_srr.htm"/>
+    </log_group>
+
+
+    <log_header name="stdout" display_name="Session Log"  file_link="1" log_file="stdout.log"/>
+
+  </log_structure>
+
+  <log_structure name="protocompiler">
+    <log_group name="Synthesis" type="IMPL" >
+      <log_header name="@E:" display_name="Error in report!" tag="error" log_file="IMPL/&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>@E:</log_title>
+        <log_title>@E|</log_title>
+      </log_header>
+      <log_header name="Synopsys Pre-instrument" display_name="Pre-instrument Report" tag="preInstrumentReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Start of Pre-instrument</log_title>
+      </log_header>
+      <log_header name="Synopsys HDL Compiler" display_name="Compiler Report" tag="compilerReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys HDL Compiler</log_title>
+        <log_title>Start of Compile</log_title>
+      </log_header>
+      <log_header name="Synopsys Pre-mapping Report" display_name="Pre-mapping Report" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Pre-mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Pre-mapping</log_title>
+        <log_title>Synopsys Intel FPGA Technology Pre-mapping</log_title>
+        <log_title>Synopsys Xilinx Technology Pre-mapping</log_title>
+        <log_title>Synopsys Generic Technology Pre-mapping</log_title>
+        <log_title>Synopsys Actel Technology Pre-mapping</log_title>
+        <log_title>Synopsys Microsemi Technology Pre-mapping</log_title>
+        <log_title>Synopsys Achronix Technology Pre-mapping</log_title>
+        <log_title>Synopsys Lattice Technology Pre-mapping</log_title>
+        <log_title>Synopsys SiliconBlue Technology Pre-mapping</log_title>
+        <log_title>Synopsys Pango Technology Pre-mapping</log_title>
+        <log_header name="Clock Summary"	display_name="Clock Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF PREMAP CLOCK OPTIMIZATION REPORT"	display_name="Clock Conversion" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="Synopsys Altera Technology Constraint Extraction" display_name="Property Extraction" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;">
+        <log_title>Synopsys Altera Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Xilinx Technology Constraint Extraction</log_title>
+        <log_title>Synopsys Intel FPGA Technology Constraint Extraction</log_title>
+      </log_header>
+      <log_header name="Synopsys Mapping Report" tag="mapperReport" display_name="Mapper Report" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+        <log_title>Synopsys Mapping Report</log_title>
+        <log_title>Synopsys Altera Technology Mapper</log_title>
+        <log_title>Synopsys Intel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Xilinx Technology Mapper</log_title>
+        <log_title>Synopsys Generic Technology Mapper</log_title>
+        <log_title>Synopsys CPLD Technology Mapper</log_title>
+        <log_title>Synopsys Atmel FPGA Technology Mapper</log_title>
+        <log_title>Synopsys QuickLogic Technology Mapper</log_title>
+        <log_title>Synopsys Actel Technology Mapper</log_title>
+        <log_title>Synopsys Microsemi Technology Mapper</log_title>
+        <log_title>Synopsys Proasic Technology Mapper</log_title>
+        <log_title>Synopsys Achronix Technology Mapper</log_title>
+        <log_title>Synopsys Lattice Technology Mapper</log_title>
+        <log_title>Synopsys Lattice ORCA FPGA Technology Mapper</log_title>
+        <log_title>Synopsys Lattice FPGA Technology Mapper</log_title>
+        <log_title>Synopsys SiliconBlue Technology Mapper</log_title>
+        <log_title>Synopsys Pango Technology Mapper</log_title>
+        <log_header name="Summary of Compile Points :" display_name="Compile Point Summary" tag="mapperReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF CLOCK OPTIMIZATION REPORT"	display_name="Clock Conversion" tag="clockReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF TIMING REPORT"			display_name="Timing Report" tag="timingReport" log_file="&lt;DESIGN_SRR_FILE&gt;" open="true">
+          <log_header name="Performance Summary"		display_name="Performance Summary" tag="performanceSummary" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Clock Relationships"		display_name= "Clock Relationships" tag="clockRelationships" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          <log_header name="Interface Information"		    display_name="Interface Information" tag="interfaceInfo" log_file="&lt;DESIGN_SRR_FILE&gt;">
+            <log_header name="Input Ports:"	display_name="Input Ports" tag="inputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+            <log_header name="Output Ports:"	display_name="Output Ports" tag="outputPorts" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+          </log_header>
+          <log_header name="HeaderDetailedClocks" display_name="Detailed Report for Clocks" display_only="true">
+            <log_header name="Detailed Report" display_name="Clock:%s" tag="clockReport" dynamic_title="1" log_file="&lt;DESIGN_SRR_FILE&gt;">
+              <log_header name="Starting Points" display_name="Starting Points with Worst Slack" tag="startingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+              <log_header name="Ending Points" display_name="Ending Points with Worst Slack" tag="endingSlack" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+              <log_header name="Worst Path Information" display_name="Worst Path Information" tag="worstPaths" xprobe="View Worst Path in Analyst" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+            </log_header>
+          </log_header>
+        </log_header>
+        <log_header name="Resource Usage"		  display_name="Resource Utilization" tag="resourceUsage" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="START OF AREA REPORT"		  display_name="Resource Utilization" tag="areaReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+        <log_header name="Report for cell"		  display_name="Resource Utilization" tag="cellReport" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+      </log_header>
+      <log_header name="High Reliability Report" display_name="High Reliability Report" file_link="1" log_file="synlog/report/highrel.rpt"/>
+      <log_header name="Synopsys Constraint Checker" display_name="Constraint Checker Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cck.rpt" />
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>
+      <log_header name="Hierarchical Area Report" display_name="Hierarchical Area Report(&lt;VIEW_BASE&gt;)" file_link="1" log_file="rpt_&lt;RESULT_BASE&gt;.areasrr"/>
+      <log_header name="Constraint Checker Report" display_name="Constraint Checker Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cck.rpt" />
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>      
+      <log_header name="Area Report" display_name="Area Report"  file_link="1" log_file="&lt;RESULT_BASE&gt;_area_est.srr"/>
+      <log_header name="Estimate Timing Report" display_name="Estimate Timing Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_time_est.srr" />
+      <log_header name="Estimate CPM Timing Report" display_name="Estimate CPM Timing Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpmtime_est.srr" />
+      <log_header name="Estimate CPM Clock Frequency Report" display_name="Estimate CPM Clock Frequency Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpmfclk_est.srr" />
+      <log_header name="Timing Analysis Report" display_name="Timing Analysis Report" file_link="1" log_file="&lt;RESULT_BASE&gt;_cpm_ann.srr" />
+      <log_header name="SLP Generation Report" display_name="SLP Generation Report" file_link="1" tag="slpGenReport" log_file="syntmp/&lt;RESULT_BASE&gt;_slpgen_srr.htm"/>
+      
+    </log_group>
+  
+    <log_group name="Place and Route" type="pnr">
+      <log_header name="Xilinx PAR P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1" tag="pnr" log_file="xflow_par.log"/>
+      <log_header name="Timing Report"	display_name="Timing Report" file_link="1" tag="pnr" log_file="&lt;RESULT_BASE&gt;.twr"/>
+      <log_header name="Quartus P&amp;R Report" display_name="Quartus P&amp;R Report" file_link="1" tag="pnr"  par_only="1" log_file="quartus.log"/>
+      <log_header name="Quartus Timing Report" display_name="Quartus Timing Report"  file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.sta.rpt"/>
+      <log_header name="Lattice iCE P&amp;R Report" display_name="Lattice iCE P&amp;R Report" file_link="1"  tag="pnr"  par_only="1" log_file="sbt_par.log"/>
+      <log_header name="Quartus Flow Report" display_name="Quartus Flow Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.flow.rpt"/>
+      <log_header name="Quartus Fit Report" display_name="Quartus Fit Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.fit.rpt"/>
+      <log_header name="Quartus Map Report" display_name="Quartus Map Report" file_link="1" tag="pnr"  log_file="&lt;RESULT_BASE&gt;.map.rpt"/>
+      <log_header name="Xilinx P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1"  tag="pnr"  log_file="xflow.log"/>
+      <log_header name="Xilinx Vivado P&amp;R Report" display_name="Xilinx P&amp;R Report" file_link="1"  tag="pnr"  log_file="vivado.log"/>
+      <log_header name="Initial Placement Report" display_name="Initial Placement Report" file_link="1"  tag="pnr"  log_file="xflow_gp.log"/>
+      <!--log_header name="Backannotation Report" display_name="Backannotation Report"  file_link="1" tag="pnr" par_only="1" log_file="&lt;RESULT_BASE&gt;.srr"/--> 
+      <log_header name="Congestion Estimate Report" display_name="Congestion Estimate Report" file_link="1"  tag="pnr" log_file="&lt;RESULT_BASE&gt;_congestion_est.rpt"/>
+    </log_group>
+    <log_group name="User Visible Reports" type="utf">
+      <log_header name="UTF-Text Report Name" display_name="%s" tag="utf-%s" dynamic_title="1" file_link="1" log_file="&lt;DESIGN_SRR_FILE&gt;"/>
+    </log_group>  
+    <log_header name="stdout" display_name="Session Log"  file_link="1" log_file="stdout.log"/>
+
+  </log_structure>
+  
+</log_structures>

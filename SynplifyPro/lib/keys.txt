@@ -1,0 +1,23 @@
+// Use verilog pragma syntax in this file
+
+`pragma protect version=1
+`pragma protect author="default"
+`pragma protect author_info="default"
+
+`pragma protect key_keyowner="Synplicity", key_keyname="SYNP15_1", key_method="rsa"
+`pragma protect key_public_key
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA62qlu5CgqQMOvrIKACeF
+1PO9IYEOXY7+UxZFyYLnK5ZmEEYI1q/YKpX5nSP1U+ms8O6XWZ6NVkKR/VRp4lrZ
+JVyBy4QJISUwIPvHhlFPLcAIUS9yIwBcR6+r8fwhEirz3sOcsMOKBtCuPDXM+NeU
+zFhIWQMrHjePdbgAMuyVWiFV8f1j0DECMLP60kTokAS3FQK8hjNTpsPRwGY5BDSY
+MhXaz18slnaio5qRHMRtIdGpjOnS+YQD4KqbgI33kiUQSCMdQf3PyYjt7r9EpnjU
+1Lp/WILsUDInHjxnWWzgSpBkOr6OKI+LZoZFqse8b7iPOZyZ74WAxID1P7vt20qB
+MwIDAQAB
+
+// Add additional public keys below this line
+// Add additional public keys above this line
+
+`pragma protect data_method="aes128-cbc"
+
+// End of file
+

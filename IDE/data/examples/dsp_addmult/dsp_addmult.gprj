@@ -1,0 +1,10 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>4</Version>
+    <Device>gw1n4-012</Device>
+    <FileList>
+        <File type="file.source" enable="1" path="src/addmult.v"/>
+    </FileList>
+</Project>

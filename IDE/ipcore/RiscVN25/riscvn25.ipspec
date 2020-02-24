@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="RiscV N25" id="gowin_riscvn25" version= "1.0" category="Soft IP Core|Microprocessor System|Soft-Core-MCU">RiscV N25</ip>
+    <target module="ae250soc">riscvn25</target>
+    <docs>
+        <doc type="summary">/doc/riscvn25.html</doc>
+        <doc type="help">/doc/riscvn25_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

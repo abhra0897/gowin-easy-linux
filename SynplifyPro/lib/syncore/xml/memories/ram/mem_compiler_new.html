@@ -1,0 +1,741 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.2.1206">
+    <meta name="TEMPLATEBASE" content="fpga_ug">
+    <meta name="LASTUPDATED" content="09/20/07 08:32:03">
+    <title>SYNCore RAM Compiler</title>
+  </head>
+
+  <body>
+  
+<center><font face="Arial, Helvetica, sans-serif" size="2"></center>
+
+<a name="wp490773"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="6">
+SYNCore RAM Compiler
+</font></div></h1>
+
+
+<a name="wp501171"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore RAM Compiler generates Verilog code for your specific RAM implementation requirements. The following topics are described here:
+</font></p>
+<ul>
+
+<a name="wp513732"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp792138">Specifying RAMs with SYNCore</a></font></li>
+
+<a name="wp792516"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp792383">SYNCore RAM Wizard</a></font></li>
+
+<a name="wp513740"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp501381">Single-Port Memories</a></font></li>
+
+<a name="wp513745"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp501870">Dual-Port Memories</a></font></li>
+
+<a name="wp513750"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp503109">Read/Write Timing Sequences</a></font></li>
+</ul>
+
+<a name="wp792138"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Specifying RAMs with SYNCore 
+</b></font></h2>
+<a name="wp792141"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP wizard helps you generate Verilog code for your RAM implementation requirements. 
+</font></p>
+
+<a name="wp792142"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to generate Verilog code for a RAM you specify, using the SYNCore IP wizard. 
+</font></p>
+<ol type="1">
+
+<a name="wp792143"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard. </font></li>
+<ul>
+
+<a name="wp792144"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the Synplicity synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon2.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard. </font></li>
+<a name="wp792151"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_mainwin3.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792152"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the window that opens, select <b>ram_model</b> and click <b>Ok</b>. This opens the first screen of the wizard. </font></li>
+<a name="wp792156"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_ram1_all4.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp792157"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the parameters you need in the wizard.</font></li>
+<ul>
+
+<a name="wp792158"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">For details about the parameters for a single-port RAM, see <a  href="mem_compiler_new.html#wp792230"><i>Specifying Parameters for Single-Port RAM</i></a>. </font></li>
+<a name="wp792164"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">For details about the parameters for a dual-port RAM, see <a  href="mem_compiler_new.html#wp792263"><i>Specifying Parameters for Dual-Port RAM</i></a>. Note that dual-port implementations are only supported for some technologies.</font></li>
+<a name="wp792166"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The RAM symbol on the left reflects the parameters you set. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792167"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The default settings for the tool implement a block RAM with synchronous resets, and where all edges (<b>clock</b>, <b>enable</b>, and <b>reset</b>) are considered positive. 
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp792169"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">After you have specified all the parameters you need, click the <b>Generate</b> button in the lower left corner. </font></li>
+
+<a name="wp792170"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The tool displays a confirmation message is displayed (<b>TCL execution successful!</b>) and writes the required files to the directory you specified in the parameters. The HDL code is in Verilog. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792715"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+SYNCore also generates a testbench for the RAM. The testbench covers a limited set of vectors. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792171"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now close the SYNCore Memory Compiler.
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792721"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the RAM files if necessary.</font></li>
+<ul>
+
+<a name="wp792753"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">The default RAM has a <b>no_rw_check</b> attribute enabled. If you do not want this, edit <code><font face="Courier New, Courier, mono">syncore_ram.v</font></code> and comment out the<b> `define SYN_MULTI_PORT_RAM</b> statement, or use<b> `undef SYN_MULTI_PORT_RAM.</b></font></li>
+<a name="wp792751"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you want to use the synchronous RAMs available in the target technology, make sure to register either the read address or the outputs. </font></li></ul>
+
+<a name="wp792173"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Add the RAM you generated to your design. </font></li>
+<ul>
+
+<a name="wp792718"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated and the <b>syncore_ram.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard. </font></li>
+<a name="wp792176"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.vin</b> template file, which is located in the same directory. Copy the lines that define the memory, and paste them into your top-level module. The following figure shows a template file (in red text) inserted into a top-level module.</font></li>
+<a name="wp792202"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="mem_compiler_new6.png" height="326" width="595" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792203"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.</font></li>
+<a name="wp792228"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="mem_compiler_new8.png" height="340" width="550" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp792230"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Parameters for Single-Port RAM
+</font></h3>
+<a name="wp792231"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+To create a single-port RAM with the SYNCore Memory Compiler, you need to specify a single read/write address (single port) and a single clock. You only need to configure Port A. The following procedure lists what you need to specify. For descriptions of each parameter, refer to <a  href="mem_compiler_new.html#wp792383"><i>SYNCore RAM Wizard</i></a>.
+</font></p>
+<ol type="1">
+
+<a name="wp792236"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore RAM wizard, as described in <a  href="mem_compiler_new.html#wp792138"><i>Specifying RAMs with SYNCore</i></a>. </font></li>
+
+<a name="wp792238"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 1 of the RAM wizard: </font></li>
+<ul>
+
+<a name="wp792239"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Component Name</b>, specify a name for the memory. Do not use spaces. </font></li>
+<a name="wp792240"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Directory</b>, specify a directory where you want the output files to be written. Do not use spaces.</font></li>
+<a name="wp792241"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Filename</b>, specify a name for the Verilog file that will be generated with the RAM specifications. Do not use spaces.</font></li>
+<a name="wp792242"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter data and address widths. </font></li>
+<a name="wp792243"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enable<b> Single Port</b>, to specify that you want to generate a single-port RAM. This automatically enables <b>Single Clock. </b></font></li>
+<a name="wp792244"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens another page where you can set parameters for Port A.</font></li>
+<a name="wp792245"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The RAM symbol dynamically updates to reflect the parameters you set. 
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp792246"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 2 of the RAM wizard: </font></li>
+<ul>
+
+<a name="wp792247"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set <b>Use Write Enable</b> to the setting you want. </font></li>
+<a name="wp792248"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set <b>Register Read Address</b> to the setting you want.</font></li>
+<a name="wp792249"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set <b>Synchronous Reset</b> to the setting you want. <b>Register Outputs</b> is always enabled</font></li>
+<a name="wp792250"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the read access you require for the RAM.</font></li>
+<a name="wp792251"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now generate the RAM by clicking <b>Generate</b>, as described in <a  href="mem_compiler_new.html#wp792138"><i>Specifying RAMs with SYNCore</i></a>. You do not need to specify any parameters on page 3, as this is a single-port RAM and you do not need to specify Port B. All output files are in the directory you specified on the first page of the wizard. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792257"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For details about setting dual-port RAM parameters, see <a  href="mem_compiler_new.html#wp792263"><i>Specifying Parameters for Dual-Port RAM</i></a>. For read/write timing diagrams, see <a  href="mem_compiler_new.html#wp503109"><i>Read/Write Timing Sequences</i></a>. 
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp792263"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Parameters for Dual-Port RAM
+</font></h3>
+<a name="wp792267"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to set parameters for dual-port memory in the SYNCore wizard. Dual-port RAMs are only supported for some technologies. For information about generating single-port RAMs, see <a  href="mem_compiler_new.html#wp792230"><i>Specifying Parameters for Single-Port RAM</i></a>. It shows you how to generate these common RAM configurations:
+</font></p>
+<ul>
+
+<a name="wp792271"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">One read access and one write access</font></li>
+
+<a name="wp792272"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Two read accesses and one write access</font></li>
+
+<a name="wp792273"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Two read accesses and two write accesses</font></li>
+</ul>
+
+<a name="wp792276"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For the corresponding read/write timing diagrams, see <a  href="mem_compiler_new.html#wp503109"><i>Read/Write Timing Sequences</i></a>. 
+</font></p>
+<ol type="1">
+
+<a name="wp792280"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore RAM wizard, as described in <a  href="mem_compiler_new.html#wp792138"><i>Specifying RAMs with SYNCore</i></a>. </font></li>
+
+<a name="wp792282"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 1 of the RAM wizard: </font></li>
+<ul>
+
+<a name="wp792283"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Component Name</b>, specify a name for the memory. Do not use spaces. </font></li>
+<a name="wp792284"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Directory</b>, specify a directory where you want the output files to be written. Do not use spaces. </font></li>
+<a name="wp792285"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Filename</b>, specify a name for the Verilog file that will be generated with the RAM specifications. Do not use spaces. </font></li>
+<a name="wp792286"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter data and address widths. </font></li>
+<a name="wp792287"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enable<b> Dual Port</b>, to specify that you want to generate a dual-port RAM. </font></li>
+<a name="wp792288"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the clocks. </font></li>
+<a name="wp792298"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp792291"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+For a single clock...
+</font></div>
+</td>
+    <td>
+<a name="wp792293"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Single Clock</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792295"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+For separate clocks for each of the ports...
+</font></div>
+</td>
+    <td>
+<a name="wp792297"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Separate Clocks For Each Port</b>.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792299"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens another page where you can set parameters for Port A. </font></li></ul>
+
+<a name="wp792300"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 2 of the RAM wizard to specify settings for Port A: </font></li>
+<ul>
+
+<a name="wp792301"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set parameters according to the kind of memory you want to generate:</font></li>
+<a name="wp792315"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp792304"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+One read &amp; one write 
+</font></div>
+</td>
+    <td>
+<a name="wp792306"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Read Only Access</b>.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792308"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Two reads &amp; one write 
+</font></div>
+</td>
+    <td>
+<a name="wp792310"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Read and Write Access</b>. <br>Specify a setting for <b>Use Write Enable</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792312"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Two reads &amp; two writes
+</font></div>
+</td>
+    <td>
+<a name="wp792314"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Read and Write Access</b>. <br>Specify a setting for <b>Use Write Enable</b>. <br>Specify a read access option for Port A. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792316"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify a setting for <b>Register Read Address. </b></font></li>
+<a name="wp792317"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set <b>Synchronous Reset</b> to the setting you want. <b>Register Outputs</b> is always enabled.</font></li>
+<a name="wp792318"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens another page where you can set parameters for Port B. The page and the parameters are identical to the previous page, except that the settings are for Port B instead of Port A. </font></li></ul>
+
+<a name="wp792319"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the settings for Port B on page 3 of the wizard according to the kind of memory you want to generate:</font></li>
+
+<a name="wp792333"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp792322"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+One read &amp; one write 
+</font></div>
+</td>
+    <td>
+<a name="wp792324"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Write Only Access</b>. <br>Set <b>Use Write Enable </b>to the setting you want.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792326"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Two reads &amp; one write 
+</font></div>
+</td>
+    <td>
+<a name="wp792328"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Read Only Access</b>.<br>Specify a setting for <b>Register Read Address</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792330"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Two reads &amp; two writes
+</font></div>
+</td>
+    <td>
+<a name="wp792332"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable <b>Read and Write Access</b>. <br>Specify a setting for <b>Use Write Enable</b>. <br>Specify a setting for <b>Register Read Address</b>. <br>Set <b>Synchronous Reset</b> to the setting you want. Note that <b>Register Outputs</b> is always enabled. <br>Select a read access option for Port B. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792334"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The RAM symbol on the left reflects the parameters you set. All output files are written to the directory you specified on the first page of the wizard. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792335"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now generate the RAM by clicking <b>Generate</b>, as described in <a  href="mem_compiler_new.html#wp792138"><i>Specifying RAMs with SYNCore</i></a>, and add it to your design. 
+</font></p>
+<p>&nbsp;</p></ol>
+
+<a name="wp792383"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+SYNCore RAM Wizard
+</b></font></h2>
+<a name="wp792384"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describe the parameters you can set in the RAM wizard, which opens when you select <b>ram_model</b>: 
+</font></p>
+<ul>
+
+<a name="wp792388"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp792394">SYNCore RAM Parameters Page 1</a></font></li>
+
+<a name="wp792392"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp792448">SYNCore RAM Parameters Pages 2 and 3</a></font></li>
+</ul>
+
+<a name="wp792394"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore RAM Parameters Page 1
+</font></h3>
+<a name="wp792398"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_ram15.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792446"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp792401"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792403"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the component. This is the name that you instantiate in your design file to create an instance of the SYNCore RAM in your design. For example: 
+</font></div>
+
+<a name="wp792404"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+ram101 &lt;<code><i>ComponentName</i></code>&gt; ( <br>
+&nbsp;&nbsp;&nbsp;.PortAClk(PortAClk)<br>
+&nbsp;&nbsp;&nbsp;, .PortAAddr(PortAAddr)<br>
+&nbsp;&nbsp;&nbsp;, .PortADataIn(PortADataIn)<br>
+&nbsp;&nbsp;&nbsp;, .PortAWriteEnable(PortAWriteEnable)<br>
+&nbsp;&nbsp;&nbsp;, .PortBDataIn(PortBDataIn) <br>
+&nbsp;&nbsp;&nbsp;, .PortBAddr(PortBAddr)<br>
+&nbsp;&nbsp;&nbsp;, .PortBWriteEnable(PortBWriteEnable)<br>
+&nbsp;&nbsp;&nbsp;, .PortADataOut(PortADataOut)<br>
+&nbsp;&nbsp;&nbsp;, .PortBDataOut(PortBDataOut)<br>
+);
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp792694"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792406"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792409"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the directory where the generated files are stored. Do not use spaces. The following files are created:
+</font></div>
+<ul>
+
+<a name="wp792410"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>filelist.txt</b> - lists files written out by SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp792411"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>options.txt</b> - lists the options selected in SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp792412"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>readme.txt</b> - contains a brief description and known issues</font></li>
+<p>&nbsp;</p>
+
+<a name="wp792413"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>syncore_ram.v </b>- Verilog library file required to generate RAM model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp792414"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>testbench.v</b> - Verilog testbench file for testing the RAM model </font></li>
+<p>&nbsp;</p>
+
+<a name="wp792415"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>instantiation_file.vin</b> - describes how to instantiate the wrapper file</font></li>
+<p>&nbsp;</p>
+
+<a name="wp792416"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><i>component</i><b>.v</b> - RAM model wrapper file generated by SYNCore</font></li>
+<p>&nbsp;</p>
+</ul>
+
+<a name="wp792417"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Note that running the Memory Compiler wizard in the same directory overwrites the existing files.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792419"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Filename</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792421"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the compiled RAM. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792423"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Data Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792425"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Is the width of the data you need for the memory. The unit used is the number of bits. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792427"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Address Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792429"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Is </b>the address depth you need for the memory. The unit used is the number of bits.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792431"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Port</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792433"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a single-port RAM. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792435"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Dual Port</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792437"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a dual-port RAM. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792439"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Clock</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792441"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a RAM with a single clock for dual-port configurations. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792443"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Separate Clocks for Each Port</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792445"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates separate clocks for each port in dual-port RAM configurations.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792448"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore RAM Parameters Pages 2 and 3
+</font></h3>
+<a name="wp792449"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The port implementation parameters on pages 2 and 3 are identical, but page 2 applies to Port A (single- and dual-port configurations), and page 3 applies to Port B (dual-port configurations only). The following figure shows the parameters on page 2 for Port A.
+</font></p>
+
+<a name="wp792453"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_ram220.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792504"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp792456"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read and Write Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792458"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can be accessed by both read and write operations
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792460"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read Only Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792462"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can only be accessed by read operations.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792464"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Write Only Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792466"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can only be accessed by write operations
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792468"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Use Write Enable</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792470"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Includes write-enable control. The RAM symbol on the left reflects the selections you make. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792472"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register Read Address</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792474"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Adds registers to the read address lines. The RAM symbol on the left reflects the selections you make. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792476"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register Outputs </b>
+</font></div>
+</td>
+    <td>
+<a name="wp792478"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Adds registers to the write address lines when you specify separate read/write addressing. The register outputs are always enabled. The RAM symbol on the left reflects the selections you make. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792484"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read before Write</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792486"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifes that the read operation takes place before the write operation for port configurations with both read and write access (<b>Read And Write Access</b> is enabled). For a timing diagram, see <a  href="mem_compiler_new.html#wp503111">Read Before Write</a>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792491"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read after Write</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792493"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifes that the read operation takes place after the write operation for port configurations with both read and write access (<b>Read And Write Access</b> is enabled). For a timing diagram, see <a  href="mem_compiler_new.html#wp721893">Write Before Read</a>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp792498"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>No Read on Write</b>
+</font></div>
+</td>
+    <td>
+<a name="wp792500"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifes that no read operation takes place when there is a write operation for port configurations with both read and write access (<b>Read And Write Access</b> is enabled). For a timing diagram, see <a  href="mem_compiler_new.html#wp503743">No Read on Write</a>. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp501381"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Single-Port Memories
+</b></font></h2>
+<a name="wp721203"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For single-port RAM, you only need to configure Port A. The following figures show the read-write timing for single-port memories. See <a  href="mem_compiler_new.html#wp792138"><i>Specifying RAMs with SYNCore</i></a> for a procedure. 
+</font></p>
+
+<a name="wp792982"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Single-Port Read
+</b></font></h5>
+
+<a name="wp770076"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_single_port_read.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp793266"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Single-Port Write
+</b></font></h5>
+
+<a name="wp793255"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_single_port_write16.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp501870"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Dual-Port Memories
+</b></font></h2>
+<a name="wp501871"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dual-port memory includes the following common configurations:
+</font></p>
+<ul>
+
+<a name="wp501879"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">One read access and one write access</font></li>
+
+<a name="wp519744"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Two read accesses and one write access</font></li>
+
+<a name="wp501883"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Two read accesses and two write accesses</font></li>
+</ul>
+
+<a name="wp506227"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following diagrams show the read-write timing for dual-port memories.
+</font></p>
+
+<a name="wp792912"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dual-Port Single Read
+</b></font></h5>
+
+<a name="wp770093"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_dual_port_single_read9.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792931"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dual-Port Single Write
+</b></font></h5>
+
+<a name="wp792928"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_dual_port_single_write11.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp770109"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dual-Port Read
+</b></font></h5>
+
+<a name="wp792941"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_dual_port_read12.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp792953"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dual-Port Write
+</b></font></h5>
+
+<a name="wp770117"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_dual_port_write10.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp503109"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Read/Write Timing Sequences
+</b></font></h2>
+<a name="wp503110"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The waveforms in this section describe the behavior of the RAM when both read and write are enabled and the address is the same. The waveforms show the behavior when each of the read-write sequences is enabled. The waveforms are merged with the simple waveforms shown in the previous sections. See the following:
+</font></p>
+<ul>
+
+<a name="wp513951"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp503111">Read Before Write</a></font></li>
+
+<a name="wp513966"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp721893">Write Before Read</a></font></li>
+
+<a name="wp513971"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="mem_compiler_new.html#wp503743">No Read on Write</a></font></li>
+</ul>
+
+<a name="wp503111"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Read Before Write
+</font></h3>
+<a name="wp770133"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_write_before_read14.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+
+<a name="wp503743"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Write Before Read 
+</font></h3>
+<a name="wp770125"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_read_before_write13.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+
+<a name="wp721893"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+No Read on Write
+</font></h3>
+<a name="wp789373"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="wf_noread_on_write15.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+
+<a name="wp787639"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+    
+    <hr>
+<p><b>Copyright &copy; 2007 Synplicity, Inc. All rights reserved.<br></b>
+  </body>
+</html>

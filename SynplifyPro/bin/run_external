@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#restore environment vars if necessary
+if [ "${SYN_BACKUP_LD_LIBRARY_PATH}" != "" ]; then
+  LD_LIBRARY_PATH=${SYN_BACKUP_LD_LIBRARY_PATH};
+  export LD_LIBRARY_PATH;
+fi
+if [ "${SYN_BACKUP_LD_LIBRARY_PATH_64}" != "" ]; then
+  LD_LIBRARY_PATH_64=${SYN_BACKUP_LD_LIBRARY_PATH_64};
+  export LD_LIBRARY_PATH_64;
+fi
+if [ "${SYN_BACKUP_SHLIB_PATH}" != "" ]; then
+  SHLIB_PATH=${SYN_BACKUP_SHLIB_PATH};
+  export SHLIB_PATH;
+fi
+exec $@

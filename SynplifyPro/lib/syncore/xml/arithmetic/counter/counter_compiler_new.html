@@ -1,0 +1,732 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>SYNCore Counter Compiler</title>
+  </head>
+
+  <body>
+  
+ 
+<center><font face="Arial, Helvetica, sans-serif" size="2"></center>
+
+<a name="wp1428577"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="6">
+SYNCore Counter Compiler
+</font></div></h1>
+
+
+<a name="wp1428345"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP wizard helps you generate Verilog code for your counter implementation requirements. You can find the following information here:
+</font></p>
+<ul>
+
+<a name="wp1428630"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428346">Specifying Counters with SYNCore</a></font></li>
+
+<a name="wp1428634"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428383">Counter Port List</a></font></li>
+
+<a name="wp1428695"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428439">Specifying Parameters</a></font></li>
+
+<a name="wp1428699"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428238">SYNCore Counter Parameters</a></font></li>
+
+<a name="wp1428700"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428106">SYNCore Counter Functional Description</a></font></li>
+</ul>
+
+<a name="wp1428611"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Overview
+</font></h3>
+<a name="wp1428615"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore counter component supports up, down, and dynamic (up/down) counter implementations using DSP blocks or logic elements. For each configuration, design optimizations are made for optimum use of core resources. 
+</font></p>
+
+<a name="wp1428346"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Counters with SYNCore
+</font></h3>
+<a name="wp1428626"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to generate Verilog code for a counter using the SYNCore IP wizard. Note that the SYNCore counter model use Verilog 2001. When adding a counter model to a Verilog-95 design, be sure to enable the <b>Verilog 2001</b> check box on the Verilog tab of the Implementation Options dialog box or include a <b>set_option -vlog_std v2001</b> statement in your project file to prevent a syntax error.
+</font></p>
+<ol type="1">
+
+<a name="wp1428347"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard.</font></li>
+<ul>
+
+<a name="wp1428348"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the FPGA synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon_qt.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard. </font></li>
+<a name="wp1428355"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_cntr_initial_screen.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428356"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the window that opens, select <b>counter_model</b> and click <b>Ok</b> to open page1 of the wizard.</font></li>
+<a name="wp1428360"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_cntr_opening_screen.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp1428361"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+2.		Specify the parameters you need in the wizard. For details about the parameters, see <a  href="counter_compiler_new.html#wp1428439">Specifying Parameters</a>. The <b>COUNTER</b> symbol on the left reflects any parameters you set.
+</font></p>
+
+<a name="wp1428365"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+3.		After you have specified all the parameters you need, click the <b>Generate</b> button in the lower left corner. The tool displays a confirmation message (TCL execution successful!) and writes the required files to the directory you specified on page 1 of the wizard. The HDL code is in Verilog. 
+</font></p>
+
+<a name="wp1428366"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+4.		The SYNCore wizard also generates a testbench for your counter. The testbench covers a limited set of vectors. You can now close the wizard.
+</font></p>
+
+<a name="wp1428367"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+5.		Edit the counter files if necessary. 
+</font></p>
+
+<a name="wp1428368"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+6.		Add the counter you generated to your design.
+</font></p>
+<ul>
+
+<a name="wp1428369"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated and the <b>syncore_addnsub.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard.</font></li>
+
+<a name="wp1428370"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.v</b> template file. This file is located in the same output files directory. Copy the lines that define the counter and paste them into your top-level module. The following figure shows a template file (in red text) inserted into a top-level module.</font></li>
+
+<a name="wp1428376"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_counter_code110.png" height="470" width="551" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp1428377"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.
+</font></p>
+
+<a name="wp1428378"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+module counter #(<br>
+&nbsp;&nbsp;&nbsp;parameter COUNT_WIDTH = 5,<br>
+&nbsp;&nbsp;&nbsp;parameter STEP = 2,<br>
+&nbsp;&nbsp;&nbsp;parameter RESET_TYPE = 0,<br>
+&nbsp;&nbsp;&nbsp;parameter LOAD = 2,<br>
+&nbsp;&nbsp;&nbsp;parameter MODE = &quot;Dynamic&quot; )
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428379"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+( <br>
+// Output Ports<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output wire [WIDTH-1:0] Count,<br>
+// Input Ports<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire Clock,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire Reset,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire Up_Down,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire Load,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire [WIDTH-1:0] LoadValue,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input wire Enable ); 
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428380"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+SynCoreCounter #(<br>
+&nbsp;&nbsp;&nbsp;.COUNT_WIDTH(COUNT_WIDTH),<br>
+&nbsp;&nbsp;&nbsp;.STEP(STEP),<br>
+&nbsp;&nbsp;&nbsp;.RESET_TYPE(RESET_TYPE),<br>
+&nbsp;&nbsp;&nbsp;.LOAD(LOAD),<br>
+&nbsp;&nbsp;&nbsp;.MODE(MODE) ) 
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428381"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+SynCoreCounter_ins1 ( <br>
+&nbsp;&nbsp;&nbsp;.PortCount(PortCount),<br>
+&nbsp;&nbsp;&nbsp;.PortClk(Clock),<br>
+&nbsp;&nbsp;&nbsp;.PortRST(Reset),<br>
+&nbsp;&nbsp;&nbsp;.PortUp_nDown(Up_Down),<br>
+&nbsp;&nbsp;&nbsp;.PortLoad(Load),<br>
+&nbsp;&nbsp;&nbsp;.PortLoadValue(LoadValue),<br>
+&nbsp;&nbsp;&nbsp;.PortCE(Enable) ); 
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428382"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+endmodule
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428383"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Counter Port List
+</font></h3>
+<a name="wp1428384"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following table lists the port assignments for all possible configurations; the third column specifies the conditionsunder which the port is available.
+</font></p>
+
+<a name="wp1428437"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1428387"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Port Name
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1428389"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1428391"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Required/Optional
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428393"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCE</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428395"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Count Enable input pin with size one (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428397"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428399"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortClk</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428401"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Primary clock input
+</font></div>
+</td>
+    <td>
+<a name="wp1428403"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428405"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortLoad</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428407"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Load Enable input which loads the counter (active high).
+</font></div>
+</td>
+    <td>
+<a name="wp1428409"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present for parameter LOAD=0
+</font></div>
+
+<a name="wp1428410"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+&#160;
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428412"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortLoadValue</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428414"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Load value primary input (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428416"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present for parameter LOAD=0 and LOAD=1
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428418"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortRST</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428420"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset input which resets the counter (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428422"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428424"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortUp_nDown</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428426"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Primary input which determines the counter mode.
+</font></div>
+
+<a name="wp1428427"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = Up counter
+</font></div>
+
+<a name="wp1428428"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 = Down counter
+</font></div>
+</td>
+    <td>
+<a name="wp1428430"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Present only for MODE="Dynamic"
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428432"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCount</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428434"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Counter primary output
+</font></div>
+</td>
+    <td>
+<a name="wp1428436"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428439"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Parameters
+</font></h3>
+<a name="wp1428440"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore counter can be configured for any of the following functions:
+</font></p>
+<ul>
+
+<a name="wp1428441"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Up Counter</font></li>
+
+<a name="wp1428442"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Down Counter</font></li>
+
+<a name="wp1428443"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Dynamic Up/Down Counter</font></li>
+</ul>
+
+<a name="wp1428444"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The counter core can have a constant or variable input load or no load value. If you are creating a constant-load counter, you will need to select <b>Enable Load</b> and <b>Load Constant Value</b> on page 2 of the wizard. If you are creating a variable-load counter, you will need to select <b>Enable Load</b> and <b>Use Variable Port Load</b> on page 2. The following procedure lists the parameters you need to define when generating a counter. For descriptions of each parameter, see <a  href="counter_compiler_new.html#wp1428238">SYNCore Counter Parameters</a>.
+</font></p>
+<ol type="1">
+
+<a name="wp1428450"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore counter wizard, as described in <a  href="counter_compiler_new.html#wp1428346">Specifying Counters with SYNCore</a>.</font></li>
+
+<a name="wp1428452"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter the following on page 1 of the wizard:</font></li>
+<ul>
+
+<a name="wp1428453"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the <b>Component Name</b> field, specify a name for your counter. Do not use spaces.</font></li>
+<a name="wp1428454"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Directory</b> field, specify a directory where you want the output files to be written. Do not use spaces.</font></li>
+<a name="wp1428455"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the <b>Filename</b> field, specify a name for the Verilog file that will be generated with the counter definitions. Do not use spaces.</font></li>
+<a name="wp1428456"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter the width and depth of the counter in the <b>Configure the Counter Paramaters</b> section.</font></li>
+<a name="wp1428457"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select the appropriate configuration in the <b>Configure the Mode of Counter</b> section.</font></li></ul>
+
+<a name="wp1428458"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens page 2 where you set parameters for <b>PortLoad</b> and <b>PortLoadValue</b>.</font></li>
+<ul>
+
+<a name="wp1428459"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">		</font>Select <b>Enable Load</b> <b>option</b> and  the required load option in <b>Configure Load Value</b> section. </font></li>
+<a name="wp1428460"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select the required reset type in the <b>Configure Reset type</b> section.</font></li>
+<a name="wp1428461"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The <b>COUNTER</b> symbol dynamically updates to reflect the parameters you set.
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp1428462"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Generate the counter core by clicking <b>Generate</b> button. All output files are written to the directory you specified on page1 of the wizard.</font></li>
+</ol>
+
+<a name="wp1428238"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Counter Parameters
+</font></h3>
+<a name="wp1428239"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describe the parameters you can set in the ROM wizard, which opens when you select <b>counter_model</b>:
+</font></p>
+<ul>
+
+<a name="wp1428243"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428249">SYNCore Counter Parameters Page 1</a></font></li>
+
+<a name="wp1428247"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428297">SYNCore Counter Parameters Page 2</a></font></li>
+</ul>
+
+<a name="wp1428249"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Counter Parameters Page 1
+</b></font></h5>
+
+<a name="wp1428253"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_cntr_pg1.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428295"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428256"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428258"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a name for the counter. This is the name that you instantiate in your design file to create an instance of the SYNCore counter in your design. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428260"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428262"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates the directory where the generated files will be stored. Do not use spaces. The following files are created:
+</font></div>
+<ul>
+
+<a name="wp1428263"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">filelist.txt - lists files written out by SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428264"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">options.txt - lists the options selected in SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428265"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">readme.txt - contains a brief description and known issues</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428266"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">syncore_counter.v - Verilog library file required to generate counter model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428267"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">testbench.v - Verilog testbench file for testing the counter model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428268"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">instantiation_file.vin - describes how to instantiate the wrapper file</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428269"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><i>component</i>.v - counter model wrapper file generated by SYNCore</font></li>
+<p>&nbsp;</p>
+</ul>
+
+<a name="wp1428270"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Note that running the wizard in the same directory overwrites any existing files.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428272"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Filename</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428274"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the generated counter. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428276"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Width of Counter
+</font></div>
+</td>
+    <td>
+<a name="wp1428278"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Determines the counter width (the corresponding file parameter is COUNT_WIDTH=n).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428280"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Counter Step Value
+</font></div>
+</td>
+    <td>
+<a name="wp1428282"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Determines the counter step value (the corresponding file parameter is STEP=n).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428284"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Up Counter</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428286"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an up counter (the default) configuration (the corresponding file parameter is MODE=Up).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428288"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Down Counter</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428290"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an down counter configuration (the corresponding file parameter is MODE=Down).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428292"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>UpDown Counter</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428294"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a dynamic up/down counter configuration (the corresponding file parameter is MODE=Dynamic).
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428297"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Counter Parameters Page 2
+</b></font></h5>
+
+<a name="wp1428301"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_cntr_pg2.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428327"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428304"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Enable Load option</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428306"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enables the load options
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428308"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Load Constant Value</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428310"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Load the constant value specified in the Load Value for constant load option field; (the corresponding file parameter is LOAD=1).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428312"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Load Value for constant load option
+</font></div>
+</td>
+    <td>
+<a name="wp1428314"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+The constant value to be loaded.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428316"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Use the port PortLoadValue to load Value
+</font></div>
+</td>
+    <td>
+<a name="wp1428318"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Loads variable value from PortLoadValue (the corresponding file parameter is LOAD=2).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428320"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Synchronous Reset
+</font></div>
+</td>
+    <td>
+<a name="wp1428322"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a synchronous (the default) reset input (the corresponding file parameter is MODE=0).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428324"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Asynchronous Reset</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428326"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an asynchronous reset input (the corresponding file parameter is MODE=1).
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428106"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Counter Functional Description
+</font></h3>
+<a name="wp1428108"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore counter compiler generates Verilog code for your up, down, and dynamic (up/down ) counter implementation. This section describes the following:
+</font></p>
+<ul>
+
+<a name="wp1428112"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428138">Functional Overview</a></font></li>
+
+<a name="wp1428116"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428143">UP Counter Operation</a></font></li>
+
+<a name="wp1428120"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428155">Down Counter Operation</a></font></li>
+
+<a name="wp1428124"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="counter_compiler_new.html#wp1428167">Dynamic Counter Operation</a> </font></li>
+</ul>
+
+<a name="wp1428138"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Functional Overview
+</b></font></h5>
+
+<a name="wp1428139"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore counter component supports up, down, and dynamic (up/down) counter implementations using DSP blocks or logic elements. For each configuration, design optimizations are made for optimum use of core resources. 
+</font></p>
+
+<a name="wp1428140"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+As its name implies, the <b>COUNTER</b> block counts up (increments) or down (decrements) by a step value and provides an output result. You can load a constant or a variable as an intermediate value or base for the counter. Reset to the counter on the <b>PortRST</b> input is active high and can be can be configured either as synchronous or asynchronous using the <b>RESET_TYPE</b> parameter. Count enable on the <b>PortCE</b> input must be value high to enable the counter to increment or decrement.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp1428141"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Altera Stratix II and Stratix III DSP blocks have registers with asynchronous resets only. Xilinx Virtex4 and Virtex5 DSP blocks have registers with synchronous resets only; Xilinx Spartan3A DSP block registers can be configured to have either synchronous or asynchronous resets. Please configure the multiplier accordingly while targeting to these technologies for effective utilization of the DSP blocks.
+</font></p>
+<hr>
+
+<a name="wp1428143"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+UP Counter Operation
+</b></font></h5>
+
+<a name="wp1428144"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, the counter is incremented by the step value defined by the <b>STEP</b> parameter. When reset is asserted (when <b>PostRST</b> is active high), the counter output is reset to 0. After the assertion of <b>PortCE</b>, the counter starts counting upwards coincident with the rising edge of the clock. The following waveform is with a constant STEP value of 5 and no load value.
+</font></p>
+
+<a name="wp1428145"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MODE= `Up'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOAD= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428149"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="counter_html_sourcea.png" height="121" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p><hr>
+NOTE:
+
+<a name="wp1428150"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Counter core can be configured to use a constant or dynamic load value in Up Counter mode (for the counter to load the <b>PortLoadValue</b>, <b>PortCE</b> must be active). This functionality is explained in <a  href="counter_compiler_new.html#wp1428167">Dynamic Counter Operation</a>.
+</font></p>
+<hr>
+
+<a name="wp1428155"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Down Counter Operation
+</b></font></h5>
+
+<a name="wp1428156"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, the counter is decremented by the step value defined by the <b>STEP</b> parameter. When reset is asserted (when <b>PostRST</b> is active high), the counter output is reset to 0. After the assertion of <b>PortCE</b>, the counter starts counting downwards coincident with the rising edge of the clock. The following waveform is with a constant STEP value of 5 and no load value.
+</font></p>
+
+<a name="wp1428157"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MODE= `Down'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOAD= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428161"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="counter_html_source2.png" height="121" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p><hr>
+NOTE:
+
+<a name="wp1428162"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Counter core can be configured to use a constant or dynamic load value in Down Counter mode (for the counter to load the <b>PortLoadValue</b>, <b>PortCE</b> must be active). This functionality is explained in <a  href="counter_compiler_new.html#wp1428167">Dynamic Counter Operation</a>.
+</font></p>
+<hr>
+
+<a name="wp1428167"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dynamic Counter Operation
+</b></font></h5>
+
+<a name="wp1428168"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, the counter is incremented or decremented by the step value defined by the <b>STEP</b> parameter; the count direction (up or down) is controlled by the <b>PortUp_nDown</b> input (1 = up, 0 = down).
+</font></p>
+
+<a name="wp1428169"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Dynamic Up/Down Counters with Constant Load Value*
+</b></font></h5>
+
+<a name="wp1428170"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+On de-assertion of <b>PortRST</b>, the counter starts counting up or down based on the <b>PortUp_nDown</b> input value. The following waveform is with <b>STEP</b> value of 5 and a <b>LOAD_VALUE</b> of 80. When <b>PortLoad</b> is asserted, the counter loads the constant load value on the next active edge of clock and resumes counting in the specified direction. 
+</font></p>
+
+<a name="wp1428171"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MODE= `Dynamic'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOAD= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428175"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="counter_html_source3.png" height="150" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p><hr>
+NOTE:
+
+<a name="wp1428176"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+*For counter to load the <b>PortLoadValue</b>, <b>PortCE</b> must be active.
+</font></p>
+<hr>
+
+<a name="wp1428177"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Up/Down Counters with Dynamic Load Value*
+</font></p>
+
+<a name="wp1428178"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+On de-assertion of <b>PortRST</b>, the counter starts counting up or down based on the <b>PortUp_nDown</b> input value. The following waveform is with <b>STEP</b> value of 5 and a <b>LOAD_VALUE</b> of 80. When <b>PortLoad</b> is asserted, the counter loads the constant load value on the next active edge of clock and resumes counting in the specified direction.
+</font></p>
+
+<a name="wp1428179"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, the counter counts up or down based on the <b>PortUp_nDown</b> input value. On the assertion of <b>PortLoad</b>, the counter loads a new <b>PortLoadValue</b> and resumes up/down counting on the next active clock edge. In this example, a variable <b>PortLoadValue</b> of 8 is used with a counter <b>STEP</b> value of 5.
+</font></p>
+
+<a name="wp1428180"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MODE= `Dynamic'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOAD= `2'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428184"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="counter_html_source4.png" height="154" width="553" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p><hr>
+NOTE:
+
+<a name="wp1428185"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+* For counter to load the PortLoadValue, PortCE should be active.
+</font></p>
+<hr>
+    <hr>
+<p><font size="1"><b>&copy; Copyright 2008 Synopsys, Inc.</b></font><br></p>
+  </body>
+</html>

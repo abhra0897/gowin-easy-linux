@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Basic FIR Filter" id="basic_fir" version= "1.0" category="Soft IP Core|DSP and Mathemathics">Basic FIR Filter</ip>
+    <target module="Basic_FIR_Filter_Top">basic_fir_filter</target>
+    <docs>
+        <doc type="summary">/doc/basic_fir.html</doc>
+        <doc type="help">/doc/basic_fir_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device> 
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSER-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

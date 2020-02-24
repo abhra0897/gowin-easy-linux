@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="SPI MASTER" id="spi_master" version= "1.0" category="Soft IP Core|Interface and Interconnect">SPI MASTER</ip>
+    <target module="SPI_MASTER_Top">spi_master</target>
+    <docs>
+        <doc type="summary">/doc/spimaster.html</doc>
+        <doc type="help">/doc/spimaster_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NZ-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>
+

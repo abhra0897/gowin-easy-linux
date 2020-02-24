@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/vhdl.xml2#1 $ -->
+<syntax name="VHDL" extension="vhd vhdl vhm">
+	<block name="Line comment" start="--" fg="#00a000" bg="white"/>
+	<block name="Comment" start="/*" end="*/" fg="#00a000" bg="white" multi="1" />
+	
+	<block name="String DQ" start='"' end='"' fg="#ff0000" bg="white"/>
+
+	<keyword name="Keywords" fg="#0000ff" bg="white">
+		<item case_sensitive="false" help="KEYWORDID_abs" template="TEMPLATEID_abs">abs</item>
+		<item case_sensitive="false" help="KEYWORDID_access" template="TEMPLATEID_access">access</item>
+		<item case_sensitive="false" help="KEYWORDID_after" template="TEMPLATEID_after">after</item>
+		<item case_sensitive="false" help="KEYWORDID_alias" template="TEMPLATEID_alias">alias</item>
+		<item case_sensitive="false" help="KEYWORDID_all" template="TEMPLATEID_all">all</item>
+		<item case_sensitive="false" help="KEYWORDID_and" template="TEMPLATEID_and">and</item>
+		<item case_sensitive="false" help="KEYWORDID_architecture" template="TEMPLATEID_architecture">architecture</item>
+		<item case_sensitive="false" help="KEYWORDID_array" template="TEMPLATEID_array">array</item>
+		<item case_sensitive="false" help="KEYWORDID_assert" template="TEMPLATEID_assert">assert</item>
+		<item case_sensitive="false" help="KEYWORDID_attribute" template="TEMPLATEID_attribute">attribute</item>
+		<item case_sensitive="false" help="KEYWORDID_begin" template="TEMPLATEID_begin">begin</item>
+		<item case_sensitive="false" help="KEYWORDID_block" template="TEMPLATEID_block">block</item>
+		<item case_sensitive="false" help="KEYWORDID_body" template="TEMPLATEID_body">body</item>
+		<item case_sensitive="false" help="KEYWORDID_buffer" template="TEMPLATEID_buffer">buffer</item>
+		<item case_sensitive="false" help="KEYWORDID_case" template="TEMPLATEID_case">case</item>
+		<item case_sensitive="false" help="KEYWORDID_component" template="TEMPLATEID_component">component</item>
+		<item case_sensitive="false" help="KEYWORDID_configuration" template="TEMPLATEID_configuration">configuration</item>
+		<item case_sensitive="false" help="KEYWORDID_constant" template="TEMPLATEID_constant">constant</item>
+		<item case_sensitive="false" help="KEYWORDID_disconnect" template="TEMPLATEID_disconnect">disconnect</item>
+		<item case_sensitive="false" help="KEYWORDID_downto" template="TEMPLATEID_downto">downto</item>
+		<item case_sensitive="false" help="KEYWORDID_else" template="TEMPLATEID_else">else</item>
+		<item case_sensitive="false" help="KEYWORDID_end" template="TEMPLATEID_end">end</item>
+		<item case_sensitive="false" help="KEYWORDID_entity" template="TEMPLATEID_entity">entity</item>
+		<item case_sensitive="false" help="KEYWORDID_exit" template="TEMPLATEID_exit">exit</item>
+		<item case_sensitive="false" help="KEYWORDID_file" template="TEMPLATEID_file">file</item>
+		<item case_sensitive="false" help="KEYWORDID_for" template="TEMPLATEID_for">for</item>
+		<item case_sensitive="false" help="KEYWORDID_function" template="TEMPLATEID_function">function</item>
+		<item case_sensitive="false" help="KEYWORDID_generate" template="TEMPLATEID_generate">generate</item>
+		<item case_sensitive="false" help="KEYWORDID_generic" template="TEMPLATEID_generic">generic</item>
+		<item case_sensitive="false" help="KEYWORDID_group" template="TEMPLATEID_group">group</item>
+		<item case_sensitive="false" help="KEYWORDID_if" template="TEMPLATEID_if">if</item>
+		<item case_sensitive="false" help="KEYWORDID_impure" template="TEMPLATEID_impure">impure</item>
+		<item case_sensitive="false" help="KEYWORDID_in" template="TEMPLATEID_in">in</item>
+		<item case_sensitive="false" help="KEYWORDID_inertial" template="TEMPLATEID_inertial">inertial</item>
+		<item case_sensitive="false" help="KEYWORDID_inout" template="TEMPLATEID_inout">inout</item>
+		<item case_sensitive="false" help="KEYWORDID_is" template="TEMPLATEID_is">is</item>
+		<item case_sensitive="false" help="KEYWORDID_label" template="TEMPLATEID_label">label</item>
+		<item case_sensitive="false" help="KEYWORDID_library" template="TEMPLATEID_library">library</item>
+		<item case_sensitive="false" help="KEYWORDID_linkage" template="TEMPLATEID_linkage">linkage</item>
+		<item case_sensitive="false" help="KEYWORDID_literal" template="TEMPLATEID_literal">literal</item>
+		<item case_sensitive="false" help="KEYWORDID_loop" template="TEMPLATEID_loop">loop</item>
+		<item case_sensitive="false" help="KEYWORDID_map" template="TEMPLATEID_map">map</item>
+		<item case_sensitive="false" help="KEYWORDID_mod" template="TEMPLATEID_mod">mod</item>
+		<item case_sensitive="false" help="KEYWORDID_nand" template="TEMPLATEID_nand">nand</item>
+		<item case_sensitive="false" help="KEYWORDID_new" template="TEMPLATEID_new">new</item>
+		<item case_sensitive="false" help="KEYWORDID_next" template="TEMPLATEID_next">next</item>
+		<item case_sensitive="false" help="KEYWORDID_nor" template="TEMPLATEID_nor">nor</item>
+		<item case_sensitive="false" help="KEYWORDID_not" template="TEMPLATEID_not">not</item>
+		<item case_sensitive="false" help="KEYWORDID_null" template="TEMPLATEID_null">null</item>
+		<item case_sensitive="false" help="KEYWORDID_of" template="TEMPLATEID_of">of</item>
+		<item case_sensitive="false" help="KEYWORDID_on" template="TEMPLATEID_on">on</item>
+		<item case_sensitive="false" help="KEYWORDID_open" template="TEMPLATEID_open">open</item>
+		<item case_sensitive="false" help="KEYWORDID_or" template="TEMPLATEID_or">or</item>
+		<item case_sensitive="false" help="KEYWORDID_others" template="TEMPLATEID_others">others</item>
+		<item case_sensitive="false" help="KEYWORDID_out" template="TEMPLATEID_out">out</item>
+		<item case_sensitive="false" help="KEYWORDID_package" template="TEMPLATEID_package">package</item>
+		<item case_sensitive="false" help="KEYWORDID_port" template="TEMPLATEID_port">port</item>
+		<item case_sensitive="false" help="KEYWORDID_postponed" template="TEMPLATEID_postponed">postponed</item>
+		<item case_sensitive="false" help="KEYWORDID_procedure" template="TEMPLATEID_procedure">procedure</item>
+		<item case_sensitive="false" help="KEYWORDID_process" template="TEMPLATEID_process">process</item>
+		<item case_sensitive="false" help="KEYWORDID_pure" template="TEMPLATEID_pure">pure</item>
+		<item case_sensitive="false" help="KEYWORDID_range" template="TEMPLATEID_range">range</item>
+		<item case_sensitive="false" help="KEYWORDID_record" template="TEMPLATEID_record">record</item>
+		<item case_sensitive="false" help="KEYWORDID_register" template="TEMPLATEID_register">register</item>
+		<item case_sensitive="false" help="KEYWORDID_reject" template="TEMPLATEID_reject">reject</item>
+		<item case_sensitive="false" help="KEYWORDID_return" template="TEMPLATEID_return">return</item>
+		<item case_sensitive="false" help="KEYWORDID_rol" template="TEMPLATEID_rol">rol</item>
+		<item case_sensitive="false" help="KEYWORDID_ror" template="TEMPLATEID_ror">ror</item>
+		<item case_sensitive="false" help="KEYWORDID_select" template="TEMPLATEID_select">select</item>
+		<item case_sensitive="false" help="KEYWORDID_severity" template="TEMPLATEID_severity">severity</item>
+		<item case_sensitive="false" help="KEYWORDID_signal" template="TEMPLATEID_signal">signal</item>
+		<item case_sensitive="false" help="KEYWORDID_shared" template="TEMPLATEID_shared">shared</item>
+		<item case_sensitive="false" help="KEYWORDID_sla" template="TEMPLATEID_sla">sla</item>
+		<item case_sensitive="false" help="KEYWORDID_sll" template="TEMPLATEID_sll">sll</item>
+		<item case_sensitive="false" help="KEYWORDID_sra" template="TEMPLATEID_sra">sra</item>
+		<item case_sensitive="false" help="KEYWORDID_srl" template="TEMPLATEID_srl">srl</item>
+		<item case_sensitive="false" help="KEYWORDID_subtype" template="TEMPLATEID_subtype">subtype</item>
+		<item case_sensitive="false" help="KEYWORDID_then" template="TEMPLATEID_then">then</item>
+		<item case_sensitive="false" help="KEYWORDID_to" template="TEMPLATEID_to">to</item>
+		<item case_sensitive="false" help="KEYWORDID_transport" template="TEMPLATEID_transport">transport</item>
+		<item case_sensitive="false" help="KEYWORDID_type" template="TEMPLATEID_type">type</item>
+		<item case_sensitive="false" help="KEYWORDID_unaffected" template="TEMPLATEID_unaffected">unaffected</item>
+		<item case_sensitive="false" help="KEYWORDID_units" template="TEMPLATEID_units">units</item>
+		<item case_sensitive="false" help="KEYWORDID_until" template="TEMPLATEID_until">until</item>
+		<item case_sensitive="false" help="KEYWORDID_use" template="TEMPLATEID_use">use</item>
+		<item case_sensitive="false" help="KEYWORDID_variable" template="TEMPLATEID_variable">variable</item>
+		<item case_sensitive="false" help="KEYWORDID_wait" template="TEMPLATEID_wait">wait</item>
+		<item case_sensitive="false" help="KEYWORDID_when" template="TEMPLATEID_when">when</item>
+		<item case_sensitive="false" help="KEYWORDID_while" template="TEMPLATEID_while">while</item>
+		<item case_sensitive="false" help="KEYWORDID_with" template="TEMPLATEID_with">with</item>
+		<item case_sensitive="false" help="KEYWORDID_xnor" template="TEMPLATEID_xnor">xnor</item>
+		<item case_sensitive="false" help="KEYWORDID_xor" template="TEMPLATEID_xor">xor</item>
+    </keyword>
+
+	<keyword name="Types" fg="#0000ff" bg="white">
+		<item case_sensitive="false">bit</item>
+		<item case_sensitive="false">bit_vector</item>
+		<item case_sensitive="false">character</item>
+		<item case_sensitive="false">boolean</item>
+		<item case_sensitive="false">integer</item>
+		<item case_sensitive="false">real</item>
+		<item case_sensitive="false">time</item>
+		<item case_sensitive="false">string</item>
+		<item case_sensitive="false">severity_level</item>
+		<item case_sensitive="false">positive</item>
+		<item case_sensitive="false">natural</item>
+		<item case_sensitive="false">signed</item>
+		<item case_sensitive="false">unsigned</item>
+		<item case_sensitive="false">line</item>
+		<item case_sensitive="false">text</item>
+		<item case_sensitive="false">std_logic</item>
+		<item case_sensitive="false">std_logic_vector</item>
+		<item case_sensitive="false">std_ulogic</item>
+		<item case_sensitive="false">std_ulogic_vector</item>
+		<item case_sensitive="false">qsim_state</item>
+		<item case_sensitive="false">qsim_state_vector</item>
+		<item case_sensitive="false">qsim_12state</item>
+		<item case_sensitive="false">qsim_12state_vector</item>
+		<item case_sensitive="false">qsim_strength</item>
+		<item case_sensitive="false">mux_bit</item>
+		<item case_sensitive="false">mux_vector</item>
+		<item case_sensitive="false">reg_bit</item>
+		<item case_sensitive="false">reg_vector</item>
+		<item case_sensitive="false">wor_bit</item>
+		<item case_sensitive="false">wor_vector</item>
+    </keyword>
+</syntax>

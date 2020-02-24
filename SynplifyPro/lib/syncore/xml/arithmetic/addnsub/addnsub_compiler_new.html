@@ -1,0 +1,1185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>SYNCore Adder/Subtractor Model</title>
+  </head>
+
+  <body>
+
+
+<center><font face="Arial, Helvetica, sans-serif" size="2"></center>
+
+<a name="wp1361166"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="6">
+SYNCore Adder/Subtractor Model
+</font></div></h1>
+
+
+<a name="wp1428773"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore adder/subtractor compiler generates Verilog code for a parametrizable, pipelined adder/subtractor. The adder/subtractor includes a single clock that controls the entire pipeline stages. You can find the following information here:
+</font></p>
+<ul>
+
+<a name="wp1428788"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428770">Specifying Adder/Subtractors with SYNCore</a></font></li>
+
+<a name="wp1428789"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428566">Port List</a></font></li>
+
+<a name="wp1428790"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428651">Specifying Parameters</a></font></li>
+
+<a name="wp1428791"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428369">SYNCore Adder/Subtractor Parameters</a></font></li>
+
+<a name="wp1428841"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428108">SYNCore Adder/Subtractor Functional Description</a></font></li>
+</ul>
+
+<a name="wp1428770"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Adder/Subtractors with SYNCore
+</font></h3>
+<a name="wp1428531"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP wizard helps you generate Verilog code for your adder/subtractor implementation requirements.
+</font></p>
+
+<a name="wp1428532"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to generate Verilog code for an adder/subtractor using the SYNCore IP wizard. Note that the SYNCore adder/subtractor models use Verilog 2001. When adding an adder/subtractor model to a Verilog-95 design, be sure to enable the <b>Verilog 2001</b> check box on the Verilog tab of the Implementation Options dialog box or include a <b>set_option -vlog_std v2001</b> statement in your project file to prevent a syntax error.
+</font></p>
+<ol type="1">
+
+<a name="wp1428533"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard.</font></li>
+<ul>
+
+<a name="wp1428534"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the FPGA synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon_qt.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard. </font></li>
+<a name="wp1428541"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_mainwin_96_addr.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428542"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the window that opens, select <b>addnsub_model</b> and click <b>Ok</b> to open page1 of the wizard.</font></li>
+<a name="wp1428546"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_addr_initial_screen.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp1428547"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+2.		Specify the parameters you need in the wizard. For details about the parameters, see <a  href="addnsub_compiler_new.html#wp1428651">Specifying Parameters</a>. The ADDnSUB symbol on the left reflects any parameters you set.
+</font></p>
+
+<a name="wp1428551"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+3.		After you have specified all the parameters you need, click the <b>Generate</b> button in the lower left corner. The tool displays a confirmation message (TCL execution successful!) and writes the required files to the directory you specified on page 1 of the wizard. The HDL code is in Verilog.
+</font></p>
+
+<a name="wp1428552"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+4.		The SYNCore wizard also generates a testbench for your adder/subtractor. The testbench covers a limited set of vectors. You can now close the wizard.
+</font></p>
+
+<a name="wp1428553"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+5.		Edit the adder/subtractor files if necessary.
+</font></p>
+
+<a name="wp1428554"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+6.		Add the adder/subtractor you generated to your design.
+</font></p>
+<ul>
+
+<a name="wp1428555"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated and the <b>syncore_addnsub.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard.</font></li>
+
+<a name="wp1428556"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.v</b> template file. This file is located in the same output files directory. Copy the lines that define the adder/subtractor and paste them into your top-level module. The following figure shows a template file (in red text) inserted into a top-level module.</font></li>
+
+<a name="wp1428562"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_addr_template27.png" height="470" width="551" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428563"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.</font></li>
+
+<a name="wp1428564"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+module top (<br>
+&nbsp;&nbsp;&nbsp;output [15 : 0] Out, <br>
+&nbsp;&nbsp;&nbsp;input Clk,<br>
+&nbsp;&nbsp;&nbsp;input [15 : 0] A,<br>
+&nbsp;&nbsp;&nbsp;input CEA,<br>
+&nbsp;&nbsp;&nbsp;input RSTA,<br>
+&nbsp;&nbsp;&nbsp;input [15 : 0] B,<br>
+&nbsp;&nbsp;&nbsp;input CEB,<br>
+&nbsp;&nbsp;&nbsp;input RSTB,<br>
+&nbsp;&nbsp;&nbsp;input CEOut, <br>
+&nbsp;&nbsp;&nbsp;input RSTOut, <br>
+&nbsp;&nbsp;&nbsp;input ADDnSUB,<br>
+&nbsp;&nbsp;&nbsp;input CarryIn );
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428565"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+My_ADDnSUB ADDnSUB_inst ( <br>
+// Output Ports<br>
+&nbsp;&nbsp;&nbsp;.PortOut(Out), <br>
+// Input  Ports<br>
+&nbsp;&nbsp;&nbsp;.PortClk(Clk), <br>
+&nbsp;&nbsp;&nbsp;.PortA(A), <br>
+&nbsp;&nbsp;&nbsp;.PortCEA(CEA), <br>
+&nbsp;&nbsp;&nbsp;.PortRSTA(RSTA), <br>
+&nbsp;&nbsp;&nbsp;.PortB(B),<br>
+&nbsp;&nbsp;&nbsp;.PortCEB(CEB), <br>
+&nbsp;&nbsp;&nbsp;.PortRSTB(RSTB), <br>
+&nbsp;&nbsp;&nbsp;.PortCEOut(CEOut), <br>
+&nbsp;&nbsp;&nbsp;.PortRSTOut(RSTOut), <br>
+&nbsp;&nbsp;&nbsp;.PortADDnSUB(ADDnSUB), <br>
+&nbsp;&nbsp;&nbsp;.PortCarryIn(CarryIn) );<br>
+endmodule
+
+</font></code>
+<p>&nbsp;</p></ul>
+
+<a name="wp1428566"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Port List
+</font></h3>
+<a name="wp1428567"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following table lists the port assignments for all possible configurations; the third column specifies the conditionsunder which the port is available.
+</font></p>
+
+<a name="wp1428649"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1428570"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Port Name
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1428572"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1428574"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Required/Optional
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428576"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428578"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data input for adder/subtractor
+</font></div>
+
+<a name="wp1428579"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Parameterized width and pipeline stages
+</font></div>
+</td>
+    <td>
+<a name="wp1428581"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428583"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428585"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data input for adder/subtractor
+</font></div>
+
+<a name="wp1428586"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Parameterized width and pipeline stages
+</font></div>
+</td>
+    <td>
+<a name="wp1428588"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if adder/subtractor is configured as a constant adder/subtractor
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428590"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortClk</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428592"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Primary clock input; clocks all registers in the unit
+</font></div>
+</td>
+    <td>
+<a name="wp1428594"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428596"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortRstA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428598"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset input for port A pipeline registers (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428600"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if pipeline stage for port A is 0
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428602"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortRstB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428604"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset input for port B pipeline registers (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428606"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if pipeline stage for port B is 0 or for constant adder/subtractor
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428608"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortADDnSUB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428610"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Selection port for dynamic operation
+</font></div>
+</td>
+    <td>
+<a name="wp1428612"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if adder/subtractor configured as standalone adder or subtractor
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428614"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortRstOut</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428616"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset input for output register (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428618"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if output pipeline stage is 0
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428620"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCEA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428622"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock enable for port A pipeline registers (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428624"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if pipeline stage for port A is 0
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428626"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCEB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428628"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock enable for port B pipeline registers (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428630"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if pipeline stage for port B is 0 or for constant adder/subtractor
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428632"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCarryIn</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428634"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Carry input for adder/subtractor
+</font></div>
+</td>
+    <td>
+<a name="wp1428636"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428638"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortCEOut</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428640"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock enable for output register (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp1428642"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Not present if output pipeline stage is 0
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428644"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PortOut</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428646"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data output
+</font></div>
+</td>
+    <td>
+<a name="wp1428648"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Always present
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428651"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Parameters
+</font></h3>
+<a name="wp1428652"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore adder/subtractor can be configured as any of the following:
+</font></p>
+<ul>
+
+<a name="wp1428653"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Adder</font></li>
+
+<a name="wp1428654"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Subtractor</font></li>
+
+<a name="wp1428655"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Dynamic Adder/Subtractor</font></li>
+</ul>
+
+<a name="wp1428656"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+If you are creating a constant input adder, subtractor, or a dynamic adder/subtractor with the SYNCore IP wizard, you must select <b>Constant Value Input</b> and specify a value for port B in the <b>Constant Value/Port B Width</b> field on page 2 of the parameters. The following procedure lists the parameters you need to define when generating an adder/subtractor. For descriptions of each parameter, see <a  href="addnsub_compiler_new.html#wp1428369">SYNCore Adder/Subtractor Parameters</a>.
+</font></p>
+<ol type="1">
+
+<a name="wp1428662"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore adder/subtractor wizard as described in <a  href="addnsub_compiler_new.html#wp1428770">Specifying Adder/Subtractors with SYNCore</a>.</font></li>
+
+<a name="wp1428664"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter the following on page 1 of the wizard:</font></li>
+<ul>
+
+<a name="wp1428665"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the <b>Component Name</b> field, specify a name for your adder/subtractor. Do not use spaces.</font></li>
+<a name="wp1428666"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Directory</b> field, specify a directory where you want the output files to be written. Do not use spaces.</font></li>
+<a name="wp1428667"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><font face="Symbol">I</font>n the <b>Filename</b> field, specify a name for the Verilog file that will be generated with the adder/subtractor definitions. Do not use spaces.</font></li>
+<a name="wp1428668"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select the appropriate configuration in <b>Configure the Mode of Operation</b>.</font></li></ul>
+
+<a name="wp1428669"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens page 2 where you set parameters for port A and port B.</font></li>
+
+<a name="wp1428670"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Configure Port A</b> section:</font></li>
+<ul>
+
+<a name="wp1428671"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter a value in the <b>Port A Width</b> field.</font></li>
+<a name="wp1428672"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are defining a synchronous adder/subtractor, check <b>Register Input A</b> and then check <b>Clock Enable for Register A</b> and/or <b>Reset for Register A</b>.</font></li></ul>
+
+<a name="wp1428673"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Configure Port B</b> section:</font></li>
+<ul>
+
+<a name="wp1428674"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are configuring port B as a constant port, check <b>Constant Value Input</b> and enter the constant value in the <b>Constant Value/Port B Width</b> field.</font></li>
+<a name="wp1428675"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are configuring port B as a dynamic port, check <b>Enable Port B</b> and enter the port width in the <b>Constant Value/Port B Width</b> field.</font></li>
+<a name="wp1428676"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are defining a synchronous adder/subtractor, check <b>Register Input B</b> and then check <b>Clock Enable for Register B</b> and/or <b>Reset for Register B</b>.</font></li></ul>
+
+<a name="wp1428677"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Configure Output Port</b> section:</font></li>
+<ul>
+
+<a name="wp1428678"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter a value in the <b>Output port Width </b>field.</font></li>
+<a name="wp1428679"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are registering the output port, check <b>Register output Port</b>.</font></li>
+<a name="wp1428680"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are defining a synchronous adder/subtractor check <b>Clock Enable for Register PortOut</b> and/or <b>Reset for Register PortOut</b>.</font></li></ul>
+
+<a name="wp1428681"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the <b>Configure Reset type for all Reset Signal</b> section, click <b>Synchronous Reset</b> or <b>Asynchronous Reset</b> as appropriate.</font></li>
+<hr>
+NOTE:
+
+<a name="wp1428682"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+As you enter the page 2 parameters, the <b>ADDnSUB</b> symbol dynamically updates to reflect the parameters you set.
+</font></p>
+<hr>
+
+<a name="wp1428683"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Generate the adder/subtractor by clicking the <b>Generate</b> button as described in <a  href="addnsub_compiler_new.html#wp1428770">Specifying Adder/Subtractors with SYNCore</a> and add it to your design. All output files are in the directory you specified on page 1 of the wizard.</font></li>
+</ol>
+
+<a name="wp1428369"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Adder/Subtractor Parameters
+</font></h3>
+<a name="wp1428370"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describe the parameters you can set in the adder/subtractor wizard, which opens when you select <b>addnsub_model</b>:
+</font></p>
+<ul>
+
+<a name="wp1428374"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428380">SYNCore Adder/Subtractor Parameters Page 1</a></font></li>
+
+<a name="wp1428378"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428420">SYNCore Adder/Subtractor Parameters Page 2</a></font></li>
+</ul>
+
+<a name="wp1428380"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Adder/Subtractor Parameters Page 1
+</b></font></h5>
+
+<a name="wp1428384"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_add_sub_pg1.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428418"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428387"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428389"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a name for the adder/subtractor. This is the name that you instantiate in your design file to create an instance of the SYNCore adder/subtractor in your design. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428391"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428393"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates the directory where the generated files will be stored. Do not use spaces. The following files are created:
+</font></div>
+<ul>
+
+<a name="wp1428394"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">filelist.txt - lists files written out by SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428395"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">options.txt - lists the options selected in SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428396"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">readme.txt - contains a brief description and known issues</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428397"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">syncore_ADDnSUB.v - Verilog library file required to generate adder/subtractor model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428398"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">testbench.v - Verilog testbench file for testing the adder/subtractor model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428399"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">instantiation_file.vin - describes how to instantiate the wrapper file</font></li>
+<p>&nbsp;</p>
+
+<a name="wp1428400"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><i>component</i>.v - adder/subtractor model wrapper file generated by SYNCore</font></li>
+<p>&nbsp;</p>
+</ul>
+
+<a name="wp1428401"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Note that running the wizard in the same directory overwrites any existing files.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428403"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Filename</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428405"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the generated adder/subtractor. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428407"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Adder</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428409"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates an adder (the corresponding file parameter is ADD_N_SUB =&quot;ADD&quot;)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428411"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Subtractor</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428413"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a subtractor (the corresponding file parameter is ADD_N_SUB =&quot;SUB&quot;)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428415"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Adder/Subtractor</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428417"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a dynamic adder/subtractor (the corresponding file parameter is ADD_N_SUB =&quot;DYNAMIC&quot;)
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428420"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Adder/Subtractor Parameters Page 2
+</b></font></h5>
+
+<a name="wp1428424"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_add_sub_pg2.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428490"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1428427"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Port A Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428429"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the width of port A (the corresponding file parameter is PORT_A_WIDTH=n)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428431"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register Input A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428433"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Used with synchronous adder/subtractor configurations to register port A. When checked, also allows clock enable and reset to be configured (the corresponding file parameter is PORTA_PIPELINE_STAGE='0' or `1')
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428435"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Clock Enable for Register A</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1428437"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the enable for port A register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428439"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset for Register A
+</font></div>
+</td>
+    <td>
+<a name="wp1428441"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the reset for port A register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428443"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Constant Value Input
+</font></div>
+</td>
+    <td>
+<a name="wp1428445"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies port B as a constant input when checked and allows you to enter a constant value in the <b>Constant Value/Port B Width</b> field (the corresponding file parameter is CONSTANT_PORT =`0')
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428447"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enable Port B
+</font></div>
+</td>
+    <td>
+<a name="wp1428449"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies port B as an input when checked and allows you to enter a port B width in the <b>Constant Value/Port B Width</b> field (the corresponding file parameter is CONSTANT_PORT =`1')
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428451"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Constant Value/Port B Width
+</font></div>
+</td>
+    <td>
+<a name="wp1428453"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies either a constant value or port B width depending on <b>Constant Value Input</b> and <b>Enable Port B </b>selection (the corresponding file parameters are CONSTANT_VALUE= n or PORT_B_WIDTH=n)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428455"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Register Input B
+</font></div>
+</td>
+    <td>
+<a name="wp1428457"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Used with synchronous adder/subtractor configurations to register port B. When checked, also allows clock enable and reset to be configured (the corresponding file parameter is PORTB_PIPELINE_STAGE='0' or `1')
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428459"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock Enable for Register B
+</font></div>
+</td>
+    <td>
+<a name="wp1428461"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the enable for the port B register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428463"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset for Register B
+</font></div>
+</td>
+    <td>
+<a name="wp1428465"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the reset for the port B register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428467"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Output port Width
+</font></div>
+</td>
+    <td>
+<a name="wp1428469"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the width of the output port (the corresponding file parameter is PORT_OUT_WIDTH=n)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428471"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Register output PortOut
+</font></div>
+</td>
+    <td>
+<a name="wp1428473"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Used with synchronous adder/subtractor configurations to register the output port. When checked, also allows clock enable and reset to be configured (the corresponding file parameter is PORTOUT_PIPELINE_STAGE='0' or `1'
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428475"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock Enable for Register PortOut
+</font></div>
+</td>
+    <td>
+<a name="wp1428477"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the enable for the output port register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428479"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset for Register PortOut
+</font></div>
+</td>
+    <td>
+<a name="wp1428481"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the reset for the output port register
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428483"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Synchronous Reset
+</font></div>
+</td>
+    <td>
+<a name="wp1428485"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the type of reset to synchronous (the corresponding file parameter is RESET_TYPE='0')
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1428487"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Asynchronous Reset
+</font></div>
+</td>
+    <td>
+<a name="wp1428489"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the type of reset to asynchronous (the corresponding file parameter is RESET_TYPE='1')
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428108"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Adder/Subtractor Functional Description
+</font></h3>
+<a name="wp1428109"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore adder/subtractor compiler generates Verilog code for a parametrizable, pipelined adder/subtractor. The adder/subtractor has a single clock that controls the entire pipeline stages (if used) of the adder/subtractor.
+</font></p>
+
+<a name="wp1428113"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+As its name implies, this block just adds/subtracts the inputs and provides the output result. One of the inputs can be configured as a constant. The data inputs and outputs of the adder/subtractor can be pipelined; the pipeline stages can be 0 or 1, and can be configured individually. The individual pipeline stage registers include their own reset and enable ports.
+</font></p>
+
+<a name="wp1428114"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The reset to all of the pipeline registers can be configured either as synchronous or asynchronous using the <b>RESET_TYPE</b> parameter. The reset type of the pipeline registers cannot be configured individually.
+</font></p>
+
+<a name="wp1428118"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_sourcea.png" height="283" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428119"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+SYNCore adder/subtracor has <b>ADD_N_SUB</b> parameter, which can take three values <b>ADD</b>, <b>SUB</b>, or <b>DYNAMIC</b>. Based on this parameter value, the adder/subtractor can be configured as follows.
+</font></p>
+<ul>
+
+<a name="wp1428120"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428124">Adder</a></font></li>
+
+<a name="wp1428121"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428169">Subtractor</a></font></li>
+
+<a name="wp1428122"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="addnsub_compiler_new.html#wp1428214">Dynamic Adder/Subtractor</a></font></li>
+</ul>
+
+<a name="wp1428124"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Adder
+</b></font></h5>
+
+<a name="wp1428125"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Based on the parameter <b>CONSTANT_PORT</b>, the adder can be configure in two ways.
+</font></p>
+<dl>
+<a name="wp1428126"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;0&#160;&#39; - adder with two input ports (port A and port B)
+
+</font></dd>
+
+<a name="wp1428127"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;1&#160;&#39; - adder with one constant port
+
+</font></dd>
+</dl>
+<a name="wp1428128"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Adder with Two Input Ports (Port A and Port B)
+</b></font></h5>
+
+<a name="wp1428129"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, port A and port B values are added. Optional pipeline stages can also be inserted at port A, port B or at both port A and port B. Optionally, pipeline stages can also be added at the output port. Depending on pipeline stages, a number of the adder configurations are given below.
+</font></p>
+
+<a name="wp1428130"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with No Pipeline Stages - In this mode, the port A and port B inputs are added. The adder is purely combinational, and the output changes immediately with respect to the inputs.
+</font></p>
+
+<a name="wp1428131"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'</b>
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428135"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source2.png" height="96" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428136"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with Pipeline Stages at Input Only - In this mode, the port A and port B inputs are pipelined and added. Because there is no pipeline stage at the output, the result is valid at each rising edge of the clock.
+</font></p>
+
+<a name="wp1428137"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428141"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source3.png" height="114" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428142"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with Pipeline Stages at Input and Output - In this mode, the port A and port B inputs are pipelined and added, and the result is pipelined. The result is valid only on the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428143"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428147"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source4.png" height="126" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428148"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Adder with a Port Constant
+</b></font></h5>
+
+<a name="wp1428149"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, port A is added with a constant value (the constant value can be passed though the parameter <b>CONSTANT_VALUE</b>). Optional pipeline stages can also be inserted at port A, Optionally, pipeline stages can also be added at the output port. Depending on the pipeline stages, a number of the adder configurations are given below (here CONSTANT_VALUE='3')
+</font></p>
+
+<a name="wp1428150"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with No Pipeline Stages - In this mode, input port A is added with a constant value. The adder is purely combinational, and the output changes immediately with respect to the input.
+</font></p>
+
+<a name="wp1428151"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428155"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source5.png" height="78" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428156"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with Pipeline Stage at Input Only - In this mode, input port A is pipelined and added with a constant value. Because there is no pipeline stage at the output, the result is valid at each rising edge of the clock.
+</font></p>
+
+<a name="wp1428157"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428161"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source6.png" height="96" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428162"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Adder with Pipeline Stages at Input and Output - In this mode, input port A is pipelined and added with a constant value, and the result is pipelined. The result is valid only on the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428163"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428167"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source7.png" height="105" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428169"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Subtractor
+</b></font></h5>
+
+<a name="wp1428170"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Based on the parameter <b>CONSTANT_PORT</b>, the subtractor can be configure in two ways.
+</font></p>
+<dl>
+<a name="wp1428171"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;0&#160;&#39; - subtractor with two input ports (port A and port B)
+
+</font></dd>
+
+<a name="wp1428172"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;1&#160;&#39; - subtractor with one constant port
+
+</font></dd>
+</dl>
+<a name="wp1428173"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Subtractor with Two Input Ports (Port A and Port B)
+</b></font></h5>
+
+<a name="wp1428174"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, port B is subtracted from port A. Optional pipeline stages can also be inserted at port A, port B, or both ports. Optionally, pipeline stages can also be added at the output port. Depending on the pipeline stages, a number of the subtractor configurations are given below.
+</font></p>
+
+<a name="wp1428175"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with No Pipeline Stages - In this mode, input port B is subtracted from port A, and the subtractor is purely combinational. The output changes immediately with respect to the inputs.
+</font></p>
+
+<a name="wp1428176"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428180"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source8.png" height="96" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428181"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with Pipeline Stages at Input Only - In this mode, input port B and input PortA are pipelined and then subtracted. Because there is no pipeline stage at the output, the result is valid at each rising edge of the clock.
+</font></p>
+
+<a name="wp1428182"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428186"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source9.png" height="124" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428187"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with Pipeline Stages at Input and Output - In this mode, input PortA and PortB are pipelined and then subtracted, and the result is pipelined. The result is valid only at the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428188"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428192"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source10.png" height="124" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428193"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Subtractor with a Port Constant
+</b></font></h5>
+
+<a name="wp1428194"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, a constant value is subtracted from port A (the constant value can be passed though the parameter <b>CONSTANT_VALUE</b>). Optional pipeline stages can also be inserted at port A, Optionally, pipeline stages can also be added at the output port. Depending on pipeline stages, a number of the subtractor configurations are given below (here <b>CONSTANT_VALUE='1'</b>).
+</font></p>
+
+<a name="wp1428195"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with No Pipeline Stages - In this mode, a constant value is subtracted from port A. The subtractor is purely combinational, and the output changes immediately with respect to the input.
+</font></p>
+
+<a name="wp1428196"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428200"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source11.png" height="82" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428201"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with Pipeline Stages at Input Only - In this mode, a constant value is subtracted from pipelined input port A. Because there is no pipeline stage at the output, the output is valid at each rising edge of the clock.
+</font></p>
+
+<a name="wp1428202"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428206"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source12.png" height="105" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428207"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Subtractor with Pipeline Stages at Input and Output - In this mode, a constant value is subtracted from pipelined port A, and the output is pipelined. The result is valid only at the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428208"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428212"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source13.png" height="108" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428214"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Dynamic Adder/Subtractor
+</b></font></h5>
+
+<a name="wp1428215"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In dynamic adder/subtractor mode, port <b>PortADDnSUB</b> controls adder/subtractor operation.
+</font></p>
+<dl>
+<a name="wp1428216"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+PortADDnSUB=&#39;&#160;0&#160;&#39; - adder operation
+
+</font></dd>
+
+<a name="wp1428217"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+PortADDnSUB=&#39;&#160;1&#160;&#39; - subtractor operation
+
+</font></dd>
+</dl>
+<a name="wp1428218"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Based on the parameter <b>CONSTANT_PORT</b> the dynamic adder/subtractor can be configured in one of two ways:
+</font></p>
+<dl>
+<a name="wp1428219"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;0&#160;&#39; - dynamic adder/subtractor with two input ports
+
+</font></dd>
+
+<a name="wp1428220"> </a><dd><font color="#000000" face="Courier New, Courier, mono" size="3">
+CONSTANT_PORT=&#39;&#160;1&#160;&#39; - dynamic adder/subtractorwith one constant port
+
+</font></dd>
+</dl>
+<a name="wp1428221"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Dynamic Adder/Subtractor with Two Input Ports (Port A and Port B)
+</b></font></h5>
+
+<a name="wp1428222"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, the addition and subtraction is dynamic based on the value of input port <b>PortADDnSUB</b>. Optional pipeline stages can also be inserted at Port A, Port B, or both Port A and Port B. Optionally, pipeline stages can also be added at the output port. Depending on pipeline stages, some of the dynamic adder/subtractor configurations are given below.
+</font></p>
+
+<a name="wp1428223"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with No Pipeline Registers - In this mode, the dynamic adder/subtractor is a purely combinational, and output changes immediately with respect to the inputs.
+</font></p>
+
+<a name="wp1428224"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428228"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source14.png" height="126" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428229"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with Pipeline Stages at Input Only - In this mode, input port A and port B are pipelined and then added/subtracted based on the value of port <b>PortADDnSUB</b>. Becasuse there is no pipeline stage at the output port, the result immediately changes with respect to the <b>PortADDnSUB</b> signal.
+</font></p>
+
+<a name="wp1428230"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428234"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source15.png" height="148" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428235"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with Pipeline Stages at Input and Output - In this mode, input port A and port B are pipelined and then added/subtracted based on the value of port <b>PortADDnSUB</b>. Because the output port is pipelined, the result is valid only on the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428236"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTB_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428245"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source16.png" height="153" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428246"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Dynamic Adder/Subtractor with a Port Constant
+</b></font></h5>
+
+<a name="wp1428247"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+In this mode, a constant value is either added or subtracted from port A based on input port value <b>PortADDnSUB</b> (the constant value can be passed though the parameter <b>CONSTANT_VALUE</b>). Optional pipeline stages can also be inserted at port A, Optionally, pipeline stages can also be added at the output port. Depending on the pipeline stages, a number of the dynamic adder/subtractor configurations are given below (here <b>CONSTANT_VALUE='1'</b>).
+</font></p>
+
+<a name="wp1428248"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with No Pipeline Registers - In this mode, dynamic adder/subtractor is a purely combinational, and the output change immediately with respect to the input.
+</font></p>
+
+<a name="wp1428249"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `0'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428253"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source17.png" height="108" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428254"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with Pipeline Stages at Input Only - In this mode, a constant value is either added or subtracted from the pipelined version of port A based on the value of port <b>PortADDnSUB</b>. Because there is no pipeline stage on the output port, the result changes immediately with respect to the <b>PortADDnSUB</b> signal.
+</font></p>
+
+<a name="wp1428255"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `0'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428259"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source18.png" height="132" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428260"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Dynamic Adder/Subtractor with Pipeline Stages at Input and Output - In this mode, a constant value is either added or subtracted from the pipelined version of port A based on the value of port <b>PortADDnSUB</b>. Because the output port is pipelined, the result is valid only on the second rising edge of the clock.
+</font></p>
+
+<a name="wp1428261"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+Parameters:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PORTA_PIPELINE_STAGE= `1'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORTOUT_PIPELINE_STAGE= `1'
+</b>
+</font></code>
+<p>&nbsp;</p>
+<a name="wp1428265"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source19.png" height="126" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428266"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Dynamic Adder/Subtractor with Carry Input
+</b></font></h5>
+
+<a name="wp1428267"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following waveform shows the behavior of the dynamic adder/subtractor with a carry input (the carry input is assumed to be 0).
+</font></p>
+
+<a name="wp1428277"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source20.png" height="166" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1428278"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Dynamic Adder/Subtractor with Complete Control Signals
+</b></font></h5>
+
+<a name="wp1428279"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following waveform shows the complete signal set for the dynamic adder/subtractor. The enable and reset signals are always present in all of the previous cases.
+</font></p>
+
+<a name="wp1428289"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="adder_html_source21.png" height="281" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1409549"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+    <hr>
+
+    <hr>
+<p><font size="1"><b>&copy; Copyright 2008 Synopsys, Inc.</b></font><br></p>
+  </body>
+</html>

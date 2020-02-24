@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/cpp.xml2#1 $ -->
+<syntax name="C++" extension="cxx cpp cc h hxx hpp hcc moc">
+	<block name="Line comment" start="//" fg="#00a000" bg="white"/>
+	<block name="Comment" start="/*" end="*/" fg="#008000"  bg="white" multi="1" />
+	
+	<block name="String" start='"' end='"' fg="#ff0000"  bg="white"/>
+	<block name="Char" start="'" end="'" fg="#ff0000"  bg="white"/>
+
+	<keyword name="Keywords" fg="#0000ff" bg="white">
+		<item>asm</item>
+		<item>break</item>
+		<item>case</item>
+		<item>catch</item>
+		<item>class</item>
+		<item>const_cast</item>
+		<item>continue</item>
+		<item>default</item>
+		<item>delete</item>
+		<item>do</item>
+		<item>dynamic_cast</item>
+		<item>else</item>
+		<item>enum</item>
+		<item>except</item>
+		<item>explicit</item>
+		<item>export</item>
+		<item>extern</item>
+		<item>false</item>
+		<item>finally</item>
+		<item>friend</item>
+		<item>for</item>
+		<item>goto</item>
+		<item>if</item>
+		<item>inline</item>
+		<item>namespace</item>
+		<item>new</item>
+		<item>operator</item>
+		<item>private</item>
+		<item>protected</item>
+		<item>public</item>
+		<item>reinterpret_cast</item>
+		<item>return</item>
+		<item>sizeof</item>
+		<item>static_cast</item>
+		<item>struct</item>
+		<item>switch</item>
+		<item>template</item>
+		<item>this</item>
+		<item>throw</item>
+		<item>true</item>
+		<item>try</item>
+		<item>typedef</item>
+		<item>typeid</item>
+		<item>type_info</item>
+		<item>typename</item>
+		<item>union</item>
+		<item>using</item>
+		<item>virtual</item>
+		<item>while</item>
+    </keyword>
+    
+	<keyword name="Preprocessor" fg="#00a000" bg="white">
+		<item>#define</item>
+		<item>#else</item>
+		<item>#endif</item>
+		<item>#ifdef</item>
+		<item>#ifndef</item>
+		<item>#include</item>
+		<item>#pragma</item>
+		<item>#undef</item>
+    </keyword>
+
+	<keyword name="Types" fg="#0000ff" bg="white">
+		<item>auto</item>
+		<item>bool</item>
+		<item>char</item>
+		<item>const</item>
+		<item>double</item>
+		<item>float</item>
+		<item>int</item>
+		<item>long</item>
+		<item>mutable</item>
+		<item>register</item>
+		<item>short</item>
+		<item>signed</item>
+		<item>static</item>
+		<item>unsigned</item>
+		<item>void</item>
+		<item>volatile</item>
+		<item>uchar</item>
+		<item>uint</item>
+		<item>int8_t</item>
+		<item>int16_t</item>
+		<item>int32_t</item>
+		<item>int64_t</item>
+		<item>uint8_t</item>
+		<item>uint16_t</item>
+		<item>uint32_t</item>
+		<item>uint64_t</item>
+		<item>wchar_t</item>
+	</keyword>
+</syntax>

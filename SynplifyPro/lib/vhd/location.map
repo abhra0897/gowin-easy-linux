@@ -1,0 +1,88 @@
+# 
+# Define locations of packages for loading
+# This is the built in location map.  The user may have
+# others.
+#
+package std.standard @ $LIB/vhd/std.vhd;
+package std.textio @ $LIB/vhd/std_textio.vhd;
+package ieee.std_logic_1164 @ $LIB/vhd/std1164.vhd;
+package ieee.std_logic_textio @ $LIB/vhd/std_logic_textio.vhd;
+package ieee.math_real @ $LIB/vhd/math_real.vhd e;
+package ieee.math_complex @ $LIB/vhd/math_complex.vhd e;
+
+# enable only in cadence.map
+# package ieee.std_logic_arith @ $LIB/vhd/cdn_arith.vhd;
+
+# enable in location.map
+package ieee.std_logic_arith @ $LIB/vhd/arith.vhd;
+
+package ieee.std_logic_signed @ $LIB/vhd/signed.vhd;
+package ieee.std_logic_unsigned @ $LIB/vhd/unsigned.vhd;
+package ieee.std_logic_misc @ $LIB/vhd/misc.vhd;
+package synopsys.std_logic_arith @ $LIB/vhd/arith.vhd;
+package synopsys.std_logic_signed @ $LIB/vhd/signed.vhd;
+package synopsys.std_logic_unsigned @ $LIB/vhd/unsigned.vhd;
+package synopsys.std_logic_misc @ $LIB/vhd/misc.vhd;
+package ieee.numeric_std @ $LIB/vhd/numeric.vhd;
+package ieee.numeric_bit @ $LIB/vhd/numeric_bit.vhd;
+package xl.xl_std @ $LIB/vhd/xl_std.vhd;
+package xl.xl_gates @ $LIB/vhd/xl_gates.vhd;
+package synergy.signed_arith @ $LIB/vhd/synergy_signed.vhd;
+package synplify.attributes @ $LIB/vhd/synattr.vhd;
+package synopsys.attributes @ $LIB/vhd/attributes.vhd;
+library synplify @ $LIB/vhdl_sim/synplify.vhd;
+package synplify.utilities @ $LIB/vhd/synutils.vhd;
+package synplify.components @ $LIB/vhdl_sim/synplify.vhd;
+library DWARE @ $LIB/designware/dware.vhd e;
+package DWARE.Dwpackages @ $LIB/designware/dware_comp.vhd;
+package DWARE.DW_Foundation_comp @ $LIB/designware/dware_comp.vhd;
+package DWARE.DW_Foundation_comp_arith @ $LIB/designware/dware_comp.vhd;
+library dw06 @ $LIB/designware/dw06.vhd e;
+package dw06.DW06_components @ $LIB/designware/dw06_comp.vhd;
+library dw04 @ $LIB/designware/dw04.vhd e;
+package dw04.DW04_components @ $LIB/designware/dw04_comp.vhd;
+library dw03 @ $LIB/designware/dw03.vhd e;
+package dw03.DW03_components @ $LIB/designware/dw03_comp.vhd;
+library dw02 @ $LIB/designware/dw02.vhd e;
+package dw02.DW02_components @ $LIB/designware/dw02_comp.vhd;
+library dw01 @ $LIB/designware/dw01.vhd e;
+package dw01.DW01_components @ $LIB/designware/dw01_comp.vhd;
+if vivado
+else
+endif
+library certify @ $LIB/vhdl_sim/certify.vhd;
+package certify.simulate @ $LIB/vhdl_sim/certify.vhd;
+library accellera_ovl_vhdl @ $LIB/synovl/std_ovl.vhd;
+
+
+
+
+# GoWin specific setup
+library gw1n @ $LIB/generic/gw1n.vhd;
+package gw1n.components @ $LIB/generic/gw1n.vhd;
+library gw2a @ $LIB/generic/gw2a.vhd;
+package gw2a.components @ $LIB/generic/gw2a.vhd;
+library gw1nr @ $LIB/generic/gw1nr.vhd;
+package gw1nr.components @ $LIB/generic/gw1nr.vhd;
+library gw1ns @ $LIB/generic/gw1ns.vhd;
+package gw1ns.components @ $LIB/generic/gw1ns.vhd;
+library gw1nse @ $LIB/generic/gw1ns.vhd;
+package gw1nse.components @ $LIB/generic/gw1ns.vhd;
+library gw1nsr @ $LIB/generic/gw1ns.vhd;
+package gw1nsr.components @ $LIB/generic/gw1ns.vhd;
+library gw2ar @ $LIB/generic/gw2a.vhd;
+package gw2ar.components @ $LIB/generic/gw2a.vhd;
+library gw1nz @ $LIB/generic/gw1nz.vhd;
+package gw1nz.components @ $LIB/generic/gw1nz.vhd;
+library gw3at @ $LIB/generic/gw3a.vhd;
+package gw3at.components @ $LIB/generic/gw3a.vhd;
+library gw1nrf @ $LIB/generic/gw1nrf.vhd;
+package gw1nrf.components @ $LIB/generic/gw1nrf.vhd;
+library gw1nser @ $LIB/generic/gw1ns.vhd;
+package gw1nser.components @ $LIB/generic/gw1ns.vhd;
+
+
+
+#builtin_ip maps
+library syn_builtin_ip @ $LIB/synip/syn_builtin_ip/syn_asym_tdp_ram_model.vhd;
+library syn_builtin_ip @ $LIB/synip/syn_builtin_ip/syn_asym_tdp_ram.vhd;

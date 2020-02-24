@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="PLLVR" id="clock_pllvr" version= "1.0" category="Hard Module|CLOCK">PLLVR</ip>
+    <target module="Gowin_PLLVR">gowin_pllvr</target>
+    <docs>
+        <doc type="summary">/doc/pll.html</doc>
+        <doc type="help">/doc/pll_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSER-4C-*</device>
+        <device supported="true">GW1NSR-4C-*</device>
+    </devices>
+</ipcore>

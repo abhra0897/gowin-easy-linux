@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OptionDef>
+    <SingleChoiceOption id="BIT01" label="Enable CRC Check" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set CRC_check = true"/>
+        <Choice label="False" cmd="set CRC_check = false"/>
+    </SingleChoiceOption>
+    <!--<SingleChoiceOption id="BIT02" label="Output Format" default="0">
+        <Description></Description>
+        <Choice label="Bit" cmd="set format = bit"/>
+        <Choice label="Hex" cmd="set format = hex"/>
+        <Choice label="Binary" cmd="set format = binary"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="BIT03" label="Bitstream with Pure Fuse" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set pure_fuse = true"/>
+        <Choice label="False" cmd="set pure_fuse = false"/>
+    </SingleChoiceOption>-->
+    <SingleChoiceOption id="BIT04" label="Enable Compress" default="1">
+        <Description></Description>
+        <Choice label="True" cmd="set compress = true"/>
+        <Choice label="False" cmd="set compress = false"/>
+    </SingleChoiceOption>
+    <!--<SingleChoiceOption id="BIT05" label="Enable Encryption" default="0">
+        <Description></Description>
+        <Choice label="True" cmd="set encryption = true"/>
+        <Choice label="False" cmd="set encryption = false"/>
+    </SingleChoiceOption>-->
+</OptionDef>

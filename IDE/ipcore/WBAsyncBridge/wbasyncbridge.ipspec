@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="WB Async Bridge" id="wb_async_bridge" version= "1.0" category="Soft IP Core|Microprocessor System|Bus Bridge">WB Async Bridge</ip>
+    <target module="WB_Async_Bridge_Top">wb_async_bridge</target>
+    <docs>
+        <doc type="summary">/doc/wbasyncbridge.html</doc>
+        <doc type="help">/doc/wbasyncbridge_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW*</device>
+    </devices>
+</ipcore>

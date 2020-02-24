@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Triple Speed Ethernet MAC" id="tse_mac" version="1.0" category="Soft IP Core|Interface and Interconnect">Triple Speed Ethernet MAC</ip>
+    <target module="Triple_Speed_Ethernet_MAC_Top">triple_speed_ethernet_mac</target>
+    <docs>
+        <doc type="summary">/doc/tse_mac.html</doc>
+        <doc type="help">/doc/tse_mac_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="false">GW1N-1S-*</device>
+        <device supported="true">GW*</device>
+    </devices>
+</ipcore>

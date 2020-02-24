@@ -1,0 +1,17 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>4</Version>
+    <Device>gw1n4-016</Device>
+    <FileList>
+        <File type="file.source" enable="1" path="src/light52_alu.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_cpu.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_mcu.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_muldiv.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_pkg.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_timer.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_uart.vhdl"/>
+        <File type="file.source" enable="1" path="src/light52_ucode_pkg.vhdl"/>
+    </FileList>
+</Project>

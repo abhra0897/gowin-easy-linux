@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Gowin Flash Controller" id="Gowin_Flash_Controller" version="1.4" category="Soft IP Core|Memory Control">Gowin Flash Controller</ip>
+    <target module="Gowin_Flash_Controller_Top">gowin_flash_controller</target>
+    <docs>
+        <doc type="summary">/doc/flashcontroller.html</doc>
+        <doc type="help">/doc/flashcontroller_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW1N-1-*</device>
+        <device supported="true">GW1N-1S-*</device>
+        <device supported="true">GW1NZ-1-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

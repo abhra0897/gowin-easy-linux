@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="SPDIF RX" id="spdif_rx" version= "1.0" category="Soft IP Core|Multimedia">SPDIF RX</ip>
+    <target module="SPDIF_RX_Top">spdif_rx</target>
+    <docs>
+        <doc type="summary">/doc/spdif_rx.html</doc>
+        <doc type="help">/doc/spdif_rx_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSE-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NZ-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NSER-4C-*</device>
+        <device supported="true">GW1NRF-*</device>
+    </devices>
+</ipcore>

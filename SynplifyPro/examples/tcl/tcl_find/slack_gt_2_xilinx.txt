@@ -1,0 +1,10 @@
+
+************* Sample TCL FIND command **********************
+
+Open the prep2_2.prj file under <install>/examples/verilog/altera
+Change the implementation to Virtex4.
+Run.
+Open the technology view.
+To find all the terminals (pins) on instances whose slack exceeds 2 in the mapped netlist, you can use the following TCL command in the TCl window:
+
+c_print [find -pin *.* -in [expand -hier -to [find -hier -inst * -filter @slack > 2]] -filter @slack > 2] -prop slack

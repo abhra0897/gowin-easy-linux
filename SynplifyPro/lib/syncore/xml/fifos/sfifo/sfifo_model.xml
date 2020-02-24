@@ -1,0 +1,1866 @@
+<?xml version="1.0"?>
+<dyndialog>
+
+<dialog id="ipdesign_sfifo" text="Fifo Wizard" width="850" height="650">
+
+    <graph_def id="graph_def1" fgcolor="white" bgcolor="#909090"> 
+      <text x="60" y="180">Sync FIFO</text>
+  
+         <in name="Areset"                    width="2" color="blue" />
+         <in name="Din "                      width="5" color="blue" />
+         <in name="Clock"                     width="2" color="blue" />
+         <in name="Write_enable"              width="2" color="blue" />
+         <in name="Read_enable"               width="2" color="blue" />
+         <in name="Prog_full_thresh"          width="2" color="blue" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and SIN_PFULL_THRESH_INPUT"/>
+         <in name="Prog_full_thresh_assert"   width="2" color="blue" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and MULT_PFULL_THRESH_INPUT" />
+         <in name="Prog_full_thresh_negate"   width="2" color="blue" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and MULT_PFULL_THRESH_INPUT" />
+         <in name="Prog_empty_thresh"         width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and SIN_PEMPTY_THRESH_INPUT" />
+         <in name="Prog_empty_thresh_assert"  width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and MULT_PEMPTY_THRESH_INPUT" />
+         <in name="Prog_empty_thresh_negate"  width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and MULT_PEMPTY_THRESH_INPUT" />
+         
+         
+         <out name="Dout"                     width="5" color="blue" />
+         <out name="Full"                     width="2" color="blue" enabled_if="FULL_FLAG_ENABLE" />
+         <out name="Almost_full"              width="2" color="blue" enabled_if="FULL_FLAG_ENABLE and AFULL_FLAG_ENABLE" />
+         <out name="Prog_full"                width="2" color="blue" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE" />
+         <out name="Empty"                    width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE" />
+         <out name="Almost_empty"             width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE and AEMPTY_FLAG_ENABLE" />
+         <out name="Prog_empty"               width="2" color="blue" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE" />
+         <out name="Write_ack"                width="2" color="blue" enabled_if="WACK_FLAG_ENABLE" />
+         <out name="Read_ack"                 width="2" color="blue" enabled_if="RACK_FLAG_ENABLE" />
+         <out name="Overflow"                 width="2" color="blue" enabled_if="OVERFLOW_FLAG_ENABLE" />
+         <out name="Underflow"                width="2" color="blue" enabled_if="UNDERFLW_FLAG_ENABLE" />
+         
+         <out name="Data_cnt"                 width="2" color="blue" enabled_if="DATA_CNT_ENABLE" />	 
+   </graph_def>
+
+   
+      <!-- GUI Design -->
+<tab id="parameters" text="FIFO Parameters">
+
+      <hline> 
+
+      <graph id="graph1" def="graph_def1" text="SynCore FIFO" width="300" height="550">
+      </graph>     
+      
+  <!-- Start of Page 1 -->
+      
+      <page id="page1" text="Sync Fifo Compiler">
+  
+  <!-- Component feild -->
+  
+      <lineedit id="COMPONENT" text="Component Name" required="true">
+      </lineedit>        
+  
+      <line /> <!-- This is to add an line separator -->
+  
+   
+  <!-- Directory feild -->
+ 
+      <lineedit id="DIRECTORY" type="directory" text="Directory" required="true" tooltip="Spaces in Directory path not supported">   
+ 
+     </lineedit>	
+     <line />   <!-- This is to add an line separator -->
+
+ <!-- Filename feild -->
+  
+     <lineedit id="FILENAME" type="save_file" text="File Name" required="true" tooltip="Filename should not be with .v extension"> 
+     </lineedit>	
+     <line />   <!-- This is to add an line separator -->
+
+
+ <!-- Memory Size Feild -->
+
+	<group text="Sync FIFO Size">
+               <lineedit id="WIDTH" text="Width" type="int" posttext="Valid Range 1..256" required="true">
+                  <value>8</value>
+                  <min_value>1</min_value>
+                  <max_value>256</max_value>
+               </lineedit>
+               
+               <lineedit id="DEPTH" text="Depth" type="int" posttext="Valid Range 8..16384" required="true">
+                  <value>16</value>
+                  <min_value>8</min_value>
+                  <max_value>16384</max_value>
+               </lineedit>
+              
+          </group>
+            
+ </page> <!-- End of Page 1 -->
+   
+   
+   
+ <!-- Start of Page 2 -->
+
+         			
+<page id="page2">   
+
+ 	<line /> <!-- This is to add an line separator -->
+    <text> Sync FIFO Optional Flags </text>
+ 	<line /> <!-- This is to add an line separator -->
+
+      <group text="Write Control Handshaking Options">
+       <group text="Full Flags">
+	    <check id="FULL_FLAG_ENABLE" text="Full Flag" >
+                   <value>true</value>
+                   <on_value>FULL_FLAG_ENABLE=1</on_value>
+                   <off_value>FULL_FLAG_ENABLE=0</off_value>
+            </check>
+         
+        <hline>
+	    <radio id="FULL_FLAG_SENSE" level ="1" text="Active High" enabled_if="FULL_FLAG_ENABLE">	   
+	           <on_value> FULL_FLAG_SENSE=1</on_value> 	      
+	    </radio>	         
+            <radio id="FULL_FLAG_SENSE" text="Active Low" enabled_if="FULL_FLAG_ENABLE">	   
+	           <on_value> FULL_FLAG_SENSE=0</on_value> 	      
+	    </radio>	         
+	    </hline>
+       
+       <line /> <!-- This is to add an line separator -->
+       
+       <!-- group text="Almost Full Flag" -->
+            <check id="AFULL_FLAG_ENABLE" text="Almost Full Flag" enabled_if="FULL_FLAG_ENABLE" >
+                   <value>false</value>
+                   <on_value>AFULL_FLAG_ENABLE=1</on_value>
+                   <off_value>AFULL_FLAG_ENABLE=0</off_value>
+            </check>
+        	  
+            <hline>
+            <radio id="AFULL_FLAG_SENSE" text="Active High" level="1" enabled_if="FULL_FLAG_ENABLE and AFULL_FLAG_ENABLE">	   
+                    <on_value> AFULL_FLAG_SENSE=1</on_value> 	      
+       	    </radio>	         
+            <radio id="AFULL_FLAG_SENSE" text="Active Low" enabled_if="FULL_FLAG_ENABLE and AFULL_FLAG_ENABLE">	   
+                    <on_value> AFULL_FLAG_SENSE=0</on_value> 	      
+       	    </radio>	         
+            </hline>
+	 </group>
+       
+	  <group text="Overflow">
+		       <check id="OVERFLOW_FLAG_ENABLE" text="Overflow Flag" >
+			   <value>false</value>
+			   <on_value>OVERFLOW_FLAG_ENABLE=1</on_value>
+			   <off_value>OVERFLOW_FLAG_ENABLE=0</off_value>
+		       </check>
+		  <hline>
+		       <radio id="OVERFLOW_FLAG_SENSE" text="Active High" level="1" enabled_if="OVERFLOW_FLAG_ENABLE">	   
+		           <on_value> OVERFLOW_FLAG_SENSE=1</on_value> 	      
+		       </radio>	         
+		       <radio id="OVERFLOW_FLAG_SENSE" text="Active Low" enabled_if="OVERFLOW_FLAG_ENABLE">	   
+		           <on_value> OVERFLOW_FLAG_SENSE=0</on_value> 	      
+		       </radio>	         
+	          </hline>
+	  </group>
+		
+	
+    	  <group text="Write Acknowledge">
+		       <check id="WACK_FLAG_ENABLE" text="Write Acknowledge Flag" >
+		             <value>false</value>
+		             <on_value>WACK_FLAG_ENABLE=1</on_value>
+		             <off_value>WACK_FLAG_ENABLE=0</off_value>
+		       </check>
+		  <hline>
+		       <radio id="WACK_FLAG_SENSE" text="Active High" level="1" enabled_if="WACK_FLAG_ENABLE">	   
+			     <on_value> WACK_FLAG_SENSE=1</on_value> 	      
+		       </radio>	         
+		       <radio id="WACK_FLAG_SENSE" text="Active Low" enabled_if="WACK_FLAG_ENABLE">	   
+		             <on_value> WACK_FLAG_SENSE=0</on_value> 	      
+		       </radio>	         
+		  </hline>
+           </group>
+			
+       </group>
+	
+ </page>  <!-- End of Page 2 -->
+ 
+<page id="page3">   
+
+	<line /> <!-- This is to add an line separator -->	
+    <text> Sync FIFO Optional Flags </text>
+ 	<line /> <!-- This is to add an line separator -->
+
+      <group text="Read Control Handshaking Options">
+       
+         <group text="Empty Flag ">
+       	    <check id="EMPTY_FLAG_ENABLE" text="Empty Flag" >
+                    <value>true</value>
+                    <on_value>EMPTY_FLAG_ENABLE=1</on_value>
+                    <off_value>EMPTY_FLAG_ENABLE=0</off_value>
+            </check>
+            <hline>
+            <radio id="EMPTY_FLAG_SENSE" text="Active High" level="1" enabled_if="EMPTY_FLAG_ENABLE">	   
+                    <on_value> EMPTY_FLAG_SENSE=1</on_value> 	      
+       	    </radio>	         
+            <radio id="EMPTY_FLAG_SENSE" text="Active Low" enabled_if="EMPTY_FLAG_ENABLE">	   
+                    <on_value> EMPTY_FLAG_SENSE=0</on_value> 	      
+       	    </radio>	         
+            </hline>
+
+       		
+	    <line /> <!-- This is to add an line separator -->
+	 
+
+	    <check id="AEMPTY_FLAG_ENABLE" text="Almost Empty Flag" enabled_if="EMPTY_FLAG_ENABLE">
+	 	    <value>false</value>
+	 	    <on_value>AEMPTY_FLAG_ENABLE=1</on_value>
+	 	    <off_value>AEMPTY_FLAG_ENABLE=0</off_value>
+	    </check>
+	    <hline>
+	    <radio id="AEMPTY_FLAG_SENSE" text="Active High" level="1" enabled_if="EMPTY_FLAG_ENABLE and AEMPTY_FLAG_ENABLE">	   
+	 	    <on_value> AEMPTY_FLAG_SENSE=1</on_value> 	      
+	    </radio>	         
+            <radio id="AEMPTY_FLAG_SENSE" text="Active Low" enabled_if="EMPTY_FLAG_ENABLE and AEMPTY_FLAG_ENABLE">	   
+	  	    <on_value> AEMPTY_FLAG_SENSE=0</on_value> 	      
+	    </radio>	         
+	    </hline>
+	  </group>
+	
+	  <group text="Underflow">
+	   	       <check id="UNDERFLW_FLAG_ENABLE" text="Underflow Flag" >
+		            <value>false</value>
+		            <on_value>UNDERFLW_FLAG_ENABLE=1</on_value>
+		            <off_value>UNDERFLW_FLAG_ENABLE=0</off_value>
+		       </check>
+		  <hline>
+		       <radio id="UNDERFLW_FLAG_SENSE" text="Active High" level="1" enabled_if="UNDERFLW_FLAG_ENABLE">	   
+			     <on_value> UNDERFLW_FLAG_SENSE=1</on_value> 	      
+		       </radio>	         
+		       <radio id="UNDERFLW_FLAG_SENSE" text="Active Low" enabled_if="UNDERFLW_FLAG_ENABLE">	   
+			     <on_value> UNDERFLW_FLAG_SENSE=0</on_value> 	      
+		       </radio>	         
+	          </hline>
+	  </group>
+		
+	   <group text="Read Acknowledge">
+		       <check id="RACK_FLAG_ENABLE" text="Read Acknowledge Flag" >
+		             <value>false</value>
+		             <on_value>RACK_FLAG_ENABLE=1</on_value>
+		             <off_value>RACK_FLAG_ENABLE=0</off_value>
+		       </check>
+		  <hline>
+		       <radio id="RACK_FLAG_SENSE" text="Active High" level="1" enabled_if="RACK_FLAG_ENABLE">	   
+		    	     <on_value> RACK_FLAG_SENSE=1</on_value> 	      
+		       </radio>	         
+	               <radio id="RACK_FLAG_SENSE" text="Active Low" enabled_if="RACK_FLAG_ENABLE">	   
+			     <on_value> RACK_FLAG_SENSE=0</on_value> 	      
+		       </radio>	         
+		  </hline>
+	   </group>
+    	
+       </group>
+	
+ </page>  <!-- End of Page 3 -->
+ 
+ 
+  <!-- Start of Page 4 -->
+ 
+          			
+ <page id="page4">
+ 
+     <group text="Handshaking Options">
+ 
+        <group text="Programmable Full Flag ">
+	      <check id="PFULL_FLAG_ENABLE" text="Programmable Full Flag" enabled_if="FULL_FLAG_ENABLE" >
+	             <value>false</value>
+	             <on_value>PFULL_FLAG_ENABLE=1</on_value>
+	             <off_value>PFULL_FLAG_ENABLE=0</off_value>
+	      </check>
+	      <check id="SIN_PFULL_THRESH_CONS" text="Single Programmable Full Threshold Constant" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and !MULT_PFULL_THRESH_CONS and !SIN_PFULL_THRESH_INPUT and !MULT_PFULL_THRESH_INPUT">
+	      	     <value>false</value>
+	      	     <on_value>SIN_PFULL_THRESH_CONS=1</on_value>
+	      	     <off_value>SIN_PFULL_THRESH_CONS=0</off_value>
+	      </check>
+	      <lineedit id="PGM_FULL_THRESH" text="Full Threshold Assert Constant" type="int" posttext="Valid Range DEPTH/2..max of DEPTH" required="true" level="1" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and SIN_PFULL_THRESH_CONS">
+		                <value>12</value>
+	                        <min_value>8</min_value>
+				<max_value>16384</max_value>   
+				
+              </lineedit>
+	      <check id="MULT_PFULL_THRESH_CONS" text="Multiple Programmable Full Threshold Constant" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and !SIN_PFULL_THRESH_CONS and !SIN_PFULL_THRESH_INPUT and !MULT_PFULL_THRESH_INPUT">
+	      	     <value>false</value>
+	      	     <on_value>MULT_PFULL_THRESH_CONS=1</on_value>
+	      	     <off_value>MULT_PFULL_THRESH_CONS=0</off_value>
+	      </check>
+	      <lineedit id="PGM_FULL_ATHRESH" text="Full Threshold Assert Constant" type="int" posttext="Valid Range DEPTH/2..max of DEPTH" required="true" level="1" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and MULT_PFULL_THRESH_CONS">
+	      	                        <value>14</value>
+	      	                        <min_value>8</min_value>
+	      	                        <max_value>16384</max_value>
+              </lineedit>
+	      <lineedit id="PGM_FULL_NTHRESH" text="Full Threshold Negate Constant" type="int" posttext="Valid Range DEPTH/2..max of DEPTH" required="true" level="1" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and MULT_PFULL_THRESH_CONS">
+	      	                        <value>12</value>
+	      	                        <min_value>8</min_value>
+	      	                        <max_value>16384</max_value>
+              </lineedit>
+	      <check id="SIN_PFULL_THRESH_INPUT" text="Single Programmable Full Threshold Input"  enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and !MULT_PFULL_THRESH_CONS and !SIN_PFULL_THRESH_CONS and !MULT_PFULL_THRESH_INPUT">
+	       	     <value>false</value>
+	       	     <on_value>SIN_PFULL_THRESH_INPUT=1</on_value>
+	       	     <off_value>SIN_PFULL_THRESH_INPUT=0</off_value>
+	      </check>
+	     
+	      <check id="MULT_PFULL_THRESH_INPUT" text="Multiple Programmable Full Threshold Input"  enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE and !MULT_PFULL_THRESH_CONS and !SIN_PFULL_THRESH_CONS and !SIN_PFULL_THRESH_INPUT">
+	       	     <value>false</value>
+	       	     <on_value>MULT_PFULL_THRESH_INPUT=1</on_value>
+	       	     <off_value>MULT_PFULL_THRESH_INPUT=0</off_value>
+	      </check>
+	  
+	  
+	  <hline>
+ 	      <radio id="PFULL_FLAG_SENSE" text="Active High" level="1" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE">	   
+ 	            <on_value> PFULL_FLAG_SENSE=1</on_value> 	      
+ 	      </radio>	         
+              <radio id="PFULL_FLAG_SENSE" text="Active Low" enabled_if="FULL_FLAG_ENABLE and PFULL_FLAG_ENABLE">	   
+   	            <on_value> PFULL_FLAG_SENSE=0</on_value> 	      
+ 	      </radio>	         
+ 	  </hline>
+        </group>
+ 	
+ </group>
+
+       
+ </page>  <!-- End of Page 4 -->
+
+ 
+  <!-- Start of Page 5 -->
+ 
+          			
+ <page id="page5">
+ 
+     <group text="Handshaking Options">
+ 
+        <group text="Programmable Empty Flag ">
+	      <check id="PEMPTY_FLAG_ENABLE" text="Programmable Empty Flag" enabled_if="EMPTY_FLAG_ENABLE">
+	             <value>false</value>
+	             <on_value>PEMPTY_FLAG_ENABLE=1</on_value>
+	             <off_value>PEMPTY_FLAG_ENABLE=0</off_value>
+             </check>
+	     <check id="SIN_PEMPTY_THRESH_CONS" text="Single Programmable Empty Threshold Constant" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and !MULT_PEMPTY_THRESH_CONS and !SIN_PEMPTY_THRESH_INPUT and !MULT_PEMPTY_THRESH_INPUT">
+	     	     <value>false</value>
+	      	     <on_value>SIN_PEMPTY_THRESH_CONS=1</on_value>
+	      	     <off_value>SIN_PEMPTY_THRESH_CONS=0</off_value>
+	     </check>
+	     <lineedit id="PGM_EMPTY_THRESH" text="Empty Threshold Assert Constant" type="int" posttext="Valid Range 1..max of DEPTH/2" required="true" level="1" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and SIN_PEMPTY_THRESH_CONS">
+		     <value>4</value>
+		     <min_value>1</min_value>
+		     <max_value>16384</max_value>
+	     </lineedit>
+	     <check id="MULT_PEMPTY_THRESH_CONS" text="Multiple Programmable Empty Threshold Constant" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and !SIN_PEMPTY_THRESH_CONS and !SIN_PEMPTY_THRESH_INPUT and !MULT_PEMPTY_THRESH_INPUT">
+		     <value>false</value>
+		     <on_value>MULT_PEMPTY_THRESH_CONS=1</on_value>
+		     <off_value>MULT_PEMPTY_THRESH_CONS=0</off_value>
+             </check>
+	     <lineedit id="PGM_EMPTY_ATHRESH" text="Empty Threshold Assert Constant" type="int" posttext="Valid Range 1..max of DEPTH/2" required="true" level="1" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and MULT_PEMPTY_THRESH_CONS">
+		     <value>2</value>
+		     <min_value>1</min_value>
+		     <max_value>16384</max_value>
+	     </lineedit>
+	     <lineedit id="PGM_EMPTY_NTHRESH" text="Empty Threshold Negate Constant" type="int" posttext="Valid Range 1..max of DEPTH/2" required="true" level="1" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and MULT_PEMPTY_THRESH_CONS">
+		     <value>4</value>
+		     <min_value>1</min_value>
+		     <max_value>16384</max_value>
+	     </lineedit>
+             <check id="SIN_PEMPTY_THRESH_INPUT" text="Single Programmable Empty Threshold Input" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and !MULT_PEMPTY_THRESH_CONS and !SIN_PEMPTY_THRESH_CONS and !MULT_PEMPTY_THRESH_INPUT">
+		     <value>false</value>
+		     <on_value>SIN_PEMPTY_THRESH_INPUT=1</on_value>
+		     <off_value>SIN_PEMPTY_THRESH_INPUT=0</off_value>
+	     </check>
+            
+	     <check id="MULT_PEMPTY_THRESH_INPUT" text="Multiple Programmable Empty Threshold Input" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE and !MULT_PEMPTY_THRESH_CONS and !SIN_PEMPTY_THRESH_CONS and !SIN_PEMPTY_THRESH_INPUT">
+		     <value>false</value>
+		     <on_value>MULT_PEMPTY_THRESH_INPUT=1</on_value>
+		     <off_value>MULT_PEMPTY_THRESH_INPUT=0</off_value>
+             </check>
+             
+	     <hline>
+	        <radio id="PEMPTY_FLAG_SENSE" text="Active High" level="1" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE">	   
+	             <on_value> PEMPTY_FLAG_SENSE=1</on_value> 	      
+	        </radio>	         
+	        <radio id="PEMPTY_FLAG_SENSE" text="Active Low" enabled_if="EMPTY_FLAG_ENABLE and PEMPTY_FLAG_ENABLE">	   
+	             <on_value> PEMPTY_FLAG_SENSE=0</on_value> 	      
+	        </radio>	         
+	     </hline>
+        </group>
+ 	
+ </group>
+
+ <group text = "Number of Words in FIFO">
+        <check id="DATA_CNT_ENABLE" text="Number of valid Data in Fifo" >
+	             <value>false</value>
+	             <on_value>DATA_CNT_ENABLE=1</on_value>
+	             <off_value>DATA_CNT_ENABLE=0</off_value>
+        </check>
+ </group>		 
+    	    
+ </page>  <!-- End of Page 5 -->
+     
+   </hline>
+ </tab>
+
+
+ <tab id="overview" text="Core Overview">      
+      
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synopsys, Inc.</value>
+         </lineedit>
+         
+         <lineedit id="creation_date" text="Creation Date:" readonly="true">
+            <value>June 26, 2005</value>
+         </lineedit>
+         
+         <lineedit id="core_type" text="Core Type:" readonly="true">
+            <value>SYNCORE Parameterizable</value>
+         </lineedit>
+         
+         <lineedit id="info" readonly="true" stretch="true" src="../../lib/html/doc1.html">
+            <value type="html">
+
+<![CDATA[
+<h2>SYNCORE FIFO COMPILER</h2>
+The SYNCORE FIFO compiler helps designers create FIFO models for their designs. <br>
+These FIFO models are written out in HDL and can be synthesized as well as simulated.<br>
+A testbench is provided for the FIFO models created by the SYNCORE FIFO compiler.<br><br>
+
+For detailed information on the SYNCORE FIFO compiler and its various options, click the FIFO Info button at the bottom of this window.<br>
+f you have any questions or issues, please contact support at www.solvnet.com .
+
+]]>
+         </value>
+         </lineedit>
+</tab>
+
+<!-- Removing the Contact tab untill we get proper information for Documentation Group -->
+<!--    
+    <tab id="contact" text="Contact">
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synplicity, Inc.</value>
+         </lineedit>
+         <lineedit id="address" text="Address:" readonly="true">
+            <value>
+600 W.California Ave.
+Sunnyvale, CA 94086
+            </value>
+         </lineedit>
+         <lineedit id="phone" text="Phone:" readonly="true">
+            <value>(408) 215-0000</value>
+         </lineedit>
+   
+         <lineedit id="Description" readonly="true" stretch="true">
+ <value>
+Synplicity, Inc. is a leading supplier of innovative synthesis, verification, and physical implementation software solutions that enable the rapid and effective design and verification of semiconductors. Synplicity's high-quality, high-performance tools significantly reduce costs and time-to-market for FPGA designers. The company's underlying Behavior Extracting Synthesis Technology (BEST), which is embedded in its logical, physical, and verification tools, is responsible for Synplicity's top position in FPGA synthesis. The company's fast, easy-to-use products support industry standard design languages (VHDL and Verilog) and run on popular platforms. Synplicity employs over 280 people in its 20 facilities worldwide. Synplicity is headquartered in Sunnyvale, California.
+   
+            </value>
+         </lineedit>
+      </tab>
+-->
+    <button id="generate" text="&amp;Generate" action="execute" tooltip="Generate TCL command">
+            <!-- <command>generate_tcl_command</command> -->
+        <command>sfifo_proc</command> 
+    </button>
+    
+       	<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog" />      	
+       	<button id="Sync FIFOInfo" text="&amp;Sync FIFO Info..." width="700" height="400" action="info" filename="SyncFifo_compiler_new.html" tooltip="Display Syncore Fifo info" />
+<!-- Commented since all implementations give BlockRAMs 
+	<button id="Table" text="&amp;Table..." action="info" filename="IMPL_Table.htm" tooltip="Display Implementaiton info" />
+
+-->
+<!-- Start of Tcl script  -->
+
+
+<tcl> <![CDATA[
+
+
+proc sfifo_proc {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39} {
+set COMPONENT 			[lindex [split [lindex $0] =] 1]
+set DIRECTORY 			[lindex [split [lindex $1] =] 1]
+set FILENAME                  [lindex [split $2 = ] 1 ]
+
+#### Extract extension of the the FILENAME #########
+set FNAME_EXT [file extension $FILENAME]  
+
+##### Check if extension of filename is any of {.v,.sv } and if not add ".v" extension #################
+
+if {[string match {.v} $FNAME_EXT  ] ==0  && [string match {.sv} $FNAME_EXT  ] ==0   } {    
+	  set FILENAME "$FILENAME.v"
+   }
+############################### 
+
+set WIDTH 			[lindex [split [lindex $3] =] 1] 
+set DEPTH 			[lindex [split [lindex $4] =] 1] 
+##set RAM_TYPE			[lindex [split [lindex $5] =] 1] 		
+
+set FULL_FLAG_ENABLE		[lindex [split [lindex $5] =] 1] 
+set FULL_FLAG_SENSE		[lindex [split [lindex $6] =] 1] 
+set AFULL_FLAG_ENABLE		[lindex [split [lindex $7] =] 1] 
+set AFULL_FLAG_SENSE    	[lindex [split [lindex $8] =] 1] 
+set OVERFLOW_FLAG_ENABLE	[lindex [split [lindex $9] =] 1]
+set OVERFLOW_FLAG_SENSE		[lindex [split [lindex $10] =] 1]
+set WACK_FLAG_ENABLE    	[lindex [split [lindex $11] =] 1]
+set WACK_FLAG_SENSE      	[lindex [split [lindex $12] =] 1]
+
+set EMPTY_FLAG_ENABLE   	[lindex [split [lindex $13] =] 1]
+set EMPTY_FLAG_SENSE    	[lindex [split [lindex $14] =] 1]
+set AEMPTY_FLAG_ENABLE  	[lindex [split [lindex $15] =] 1]
+set AEMPTY_FLAG_SENSE	        [lindex [split [lindex $16] =] 1]
+set UNDERFLW_FLAG_ENABLE	[lindex [split [lindex $17] =] 1]
+set UNDERFLW_FLAG_SENSE	        [lindex [split [lindex $18] =] 1]
+set RACK_FLAG_ENABLE		[lindex [split [lindex $19] =] 1]
+set RACK_FLAG_SENSE		[lindex [split [lindex $20] =] 1]
+
+set PFULL_FLAG_ENABLE		[lindex [split [lindex $21] =] 1] 
+set SIN_PFULL_THRESH_CONS       [lindex [split [lindex $22] =] 1]
+set PGM_FULL_THRESH             [lindex [split [lindex $23] =] 1]
+set MULT_PFULL_THRESH_CONS      [lindex [split [lindex $24] =] 1]
+set PGM_FULL_ATHRESH            [lindex [split [lindex $25] =] 1]
+set PGM_FULL_NTHRESH            [lindex [split [lindex $26] =] 1]
+set SIN_PFULL_THRESH_INPUT      [lindex [split [lindex $27] =] 1]
+set MULT_PFULL_THRESH_INPUT     [lindex [split [lindex $28] =] 1]
+set PFULL_FLAG_SENSE		[lindex [split [lindex $29] =] 1] 
+
+set PEMPTY_FLAG_ENABLE		[lindex [split [lindex $30] =] 1] 
+set SIN_PEMPTY_THRESH_CONS      [lindex [split [lindex $31] =] 1]
+set PGM_EMPTY_THRESH            [lindex [split [lindex $32] =] 1]
+set MULT_PEMPTY_THRESH_CONS     [lindex [split [lindex $33] =] 1]
+set PGM_EMPTY_ATHRESH           [lindex [split [lindex $34] =] 1]
+set PGM_EMPTY_NTHRESH           [lindex [split [lindex $35] =] 1]
+set SIN_PEMPTY_THRESH_INPUT     [lindex [split [lindex $36] =] 1]
+set MULT_PEMPTY_THRESH_INPUT    [lindex [split [lindex $37] =] 1]
+set PEMPTY_FLAG_SENSE		[lindex [split [lindex $38] =] 1] 
+set DATA_CNT_ENABLE             [lindex [split [lindex $39] =] 1]
+ 
+#### install_dir will be path to the XML
+
+global LIB
+
+set install_dir $LIB/syncore/xml/memories/rom
+
+file mkdir $DIRECTORY
+
+file copy -force $install_dir/../../../models/fifos/sfifo/syncore_sfifo.v $DIRECTORY/syncore_sfifo.v
+file copy -force $install_dir/../../../models/fifos/sfifo/readme.txt $DIRECTORY/readme.txt
+
+if { $SIN_PFULL_THRESH_CONS == 1 } {
+     set PGM_FULL_TYPE 1 
+   } elseif { $MULT_PFULL_THRESH_CONS == 1 } {
+              set PGM_FULL_TYPE 2
+   } elseif { $SIN_PFULL_THRESH_INPUT == 1 } {
+              set PGM_FULL_TYPE 3 
+   } elseif { $MULT_PFULL_THRESH_INPUT == 1 } {
+              set PGM_FULL_TYPE 4 
+   }
+
+if { $SIN_PEMPTY_THRESH_CONS == 1 } {
+     set PGM_EMPTY_TYPE 1 
+   } elseif { $MULT_PEMPTY_THRESH_CONS == 1 } {
+              set PGM_EMPTY_TYPE 2
+   } elseif { $SIN_PEMPTY_THRESH_INPUT == 1 } {
+              set PGM_EMPTY_TYPE 3 
+   } elseif { $MULT_PEMPTY_THRESH_INPUT == 1 } {
+              set PGM_EMPTY_TYPE 4 
+   }
+
+if { $PFULL_FLAG_ENABLE == 1 } {
+     if { ( $SIN_PFULL_THRESH_CONS | $MULT_PFULL_THRESH_CONS | $SIN_PFULL_THRESH_INPUT | $MULT_PFULL_THRESH_INPUT ) == 0 } {
+          error "PFULL flag is enabled, but Programmable Full Mode is not defined properly" 
+        }
+   }
+  
+
+if { $PEMPTY_FLAG_ENABLE == 1 } {
+     if { ( $SIN_PEMPTY_THRESH_CONS | $MULT_PEMPTY_THRESH_CONS | $SIN_PEMPTY_THRESH_INPUT | $MULT_PEMPTY_THRESH_INPUT ) == 0 } {
+          error "PEMPTY flag is enabled, but Programmable Empty Mode is not defined properly" 
+        }
+   }
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for  generate options file generation
+## ----------------------------------------------------------------------------------------------
+
+
+ set cf [open $DIRECTORY/options.txt w+]
+ puts $cf " $0"
+ puts $cf " $1"
+ puts $cf " $2" 
+ puts $cf " $3"
+ puts $cf " $4"
+ 
+ puts $cf " $5" 
+ #puts $cf " $6"
+ if { $FULL_FLAG_ENABLE == 1 }  { 
+      puts $cf " $6" 
+      puts $cf " $7" 
+      }
+ if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 }  {    
+      puts $cf " $8" 
+    }
+ puts $cf " $9" 
+ if { $OVERFLOW_FLAG_ENABLE == 1 }  {    
+      puts $cf " $10" 
+      }
+ puts $cf " $11"      
+ if { $WACK_FLAG_ENABLE == 1 }  {    
+      puts $cf " $12" 
+      }
+      
+ puts $cf " $13"       
+ if { $EMPTY_FLAG_ENABLE == 1 }  {    
+      puts $cf " $14" 
+      puts $cf " $15" 
+    }
+ if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 }  {    
+      puts $cf " $16" 
+    }
+ puts $cf " $17" 
+ if { $UNDERFLW_FLAG_ENABLE == 1 }  {    
+      puts $cf " $18" 
+    }
+ puts $cf " $19" 
+ if { $RACK_FLAG_ENABLE == 1 }  {    
+      puts $cf " $20" 
+    }
+
+ if { $FULL_FLAG_ENABLE == 1 } {
+      puts $cf " $21" 
+      puts $cf " $22" 
+      if { $SIN_PFULL_THRESH_CONS == 1 }  { 
+           puts $cf " $23" 
+         }
+      puts $cf " $24" 
+      if { $MULT_PFULL_THRESH_CONS == 1 }  {    
+           puts $cf " $25" 
+           puts $cf " $26" 
+         }
+      puts $cf " $27" 
+      puts $cf " $28" 
+      if { $PFULL_FLAG_ENABLE == 1 }  { 
+           puts $cf " $29" 
+         }
+    }
+
+ if { $EMPTY_FLAG_ENABLE == 1 } {
+      puts $cf " $30" 
+      puts $cf " $31" 
+      if { $SIN_PEMPTY_THRESH_CONS == 1 }  { 
+           puts $cf " $32" 
+         }
+      puts $cf " $33" 
+      if { $MULT_PEMPTY_THRESH_CONS == 1 }  {    
+           puts $cf " $34" 
+           puts $cf " $35" 
+         }
+      puts $cf " $36" 
+      puts $cf " $37" 
+      if { $PEMPTY_FLAG_ENABLE == 1 }  { 
+           puts $cf " $38" 
+         }
+    } 	 
+ puts $cf " $39"
+ close $cf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for Instantiation file generation
+## ----------------------------------------------------------------------------------------------
+
+ set vf [open $DIRECTORY/instantiation_file.vin w+]
+ 
+    puts $vf "     // The following must be inserted into your Verilog file for this"
+    puts $vf "     // core to be instantiated. Change the instance name and port connections"
+    puts $vf "     // (in parentheses) to your own signal names."
+    puts $vf "\n"
+    puts $vf "     //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG"
+    puts $vf "\n"
+    puts $vf "$COMPONENT <InstanceName> ( "
+    puts $vf "                             .Reset(Reset) "
+    puts $vf "                            ,.Clock(Clock) "
+    puts $vf "                            ,.Din(Din) "
+    puts $vf "                            ,.Write_enable(Write_enable) "
+    puts $vf "                            ,.Read_enable(Read_enable) "
+    puts $vf "                            ,.Dout(Dout) "
+    if { $FULL_FLAG_ENABLE == 1 }  {
+    puts $vf "                            ,.Full(Full) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+    puts $vf "                            ,.Almost_full(Almost_full) " 
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+    puts $vf "                            ,.Overflow(Overflow) " 
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+    puts $vf "                            ,.Write_ack(Write_ack) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+    puts $vf "                            ,.Prog_full(Prog_full) "  
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+    puts $vf "                            ,.Prog_full_thresh(Prog_full_thresh) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+    puts $vf "                            ,.Prog_full_thresh_assert(Prog_full_thresh_assert) " 
+    puts $vf "                            ,.Prog_full_thresh_negate(Prog_full_thresh_negate) " 
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+    puts $vf "                            ,.Data_cnt(Data_cnt) " 
+       }
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+    puts $vf "                            ,.Empty(Empty) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {   
+    puts $vf "                            ,.Almost_empty(Almost_empty) "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 
+    puts $vf "                            ,.Underflow(Underflow) "
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {       
+    puts $vf "                            ,.Read_ack(Read_ack) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+    puts $vf "                            ,.Prog_empty(Prog_empty) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $vf "                            ,.Prog_empty_thresh(Prog_empty_thresh) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $vf "                            ,.Prog_empty_thresh_assert(Prog_empty_thresh_assert) "
+    puts $vf "                            ,.Prog_empty_thresh_negate(Prog_empty_thresh_negate) "
+       }
+    puts $vf "	                       ); "
+    	 
+ close $vf
+
+## ----------------------------------------------------------------------------------------------
+
+   
+## ----------------------------------------------------------------------------------------------
+## Code for wrapper file generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "." ] } { 	    ### The FILENAME has just the file name
+    set WFILENAME "$DIRECTORY/$FILENAME"
+  } else {                                              	### The FILENAME has a directory/filename structure
+	file mkdir [file dirname $FILENAME]
+	set WFILENAME "$FILENAME"
+}
+
+set wf [open $WFILENAME w+ ]
+
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// --- "
+    puts $wf "// ---                 (C) COPYRIGHT 2001-2010 SYNOPSYS, INC. "
+    puts $wf "// ---                           ALL RIGHTS RESERVED "
+    puts $wf "// --- "
+    puts $wf "// --- This software and the associated documentation are confidential and "
+    puts $wf "// --- proprietary to Synopsys, Inc.  Your use or disclosure of this "
+    puts $wf "// --- software is subject to the terms and conditions of a written "
+    puts $wf "// --- license agreement between you, or your company, and Synopsys, Inc. "
+    puts $wf "// --- "
+    puts $wf "// --- The entire notice above must be reproduced on all authorized copies. "
+    puts $wf "// --- "
+    puts $wf "// ----------------------------------------------------------------------------- "
+    puts $wf "// "
+    puts $wf " "
+
+    puts $wf "`timescale 1ns/100ps"
+    puts $wf " module $COMPONENT "
+    puts $wf " \t \t \t ("
+    puts $wf " \t \t \t    Reset "
+    puts $wf " \t \t \t  , Clock "
+    puts $wf " \t \t \t  , Din "
+    puts $wf " \t \t \t  , Write_enable "
+    puts $wf " \t \t \t  , Read_enable "
+    puts $wf " \t \t \t  , Dout "
+    if { $FULL_FLAG_ENABLE == 1 }  {
+    puts $wf " \t \t \t  , Full " 
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+    puts $wf " \t \t \t  , Almost_full " 
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+    puts $wf " \t \t \t  , Overflow " 
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+    puts $wf " \t \t \t  , Write_ack " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+    puts $wf " \t \t \t  , Prog_full "  
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+    puts $wf " \t \t \t  , Prog_full_thresh " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+    puts $wf " \t \t \t  , Prog_full_thresh_assert " 
+    puts $wf " \t \t \t  , Prog_full_thresh_negate " 
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+    puts $wf " \t \t \t  , Data_cnt " 
+       }
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+    puts $wf " \t \t \t  , Empty "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {   
+    puts $wf " \t \t \t  , Almost_empty "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 
+    puts $wf " \t \t \t  , Underflow "
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {       
+    puts $wf " \t \t \t  , Read_ack "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+    puts $wf " \t \t \t  , Prog_empty "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $wf " \t \t \t  , Prog_empty_thresh "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $wf " \t \t \t  , Prog_empty_thresh_assert "
+    puts $wf " \t \t \t  , Prog_empty_thresh_negate "
+       }	    
+    puts $wf " \t \t \t ) ;"
+    puts $wf " "  
+    puts $wf "parameter WIDTH = $WIDTH ;"  
+    puts $wf "parameter DEPTH = $DEPTH ;"
+    if { $FULL_FLAG_ENABLE == 1 } {
+         puts $wf "parameter FULL_FLAG_SENSE = $FULL_FLAG_SENSE ;"
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+         puts $wf "parameter AFULL_FLAG_SENSE = $AFULL_FLAG_SENSE ;"
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+         puts $wf "parameter OVERFLOW_FLAG_SENSE = $OVERFLOW_FLAG_SENSE ;"
+       }
+    if { $WACK_FLAG_ENABLE == 1 } {
+         puts $wf "parameter WACK_FLAG_SENSE = $WACK_FLAG_SENSE ;"
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+         puts $wf "parameter PFULL_FLAG_SENSE = $PFULL_FLAG_SENSE ;"
+         puts $wf "parameter PGM_FULL_TYPE = $PGM_FULL_TYPE ;"
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_CONS) == 1 } {       
+         puts $wf "parameter PGM_FULL_THRESH = $PGM_FULL_THRESH ;"
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_CONS) == 1 } {       
+         puts $wf "parameter PGM_FULL_ATHRESH = $PGM_FULL_ATHRESH ;"
+         puts $wf "parameter PGM_FULL_NTHRESH = $PGM_FULL_NTHRESH ;"
+       }   
+    if { $EMPTY_FLAG_ENABLE == 1 } {
+         puts $wf "parameter EMPTY_FLAG_SENSE = $EMPTY_FLAG_SENSE ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {
+         puts $wf "parameter AEMPTY_FLAG_SENSE = $AEMPTY_FLAG_SENSE ;"
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } {
+         puts $wf "parameter UNDERFLW_FLAG_SENSE = $UNDERFLW_FLAG_SENSE ;"
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {
+         puts $wf "parameter RACK_FLAG_SENSE = $RACK_FLAG_SENSE ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+         puts $wf "parameter PEMPTY_FLAG_SENSE = $PEMPTY_FLAG_SENSE ;"   
+         puts $wf "parameter PGM_EMPTY_TYPE = $PGM_EMPTY_TYPE ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_CONS) == 1 } {       
+         puts $wf "parameter PGM_EMPTY_THRESH = $PGM_EMPTY_THRESH ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_CONS) == 1 } {       
+         puts $wf "parameter PGM_EMPTY_ATHRESH = $PGM_EMPTY_ATHRESH ;"
+         puts $wf "parameter PGM_EMPTY_NTHRESH = $PGM_EMPTY_NTHRESH ;"
+       }     
+
+    puts $wf " "     
+    puts $wf "parameter HIGH        = 1'b1 ;"
+    puts $wf "parameter LOW         = 1'b1 ;"
+   ## puts $wf "parameter HIGH_BUS    = {WIDTH{HIGH}} ;"
+   ## puts $wf "parameter LOW_BUS     = {WIDTH{LOW}} ;"
+    puts $wf "parameter ADDR_WIDTH  = clog2(DEPTH) ;"
+    puts $wf "parameter CNT_WIDTH   = ADDR_WIDTH + 1 ;"
+   ## puts $wf "parameter RST_SENSE   = LOW_BUS ;"
+   ## puts $wf "parameter RST_SYN_STG = 2 ; "
+
+    puts $wf " "
+    puts $wf "input                       Reset ;"
+    puts $wf "input                       Clock ;"
+    puts $wf {input [WIDTH-1:0]           Din ;}
+    puts $wf "input                       Write_enable ;"
+    puts $wf "input                       Read_enable ;"
+    puts $wf {output [WIDTH-1:0]          Dout ;}
+    if { $FULL_FLAG_ENABLE == 1 }  {
+         puts $wf "output                 Full ;" 
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+         puts $wf "output                 Almost_full ;" 
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+         puts $wf "output                 Overflow ;" 
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+         puts $wf "output                 Write_ack ;" 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+         puts $wf "output                 Prog_full ;"  
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+         puts $wf {input [CNT_WIDTH-1:0]  Prog_full_thresh ;}
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+         puts $wf {input [CNT_WIDTH-1:0]  Prog_full_thresh_assert ;} 
+	 puts $wf {input [CNT_WIDTH-1:0]  Prog_full_thresh_negate ;}
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+         puts $wf {output [CNT_WIDTH-1:0] Data_cnt ;}
+       }
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+         puts $wf "output                 Empty ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {   
+         puts $wf "output                 Almost_empty ;"
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 
+         puts $wf "output                 Underflow ;"
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {       
+         puts $wf "output                 Read_ack ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+         puts $wf "output                 Prog_empty ;"
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {
+         puts $wf {input [CNT_WIDTH-1:0] Prog_empty_thresh ;}
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {
+         puts $wf {input [CNT_WIDTH-1:0] Prog_empty_thresh_assert ;}
+         puts $wf {input [CNT_WIDTH-1:0] Prog_empty_thresh_negate ;}
+       }	 
+
+    puts $wf " "
+    puts $wf "syncore_sfifo #( "
+    puts $wf "                  .WIDTH(WIDTH) "  
+    puts $wf "                 ,.DEPTH(DEPTH) "
+    if { $FULL_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.FULL_FLAG_SENSE(FULL_FLAG_SENSE) "
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+    puts $wf "                 ,.AFULL_FLAG_SENSE(AFULL_FLAG_SENSE) "
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.OVERFLOW_FLAG_SENSE(OVERFLOW_FLAG_SENSE) "
+       }
+    if { $WACK_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.WACK_FLAG_SENSE(WACK_FLAG_SENSE) "
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+    puts $wf "                 ,.PFULL_FLAG_SENSE(PFULL_FLAG_SENSE) "
+    puts $wf "                 ,.PGM_FULL_TYPE(PGM_FULL_TYPE) "
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_CONS) == 1 } {       
+    puts $wf "                 ,.PGM_FULL_THRESH(PGM_FULL_THRESH) "
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_CONS) == 1 } {       
+    puts $wf "                 ,.PGM_FULL_ATHRESH(PGM_FULL_ATHRESH) "
+    puts $wf "                 ,.PGM_FULL_NTHRESH(PGM_FULL_NTHRESH) "
+       }   
+    if { $EMPTY_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.EMPTY_FLAG_SENSE(EMPTY_FLAG_SENSE) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {
+    puts $wf "                 ,.AEMPTY_FLAG_SENSE(AEMPTY_FLAG_SENSE) "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.UNDERFLW_FLAG_SENSE(UNDERFLW_FLAG_SENSE) "
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {
+    puts $wf "                 ,.RACK_FLAG_SENSE(RACK_FLAG_SENSE) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+    puts $wf "                 ,.PEMPTY_FLAG_SENSE(PEMPTY_FLAG_SENSE) "   
+    puts $wf "                 ,.PGM_EMPTY_TYPE(PGM_EMPTY_TYPE) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_CONS) == 1 } {       
+    puts $wf "                 ,.PGM_EMPTY_THRESH(PGM_EMPTY_THRESH) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_CONS) == 1 } {       
+    puts $wf "                 ,.PGM_EMPTY_ATHRESH(PGM_EMPTY_ATHRESH) "
+    puts $wf "                 ,.PGM_EMPTY_NTHRESH(PGM_EMPTY_NTHRESH) "
+       } 
+       
+    puts $wf "           )"
+    
+    puts $wf " U1        ("
+    puts $wf "                .Reset(Reset) "
+    puts $wf "               ,.Clock(Clock) "
+    puts $wf "               ,.Din(Din) "
+    puts $wf "               ,.Write_enable(Write_enable) "
+    puts $wf "               ,.Read_enable(Read_enable) "
+    puts $wf "               ,.Dout(Dout) "
+    if { $FULL_FLAG_ENABLE == 1 }  {
+    puts $wf "               ,.Full(Full) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $AFULL_FLAG_ENABLE) == 1 } {
+    puts $wf "               ,.Almost_full(Almost_full) " 
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+    puts $wf "               ,.Overflow(Overflow) " 
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+    puts $wf "               ,.Write_ack(Write_ack) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE) == 1 } {
+    puts $wf "               ,.Prog_full(Prog_full) "  
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+    puts $wf "               ,.Prog_full_thresh(Prog_full_thresh) " 
+       }
+    if { ($FULL_FLAG_ENABLE & $PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+    puts $wf "               ,.Prog_full_thresh_assert(Prog_full_thresh_assert) " 
+    puts $wf "               ,.Prog_full_thresh_negate(Prog_full_thresh_negate) " 
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+    puts $wf "               ,.Data_cnt(Data_cnt) " 
+       }
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+    puts $wf "               ,.Empty(Empty) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $AEMPTY_FLAG_ENABLE) == 1 } {   
+    puts $wf "               ,.Almost_empty(Almost_empty) "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 
+    puts $wf "               ,.Underflow(Underflow) "
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {       
+    puts $wf "               ,.Read_ack(Read_ack) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE) == 1 } {
+    puts $wf "               ,.Prog_empty(Prog_empty) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $wf "               ,.Prog_empty_thresh(Prog_empty_thresh) "
+       }
+    if { ($EMPTY_FLAG_ENABLE & $PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $wf "               ,.Prog_empty_thresh_assert(Prog_empty_thresh_assert) "
+    puts $wf "               ,.Prog_empty_thresh_negate(Prog_empty_thresh_negate) "
+       }
+    puts $wf "	         ); "
+       
+    puts $wf " "
+    puts $wf "function integer find_ones ;"
+    puts $wf {input [31:0] value ;}
+    puts $wf "integer i ;"
+    puts $wf "  begin "
+    puts $wf "    find_ones=0 ;"
+    puts $wf {    for (i=0; i<32 ; i=i+1) }
+    puts $wf {      find_ones = find_ones + value[i] ;}
+    puts $wf "  end "
+    puts $wf "endfunction "
+
+    puts $wf " "
+    puts $wf "function integer clog2 ;"
+    puts $wf {input [31:0] value ;}
+    puts $wf "begin "
+    puts $wf {  if(find_ones(value) > 1) }
+    puts $wf {     clog2 = clog2_main(value) + 1 ;}
+    puts $wf "  else "
+    puts $wf {     clog2 = clog2_main(value) ;}
+    puts $wf "end "
+    puts $wf "endfunction "
+
+    puts $wf " "
+    puts $wf "function integer clog2_main ;"
+    puts $wf {input [31:0] value ;}
+    puts $wf {  for (clog2_main=0; value>1; clog2_main=clog2_main+1) }
+    puts $wf {    value = value>>1 ;}
+    puts $wf "endfunction"
+   
+    puts $wf " "	 
+    puts $wf "endmodule "
+    
+    close $wf
+
+## ----------------------------------------------------------------------------------------------
+
+  
+## ----------------------------------------------------------------------------------------------
+## Code for TestBench Generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "."] } {  ### The FILENAME has just the filename
+	set TBFILE "$DIRECTORY/tb_$FILENAME" 
+} else {                                               ### The FILENAME has a directory/filename structure
+    set FDIR [file dirname $FILENAME]
+    set FNAME [file tail $FILENAME]
+	set TBFILE "$FDIR/tb_$FNAME"
+}
+
+set tf [open $TBFILE w+]
+
+    puts $tf {`timescale  1 ns / 100 ps }
+    puts $tf " "
+    puts $tf {module  Testbench ( ) ; }
+    puts $tf " "
+    puts $tf "parameter   WIDTH 	     = $WIDTH ; "
+    puts $tf "parameter	  DEPTH		     = $DEPTH ; "
+    puts $tf "parameter   FULL_FLAG_SENSE    = $FULL_FLAG_SENSE ; "
+    puts $tf "parameter   AFULL_FLAG_SENSE   = $AFULL_FLAG_SENSE ; "
+    puts $tf "parameter   EMPTY_FLAG_SENSE   = $EMPTY_FLAG_SENSE ; "
+    puts $tf "parameter   AEMPTY_FLAG_SENSE  = $AEMPTY_FLAG_SENSE ; "
+    
+    puts $tf " "
+    puts $tf "parameter	HIGH	      = 1'b1 ;"
+    puts $tf "parameter	LOW	      = 1'b0 ; "
+    puts $tf {parameter	HIGH_BUS      = {WIDTH{HIGH}} ; }
+    puts $tf {parameter	LOW_BUS	      = {WIDTH{LOW}} ; } 
+    puts $tf {parameter	ADDR_WIDTH    = clog2(DEPTH) ; }
+    puts $tf {parameter	CNT_WIDTH     = ADDR_WIDTH +1 ; }
+
+    puts $tf " "
+    puts $tf "function integer find_ones ;"
+    puts $tf {input [31:0] value ;}
+    puts $tf "integer i ;"
+    puts $tf "  begin "
+    puts $tf "    find_ones=0 ;"
+    puts $tf {    for (i=0; i<32 ; i=i+1) }
+    puts $tf {      find_ones = find_ones + value[i] ;}
+    puts $tf "  end "
+    puts $tf "endfunction "
+
+    puts $tf " "
+    puts $tf "function integer clog2 ;"
+    puts $tf {input [31:0] value ;}
+    puts $tf "begin "
+    puts $tf {  if(find_ones(value) > 1) }
+    puts $tf {     clog2 = clog2_main(value) + 1 ;}
+    puts $tf "  else "
+    puts $tf {     clog2 = clog2_main(value) ;}
+    puts $tf "end "
+    puts $tf "endfunction "
+
+    puts $tf " "
+    puts $tf "function integer clog2_main ;"
+    puts $tf {input [31:0] value ;}
+    puts $tf {  for (clog2_main = 0; value > 1 ; clog2_main = clog2_main+1 ) }
+    puts $tf {    value = value>>1 ;}
+    puts $tf "endfunction"	    
+
+    puts $tf "  "
+    puts $tf "reg Reset ; "
+    puts $tf {reg [WIDTH-1:0] Din = {WIDTH{1'b0}} ; }
+    puts $tf {reg Clock = 1'b0 ; }
+    puts $tf {reg Write_enable = 1'b0 ; }
+    if { $FULL_FLAG_ENABLE == 1 }  {
+         puts $tf "wire Full ; "
+       }
+    if { $AFULL_FLAG_ENABLE == 1 } {	 
+         puts $tf "wire Almost_full ; "
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+         puts $tf "wire Write_ack ; "
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {   
+         puts $tf "wire Overflow ; "
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+       puts $tf {wire [CNT_WIDTH-1:0] Data_cnt ; }
+    }
+     
+    puts $tf " "
+    if { $PFULL_FLAG_ENABLE == 1 } {
+         puts $tf "wire Prog_full ; "
+       }
+    if { ($PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+         puts $tf {// ----- you cannot specify this value in the UI, please modify this accordingly }     
+	 ##     puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh = \'d$PGM_FULL_THRESH ; "
+	 set FULL_THRESH [expr $DEPTH-2]
+	 puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh = \'d$FULL_THRESH ; "
+       }	    
+    if { ($PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+         puts $tf {// ----- you cannot specify this value in the UI, please modify this accordingly }           
+	 set FULL_ATHRESH [expr $DEPTH-2]
+	 set FULL_NTHRESH [expr $DEPTH/2]
+        ## puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh_assert = \'d$PGM_FULL_ATHRESH ; "
+        ## puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh_negate = \'d$PGM_FULL_NTHRESH ; "
+         puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh_assert = \'d$FULL_ATHRESH ; "
+         puts $tf "reg  \[CNT_WIDTH\-1:0\]  Prog_full_thresh_negate = \'d$FULL_NTHRESH ; " 
+	}
+
+    puts $tf " "
+    puts $tf {wire [WIDTH-1:0] Dout ; }
+    puts $tf "reg  Read_enable = 1'b0 ; "
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+         puts $tf "wire Empty ; "
+       }	 
+    if { $AEMPTY_FLAG_ENABLE == 1 } {   
+         puts $tf "wire Almost_empty ; "
+       }	 
+    if { $RACK_FLAG_ENABLE == 1 } {          
+         puts $tf "wire Read_ack ; "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 	 
+	 puts $tf "wire Underflow ; "
+       }
+	 
+    puts $tf " "
+    if { $PEMPTY_FLAG_ENABLE == 1 } {
+         puts $tf "wire Prog_empty ; "
+       }	 
+    if { ($PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {	 
+          puts $tf {// ----- you cannot specify this value in the UI, please modify this accordingly } 
+          ## puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh = \'d$PGM_EMPTY_THRESH ; "
+          set EMPTY_THRESH [expr $DEPTH/4]
+	  puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh = \'d$EMPTY_THRESH ; "
+       }
+    if { ($PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {   
+          puts $tf {// ----- you cannot specify this value in the UI, please modify this accordingly }        
+          set EMPTY_NTHRESH [expr $DEPTH/2]
+          ##puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh_assert = \'d$PGM_EMPTY_ATHRESH ; "
+	  ##puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh_negate = \'d$PGM_EMPTY_NTHRESH ; "
+          puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh_assert = \'d2 ; "
+          puts $tf "wire  \[CNT_WIDTH\-1:0\]  Prog_empty_thresh_negate = \'d$EMPTY_NTHRESH ; "
+       }
+	 
+    puts $tf " "
+    puts $tf "parameter  CLK_PERIOD  = 200 ; " 
+    puts $tf "integer i , j , k , m , t , s , r , l ; "
+
+    puts $tf "   "
+    puts $tf {// ******************************************************************************* }
+    puts $tf {// DUT instantiation }
+    puts $tf " "
+    
+    puts $tf "$COMPONENT rtl            ( "
+    puts $tf "                             .Reset(Reset) "
+    puts $tf "                            ,.Clock(Clock) "
+    puts $tf "                            ,.Din(Din) "
+    puts $tf "                            ,.Write_enable(Write_enable) "
+    puts $tf "                            ,.Read_enable(Read_enable) "
+    puts $tf "                            ,.Dout(Dout) "
+    if { $FULL_FLAG_ENABLE == 1 }  {
+    puts $tf "                            ,.Full(Full) " 
+       }
+    if { $AFULL_FLAG_ENABLE == 1 } {
+    puts $tf "                            ,.Almost_full(Almost_full) " 
+       }
+    if { $OVERFLOW_FLAG_ENABLE == 1 } {
+    puts $tf "                            ,.Overflow(Overflow) " 
+       }
+    if { $WACK_FLAG_ENABLE == 1 }  {
+    puts $tf "                            ,.Write_ack(Write_ack) " 
+       }
+    if { $PFULL_FLAG_ENABLE == 1 } {
+    puts $tf "                            ,.Prog_full(Prog_full) "  
+       }
+    if { ($PFULL_FLAG_ENABLE & $SIN_PFULL_THRESH_INPUT) == 1 } {
+    puts $tf "                            ,.Prog_full_thresh(Prog_full_thresh) " 
+       }
+    if { ($PFULL_FLAG_ENABLE & $MULT_PFULL_THRESH_INPUT) == 1 } {
+    puts $tf "                            ,.Prog_full_thresh_assert(Prog_full_thresh_assert) " 
+    puts $tf "                            ,.Prog_full_thresh_negate(Prog_full_thresh_negate) " 
+       }
+    if { $DATA_CNT_ENABLE == 1 } {
+    puts $tf "                            ,.Data_cnt(Data_cnt) " 
+       }
+    if { $EMPTY_FLAG_ENABLE == 1 } { 
+    puts $tf "                            ,.Empty(Empty) "
+       }
+    if { $AEMPTY_FLAG_ENABLE == 1 } {   
+    puts $tf "                            ,.Almost_empty(Almost_empty) "
+       }
+    if { $UNDERFLW_FLAG_ENABLE == 1 } { 
+    puts $tf "                            ,.Underflow(Underflow) "
+       }
+    if { $RACK_FLAG_ENABLE == 1 } {       
+    puts $tf "                            ,.Read_ack(Read_ack) "
+       }
+    if { $PEMPTY_FLAG_ENABLE == 1 } {
+    puts $tf "                            ,.Prog_empty(Prog_empty) "
+       }
+    if { ($PEMPTY_FLAG_ENABLE & $SIN_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $tf "                            ,.Prog_empty_thresh(Prog_empty_thresh) "
+       }
+    if { ($PEMPTY_FLAG_ENABLE & $MULT_PEMPTY_THRESH_INPUT) == 1 } {
+    puts $tf "                            ,.Prog_empty_thresh_assert(Prog_empty_thresh_assert) "
+    puts $tf "                            ,.Prog_empty_thresh_negate(Prog_empty_thresh_negate) "
+       }
+    puts $tf "	                       ); "
+
+    puts $tf {// *********************************************************************************** }
+    
+    puts $tf " "
+
+    puts $tf "always "
+    puts $tf { #(CLK_PERIOD/2) Clock <= ~Clock ; }
+    puts $tf " "
+    puts $tf "initial "
+    puts $tf "begin "
+    
+    puts $tf {  #0 Write_enable = 1'b0 ; }
+    puts $tf {  #0 Read_enable  = 1'b0 ; }
+    puts $tf {  #0 Din = {WIDTH{1'b1}} ; }
+    puts $tf {  #0 Reset = 1'b1 ; }
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  #0 j = 0 ; }
+    puts $tf {  #0 k = 0 ; }
+    puts $tf {  #0 m = 0 ; }
+    puts $tf {  #0 t = 0 ; }
+    puts $tf {  #0 s = 0 ; }
+    puts $tf {  #0 r = 0 ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  #0 Reset = 1'b0 ; }
+    
+    puts $tf " "
+    puts $tf " "
+    puts $tf {  for (i=0 ; i<=15; i=i+1) }
+    puts $tf {    @(negedge Clock) ; }
+    puts $tf {  write_flag_check ; }
+
+    puts $tf " "
+    puts $tf {  for (i=0 ; i<=15; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf {  #0 i = 0 ; }
+    puts $tf "  read_flag_check ;"
+
+    puts $tf " "
+    puts $tf {  for (i=0 ; i<= 15; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf {  write_read_data_check ; }
+
+    puts $tf "  "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf "  readwrite_check_during_fullempty ; "
+
+    puts $tf "  "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf "  readwrite_check_during_afullaempty ; "
+
+    puts $tf " "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf "  readwrite_check_during_fifoempty ; "
+
+    puts $tf " "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf "  readwrite_check_during_fifoaempty ; "
+
+    puts $tf " "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf "  readwrite_check_during_fifofull ; "
+
+    puts $tf " "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+    puts $tf {  readwrite_check_during_fifoafull ; }
+
+    puts $tf " "
+    puts $tf {  #0 i = 0 ; }
+    puts $tf {  for (i=0; i <=15 ; i=i+1) }
+    puts $tf {     @(negedge Clock) ; }
+
+    puts $tf " "
+    puts $tf {  $stop ; }
+    puts $tf "end "
+
+    puts $tf "  "
+    puts $tf {// ******************************************************************************************* }
+    puts $tf {// write_flag_check TASK }
+  
+    puts $tf " "
+    puts $tf "task write_flag_check ;  "
+    puts $tf "begin "
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf "  begin "
+    puts $tf {    Write_enable  =  1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  for (j = 0 ; j <= DEPTH+3 ; j = j+1 ) }
+    puts $tf {  @(negedge Clock) }
+    puts $tf {  begin }
+    puts $tf {	  Din = $random ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) ; }
+    puts $tf {  if (Full == FULL_FLAG_SENSE) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable = 1'b0 ; }
+    puts $tf {    Din = {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+
+    puts $tf " " 
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf {// ******************************************************************************************** }
+    puts $tf {// read_flag_check }
+  
+    puts $tf "task read_flag_check ; "
+    puts $tf "begin "
+    puts $tf {  @(negedge Clock) }
+    puts $tf {    Read_enable = 1'b1 ; }
+
+    puts $tf " "
+    puts $tf {  for (k = 0 ; k < DEPTH+3 ; k = k+1 ) }
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Read_enable = 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    if (Empty == EMPTY_FLAG_SENSE) }
+    puts $tf "       Read_enable = 1'b0 ; "
+    puts $tf "  end "    
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf {// ******************************************************************************************* }
+    puts $tf {// Write Read Data Check }
+  
+    puts $tf " "
+    puts $tf "task write_read_data_check ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable = 1'b1 ; }
+    puts $tf "  end "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Read_enable = 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  for(l = 0; l <= 4*DEPTH; l = l+1) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Din = $random ; }
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock ) }
+    puts $tf "  begin "
+    puts $tf "	  Write_enable = 1'b0 ; "
+    puts $tf "    Read_enable = 1'b0 ; "
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // ************************************************************************************* }
+    puts $tf { // Read Check during Full , write check during Empty }
+    puts $tf { // Overflow / Underflow should not occur }
+
+    puts $tf " "
+    puts $tf "task readwrite_check_during_fullempty ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf "    Write_enable <= 1'b1 ; "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  for (t = 0 ; t <= 2*DEPTH-2 ; t = t+1) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Din <= $random ; }
+    puts $tf {	    if (Full == FULL_FLAG_SENSE) }
+    puts $tf "      begin "
+    puts $tf {	      Read_enable <= 1'b1 ; }
+    puts $tf {        Write_enable <= 1'b0 ; }
+    puts $tf "	    end "
+    puts $tf {      if (Empty == EMPTY_FLAG_SENSE) }
+    puts $tf "      begin "
+    puts $tf {	      Write_enable <= 1'b1 ; }
+    puts $tf {        Din = $random ; }
+    puts $tf {	      Read_enable <= 1'b0 ; }
+    puts $tf "	    end "
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // ***************************************************************************************  }
+    puts $tf { // Read Check during Almost Full , write check during Almost Empty }
+    puts $tf { // Full / Empty should not occur }
+
+    puts $tf " "
+    puts $tf "task readwrite_check_during_afullaempty ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  for (s = 0 ; s <= 2*DEPTH-5 ; s = s+1 ) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Din <= $random ; }
+    puts $tf {	    if (Almost_full == AFULL_FLAG_SENSE) }
+    puts $tf "      begin "
+    puts $tf {	      Read_enable <= 1'b1 ; }
+    puts $tf {        Write_enable <= 1'b0 ; }
+    puts $tf "	    end "
+    puts $tf {      if (Almost_empty == AEMPTY_FLAG_SENSE) }
+    puts $tf "      begin "
+    puts $tf {	      Write_enable <= 1'b1 ; }
+    puts $tf {        Din = $random ; }
+    puts $tf {	      Read_enable <= 1'b0 ; }
+    puts $tf "	    end "
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " " 
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Read_enable <= 1'b0 ; }
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // **************************************************************************************** }
+    puts $tf { // Reading and Writing from FIFO, when FIFO is empty to check toggling of flags }
+  
+    puts $tf " "
+    puts $tf "task  readwrite_check_during_fifoempty ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Din <= $random ; }
+    puts $tf {    Read_enable <= 1'b1 ; }
+    puts $tf {    Write_enable <= 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Din  <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf {     Read_enable <= 1'b0 ; }
+
+    puts $tf " "
+    puts $tf {  for (s=0; s < DEPTH ; s = s+1 ) }
+    puts $tf "  begin "	     
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Write_enable <= 1'b1 ; }
+    puts $tf {      Read_enable  <= 1'b0 ; }
+    puts $tf { 	    Din <= $random ; }
+    puts $tf "    end "
+    
+    puts $tf " "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf { 	    Write_enable <= 1'b0 ; }
+    puts $tf {	    Read_enable  <= 1'b1 ; }
+    puts $tf {	    Din <= {WIDTH{1'b0}} ; }
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " " 
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf {    Din          <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // ****************************************************************************************** }
+    puts $tf { // Reading and Writing from FIFO, when FIFO is Almost empty to check toggling of flags }
+  
+    puts $tf " "
+    puts $tf "task  readwrite_check_during_fifoaempty ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  #0 s = 0 ; }
+    puts $tf {  for ( s = 0 ; s < 3 ; s = s+1) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf {    if ( Almost_empty == AEMPTY_FLAG_SENSE ) }
+    puts $tf "    begin "
+    puts $tf {      Write_enable <= 1'b1 ; }
+    puts $tf {      Din <= $random ; }
+    puts $tf "    end "
+    puts $tf "	  else "
+    puts $tf "    begin "
+    puts $tf { 	    Write_enable <= 1'b0 ; }
+    puts $tf {      Din    <=  {WIDTH{1'b0}} ; }
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b1 ; }
+    puts $tf {    Read_enable  <= 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  #0 s = 0 ;  }
+    puts $tf {  for (s=0; s < DEPTH; s = s+1) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Write_enable <= 1'b0 ; }
+    puts $tf {	    Read_enable  <= 1'b1 ; }
+    puts $tf {	    Din <= {WIDTH{1'b0}} ; }
+    puts $tf "    end "
+
+    puts $tf " "    
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Write_enable <= 1'b1 ; }
+    puts $tf { 	    Read_enable <= 1'b0 ; }
+    puts $tf {	    Din <= $random ; }
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf {    Din          <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // *************************************************************************************** }
+    puts $tf { // Reading and Writing from FIFO , when FIFO is Full to check toggling of flags }
+  
+    puts $tf " " 
+    puts $tf "task readwrite_check_during_fifofull ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf {  #0 s = 0 ; }
+    puts $tf {  for ( s = 0 ; s < DEPTH+3 ; s = s+1 ) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf {    if ( Full == FULL_FLAG_SENSE )  }
+    puts $tf "	  begin "
+    puts $tf {      Write_enable <= 1'b0 ; }
+    puts $tf {      Din <= {WIDTH{1'b0}} ; }
+    puts $tf "	  end "
+    puts $tf "    else "
+    puts $tf "    begin "
+    puts $tf {      Write_enable <= 1'b1 ; }
+    puts $tf {	    Din  <= $random ; }
+    puts $tf "	  end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Din <= $random ; }
+    puts $tf {    Read_enable <= 1'b1 ; }
+    puts $tf {    Write_enable <= 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Din  <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf {    Read_enable <= 1'b0 ; }
+
+    puts $tf " "
+    puts $tf {  #0 s = 0 ; }
+    puts $tf {  for ( s = 0 ; s < DEPTH ; s = s+1 ) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf { 	    Din  <=  {WIDTH{1'b0}} ; }
+    puts $tf {	    Read_enable <= 1'b1 ; }
+    puts $tf {      Write_enable  <= 1'b0 ; }
+    puts $tf "    end "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {      Din  <=  $random ; }
+    puts $tf {	    Write_enable  <= 1'b1 ; }
+    puts $tf {      Read_enable   <= 1'b0 ; }
+    puts $tf "    end "
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf {    Din          <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf " "
+    puts $tf { // *********************************************************************************** }
+    puts $tf { // Reading and Writing from FIFO , when FIFO is Almost Full to check toggling of flags }
+  
+    puts $tf " " 
+    puts $tf "task readwrite_check_during_fifoafull ; "
+    puts $tf "begin "
+
+    puts $tf " "
+    puts $tf "  @(negedge Clock) "
+    puts $tf "  begin "
+    puts $tf {    Din <= $random ; }
+    puts $tf {    Read_enable <= 1'b1 ; }
+    puts $tf {    Write_enable <= 1'b1 ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Din  <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf {    Read_enable <= 1'b0 ; }
+
+    puts $tf " "
+    puts $tf {  #0 s = 0 ; }
+    puts $tf {  for ( s = 0 ; s < DEPTH ; s = s+1 ) }
+    puts $tf "  begin "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf {	    Din  <=  {WIDTH{1'b0}} ; }
+    puts $tf {      Read_enable <= 1'b1 ; }
+    puts $tf {      Write_enable  <= 1'b0 ; }
+    puts $tf "    end "
+
+    puts $tf " "
+    puts $tf {    @(negedge Clock) }
+    puts $tf "    begin "
+    puts $tf { 	    Din  <=  $random ; }
+    puts $tf {	    Write_enable  <= 1'b1 ; }
+    puts $tf {      Read_enable   <= 1'b0 ; }
+    puts $tf "    end "
+    puts $tf "  end "     
+
+    puts $tf " "
+    puts $tf {  @(negedge Clock) }
+    puts $tf "  begin "
+    puts $tf {    Write_enable <= 1'b0 ; }
+    puts $tf {    Read_enable  <= 1'b0 ; }
+    puts $tf {    Din          <= {WIDTH{1'b0}} ; }
+    puts $tf "  end "
+    puts $tf "end "
+    puts $tf "endtask "
+
+    puts $tf "endmodule "
+    
+    close $tf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Syncore Generated files list
+## ----------------------------------------------------------------------------------------------
+
+## Filelist Generation
+
+ set lf [open $DIRECTORY/filelist.txt w+]
+ puts $lf "filelist.txt  -- Contains list of files written out by SynCore"
+ puts $lf "options.txt -- Contains all the options selected in SynCore"
+ puts $lf "readme.txt -- Contains brief description and known issues"
+ puts $lf "syncore_fifo.v -- Verilog library file required to generate FIFO model" 
+ 
+ if { [ string match [file dirname  $FILENAME] "." ] } {
+	 puts $lf "tb_$FILENAME       -- Verilog testbench file to simulate Core Model"
+ } else {
+     puts $lf "$TBFILE            -- Verilog testbench file to simulate Core Model"
+ }
+ puts $lf "$FILENAME		        -- Core Model wrapper file"
+ puts $lf "instantiation_file.vin -- Describes how to instantiate wrapper file"
+ close $lf
+
+ ## ----------------------------------------------------------------------------------------------
+
+ cd $install_dir
+}
+
+}
+   ]]> </tcl>
+
+
+ </dialog>
+   
+</dyndialog>
+
+
+

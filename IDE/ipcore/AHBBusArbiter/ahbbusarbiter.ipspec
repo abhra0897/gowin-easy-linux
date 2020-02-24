@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="AHB Bus Arbiter" id="ahb_bus_arbiter" version= "1.0" category="Soft IP Core|Interface and Interconnect">AHB Bus Arbiter</ip>
+    <target module="Gowin_AHB_Arbiter_Top">gowin_ahb_arbiter</target>
+    <docs>
+        <doc type="summary">/doc/ahb_bus_arbiter.html</doc>
+        <doc type="help">/doc/ahb_bus_arbiter_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW*</device>
+    </devices>
+</ipcore>

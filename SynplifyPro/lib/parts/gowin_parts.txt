@@ -1,0 +1,357 @@
+target GOWIN-GW1N {
+
+      part GW1N_2{
+	package QFN32;
+	package QFN48;
+	package QFN88;
+	package WLCSP72;
+	package LQFP100;
+	package LQFP144;
+	package MBGA160;
+	package PBGA256;
+	package PBGA256M;
+	grade -4;
+	grade -5;
+     grade -6;
+    }
+    part GW1N_1 {
+	package WLCSP30;
+	package QFN32;
+	package QFN48;
+	package LQFP100;
+	package LQFP100X;
+	package LQFP144;
+	grade -4;
+	grade -5;
+    grade -6;
+}
+
+
+	part GW1N_2B {
+	package QFN32;
+	package QFN48;
+	package QFN88;
+	package WLCSP72;
+	package LQFP100;
+	package LQFP144;
+	package MBGA160;
+	package PBGA256;
+	package PBGA256M;
+	grade -4;
+	grade -5;
+    grade -6;
+    }
+
+	part GW1N_4{
+	package QFN32;
+	package QFN48;
+	package QFN88;
+	package WLCSP72;
+	package LQFP100;
+	package LQFP144;
+	package MBGA160;
+	package PBGA256;
+	package PBGA256M;
+	grade -4;
+	grade -5;
+	grade -5H;
+    grade -6;
+    }
+
+	part GW1N_4B {
+	package QFN32;
+	package QFN48;
+	package QFN88;
+	package WLCSP72;
+	package LQFP100;
+	package LQFP144;
+	package MBGA160;
+	package PBGA256;
+	package PBGA256M;
+	package MBGA132X;
+	grade -4;
+	grade -5;
+    grade -6;
+    }
+	
+	part GW1N_6{
+	package WLCSP64;
+	package LQFP100;
+	package LQFP144;
+	package LQFP176;
+	package PBGA256;
+	package MBGA160;
+	package UBGA256;
+	package UBGA332;
+    package QFN48;
+    package QFN88;
+	grade -4;
+	grade -5;
+    grade -6;
+    }
+
+
+	part GW1N_9{
+	package WLCSP64;
+	package LQFP100;
+	package LQFP144;
+	package LQFP176;
+	package PBGA256;
+	package MBGA160;
+	package UBGA256;
+	package UBGA332;
+        package QFN48;
+        package QFN88;
+	package eLQFP144;
+	package MBGA196;
+	package UBGA169;
+	package eLQFP176;
+	grade -4;
+	grade -5;
+    	grade -6;
+	grade -5H;
+    grade -7;
+
+    }
+
+ 	part GW1N_1S{
+	    package WLCSP30;
+ 	    package QFN32;
+ 	    grade -4;
+     	    grade -5;
+	    grade -6;
+    }
+
+}
+
+
+target GOWIN-GW1NR {
+
+    part GW1NR_4 {
+	package QFN88;
+	package MBGA81;
+	grade -4;
+	grade -5;
+    grade -6;
+    }
+
+	part GW1NR_4B {
+	package QFN88;
+	package MBGA81;
+	grade -4;
+	grade -5;
+	grade -6;
+    }
+
+    part GW1NR_9 {
+	package QFN88;
+	package LQFP144;
+	package MBGA100;
+	grade -4;
+	grade -5;
+    grade -6;
+    }
+
+	}
+
+target GOWIN-GW2A {
+	part GW2A_55 {
+	package PBGA484;
+	package PBGA1156;
+	package UBGA324;
+	package UBGA324D;
+	grade -6;
+    grade -7;
+    grade -8;
+    grade -9;
+    }
+	part GW2A_18{
+	package LQFP144;
+	package PBGA256;
+	package PBGA484;
+	package QFN88;
+	package MBGA196;
+	package PBGA256S;
+	package PBGA256C;
+	package eLQFP144;
+	package PBGA256E;
+	package	UBGA324;
+	grade -6;
+    grade -7;
+    grade -8;
+    grade -9;
+    }
+	
+
+	part GW2A_55C {
+	package PBGA484;
+	package PBGA1156;
+	package UBGA324;
+	package UBGA324D;
+	grade -6; 
+    grade -7; 
+    grade -8;
+    grade -9;
+    }
+	
+
+
+
+
+}
+
+target GOWIN-GW2AR {
+	part GW2AR_18 {
+	package QFN88;
+	package LQFP144;
+	package LQFP176;
+	package eLQFP144;
+	package eLQFP176;
+	grade -6;
+	grade -7;
+	grade -8;
+	grade -9;
+    }
+}
+
+target GOWIN-GW3AT {
+	part GW3AT_100 {
+	package FCBGA676;
+	   grade -3;
+	   grade -2;
+	   grade -1;
+    }
+}
+
+target GOWIN-GW1NS {
+	part GW1NS_2 {
+	package WLCSP36;
+	package QFN32;
+	package QFN48;
+	package LQFP144;
+	package QFN32U;
+	grade -4;
+    grade -5;
+    grade -6;
+    }
+
+	part GW1NS_2C {
+	package WLCSP36;
+	package QFN32;
+	package QFN48;
+	package LQFP144;
+	package QFN32U;
+	grade -4;
+    grade -5;
+    grade -6;
+    }
+	
+	part GW1NS_4 {
+	package WLCSP49;
+	package QFN48;
+	grade -4;
+    grade -5;
+    grade -6;
+    }
+
+
+	part GW1NS_4C {
+	package WLCSP49;
+	package QFN48;
+	grade -4;
+    grade -5;
+    grade -6;
+    }
+	
+
+
+	
+
+
+}
+target GOWIN-GW1NSE {
+	part GW1NSE_2C {
+	package QFN48;
+	package LQFP144;
+	grade -4; 
+  grade -5; 
+  grade -6;
+    }		
+}
+
+target GOWIN-GW1NSR {
+	part GW1NSR_2 {
+	package QFN48;
+	grade -4;
+    	grade -5;
+    	grade -6;
+    }
+	part GW1NSR_2C {
+	package QFN48;
+	grade -4;
+    	grade -5;
+    	grade -6;
+    }
+	
+	part GW1NSR_4 {
+	package QFN48P;
+	package QFN48G;
+	package MBGA64P;
+	grade -4; 
+    	grade -5; 
+    	grade -6;
+    }	
+
+    	part GW1NSR_4C {
+	package QFN48P;
+	package QFN48G;
+	package MBGA64P;
+	grade -4; 
+    	grade -5; 
+    	grade -6;
+    }
+
+}
+
+target GOWIN-GW1NZ{
+    part GW1NZ_1{
+	package WLCSP16;
+	package QFN32;
+	package QFN48;
+	grade -2;
+	grade -3;
+	grade -4;
+	grade -5;
+	grade -6;
+	}
+}
+
+target GOWIN-GW1NRF{
+	part GW1NRF_4B {
+	package QFN48;
+	package QFN48E;
+	grade -4;
+    	grade -5;
+    	grade -6;		
+	}
+}
+
+target GOWIN-GW1NSER {
+	part GW1NSER_4C {
+	package QFN48P;
+	package QFN48G;
+	grade -4; 
+    	grade -5; 
+    	grade -6;
+    }		
+}
+
+
+
+
+
+
+
+
+
+

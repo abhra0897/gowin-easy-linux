@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="I3C DDR eXtension" id="i3c_hdr" version="1.0" category="Soft IP Core|Interface and Interconnect">I3C DDR eXtension</ip>
+    <target module="I3C_HDR">i3c_hdr</target>
+    <docs>
+        <doc type="summary">/doc/i3c_hdr.html</doc>
+        <doc type="help">/doc/i3c_hdr_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NSER-*</device>
+        <device supported="true">GW1NSE-2C-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

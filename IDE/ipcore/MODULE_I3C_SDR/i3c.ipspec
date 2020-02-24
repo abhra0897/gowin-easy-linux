@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="I3C: I3C SDR" id="module_i3c_sdr" version= "1.0" category="Hard Module|I3C">I3C SDR</ip>
+    <target module="GW_I3C">gw_i3c</target>
+    <docs>
+        <doc type="summary">/doc/i3c_sdr.html</doc>
+        <doc type="help">/doc/i3c_sdr_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NZ-1-*</device>
+    </devices>
+</ipcore>

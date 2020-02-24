@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="SDRAM Controller(With embedded SDRAM)" id="sdrc_emb" version= "1.3" category="Soft IP Core|Memory Control">SDRAM Controller(With embedded SDRAM)</ip>
+    <target module="SDRAM_controller_top_SIP">SDRAM_controller_top_SIP</target>
+    <docs>
+        <doc type="summary">/doc/sdrc_embedded.html</doc>
+        <doc type="help">/doc/sdrc_embedded_help.html</doc>
+    </docs>
+    <devices>
+    </devices>
+</ipcore>

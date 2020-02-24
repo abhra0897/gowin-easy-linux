@@ -1,0 +1,2001 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.2.1206">
+    <meta name="TEMPLATEBASE" content="fpga_ug">
+    <meta name="LASTUPDATED" content="09/20/07 08:32:28">
+    <title>SYNCore FIFO Compiler</title>
+  </head>
+
+  <body>
+  
+<center><font face="Arial, Helvetica, sans-serif" size="2"></center>
+
+<a name="wp1305869"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="6">
+SYNCore FIFO Compiler
+</font></div></h1>
+
+
+<a name="wp1657621"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore FIFO Compiler generates Verilog code for your FIFO implementations. Note that the SYNCore FIFO compiler uses Verilog 2001. When adding a FIFO model to a Verilog-95 design, be sure to enable the <b>Verilog 2001</b> check box on the Verilog tab of the Implementation Options dialog box or include a <b>set_option -vlog_std v2001</b> statement in your project file to prevent a syntax error. You can find the following information here:
+</font></p>
+<ul>
+
+<a name="wp1657617"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1658259">Overview of Synchronous FIFOs</a></font></li>
+
+<a name="wp1658000"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1657675">Specifying FIFOs with SYNCore</a> </font></li>
+
+<a name="wp1658256"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643636">SYNCore FIFO Wizard</a></font></li>
+
+<a name="wp1658257"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639573">FIFO Read and Write Operations</a></font></li>
+
+<a name="wp1658265"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1656585">FIFO Ports</a></font></li>
+
+<a name="wp1658277"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1657121">FIFO Status Flags</a></font></li>
+
+<a name="wp1658273"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639650">FIFO Handshaking Flags</a></font></li>
+
+<a name="wp1658272"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639899">FIFO Programmable Flags</a></font></li>
+</ul>
+
+<a name="wp1658259"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Overview of Synchronous FIFOs
+</b></font></h2>
+<a name="wp1657979"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+A FIFO is a First-In-First-Out memory queue. Different control logic manages the read and write operations. A FIFO also has various handshake signals for interfacing with external user modules. 
+</font></p>
+
+<a name="wp1657981"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore FIFO compiler generates synchronous FIFOs with symmetric ports and one clock controlling both the read and write operations. The FIFO is symmetric because the read and write ports have the same width. 
+</font></p>
+
+<a name="wp1657982"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When the <b>Write</b>_<b>enable</b> signal is active and the FIFO has empty locations, data is written into FIFO memory on the rising edge of the clock. A <b>Full</b> status flag indicates that the FIFO is full and that no more write operations can be performed. See <a  href="SyncFifo_compiler_new.html#wp1639576"><i>FIFO Write Operation</i></a> for details. 
+</font></p>
+
+<a name="wp1657986"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When the FIFO has valid data and <b>Read</b>_<b>enable</b> is active, data is read from the FIFO memory and presented at the outputs. The FIFO <b>Empty</b> status flag indicates that the FIFO is empty and that no more read operations can be performed. See <a  href="SyncFifo_compiler_new.html#wp1639585"><i>FIFO Read Operation</i></a> for details. 
+</font></p>
+
+<a name="wp1657990"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The FIFO is not corrupted by an invalid request: for example, if a read request is made while the FIFO is empty or a write request is received when the FIFO is full. Invalid requests do not corrupt the data, but they cause the corresponding read or write request to be ignored and the <b>Overflow</b> or <b>Underflow</b> flags to be asserted. You can monitor these status flags for invalid requests. These and other flags are described in <a  href="SyncFifo_compiler_new.html#wp1657121"><i>FIFO Status Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1639899"><i>FIFO Programmable Flags</i></a>. 
+</font></p>
+
+<a name="wp1657997"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+At any point in time, <b>Data count</b> reflects the available data inside the FIFO. In addition, you can use the <b>Programmable Full </b>and<b> Programmable Empty </b>status flags for user-defined thresholds.
+</font></p>
+
+<a name="wp1657675"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+Specifying FIFOs with SYNCore 
+</b></font></h2>
+<a name="wp1657677"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP Wizard helps you generate Verilog code for your FIFO implementations. The following procedure shows you how to generate Verilog code for a FIFO you specify, using the SYNCore IP wizard. 
+</font></p>
+<ol type="1">
+
+<a name="wp1657678"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard. </font></li>
+<ul>
+
+<a name="wp1657679"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the Synplicity synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon22.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard. </font></li>
+<a name="wp1657686"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_mainwin19.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657687"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the window that opens, select <b>sfifo_model</b> and click <b>Ok</b>. This opens the first screen of the wizard. </font></li>
+<a name="wp1657691"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="fifo_params1_all_help.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp1657692"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the parameters you need in the 5 pages of the wizard. For details, refer to <a  href="SyncFifo_compiler_new.html#wp1657759"><i>Specifying SYNCore FIFO Parameters</i></a>. </font></li>
+
+<a name="wp1657696"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The FIFO symbol on the left reflects the parameters you set. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657698"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">After you have specified all the parameters you need, click the <b>Generate</b> button (lower left). </font></li>
+
+<a name="wp1657699"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The tool displays a confirmation message (<b>TCL execution successful!</b>) and writes the required files to the directory you specified in the parameters. The HDL code is in Verilog. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657700"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The FIFO generated is a synchronous FIFO with symmetric ports and with the same clock controlling both the read and write operations. Data is written or read on the rising edge of the clock. All resets are synchronous with the clock. All edges (<b>clock</b>, <b>enable</b>, and <b>reset</b>) are considered positive. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1658598"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+SYNCore also generates a testbench for the FIFO that you can use for simulation. The testbench covers a limited set of vectors for testing. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657701"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now close the SYNCore wizard.
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657703"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Add the FIFO you generated to your design. </font></li>
+<ul>
+
+<a name="wp1657704"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated and the <b>syncore_sfifo.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard. </font></li>
+<a name="wp1657706"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.vin</b> template file, which is located in the same directory. Copy the lines that define the memory, and paste them into your top-level module. The following shows a template file (in red text) inserted into a top-level module.</font></li>
+<a name="wp1657732"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657733"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.</font></li>
+<a name="wp1660250"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="SyncFifo_compiler_new6.png" height="335" width="551" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1660399"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module as shown in the example below. You can also assign a unique name to each instantiation.</font></li>
+<a name="wp1660422"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="SyncFifo_compiler_new2.png" height="333" width="545" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1658924"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Note that currently the FIFO models will not be implemented with the dedicated FIFO blocks available in certain technologies. 
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp1657759"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying SYNCore FIFO Parameters
+</font></h3>
+<a name="wp1657760"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following elaborates on the parameter settings for SYNCore FIFOs. The status, handshaking, and programmable flags are optional. For descriptions of the parameters, see <a  href="SyncFifo_compiler_new.html#wp1643636"><i>SYNCore FIFO Wizard</i></a>. For timing diagrams, see <a  href="SyncFifo_compiler_new.html#wp1639573"><i>FIFO Read and Write Operations</i></a>.
+</font></p>
+<ol type="1">
+
+<a name="wp1657769"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore wizard, as described in <a  href="SyncFifo_compiler_new.html#wp1657675"><i>Specifying FIFOs with SYNCore</i></a>. </font></li>
+
+<a name="wp1657771"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Do the following on page 1 of the FIFO wizard: </font></li>
+<ul>
+
+<a name="wp1657772"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Component Name</b>, specify a name for the FIFO. Do not use spaces. </font></li>
+<a name="wp1657773"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Directory</b>, specify a directory where you want the output files to be written. Do not use spaces. </font></li>
+<a name="wp1657774"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In <b>Filename</b>, specify a name for the Verilog output file with the FIFO specifications. Do not use spaces. </font></li>
+<a name="wp1657775"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b>. The wizard opens another page where you can set parameters.</font></li></ul>
+
+<a name="wp1657776"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">For a FIFO with no status, handshaking, or programmable flags, use the default settings. You can generate the FIFO, as described in <a  href="SyncFifo_compiler_new.html#wp1657675"><i>Specifying FIFOs with SYNCore</i></a>. </font></li>
+
+<a name="wp1657780"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">To set an almost full status flag, do the following on page 2 of the FIFO wizard:</font></li>
+<ul>
+
+<a name="wp1657781"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enable <b>Almost Full</b>. </font></li>
+<a name="wp1657782"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set associated handshaking flags for the signal as desired, with the<b> Overflow Flag</b> and <b>Write Acknowledge</b> options. </font></li>
+<a name="wp1657783"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b> when you are done. </font></li></ul>
+
+<a name="wp1657784"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">To set an almost empty status flag, do the following on page 3:</font></li>
+<ul>
+
+<a name="wp1657785"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enable <b>Almost Empty</b>.</font></li>
+<a name="wp1657786"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set associated handshaking flags for the signal as desired, with the<b> Underflow Flag</b> and <b>Read Acknowledge</b> options.</font></li>
+<a name="wp1657787"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b> when you are done. </font></li></ul>
+
+<a name="wp1657788"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">To set a programmable full flag, do the following:</font></li>
+<ul>
+
+<a name="wp1657789"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Make sure you have enabled <b>Full</b> on page 2 of the wizard and set any handshaking flags you require. </font></li>
+<a name="wp1657790"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Go to page 4 and enable <b>Programmable Full</b>. </font></li>
+<a name="wp1657791"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select one of the four mutually exclusive configurations for Programmable Full on page 4. See <a  href="SyncFifo_compiler_new.html#wp1639932"><i>Programmable Full</i></a> for details. </font></li>
+<a name="wp1657795"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b> when you are done. </font></li></ul>
+
+<a name="wp1657796"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">To set a programmable empty flag, do the following:</font></li>
+<ul>
+
+<a name="wp1657797"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Make sure you have enabled <b>Empty</b> on page 3 of the wizard and set any handshaking flags you require. </font></li>
+<a name="wp1657798"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Go to page 5 and enable <b>Programmable Empty</b>. </font></li>
+<a name="wp1657799"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select one of the four mutually exclusive configurations for Programmable Empty on page 5. See <a  href="SyncFifo_compiler_new.html#wp1640053"><i>Programmable Empty</i></a> for details. </font></li>
+<a name="wp1657803"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can now generate the FIFO and add it to the design, as described in <a  href="SyncFifo_compiler_new.html#wp1657675"><i>Specifying FIFOs with SYNCore</i></a>. 
+</font></p>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp1643636"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+SYNCore FIFO Wizard
+</b></font></h2>
+<a name="wp1643668"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describe the parameters you can set in the FIFO wizard, which opens when you select <b>sfifo_model</b>: 
+</font></p>
+<ul>
+
+<a name="wp1643672"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643701">SYNCore FIFO Parameters Page 1</a></font></li>
+
+<a name="wp1643676"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643738">SYNCore FIFO Parameters Page 2</a></font></li>
+
+<a name="wp1643680"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643791">SYNCore FIFO Parameters Page 3</a></font></li>
+
+<a name="wp1643684"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643844">SYNCore FIFO Parameters Page 4</a></font></li>
+
+<a name="wp1643688"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1643914">SYNCore FIFO Parameters Page 5</a></font></li>
+</ul>
+
+<a name="wp1643701"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore FIFO Parameters Page 1
+</font></h3>
+<a name="wp1643702"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The page 1 parameters define the FIFO. Data is written/read on the rising edge of the clock. 
+</font></p>
+
+<a name="wp1643706"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="fifo_params121.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643736"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1643709"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1643711"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Function
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643713"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643715"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a name for the FIFO. This is the name that you instantiate in your design file to create an instance of the SYNCore FIFO in your design. Do not use spaces. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643717"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643719"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates the directory where the generated files will be stored. Do not use spaces. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643721"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Filename</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643723"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the generated FIFO. Do not use spaces. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643729"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643731"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the width of the FIFO data input and output. It must be within the valid range. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643733"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Depth</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643735"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the depth of the FIFO. It must be within the valid range. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643738"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore FIFO Parameters Page 2
+</font></h3>
+<a name="wp1643739"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+These parameters let you specify optional handshaking flags for FIFO write operations. The symbol on the left reflects your choice. 
+</font></p>
+
+<a name="wp1643743"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="fifo_params223.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643789"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1643746"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1643748"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Function
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643750"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Full Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643752"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Full</b> signal, which is asserted when the FIFO memory queue is full and no more writes can be performed until data is read. 
+</font></div>
+
+<a name="wp1658981"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low</b> options (<b>FULL_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639614"><i>Full/Almost Full Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643758"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Almost Full Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643760"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an <b>Almost_full</b> signal, which is asserted to indicate that there is one location left and the FIFO will be full after one more write operation. 
+</font></div>
+
+<a name="wp1659008"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low </b>options available for the signal (<b>AFULL_FLAG_SENSE</b> parameter. See <a  href="SyncFifo_compiler_new.html#wp1639614"><i>Full/Almost Full Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643766"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Overflow Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643768"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an <b>Overflow</b> signal, which is asserted to indicate that the write operation was unsuccessful because the FIFO was full.
+</font></div>
+
+<a name="wp1659042"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low</b> options (<b>OVERFLOW_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639650"><i>FIFO Handshaking Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643774"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Write Acknowledge Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1656054"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Write_ack</b> signal, which is asserted at the completion of a successful write operation. 
+</font></div>
+
+<a name="wp1659064"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low </b>options (<b>WACK_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639650"><i>FIFO Handshaking Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643782"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active High </b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643784"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active high (1).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643786"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active Low</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643788"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active low (0). 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643791"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore FIFO Parameters Page 3
+</font></h3>
+<a name="wp1643792"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The page 3 parameters let you specify optional handshaking flags for FIFO read operations.
+</font></p>
+
+<a name="wp1643796"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="fifo_params33.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643842"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1643799"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1643801"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Function
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643803"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Empty Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643805"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an <b>Empty</b> signal, which is asserted when the memory queue for the FIFO is empty and no more reads can be performed until data is written. 
+</font></div>
+
+<a name="wp1659096"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low</b> options (<b>EMPTY_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639632"><i>Empty/Almost Empty Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643811"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Almost Empty Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643813"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an <b>Almost_empty</b> signal, which is asserted when there is only one location left to be read. The FIFO will be empty after one more read operation. 
+</font></div>
+
+<a name="wp1659131"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low </b>options (<b>AEMPTY_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639632"><i>Empty/Almost Empty Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643819"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Underflow Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643821"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies an <b>Underflow</b> signal, which is asserted to indicate that the read operation was unsuccessful because the FIFO was empty. 
+</font></div>
+
+<a name="wp1659163"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low </b>options (<b>UNDRFLW_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639650"><i>FIFO Handshaking Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643827"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read Acknowledge Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643829"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Read_ack</b> signal, which is asserted at the completion of a successful read operation. 
+</font></div>
+
+<a name="wp1659204"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the <b>Active High</b> and <b>Active Low </b>options (<b>RACK_FLAG_SENSE</b> parameter) available for the signal. See <a  href="SyncFifo_compiler_new.html#wp1639650"><i>FIFO Handshaking Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643835"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active High </b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643837"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active high (1). 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643839"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active Low</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643841"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active low (0). 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643844"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore FIFO Parameters Page 4
+</font></h3>
+<a name="wp1643845"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The page 4 parameters let you specify optional handshaking flags for FIFO programmable full operations. To use these options, you must have a <b>Full</b> signal specified. See <a  href="SyncFifo_compiler_new.html#wp1639899"><i>FIFO Programmable Flags</i></a> for details.
+</font></p>
+
+<a name="wp1643852"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="fifo_params45.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643912"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1643855"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1643857"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Function
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643859"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Programmable Full Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643861"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_full </b>signal, which indicates that the FIFO has reached a user-defined full threshold.
+</font></div>
+
+<a name="wp1643865"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+You can only enable this option if you set<b> Full Flag</b> on page 2. When it is enabled, you can specify other options for the <b>Prog_Full</b> signal (<b>PFULL_FLAG_SENSE </b>parameter). See <a  href="SyncFifo_compiler_new.html#wp1639932"><i>Programmable Full</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643867"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Programmable Full Threshold Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643869"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_full</b> signal with a single constant defining the assertion threshold (<b>PGM_FULL_TYPE=1 </b>parameter). See <a  href="SyncFifo_compiler_new.html#wp1639966"><i>Programmable Full with Single Threshold Constant</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+
+<a name="wp1643873"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes <b>Full Threshold Assert Constant </b>available. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643875"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Multiple Programmable Full Threshold Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643877"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_full</b> signal (<b>PGM_FULL_TYPE=2 </b>parameter), with multiple constants defining the assertion and de-assertion thresholds. See <a  href="SyncFifo_compiler_new.html#wp1639974"><i>Programmable Full with Multiple Threshold Constants</i></a> for details. 
+</font></div>
+
+<a name="wp1643881"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes <b>Full Threshold Assert Constant </b>and<b> Full Threshold Negate Constant </b>available. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643883"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Full Threshold Assert Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643885"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a constant that is used as a threshold value for asserting the <b>Prog_full</b> signal. It sets the <b>PGM_FULL_THRESH </b>parameter for <b>PGM_FULL_TYPE=1</b> and the <b>PGM_FULL_ATHRESH</b> parameter for <b>PGM_FULL_TYPE=2</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643887"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Full Threshold Negate Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643889"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a constant that is used as a threshold value for de-asserting the <b>Prog_full</b> signal (<b>PGM_FULL_NTHRESH </b>parameter). 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643891"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Programmable Full Threshold Input</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643893"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_full</b> signal (<b>PGM_FULL_TYPE=3 </b>parameter), with a threshold value specified dynamically through a <b>Prog_full_thresh</b> input port during the reset state. See <a  href="SyncFifo_compiler_new.html#wp1639982"><i>Programmable Full with Single Threshold Input</i></a> for details. 
+</font></div>
+
+<a name="wp1659275"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option adds the <b>Prog_full_thresh</b> input port to the FIFO. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643898"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Multiple Programmable Full Threshold Input</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643900"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_full</b> signal (<b>PGM_FULL_TYPE=4 </b>parameter), with threshold assertion and deassertion values specified dynamically through input ports during the reset state. See <a  href="SyncFifo_compiler_new.html#wp1639974"><i>Programmable Full with Multiple Threshold Constants</i></a>. 
+</font></div>
+
+<a name="wp1659274"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option adds the <b>Prog_full_thresh_assert</b> and <b>Prog_full_thresh_negate</b> input ports to the FIFO. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643905"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active High </b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643907"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active high <b>(1)</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643909"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active Low</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643911"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active low<b> (0)</b>. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643914"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore FIFO Parameters Page 5
+</font></h3>
+<a name="wp1643915"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+These options specify optional handshaking flags for FIFO programmable empty operations. To use these options, you first specify an <b>Empty</b> signal on page 3. See <a  href="SyncFifo_compiler_new.html#wp1639899"><i>FIFO Programmable Flags</i></a> for information about the <b>Programmable Empty</b> flag.
+</font></p>
+
+<a name="wp1643922"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="fifo_params57.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1643986"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1643925"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1643927"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Function
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643929"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Programmable Empty Flag</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643931"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_empty </b>signal (<b>PEMPTY_FLAG_SENSE</b> parameter), which indicates that the FIFO has reached a user-defined empty threshold. See <a  href="SyncFifo_compiler_new.html#wp1639899"><i>FIFO Programmable Flags</i></a> and <a  href="SyncFifo_compiler_new.html#wp1657001"><i>FIFO Parameters</i></a> for descriptions of the flag and parameter. 
+</font></div>
+
+<a name="wp1643935"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes the other options available to specify the threshold value, either as a constant or through input ports. You can also specify single or multiple thresholds for each of these options. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643937"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Programmable Empty Threshold Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643939"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_empty</b> signal (<b>PGM_EMPTY_TYPE=1 </b>parameter), with a single constant defining the assertion threshold. See <a  href="SyncFifo_compiler_new.html#wp1640073"><i>Programmable Empty with Single Threshold Constant</i></a>. 
+</font></div>
+
+<a name="wp1643943"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes <b>Empty Threshold Assert Constant </b>available. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643945"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Multiple Programmable Empty Threshold Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643947"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_empty</b> signal (<b>PGM_EMPTY_TYPE=2 </b>parameter), with multiple constants defining the assertion and de-assertion thresholds. See <a  href="SyncFifo_compiler_new.html#wp1640081"><i>Programmable Empty with Multiple Threshold Constants</i></a>. 
+</font></div>
+
+<a name="wp1643951"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Enabling this option makes <b>Empty Threshold Assert Constant </b>and<b> Empty Threshold Negate Constant </b>available. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643953"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Empty Threshold Assert Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643955"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a constant that is used as a threshold value for asserting the <b>Prog_empty </b>signal. It sets the <b>PGM_EMPTY_THRESH </b>parameter for <b>PGM_EMPTY_TYPE=1</b> and the <b>PGM_EMPTY_ATHRESH</b> parameter for <b>PGM_EMPTY_TYPE=2.</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643957"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Empty Threshold Negate Constant</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643959"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a constant that is used as a threshold value for de-asserting the <b>Prog_empty</b> signal (<b>PGM_EMPTY_NTHRESH </b>parameter). 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643961"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Programmable Empty Threshold Input</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643963"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_empty</b> signal (<b>PGM_EMPTY_TYPE=3 </b>parameter), with a threshold value specified dynamically through a <b>Prog_empty_thresh</b> input port during the reset state. See <a  href="SyncFifo_compiler_new.html#wp1640090"><i>Programmable Empty with Single Threshold Input</i></a>. Enabling this option adds the <b>Prog_full_thresh</b> input port to the FIFO. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643968"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Multiple Programmable Empty Threshold Input</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643970"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies a <b>Prog_empty</b> signal (<b>PGM_EMPTY_TYPE=4 </b>parameter), with threshold assertion and deassertion values specified dynamically through <b>Prog_empty_thresh_assert</b> and <b>Prog_empty_thresh_negate</b> input ports during the reset state. See <a  href="SyncFifo_compiler_new.html#wp1640098"><i>Programmable Empty with Multiple Threshold Inputs</i></a>. Enabling this option adds the input ports to the FIFO. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643975"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active High </b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643977"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active high <b>(1)</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643979"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Active Low</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643981"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Sets the specified signal to active low <b>(0)</b>. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1643983"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Number of Valid Data in FIFO</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1643985"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the <b>Data_cnt </b>signal for the FIFO output. This signal contains the number of words in the FIFO in the read domain.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639573"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+FIFO Read and Write Operations
+</b></font></h2>
+<a name="wp1639574"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This section describes FIFO behavior with read and write operations. 
+</font></p>
+
+<a name="wp1639576"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+FIFO Write Operation
+</b></font></h5>
+
+<a name="wp1639577"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When write enable is asserted and the FIFO is not full, data is added to the FIFO from the input bus (<b>Din</b>) and write acknowledge (<b>Write_ack</b>) is asserted. If the FIFO is continuously written without being read, it will fill with data. The status outputs are asserted when the number of entries in the FIFO is greater than or equal to the corresponding threshold, and should be monitored to avoid overflowing the FIFO.
+</font></p>
+
+<a name="wp1639578"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When the FIFO is full, any attempted write operation fails and the overflow flag is asserted.
+</font></p>
+
+<a name="wp1639579"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure illustrates the write operation. Write acknowledge (<b>Write_ack</b>) is asserted on the next rising clock edge after a valid write operation. When <b>Full</b> is asserted, there can be no more legal write operations. This example shows that asserting <b>Write_enable</b> when <b>Full</b> is high causes the assertion of <b>Overflow</b>.
+</font></p>
+
+<a name="wp1639585"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+</b></font></h5><div align="left"><img src="SyncFifo_compiler_new20.png" height="154" width="555" border="0" hspace="0" vspace="0"></div><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>FIFO Read Operation
+</b></font></h5>
+
+<a name="wp1639586"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When read enable is asserted and the FIFO is not empty, the next data word in the FIFO is driven on the output bus (<b>Dout</b>) and a read valid is asserted. If the FIFO is continuously read without being written, the FIFO will empty. The status outputs are asserted when the number of entries in the FIFO are less than or equal to the corresponding threshold, and should be monitored to avoid underflowing the FIFO. When the FIFO is empty, all read operations fail and the underflow flag is asserted.
+</font></p>
+
+<a name="wp1639587"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+If read and write operation occur simultaneously during the empty state, the write operation will be valid and empty, and is de-asserted at the next rising clock edge. There cannot be a legal read operation from an empty FIFO, so the underflow flag is asserted.
+</font></p>
+
+<a name="wp1648215"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure illustrates a typical read operation. If the FIFO is not empty, <b>Read_ack</b> is asserted at the rising clock edge after <b>Read_enable</b> is asserted and the data on <b>Dout</b> is valid. When <b>Empty</b> is asserted, no more read operations can be performed. In this case, initiating a read causes the assertion of <b>Underflow</b> on the next rising clock edge, as shown in this figure.
+</font></p>
+
+<a name="wp1648315"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new9.png" height="152" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1656585"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+FIFO Ports
+</b></font></h2>
+<a name="wp1656586"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure shows the FIFO ports. 
+</font></p>
+
+<a name="wp1656886"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_fifo_ports17.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1656688"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1656593"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Port Name 
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1656595"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description 
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656597"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Almost_empty
+</font></div>
+</td>
+    <td>
+<a name="wp1656599"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Almost empty flag output (active high). Asserted when the FIFO is almost empty and only one more read can be performed. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656601"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Almost_full
+</font></div>
+</td>
+    <td>
+<a name="wp1656603"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Almost full flag output (active high). Asserted when only one more write can be performed into the FIFO. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656980"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+AReset
+</font></div>
+</td>
+    <td>
+<a name="wp1656982"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Asynchronous reset input. Resets all internal counters and FIFO flag outputs.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656605"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock 
+</font></div>
+</td>
+    <td>
+<a name="wp1656607"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock input for write and read. Data is written/read on the rising edge. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656609"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data_cnt
+</font></div>
+</td>
+    <td>
+<a name="wp1656611"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data word count output. Indicates the number of words in the FIFO in the read clock domain.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656613"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Din [width:0] 
+</font></div>
+</td>
+    <td>
+<a name="wp1656615"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data input word to the FIFO.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656617"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Dout [width:0]
+</font></div>
+</td>
+    <td>
+<a name="wp1656619"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data output word from the FIFO.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656621"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Empty
+</font></div>
+</td>
+    <td>
+<a name="wp1656623"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO empty output (active high). Asserted when the FIFO is empty and no additional reads can be performed. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656625"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Full
+</font></div>
+</td>
+    <td>
+<a name="wp1656627"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO full output (active high). Asserted when the FIFO is full and no additional writes can be performed. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656629"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Overflow
+</font></div>
+</td>
+    <td>
+<a name="wp1656631"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO overflow output flag (active high). Asserted when the FIFO is full and the previous write was rejected. Can be active high or active low. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656633"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_empty
+</font></div>
+</td>
+    <td>
+<a name="wp1656635"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty output flag (active high). Asserted when the words in the FIFO exceed or equal the programmable empty assert threshold. De-asserted when the number of words is more than the programmable full negate threshold. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656637"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_empty_<br>thresh 
+</font></div>
+</td>
+    <td>
+<a name="wp1656639"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO empty threshold input. User-programmable threshold value for the assertion of the <b>Prog_empty</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656641"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_empty_<br>thresh_assert
+</font></div>
+</td>
+    <td>
+<a name="wp1656643"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO empty threshold assert input. User-programmable threshold value for the assertion of the <b>Prog_empty</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656645"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_empty_<br>thresh_negate 
+</font></div>
+</td>
+    <td>
+<a name="wp1656647"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO empty threshold negate input. User programmable threshold value for the de-assertion of the <b>Prog_full</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656649"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_full
+</font></div>
+</td>
+    <td>
+<a name="wp1656651"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full output flag (active high). Asserted when the words in the FIFO exceed or equal the programmable full assert threshold. De-asserted when the number of words is less than the programmable full negate threshold. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656653"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_full_thresh
+</font></div>
+</td>
+    <td>
+<a name="wp1656655"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO full threshold input. User-programmable threshold value for the assertion of the <b>Prog_full</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656657"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_full_thresh_<br>assert
+</font></div>
+</td>
+    <td>
+<a name="wp1656659"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO full threshold assert input. User-programmable threshold value for the assertion of the <b>Prog_full</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656661"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_full_thresh_<br>negate 
+</font></div>
+</td>
+    <td>
+<a name="wp1656663"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable FIFO full threshold negate input. User-programmable threshold value for the de-assertion of the <b>Prog_full</b> flag. Set during reset.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656665"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read_ack
+</font></div>
+</td>
+    <td>
+<a name="wp1656667"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read acknowledge output (active high). Asserted when valid data is read from the FIFO. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656669"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read_enable
+</font></div>
+</td>
+    <td>
+<a name="wp1656671"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read enable output (active high). If the FIFO is not empty, data is read from the FIFO on the next rising edge of the read clock.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656677"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Underflow
+</font></div>
+</td>
+    <td>
+<a name="wp1656679"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO underflow output flag (active high). Asserted when the FIFO is empty and the previous read was rejected.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656681"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write_ack
+</font></div>
+</td>
+    <td>
+<a name="wp1656683"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write Acknowledge output (active high). Asserted when there is a valid write into the FIFO. Can be active high or active low.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1656685"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write_enable
+</font></div>
+</td>
+    <td>
+<a name="wp1656687"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write enable input (active high). If the FIFO is not full, data is written into the FIFO on the next rising edge. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657001"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+FIFO Parameters
+</font></h3>
+<a name="wp1657118"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="center">    <th>
+<a name="wp1657004"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter
+</b></font></div></div>
+</th>
+    <th>
+<a name="wp1657006"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</th>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657008"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+AEMPTY_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657010"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO almost empty flag sense 
+</font></div>
+
+<a name="wp1657011"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657012"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657014"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+AFULL_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657016"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO almost full flag sense 
+</font></div>
+
+<a name="wp1657186"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657018"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657024"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+DEPTH
+</font></div>
+</td>
+    <td>
+<a name="wp1657026"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO depth
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657028"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+EMPTY_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657030"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO empty flag sense 
+</font></div>
+
+<a name="wp1657190"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657032"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657034"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FULL_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657036"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO full flag sense 
+</font></div>
+
+<a name="wp1657194"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657038"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657045"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+OVERFLOW_FLAG_<br>SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657047"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO overflow flag sense 
+</font></div>
+
+<a name="wp1657198"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657049"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657051"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PEMPTY_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657053"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO programmable empty flag sense
+</font></div>
+
+<a name="wp1657202"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657055"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657057"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PFULL_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657059"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO programmable full flag sense
+</font></div>
+
+<a name="wp1657206"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657061"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657063"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_EMPTY_ATHRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1657065"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty assert threshold for <b>PGM_EMPTY_TYPE=2</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657067"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_EMPTY_NTHRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1657069"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty negate threshold for <b>PGM_EMPTY_TYPE=2</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1660301"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_EMPTY_THRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1660303"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty threshold for <b>PGM_EMPTY_TYPE=1</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657071"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_EMPTY_TYPE
+</font></div>
+</td>
+    <td>
+<a name="wp1657073"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty type. See <a  href="SyncFifo_compiler_new.html#wp1640053"><i>Programmable Empty</i></a> for details. 
+</font></div>
+
+<a name="wp1657075"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Programmable empty with single threshold constant.
+</font></div>
+
+<a name="wp1657076"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 Programmable empty with multiple threshold constant
+</font></div>
+
+<a name="wp1657077"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+3 Programmable empty with single threshold input
+</font></div>
+
+<a name="wp1657078"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+4 Programmable empty with multiple threshold input
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657080"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_FULL_ATHRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1657082"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full assert threshold for <b>PGM_FULL_TYPE=2</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657084"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_FULL_NTHRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1657086"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full negate threshold for <b>PGM_FULL_TYPE=2</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1660316"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_FULL_THRESH
+</font></div>
+</td>
+    <td>
+<a name="wp1660318"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full threshold for <b>PGM_FULL_TYPE=1</b>
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657088"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+PGM_FULL_TYPE
+</font></div>
+</td>
+    <td>
+<a name="wp1657090"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full type. See <a  href="SyncFifo_compiler_new.html#wp1639932"><i>Programmable Full</i></a> for details. 
+</font></div>
+
+<a name="wp1657092"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Programmable full with single threshold constant
+</font></div>
+
+<a name="wp1657093"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 Programmable full with multiple threshold constant
+</font></div>
+
+<a name="wp1657094"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+3 Programmable full with single threshold input
+</font></div>
+
+<a name="wp1657095"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+4 Programmable full with multiple threshold input
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657097"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+RACK_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657099"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO read acknowledge flag sense 
+</font></div>
+
+<a name="wp1657100"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657101"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657103"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+UNDERFLOW_FLAG_<br>SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657105"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO underflow flag sense
+</font></div>
+
+<a name="wp1657106"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657107"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657109"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+WACK_FLAG_SENSE
+</font></div>
+</td>
+    <td>
+<a name="wp1657111"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO write acknowledge flag sense 
+</font></div>
+
+<a name="wp1657112"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 Active Low
+</font></div>
+
+<a name="wp1657113"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 Active High
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1657115"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+WIDTH
+</font></div>
+</td>
+    <td>
+<a name="wp1657117"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+FIFO data input and data output width
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1657121"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+FIFO Status Flags
+</b></font></h2>
+<a name="wp1639596"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can set the following status flags for FIFO read and write operations. 
+</font></p>
+<ul>
+
+<a name="wp1639600"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639614">Full/Almost Full Flags</a></font></li>
+
+<a name="wp1639604"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639632">Empty/Almost Empty Flags</a></font></li>
+
+<a name="wp1639608"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639650">FIFO Handshaking Flags</a></font></li>
+
+<a name="wp1639611"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Programmable full and empty flags, which are described in <a  href="SyncFifo_compiler_new.html#wp1639932"><i>Programmable Full</i></a> and <a  href="SyncFifo_compiler_new.html#wp1640053"><i>Programmable Empty</i></a>. </font></li>
+</ul>
+
+<a name="wp1639614"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Full/Almost Full Flags
+</font></h3>
+<a name="wp1639615"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+These flags indicate the status of the FIFO memory queue for write operations:
+</font></p>
+
+<a name="wp1639625"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1639618"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Full</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1639620"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates that the FIFO memory queue is full and no more writes can be performed until data is read. <b>Full</b> is synchronous with the clock (<b>Clock</b>). If a write is initiated when <b>Full</b> is asserted, the write does not succeed and the overflow flag is asserted.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639622"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Almost_full</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1639624"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+The almost full flag (<b>Almost_full</b>) indicates that there is one location left and the FIFO will be full after one more write operation. Almost full is synchronous to Clock. This flag is guaranteed to be asserted when the FIFO has one remaining location for a write operation.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639626"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure displays the behavior of these flags. In this example, asserting <b>Wriite_enable</b> when <b>Almost_full</b> is high causes the assertion of <b>Full</b> on the next rising clock edge.
+</font></p>
+
+<a name="wp1648705"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new8.png" height="151" width="555" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639632"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Empty/Almost Empty Flags
+</font></h3>
+<a name="wp1639633"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+These flags indicate the status of the FIFO memory queue for read operations:
+</font></p>
+
+<a name="wp1639643"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1639636"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Empty</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1639638"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates that the memory queue for the FIFO is empty and no more reads can be performed until data is written. The output is active high and is synchronous to the clock (<b>Clock</b>). If a read is initiated when the empty flag is true, the underflow flag is asserted.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639640"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Almost_<br>empty</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1639642"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates that the FIFO will be empty after one more read operation. <b>Almost_empty</b> is active high and is synchronous to <b>Clock</b>. The flag is guaranteed to be asserted when the FIFO has one remaining location for a read operation.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639644"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure illustrates the behavior of the FIFO with one word remaining.
+</font></p>
+
+<a name="wp1648917"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new14.png" height="152" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639650"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+FIFO Handshaking Flags
+</b></font></h2>
+<a name="wp1639651"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+You can specify optional Read_ack, Write_ack, <b>Overflow</b>, and <b>Underflow</b> handshaking flags for the FIFO. 
+</font></p>
+
+<a name="wp1649221"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new15.png" height="283" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639675"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1639658"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read_ack
+</font></div>
+</td>
+    <td>
+<a name="wp1639660"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Asserted at the completion of each successful read operation. It indicates that the data on the <b>Dout</b> bus is valid. It is an optional port that is synchronous with <b>Clock</b> and can be configured as active high or active low. 
+</font></div>
+
+<a name="wp1639661"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read_ack</b> is deasserted when the FIFO is underflowing, which indicates that the data on the <b>Dout</b> bus is invalid. <b>Read_ack</b> is asserted at the next rising clock edge after read enable. <b>Read_enable </b>is asserted when the FIFO is not empty.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639663"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write_ack
+</font></div>
+</td>
+    <td>
+<a name="wp1639665"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Asserted at the completion of each successful write operation. It indicates that the data on the <b>Din</b> port has been stored in the FIFO. It is synchronous with the clock, and can be configured as active high or active low. 
+</font></div>
+
+<a name="wp1639666"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Write_ack</b> is deasserted for a write to a full FIFO, as illustrated in the figure. <b>Write_ack</b> is deasserted one clock cycle after <b>Full</b> is asserted to indicate that the last write operation was valid and no other write operations can be performed.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639668"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Overflow</b>
+</font></div>
+</td>
+    <td>
+<a name="wp1639670"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates that a write operation was unsuccessful because the FIFO was full. In the figure, <b>Full</b> is asserted to indicate that no more writes can be performed. Because the write enable is still asserted and the FIFO is full, the next cycle causes <b>Overflow</b> to be asserted. Note that <b>Write_ack</b> is not asserted when FIFO is overflowing. When the write enable is deasserted, <b>Overflow</b> deasserts on the next clock cycle.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639672"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Underflow
+</font></div>
+</td>
+    <td>
+<a name="wp1639674"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Indicates that a read operation was unsuccessful, because the read was attempted on an empty FIFO. In the figure, <b>Empty</b> is asserted to indicate that no more reads can be performed. As the read enable is still asserted and the FIFO is empty, the next cycle causes <b>Underflow</b> to be asserted. Note that <b>Read_ack</b> is not asserted when FIFO is underflowing. When the read enable is deasserted, the Underflow flag deasserts on the next clock cycle.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639899"> </a><h2><font color="Black" face="Arial, Helvetica, sans-serif" size="5"><b>
+FIFO Programmable Flags
+</b></font></h2>
+<a name="wp1655980"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The FIFO supports completely programmable full and empty flags to indicate when the FIFO reaches a predetermined user-defined fill level. See the following: 
+</font></p>
+
+<a name="wp1639925"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1639906"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_full
+</font></div>
+</td>
+    <td>
+<a name="wp1639908"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable full indicates that the FIFO has reached a user-defined full threshold. See <a  href="SyncFifo_compiler_new.html#wp1639932"><i>Programmable Full</i></a> for more information.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1639916"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Prog_empty
+</font></div>
+</td>
+    <td>
+<a name="wp1639918"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Programmable empty indicates that the FIFO has reached a user-defined empty threshold. See <a  href="SyncFifo_compiler_new.html#wp1640053"><i>Programmable Empty</i></a> for more information. 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639926"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Both flags support various implementation options. You can do the following:
+</font></p>
+<ul>
+
+<a name="wp1639927"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set a constant value</font></li>
+
+<a name="wp1639928"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set dedicated input ports so that the thresholds can change dynamically in the circuit</font></li>
+
+<a name="wp1639929"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use hysteresis, so that each flag has different assert and negative values </font></li>
+</ul>
+
+<a name="wp1639932"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Programmable Full
+</font></h3>
+<a name="wp1639933"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The <b>Prog_full</b> flag (programmable full) is asserted when the number of entries in the FIFO is greater than or equal to a user-defined assert threshold. If the number of words in the FIFO is less than the negate threshold, the flag is de-asserted. The following is the valid range of threshold values: 
+</font></p>
+
+<a name="wp1659300"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1659293"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Assert threshold value
+</font></div>
+</td>
+    <td>
+<a name="wp1659295"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Depth / 2 to Max of Depth<br></b>For multiple threshold<b> types, t</b>he assert value should always be larger than the negate value in multiple threshold types.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1659297"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Negate threshold value
+</font></div>
+</td>
+    <td>
+<a name="wp1659299"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Depth / 2 to Max of Depth</b>
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639944"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Prog_full</b> has four threshold types:
+</font></p>
+<ul>
+
+<a name="wp1639947"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639966">Programmable Full with Single Threshold Constant</a></font></li>
+
+<a name="wp1639951"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639974">Programmable Full with Multiple Threshold Constants</a></font></li>
+
+<a name="wp1639955"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639982">Programmable Full with Single Threshold Input</a></font></li>
+
+<a name="wp1639959"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1639990">Programmable Full with Multiple Threshold Inputs</a></font></li>
+</ul>
+
+<a name="wp1639966"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Full with Single Threshold Constant 
+</b></font></h5>
+
+<a name="wp1639967"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_FULL_TYPE = 1</b>
+</font></p>
+
+<a name="wp1651565"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you set a constant value for the threshold. It requires significantly fewer resources when the FIFO is generated. This figure illustrates the behavior of <b>Prog_full</b> when configured as a single threshold constant with a value of 6.
+</font></p>
+
+<a name="wp1659404"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new18.png" height="151" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639974"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Full with Multiple Threshold Constants 
+</b></font></h5>
+
+<a name="wp1639975"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_FULL_TYPE = 2</b>
+</font></p>
+
+<a name="wp1639976"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The programmable full flag is asserted when the number of words in the FIFO is greater than or equal to the full threshold assert value. If the number of FIFO words drops to less than the full threshold negate value, the programmable full flag is de-asserted. Note that the negate value must be set to a value less than the assert value. The following figure illustrates the behavior of <b>Prog_full</b> configured as multiple threshold constants with an assert value of 6 and a negate value of 4.
+</font></p>
+
+<a name="wp1652276"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new12.png" height="153" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639982"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Full with Single Threshold Input 
+</b></font></h5>
+
+<a name="wp1639983"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_FULL_TYPE = 3</b>
+</font></p>
+
+<a name="wp1639984"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify the threshold value through an input port (<b>Prog_full_thresh</b>) during the reset state, instead of using constants. The following figure illustrates the behavior of <b>Prog_full</b> configured as a single threshold input with a value of 6. 
+</font></p>
+
+<a name="wp1652855"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new4.png" height="151" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1639990"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Full with Multiple Threshold Inputs
+</b></font></h5>
+
+<a name="wp1639991"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_FULL_TYPE = 4</b>
+</font></p>
+
+<a name="wp1639992"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify the assert and negate threshold values dynamically during the reset stage using the <b>Prog_full_thresh_assert</b> and <b>Prog_full_thresh_negate</b> input ports. You must set the negate value to a value less than the assert value.
+</font></p>
+
+<a name="wp1639993"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The programmable full flag is asserted when the number of words in the FIFO is greater than or equal to the <b>Prog_full_thresh_assert</b> value. If the number of FIFO words goes below <b>Prog_full_thresh_negate</b> value, the programmable full flag is deasserted. The following figure illustrates the behavior of <b>Prog_full</b> configured as multiple threshold inputs with an assert value of 6 and a negate value of 4.
+</font></p>
+
+<a name="wp1652998"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new11.png" height="153" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1640053"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Programmable Empty
+</font></h3>
+<a name="wp1659726"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The programmable empty flag (<b>Prog_empty</b>) is asserted when the number of entries in the FIFO is less than or equal to a user-defined assert threshold. If the number of words in the FIFO is greater than the negate threshold, the flag is deasserted. The following is the valid range of threshold values: 
+</font></p>
+
+<a name="wp1659736"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp1659729"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Assert threshold value
+</font></div>
+</td>
+    <td>
+<a name="wp1659731"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>1 to Max of Depth / 2<br></b>For multiple threshold<b> types, t</b>he assert value should always be lower than the negate value in multiple threshold types.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp1659733"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Negate threshold value
+</font></div>
+</td>
+    <td>
+<a name="wp1659735"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>1 to Max of Depth / 2</b>
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1640054"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+There are four threshold types you can specify:
+</font></p>
+<ul>
+
+<a name="wp1640058"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1640073">Programmable Empty with Single Threshold Constant</a></font></li>
+
+<a name="wp1640062"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1640081">Programmable Empty with Multiple Threshold Constants</a></font></li>
+
+<a name="wp1640066"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1640090">Programmable Empty with Single Threshold Input</a></font></li>
+
+<a name="wp1640070"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="SyncFifo_compiler_new.html#wp1640098">Programmable Empty with Multiple Threshold Inputs</a></font></li>
+</ul>
+
+<a name="wp1640073"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Empty with Single Threshold Constant
+</b></font></h5>
+
+<a name="wp1640074"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_EMPTY_TYPE = 1</b>
+</font></p>
+
+<a name="wp1640075"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify an empty threshold value with a single constant. This approach requires significantly fewer resources when the FIFO is generated. The following figure illustrates the behavior of <b>Prog_empty</b> configured as a single threshold constant with a value of 3.
+</font></p>
+
+<a name="wp1653154"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new16.png" height="132" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1640081"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Empty with Multiple Threshold Constants
+</b></font></h5>
+
+<a name="wp1640082"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_EMPTY_TYPE = 2</b>
+</font></p>
+
+<a name="wp1640083"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify constants for the empty threshold assert value and empty threshold negate value. The programmable empty flag asserts and deasserts in the range set by assert and negate values. The assert value must be set to a value less than the negate value. When the number of words in the FIFO is less than or equal to the empty threshold assert value, the <b>Prog_empty</b> flag is asserted. When the number of words in FIFO is greater than the empty threshold negate value, <b>Prog_empty</b> is deasserted. 
+</font></p>
+
+<a name="wp1640084"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following figure illustrates the behavior of <b>Prog_empty</b> when configured as multiple threshold constants with an assert value of 3 and a negate value of 5. 
+</font></p>
+
+<a name="wp1653604"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new24.png" height="131" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1640090"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Empty with Single Threshold Input
+</b></font></h5>
+
+<a name="wp1640091"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_EMPTY_TYPE = 3</b>
+</font></p>
+
+<a name="wp1640092"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify the threshold value dynamically during the reset state with the <b>Prog_empty_thresh</b> input port, instead of with a constant. The <b>Prog_empty</b> flag asserts when the number of FIFO words is equal to or less than the <b>Prog_empty_thresh</b> value and deasserts when the number of FIFO words is more than the <b>Prog_empty_thresh</b> value. The following figure illustrates the behavior of <b>Prog_empty</b> when configured as a single threshold input with a value of 3.
+</font></p>
+
+<a name="wp1654437"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new10.png" height="132" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1640098"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Programmable Empty with Multiple Threshold Inputs
+</b></font></h5>
+
+<a name="wp1640099"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<b>PGM_EMPTY_TYPE = 4</b>
+</font></p>
+
+<a name="wp1640100"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This option lets you specify the assert and negate threshold values dynamically during the reset stage using the <b>Prog_empty_thresh_assert</b> and <b>Prog_empty_thresh_negate</b> input ports instead of constants. The programmable empty flag asserts and deasserts according to the range set by assert and negate values. The assert value must be set to a value less than the negate value. 
+</font></p>
+
+<a name="wp1640101"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When the number of FIFO words is less than or equal to the empty threshold assert value, <b>Prog_empty</b> is asserted. If the number of FIFO words is more than the empty threshold negate value, the flag is deasserted. The following figure illustrates the behavior of <b>Prog_empty</b> configured as multiple threshold inputs, with an assert value of 3 and a negate value of 5. 
+</font></p>
+
+<a name="wp1654556"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="SyncFifo_compiler_new13.png" height="131" width="551" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp1646381"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+<p>&nbsp;</p>
+    
+    <hr>
+<p><b>Copyright &copy; 2007 Synplicity, Inc. All rights reserved.<br></b>
+  </body>
+</html>

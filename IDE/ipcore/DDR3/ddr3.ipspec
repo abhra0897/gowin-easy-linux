@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="DDR3 Memory Interface" id="ddr3" version= "1.0" category="Soft IP Core|Memory Control">DDR3 Memory Interface</ip>
+    <target module="DDR3_Memory_Interface_Top">ddr3_memory_interface</target>
+    <docs>
+        <doc type="summary">/doc/ddr3.html</doc>
+        <doc type="help">/doc/ddr3_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

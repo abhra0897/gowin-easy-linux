@@ -1,0 +1,430 @@
+#!/bin/bash
+#+-+-+-+-+-+-+-+-   Invoking all tools with one case statement    +-+-+-+-+-+-+
+#
+# Common code is executed, synbatch/certbatch/protobatch is not executed in case of synplify, 
+# if program is not found an error is generated in true batch mode synbatch/certbatch
+# is invoked with original switches.
+# $Header: //synplicity/ui2019q3p1/unix_scripts/bin/config/execute#1 $
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+reqtmp=300
+# allow enabling valgrind or other debugger from env vars
+for e in `echo $SYN_MEMCHECK_EXEC`
+do
+	echo "SYN_PRGM is $SYN_PRGM"
+    if [ $e == $SYN_PRGM ]; then
+		echo "MEMCHECK: checking $e"
+        SYNPLIFY_SAVEMEM=1
+        export SYNPLIFY_SAVEMEM
+		SYN_MEMCHECK=1
+    fi
+done
+for e in `echo $SYNPERF_EXEC`
+do
+	if [ $e == $SYN_PRGM ]; then
+		echo "SYNPERF enabled for $e"
+		SDP_ENABLED=1
+		SYNPERF_CPU=1
+		export SYNPERF_CPU SDP_ENABLED
+	fi
+done
+
+fatal_error() {
+	echo "************************************************************" 1>&2
+	echo 1>&2
+	echo "Error: $1" 1>&2 
+	echo 1>&2
+	echo "************************************************************" 1>&2
+	exit 2 # FPGA tool standard: 2 is error, 1 is only warning
+}
+
+update_rlwrap() {
+	if [ "$RLWRAP_HOME" ]; then
+		USER_COMPLETE="$RLWRAP_HOME/${SYN_PRGM}_completions"
+		if [ ! -d "${RLWRAP_HOME}" ]; then
+			echo "Creating \$RLWRAP_HOME directory ${RLWRAP_HOME}" 1>&2
+			mkdir ${RLWRAP_HOME}
+		fi
+	else
+		USER_COMPLETE=~/".${SYN_PRGM}_completions"
+	fi
+	LIB_COMPLETE="$SYN_HOMEDIR/lib/rlwrap/${SYN_PRGM}_completions"
+	if [ -r "$LIB_COMPLETE" ] && ([ ! -f "$USER_COMPLETE" ] || ! diff -q "$USER_COMPLETE" "$LIB_COMPLETE" > /dev/null); then
+		if [ -f "$USER_COMPLETE" ];then
+			echo "Updating \"${USER_COMPLETE}\" for command completion. Change \$RLWRAP_HOME to select a different location."
+			cp "${USER_COMPLETE}" "${USER_COMPLETE}.backup"
+		else
+			echo "Initializing \"$USER_COMPLETE\" for command completion. Change \$RLWRAP_HOME to select a different location."
+		fi
+		cp "$LIB_COMPLETE" "$USER_COMPLETE"
+	fi
+}
+
+parse_runtime_args() {
+	i=0
+	mode=-1
+	l=${#args_a[@]}
+	while [ $l -gt $i ]; do
+		arg=${args_a[$i]}
+		case $arg in
+			-h|-help|--help ) 
+				case $mode in
+					-1|1|2|3 ) mode=4;;
+					0 ) optargs="$optargs -h";;
+				esac
+				;;
+			board_query     ) mode=3;;
+			board_bringup   ) mode=2;;
+			debug           ) mode=1;;
+			config          ) 
+				mode=0
+				if [ -e ${runtime_dir}/design/designs/project.conf ]; then
+					project="-p ${runtime_dir}/design/designs/project.conf"
+				fi;;
+			-optargs      )
+				i=$[$i+1]
+				optargs="$optargs ${args_a[$i]}"
+				;;
+			-tcl          )
+				i=$[$i+1];
+				script=${args_a[$i]}
+				dbgscript="-tcl ${script}"
+				;;
+			-device       )
+				i=$[$i+1]
+				dev="-d ${args_a[$i]}";;
+			-in           )
+				i=$[$i+1]
+				runtime_dir=${args_a[$i]}
+				if [ $mode -eq 0 ]; then
+					# tolerate a possibly trailing '/project.conf' (by removing it from runtime_dir):
+					runtime_dir=${runtime_dir%/project.conf}
+					if [ -e ${runtime_dir}/project.conf ]; then
+						project="-p ${runtime_dir}/project.conf"
+					fi
+				else
+					# tolerate a possibly trailing '/debug.prj' (by removing it from runtime_dir):
+					runtime_dir=${runtime_dir%/debug.prj}
+					if [ ! -f ${runtime_dir}/debug.prj ]; then
+						echo "Error: Trying to load the specified project, but file \"${runtime_dir}/debug.prj\" does not exist!"
+					fi
+					# Nevertheless, pass it to the program, to see the error from there as well:
+					project="-prj ${runtime_dir}/debug.prj"
+				fi;;
+			-log|-loga    )
+				optargs="$optargs ${args_a[$i]}"
+				i=$[$i+1]
+				optargs="$optargs ${args_a[$i]}"
+				optlogfile="-loga ${args_a[$i]}"
+				;;
+			-debug        )
+				;;
+			*) 
+				optargs="$optargs ${args_a[$i]}"
+				;;
+		esac
+		i=$[$i+1]
+	done
+	if [ $mode -eq -1 ]; then 
+		mode=1
+	fi
+}
+if [ "$SYN_PRGM" = "aptn" ]; then
+    for i in "$@"
+    do
+      case $i in 
+        -interactPcf  ) 
+          SYN_INTERACTIVE=1;                         export   SYN_INTERACTIVE; 
+          break;
+        ;;
+      esac
+    done
+fi
+case $SYN_PRGM in
+    synplify             |   \
+    synplify_axis        |   \
+    synplify_pro         |   \
+    synplify_premier     |   \
+    synplify_premier_dp  |   \
+    synplify_premier_urc |   \
+    phoenix_syn          |   \
+    phoenix )
+
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/synplify ]; then
+            USERNAME="$(id -u -n)";
+            ERRFILE="/tmp/syn_stderr_${USERNAME}_$$.log";
+            if [ "$DEBUG_MODE" = "1" ]; then
+                echo "Type:";
+                echo "    run $@";
+                echo "to start debugging.";
+                exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/synplify -product $SYN_PRGM $SYN_ARGS "$@" >$ERRFILE;
+            else
+                if [ "$SYN_MEMCHECK" ]; then
+                    exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/synplify -product $SYN_PRGM $SYN_ARGS "$@" >$ERRFILE;
+                else
+                    exec $SYN_HOMEDIR/$PLATFORM/mbin/synplify -product $SYN_PRGM $SYN_ARGS "$@" $QT_GRAPHICS_MODE >$ERRFILE;
+                fi
+            fi
+        else
+            echo " " 1>&2
+            echo "************************************************************" 1>&2
+            echo " " 1>&2
+            echo "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/synplify" 1>&2
+            echo " " 1>&2
+            echo "************************************************************" 1>&2
+            echo " " 1>&2
+            exit 2;
+        fi;;
+
+    protocompiler     |   \
+    protocompiler_s   |   \
+    protocompiler_dx  |   \
+    phoenix_pc )
+
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/protocompiler ]; then
+            update_rlwrap
+            USERNAME="$(id -u -n)";
+            ERRFILE="/tmp/syn_stderr_${USERNAME}_$$.log";
+            if [ "$DEBUG_MODE" = "1" ]; then
+                echo "Type:";
+                echo "    run $@";
+                echo "to start debugging.";
+                exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/protocompiler -product $SYN_PRGM $SYN_ARGS "$@" >$ERRFILE;
+            else
+                if [ "$SYN_MEMCHECK" ]; then
+                    exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/protocompiler -product $SYN_PRGM $SYN_ARGS "$@" >$ERRFILE;
+                else
+                    exec $SYN_HOMEDIR/$PLATFORM/mbin/protocompiler -product $SYN_PRGM $SYN_ARGS "$@" $QT_GRAPHICS_MODE >$ERRFILE;
+                fi
+            fi
+        else
+            echo " " 1>&2
+            echo "************************************************************" 1>&2
+            echo " " 1>&2
+            echo "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/protocompiler" 1>&2
+            echo " " 1>&2
+            echo "************************************************************" 1>&2
+            echo " " 1>&2
+            exit 2;
+        fi;;
+
+    certify                 |   \
+    identify_instrumentor   |   \
+    identify_debugger       |   \
+    analystview             |   \
+    textview )
+
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM ]; then
+            ERRFILE="/tmp/syn_stderr_$$.log";
+            if [ "$DEBUG_MODE" = "1" ]; then
+                if [ "$TRACE_MODE" = "" ]; then
+                    echo "Type:";
+                    echo "    run $SYN_ARGS $@";
+                    echo "to start debugging.";
+                fi
+                $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM 2>$ERRFILE;
+            else
+                if [ "$SYN_MEMCHECK" ]; then
+                    $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM "$@" 2>$ERRFILE;
+                else
+                    $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM $SYN_ARGS "$@" $QT_GRAPHICS_MODE 2>$ERRFILE;
+                fi
+            fi
+            cat $ERRFILE;
+            if [ `grep -l "bin is not a valid registry file" $ERRFILE |wc -l` = "1" ]; then
+                echo "Please delete your ~/.Synplicity directory  to restore your registry.";
+            fi
+            rm -f $ERRFILE;
+            SYN_UI_RC=$?
+        else
+            fatal_error "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM"
+        fi;;
+		
+    synbatch       |   \
+    certbatch      |   \
+    protobatch     |   \
+    tssbuilder     |   \
+    identify_instrumentor_shell   |   \
+    identify_debugger_shell ) 
+
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM ]; then
+            if [ "$SYN_BATCH_ENABLED" = "1" ]; then
+                if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM ]; then
+					[ "$1" != "-version" ] && update_rlwrap
+                    if [ -r "$SYN_HOMEDIR/$PLATFORM/rlwrap" ]; then
+                        [ ! "${NORLWRAP}" ] && RLWRAP="$SYN_HOMEDIR/$PLATFORM/rlwrap -b \"\""
+                    fi
+                    # Don't debug probably a shell script
+                    if [ "$SYN_MEMCHECK" ]; then
+                        $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM  $SYN_ARGS "$@";
+                    else
+                        $RLWRAP $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM  $SYN_ARGS "$@";
+                    fi
+                    exit $?
+                else
+                    fatal_error "$SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM : $SYN_PRGM is not found at this location."
+                fi
+            fi
+
+            # Ensure there's space on /tmp
+#            tmpspace=`/bin/df -k | grep -v '^Filesystem' | head -1 | awk '{print $4;}'`
+#            if [ "${tmpspace}" -lt ${reqtmp} ]; then
+#               echo "Warning: Insufficient space (only ${tmpspace}K available) on /tmp could cause instability."
+#               echo "At least ${reqtmp}K is required.  Please clean up /tmp."
+#            fi
+
+            ERRFILE="/tmp/syn_stderr_$$.log";
+            if [ "$DEBUG_MODE" = "1" ]; then
+                if [ "$TRACE_MODE" = "" ]; then
+                    echo "Type:";
+                    echo "    run $SYN_ARGS $@";
+                    echo "to start debugging.";
+                fi
+                $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM 2>$ERRFILE;
+            else
+				if [ "$SYN_MEMCHECK" ]; then
+					$SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM "$@" 2>$ERRFILE;
+				else
+					$SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM $SYN_ARGS "$@" 2>$ERRFILE;
+				fi
+			fi
+            cat $ERRFILE;
+            if [ `grep -l "bin is not a valid registry file" $ERRFILE |wc -l` = "1" ]; then
+                echo "Please delete your ~/.Synplicity directory  to restore your registry.";
+            fi
+            rm -f $ERRFILE;
+            SYN_UI_RC=$?
+        else
+            fatal_error "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM"
+        fi;;
+
+    zsynbatch      |   \
+    p_plan         |   \
+    netloader      |   \
+    licensedialog  )
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM ]; then
+            if [ "$SYN_MEMCHECK" ]; then
+				echo "$SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM \"$@\""
+				exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM "$@"
+            else
+                exec $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM "$@"
+            fi
+        else
+            fatal_error "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM"
+        fi;;
+
+    assistant  )
+        if [ -x $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM ]; then
+            if [ -n "$SYN_HELP_FILE" ]; then
+                exec $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM $SYN_HELP_ARGS $SYN_HOMEDIR/$SYN_HELP_FILE "$@" $QT_GRAPHICS_MODE
+            else
+                exec $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM "$@" $QT_GRAPHICS_MODE
+            fi
+        else
+            fatal_error "Error: Could not find $SYN_HOMEDIR/$PLATFORM/mbin/$SYN_PRGM"
+        fi;;
+
+    protocompiler_runtime | \
+    protocompiler_s_runtime| \
+    protocompiler_dx_runtime )
+        cwd=`pwd`
+        #set input directory (location of debug.prj)
+        runtime_dir="$cwd"
+        args_a=( $@ )
+
+        parse_runtime_args
+
+        # choose flow
+        case $mode in
+            0)  #config
+                : ${HAPS_INSTALL_DIR:?"Error: Need to set HAPS_INSTALL_DIR."}
+                tool=$HAPS_INSTALL_DIR/bin/$CONFTOOL
+                SYN_ARGS="$project $dev $cfgscript"
+                ;;
+            1)  #debug
+                tool=$SYN_HOMEDIR/$PLATFORM/$SYN_TOOL
+                SYN_ARGS="$SYN_PRODUCT $project $dbgscript"
+                ;;
+            2)  #bringup
+                tool=$SYN_HOMEDIR/$PLATFORM/$SYN_TOOL
+                SYN_ARGS="$SYN_PRODUCT -board_bringup $dbgscript"
+                ;;
+            3)  #query
+                tool=$SYN_HOMEDIR/$PLATFORM/$SYN_TOOL
+                SYN_ARGS="$SYN_PRODUCT -board_query board_template.tcl"
+                ;;
+            4)  #help
+		            echo " " 1>&2
+		            echo "************************************************************" 1>&2
+		            echo " " 1>&2
+		            echo "Usage:"
+		            echo "       $SYN_PRGM config [-in <user specified export location>/<confpro prj>/designs>] [-shell] [-device <device>] [-tcl <script>] or"
+		            echo "       $SYN_PRGM debug [-log|loga <logfile>] [-in <user specified export location>/<Design Name>/debug>] [-skip_rtl_loading] [-shell] [-batch] [-tcl <script>]    or"
+		            echo "       $SYN_PRGM board_bringup [-log|loga <logfile>] [-shell] [-batch] [-tcl <script>] or"
+		            echo "       $SYN_PRGM board_query [-log|loga <logfile>] [-shell] [-batch]"
+		            echo " ";
+		            echo "************************************************************" 1>&2
+		            echo " " 1>&2
+		            exit 2;
+                ;;
+        esac
+        if ! [ -x $tool ]; then
+            fatal_error "Could not find $tool"
+        fi
+        if [ "$DEBUG_MODE" = "1" ]; then
+          echo "Type:";
+          echo "    run $@";
+          echo "to start debugging.";
+          exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $tool $optargs $SYN_ARGS
+        fi
+        if [ $SYN_BATCH_ENABLED = "0" ] || ( ! [ ! "$optlogfile" ] ); then
+			      USERNAME="$(id -u -n)";
+            ERRFILE="/tmp/syn_stderr_${USERNAME}_$$.log";
+            exec $tool $optargs $SYN_ARGS >$ERRFILE 2>&1;
+        fi
+        if [ "$SYN_BATCH_ENABLED" = "1" ] && [ ! "${NORLWRAP}" ]; then
+          update_rlwrap
+          RLWRAP="$SYN_HOMEDIR/$PLATFORM/rlwrap -b \"\""
+          exec $RLWRAP $tool $optargs $SYN_ARGS;
+        fi
+        exec $tool $optargs $SYN_ARGS;
+        ;;
+    *)
+        if [ "${SYN_NOEXEC:+set}" = "set" ]; then
+            if [ "${SYN_SAVE_OUTPUT}" != "" ]; then
+                exec $SYN_PRGM >/tmp/${SYN_PRGM}_$$.out;
+                SYN_SAVE_OUTPUT="";
+                export SYN_SAVE_OUTPUT;
+            else 
+                exec $SYN_PRGM;
+            fi
+        else if [ -x $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM ]; then
+            if [ "$DEBUG_MODE" = "1" ]; then
+                echo "Type:";
+                echo "    run $@";
+                echo "to start debugging.";
+                exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM
+            else if [ "$SYN_MEMCHECK" ]; then
+                echo "$SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM \"$@\""
+                exec $SYN_DEBUGGER $SYN_DEBUGGER_ARGS $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM "$@"
+            else 
+                if [ "$SYN_INTERACTIVE" ]; then
+			if [ "$USE_APTN_GUI" ]; then
+                    		$SYN_HOMEDIR/$PLATFORM/${SYN_PRGM}_gui $@
+			else
+                    		update_rlwrap
+                    		xterm -e $SYN_HOMEDIR/$PLATFORM/rlwrap $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM $@
+                    		exit 5
+			fi
+                else
+                    exec $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM "$@"
+                fi
+            fi
+        fi
+        else
+            fatal_error "Error: Could not find $SYN_HOMEDIR/$PLATFORM/$SYN_PRGM"
+        fi
+        SYN_SSC_ENV="";
+        export SYN_SSC_ENV;
+    fi;;
+esac

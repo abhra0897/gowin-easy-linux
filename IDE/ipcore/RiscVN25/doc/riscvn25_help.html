@@ -1,0 +1,207 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>RiscV N25 Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>RiscV N25</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>RiscV N25</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>Andes</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>AndesCore™ N25/N25F is a 32-bit CPU IP core based on AndeStar™ V5 architecture which incorporated RISC-V technology, it is capable of delivering high per-MHz performance and operating at high frequencies, at the same time it is small in gate count. N25F also supports single and double precision floating point instructions and half precision load/store. N25/N25F comes with options, including branch prediction for efficient branch execution, Instruction and Data caches, Local Memories for low-latency accesses, ECC for L1 memory soft error protection, and Andes Custom Extension™ (ACE) to add proprietary instructions to accelerate performance/power consumption critical spots. N25/N25F’s 5-stage pipeline is optimized for high operating frequency and small gate count. Features also includes PLIC and vectored interrupts for serving various types of system events, AXI 64-bit or AHB 64/32-bit bus, PowerBrake and WFI mode for low power and power management, and JTAG debug interface for development support.
+                        </td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Items</th>
+                    <th>Options</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">RISC-V Atomic Instruction Extension</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.1</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Privilege Modes</td>
+                        <td>Machine/Machine + User Section</td>
+                        <td>Section 2.1.3</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Number of PMP Entries</td>
+                        <td>0/2/4/8/16</td>
+                        <td>Section 2.1.8</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Performance Monitors</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.4</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Andes Vectored PLIC Extension</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.17</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Andes StackSafe Extension</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.18</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Andes PowerBrake Extension</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.19</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Low Access-Latency AHB Bus</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.5</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Multiplier Implementation</td>
+                        <td>radix2/radix4/radix16/radix256/fast</td>
+                        <td>Section 2.1.6</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Branch Prediction</td>
+                        <td>none/static/dynamic</td>
+                        <td>Section 2.1.7</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Number of BTB Entries</td>
+                        <td>32/64/128/256</td>
+                        <td>Section 2.1.7</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">ILM Size</td>
+                        <td>0/4/8/16/32/64/128/256/512/1024/2048/4096/8192/16384</td>
+                        <td>Section 2.1.10</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">DLM Size</td>
+                        <td>0/4/8/16/32/64/128/256/512/1024/2048/4096/8192/16384</td>
+                        <td>Section 2.1.11</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Slave Port Support</td>
+                        <td>yes/no</td>
+                        <td>Section 2.1.12</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCBMC</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCBMC200_DS090</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCAPBBRG</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCAPBBRG100_DS084</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCDMAC</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCDMAC100_DS079</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCGPIO</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCGPIO100_DS080</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCIIC</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCIIC100_DS091</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCRTC</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCRTC100_DS085</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ATCSPI</td>
+                        <td>---</td>
+                        <td>AndeShape_ATCSPI200_DS087</td> 
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

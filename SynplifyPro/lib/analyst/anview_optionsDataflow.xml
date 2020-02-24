@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anview_config>
+	<placer value="LEVEL"/>
+	<background value="255.255.255"/>
+	<net>
+		<color value="0.0.0"/>
+	</net>
+	<bundle>
+		<color value="0.0.128"/>
+	</bundle>
+	<inst>
+		<color value="255.255.0"/>
+	</inst>
+	<prim>
+		<color value="246.246.255"/>
+	</prim>
+	<group>
+		<color value="182.162.255"/>
+	</group>
+	<tech_prim>
+		<color value="190.190.190"/>
+	</tech_prim>
+	<sub_proj>
+		<color value="152.251.152"/>
+	</sub_proj>
+	<comp_point>
+		<color value="175.238.238"/>
+	</comp_point>
+	<port>
+		<color value="0.0.255"/>
+	</port>
+	<net_prop_color color="50.205.50" value="@.is_clock"/>
+	<net_prop_color color="128.0.128" value="@.syn_clock_extraction==&quot;S&quot;"/>
+	<net_prop_color color="255.140.0" value="@.syn_clock_extraction==&quot;R&quot;"/>
+</anview_config>

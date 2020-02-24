@@ -1,0 +1,14 @@
+
+Product Name: Synopsys Common Licensing (SCL)
+
+Version Details: 2018.06
+
+Copyright (c) 2001->2018 by Synopsys, Inc.
+
+ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys, Inc. and may be used and disclosed only as authorized in a license agreement controlling such use and disclosure.
+
+The program(s) being installed herein are protected by U.S. and international copyrights laws and international treaties. The program(s) may be used only in accordance with the terms of a license agreement entered into by the end user (or his employer) and Synopsys, Inc. Please review this license to ensure that you, and all other authorized users, are familiar with the terms of the applicable license, including the restrictions on use of the program(s). Unauthorized use, reproduction or distribution of this program, or any portion of it, constitutes a violation of the license agreement and applicable laws, and may result in severe criminal penalties.
+
+Licensed Products communicate with Synopsys servers for the purpose of providing software updates, detecting software piracy and verifying that customers are using Licensed Products in conformity with the applicable License Key for such Licensed Products. Synopsys will use information gathered in connection with this process to deliver software updates and pursue software pirates and infringers.

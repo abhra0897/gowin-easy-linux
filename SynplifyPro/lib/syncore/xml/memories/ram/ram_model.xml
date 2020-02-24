@@ -1,0 +1,1490 @@
+<?xml version="1.0"?>
+
+<!-- 
+
+Modifications:
+
+Date: August 29, 06
+Author: vshanker
+ 
+1. Memory Size - Width  is replaced with Memory Size - Data Width
+2. Memory Size - Depth  is replaced with Memory Size - Address Width
+3. Register Outputs always turned ON
+4. Register Outputs - Enable is removed from the UI Options. This options is always disabled. 
+			Reason: When RAM is generated with only its outputs registered and 
+			enable turned ON, we cannot pack it into BlockRAMs.
+			TODOs: We can modify the ENABLE_OUTPUT_REG logic so that use RAM Enable pins of Block RAMs 			
+5. Removed RdEn A & RdEn B ports from the port list
+6. When Write Enable is OFF, (Always in wrtie mode)
+		Turning on 'NO Read On Write' Option will result in 0. No data is read from RAM and hence can be optimized
+		Turning on 'Read After Write' Option will result in a single register and Data is always read on next clock cycle, RAM will be optimized		 	 
+	Therefore options 'NO Read On Write' & 'Read After Write' will be disabled when 'Use Write Enable' option is turned OFF
+-->
+
+<dyndialog>
+
+<dialog id="ipdesign_ram" text="Memory Wizard" width="850" height="650">
+
+   <graph_def id="graph_def1" fgcolor="white" bgcolor="#909090">
+   
+   <text x="60" y="180">RAM</text>
+
+	<in name="Clk A"  	width="2" color="blue" />
+	<in name="Wen A"  	width="2" color="blue" enabled_if="ENABLE_WR_PORTA"/>
+	<in name="Addr A" 	width="6" color="blue" />
+ <!--	<in name="RdEn A"	width="2" color="blue" enabled_if="REGISTER_OUTPUT_PORTA and ENABLE_OUTPUT_REG_PORTA and !Write_Only_A" /> -->
+  	<in name="Rst A" 	width="2" color="blue" enabled_if="REGISTER_OUTPUT_PORTA and RESET_OUTPUT_REG_PORTA and !Write_Only_A"/>	
+    <in name="Din A"		width="4" color="blue" enabled_if="!Read_Only_A"/> 
+	
+	<in name=""		width="0" color="#909090" /><!-- Add a blank line between PortA & PortB -->
+	
+	<in name="Clk B"  	width="2" color="green" enabled_if="!SPRAM and DUAL_CLOCKS" />
+	<in name="Wen B"  	width="2" color="green" enabled_if="!SPRAM and ENABLE_WR_PORTB"/>
+	<in name="Addr B" 	width="6" color="green" enabled_if="!SPRAM"/>
+ <!--	<in name="RdEn B" 	width="2" color="green" enabled_if="!SPRAM and REGISTER_OUTPUT_PORTB and ENABLE_OUTPUT_REG_PORTB and !Write_Only_B" /> -->
+ 	<in name="Rst B"  	width="2" color="green" enabled_if="!SPRAM and REGISTER_OUTPUT_PORTB and RESET_OUTPUT_REG_PORTB and !Write_Only_B"/>	
+	<in name="Din B" 	width="4" color="green" enabled_if="!SPRAM and !Read_Only_B"/>
+	
+	<out name="Dout A"	width="4" color="blue" enabled_if="!Write_Only_A"/>
+	<out name="Dout B" 	width="4" color="green" enabled_if="!SPRAM and !Write_Only_B"/>
+</graph_def>
+
+
+   
+      <!-- GUI Design -->
+<tab id="parameters" text="RAM Parameters">
+
+  <hline>
+
+      <graph id="graph1" def="graph_def1" text="SynCore RAM" width="300" height="550">
+      </graph>     
+      
+  <!-- Start of Page 1 -->
+      
+  <page id="page1" text="Memory Compiler">
+  
+  <!-- Componenet feild -->
+  
+  <lineedit id="COMPONENT" text="Component Name" required="true">
+
+  </lineedit>        
+  
+  <line /> <!-- This is to add an line separator -->
+ 
+  <!-- Directory feild -->
+ 
+     <lineedit id="DIRECTORY" type="directory" text="Directory" required="true" tooltip="Spaces in Directory path not supported">   
+
+      </lineedit>	
+  
+  <line />   <!-- This is to add an line separator -->
+
+ <!-- Filename feild -->
+  
+    <lineedit id="FILENAME" type="save_file" text="File Name" required="true" tooltip="Filename should not be with .v extension">  
+  	
+    </lineedit>	
+
+
+ <!-- Memory Size Feild -->
+
+	<group text="Memory Size">
+               <lineedit id="DATAWIDTH" text="Data Width" type="int" posttext="Valid Range 1..256" required="true">
+                  <value>16</value>
+                  <min_value>1</min_value>
+                  <max_value>256</max_value>
+               </lineedit>
+               
+               <lineedit id="ADDRWIDTH" text="Address Width" type="int" posttext="Valid Range 2..20" required="true">
+                  <value>8</value>
+                  <min_value>2</min_value>
+                  <max_value>20</max_value>
+               </lineedit>
+              
+          </group>
+            
+  <line /> <!-- This is to add an line separator -->
+  
+  
+<group text="How will you be using the RAM?">      	
+   <hline>
+   
+	 <radio id="SPRAM" text="Single Port">	
+	     <value>true</value>	     
+ 	     <on_value> SPRAM=1</on_value>
+	 </radio> 
+
+	<radio id="DPRAM" text="Dual Port">	   	
+	     <on_value> SPRAM=0</on_value> 
+	     <value>false</value>	      	 
+	</radio> 	          
+        
+   </hline>	 
+ </group>
+ 
+ 
+ <line /> <!-- This is to add an line separator -->
+  
+    <group text="Which clocking method do you want to use?">
+       <hline>
+	 <radio id="NO_OF_CLOCKS" text="Single Clock" checked_if="SPRAM">	     
+	     <on_value> NO_OF_CLOCKS=1</on_value> 	     
+	 </radio> 
+	   
+	 <radio id="DUAL_CLOCKS" text="Separate Clocks For Each Port" enabled_if="!SPRAM">	   	
+	     <on_value> NO_OF_CLOCKS=2</on_value> 	     
+	 </radio> 	   
+       </hline>	
+    </group>
+    
+ </page> <!-- End of Page 1 -->
+   
+   
+   
+ <!-- Start of Page 2 -->
+
+         			
+<page id="page2">
+
+	<line /> <!-- This is to add an line separator -->	
+ 	     <text> Configuring Port A </text>
+ 	<line /> <!-- This is to add an line separator -->
+
+
+       <group text="How do you want to configure Port A ">
+	  <hline>
+	  	    
+	 <radio id="Read_Write_A" text="Read And Write Access" checked_if="SPRAM">	   
+	      <value>true</value>
+	      <on_value> READ_WRITE_A=1</on_value> 	      
+	    </radio>	         
+
+	    <radio id="Read_Only_A" text="Read Only Access" enabled_if="!Read_Only_B and !SPRAM">
+	    	 <value>false</value>
+	         <on_value>READ_WRITE_A=2</on_value> 	         
+	    </radio>	          
+	    
+	    <radio id="Write_Only_A" text="Write Only Access" enabled_if="!Write_Only_B and !SPRAM">
+	        <value>"false"</value>
+	        <on_value>READ_WRITE_A=3</on_value>	        
+	    </radio>
+	   </hline>
+	</group>
+	
+	<line /> <!-- This is to add an line separator -->
+
+
+	<group text="Design Options for Port A ">
+
+
+	    <hline>
+		<check id="ENABLE_WR_PORTA" text="Use Write Enable" enabled_if="!Read_Only_A" checked_if="Read_Write_A or Write_Only_A" unchecked_if="Read_Only_A">
+                    <value>true</value>
+                   <on_value>ENABLE_WR_PORTA=1</on_value>
+            	   <off_value>ENABLE_WR_PORTA=0</off_value>
+                </check>
+            </hline> 
+
+	    <hline>	
+               <check id="REGISTER_RD_ADDR_PORTA" text="Register Read Address" enabled_if="!Write_Only_A" checked_if="Read_Write_A or Read_Only_A" unchecked_if="Write_Only_A">
+                    <value>true</value>
+                   <on_value>REGISTER_RD_ADDR_PORTA=1</on_value>
+            	   <off_value>REGISTER_RD_ADDR_PORTA=0</off_value>
+               </check>              
+            </hline>
+        
+
+    	    <!-- 29Aug06 vshanker
+	      ** Output registers are always enabled to ensure Rams generated by SynCore gets packed into BlockRAM
+	      ** REGISTER_OUTPUT_PORTA=1, REGISTER_OUTPUT_PORTB=1
+	      ** Enables for these registers are alwyas disabled as these are preventing Rams getting packed into BlockRAMs
+	      ** ENABLE_OUTPUT_REG_PORTA=0, ENABLE_OUTPUT_REG_PORTB=0
+	      
+	      ** TODOs 
+	      ** We can modify the ENABLE_OUTPUT_REG logic so that use RAM Enable pins of Block RAMs 
+	    -->
+   	    
+   	    
+              <check id="REGISTER_OUTPUT_PORTA" text="Register Outputs" enabled_if="!REGISTER_OUTPUT_PORTA"> 
+                    <value>true</value>
+                    <on_value>REGISTER_OUTPUT_PORTA=1</on_value>
+            	   <off_value>REGISTER_OUTPUT_PORTA=0</off_value>
+               </check>
+               
+            <hline> 	        
+               <check id="RESET_OUTPUT_REG_PORTA" level = "1" text="Synchronous Reset" enabled_if="REGISTER_OUTPUT_PORTA and !Write_Only_A">
+                    <value>false</value>
+                    <on_value>RESET_OUTPUT_REG_PORTA=1 ENABLE_OUTPUT_REG_PORTA=0 </on_value>
+                   <off_value>RESET_OUTPUT_REG_PORTA=0 ENABLE_OUTPUT_REG_PORTA=0 </off_value>
+               </check>
+<!--       
+               <check id="ENABLE_OUTPUT_REG_PORTA" text="Enable" enabled_if="REGISTER_OUTPUT_PORTA and !Write_Only_A">
+                     <value>false</value>
+                    <on_value>ENABLE_OUTPUT_REG_PORTA=1</on_value>
+                    <off_value>ENABLE_OUTPUT_REG_PORTA=0 </off_value>
+               </check> -->
+          </hline>
+           
+       </group>
+         
+         <line /> <!-- This is to add an line separator -->
+         
+      <group text="Read Access Options for Port A">
+
+	<!-- 29Aug06 vshanker
+ 	** When Write Enable is OFF, (Always in wrtie mode)
+	**	Turning on 'NO Read On Write' Option will result in 0. No data is read from RAM and hence can be optimized
+	**	Turning on 'Read After Write' Option will result in a single register and Data is always read on next clock cycle, RAM will be optimized		 	 
+	** 	Therefore options 'NO Read On Write' & 'Read After Write' will be disabled when 'Use Write Enable' option is turned OFF
+	-->
+	
+            <hline>
+	   	 <radio id="READ_MODE_A" text="Read before Write"  enabled_if="Read_Write_A" checked_if="!ENABLE_WR_PORTA">
+	   	      <value>true</value>	
+	   	      <on_value>READ_MODE_A=1</on_value> 	   	      
+	   	 </radio>	          
+	   	 
+	   	 <radio id="READ_MODE_A" text="Read after Write"  enabled_if="Read_Write_A and ENABLE_WR_PORTA">
+	   	     <value>false</value>
+	   	     <on_value>READ_MODE_A=2</on_value>	   	     
+	   	 </radio>
+	   	 
+	   	 <radio id="READ_MODE_A" text="No Read on Write"  enabled_if="Read_Write_A and ENABLE_WR_PORTA">
+	   	    <value>false</value>
+	   	    <on_value> READ_MODE_A=3</on_value> 	   	    
+	   	 </radio>	         
+  	    </hline>
+  	    
+  	</group>           
+    	
+    	<line /> <!-- This is to add an line separator -->
+    	
+ </page>  <!-- End of Page 2 -->
+ 
+ 
+ 
+  <!-- Start of Page 3 -->
+ 
+          			
+ <page id="page3">
+ 
+ 	<line /> <!-- This is to add an line separator -->	
+  	     <text> Configuring Port B </text>
+  	<line /> <!-- This is to add an line separator -->
+ 
+ 
+        <group text="How do you want to configure Port B">
+ 	  <hline>
+ 	  	    
+ 	   <radio id="Read_Write_B" text="Read And Write Access" enabled_if="!SPRAM">
+ 	      <value>true</value>
+ 	      <on_value> READ_WRITE_B=1</on_value>  	      
+ 	    </radio>	         
+ 
+ 	    <radio id="Read_Only_B" text="Read Only Access" enabled_if="!SPRAM and !Read_Only_A">
+ 	    	 <value>false</value>
+ 	         <on_value>READ_WRITE_B=2</on_value>  	         
+ 	    </radio>	          
+ 	    
+ 	    <radio id="Write_Only_B" text="Write Only Access" enabled_if="!SPRAM and !Write_Only_A">
+ 	        <value>"false"</value>
+ 	        <on_value>READ_WRITE_B=3</on_value> 	        
+ 	    </radio>
+ 	   </hline>
+ 	</group>
+ 	
+ 	<line /> <!-- This is to add an line separator -->
+ 
+ 
+ 	<group text="Design Options for Port B">
+ 
+ 
+ 	    <hline>
+ 		<check id="ENABLE_WR_PORTB" text="Use Write Enable" enabled_if="!Read_Only_B and !SPRAM" checked_if="Read_Write_B or Write_Only_B" unchecked_if="!DPRAM or Read_Only_B">
+                     <value>true</value>
+                    <on_value>ENABLE_WR_PORTB=1</on_value>
+             	   <off_value>ENABLE_WR_PORTB=0</off_value>
+                 </check>
+             </hline> 
+ 
+ 	    <hline>	
+                <check id="REGISTER_RD_ADDR_PORTB" text="Register Read Address" enabled_if="!Write_Only_B and !SPRAM" checked_if="Read_Write_B or Read_Only_B" unchecked_if="!DPRAM or Write_Only_B">
+                     <value>true</value>
+                    <on_value>REGISTER_RD_ADDR_PORTB=1</on_value>
+             	   <off_value>REGISTER_RD_ADDR_PORTB=0</off_value>
+                </check>              
+             </hline>
+         
+    	    
+    	    <!-- 29Aug06 vshanker
+	      ** Output registers are always enabled to ensure Rams generated by SynCore gets packed into BlockRAM
+	      ** REGISTER_OUTPUT_PORTA=1, REGISTER_OUTPUT_PORTB=1
+	      ** Enables for these registers are always disabled as these are preventing Rams getting packed into BlockRAMs
+	      ** ENABLE_OUTPUT_REG_PORTA=0, ENABLE_OUTPUT_REG_PORTB=0
+	      
+	      ** TODOs 
+	      ** We can modify the ENABLE_OUTPUT_REG logic so that use RAM Enable pins of Block RAMs 
+	    -->
+
+    	    
+              <!--  <check id="REGISTER_OUTPUT_PORTB" text="Register Outputs" enabled_if="!Write_Only_B and !SPRAM"> -->
+                <check id="REGISTER_OUTPUT_PORTB" text="Register Outputs" enabled_if="!REGISTER_OUTPUT_PORTB">
+                     <value>true</value>
+                     <on_value>REGISTER_OUTPUT_PORTB=1</on_value>
+             	   <off_value>REGISTER_OUTPUT_PORTB=0</off_value>
+                </check>
+                
+             <hline> 	        
+                <check id="RESET_OUTPUT_REG_PORTB" level = "1" text="Synchronous Reset" enabled_if="!Write_Only_B and REGISTER_OUTPUT_PORTB and !SPRAM">
+                     <value>false</value>
+                     <on_value>RESET_OUTPUT_REG_PORTB=1 ENABLE_OUTPUT_REG_PORTB=0</on_value>
+                    <off_value>RESET_OUTPUT_REG_PORTB=0 ENABLE_OUTPUT_REG_PORTB=0</off_value>
+                </check>
+                
+        
+	
+             <!--   <check id="ENABLE_OUTPUT_REG_PORTB" text="Enable" enabled_if="!Write_Only_B and REGISTER_OUTPUT_PORTB and !SPRAM" >
+                      <value>false</value>
+                     <on_value>ENABLE_OUTPUT_REG_PORTB=1</on_value>
+                     <off_value>ENABLE_OUTPUT_REG_PORTB=0 </off_value>
+                </check> -->
+            </hline>
+            
+        </group>
+          
+          <line /> <!-- This is to add an line separator -->
+          
+       <group text="Read Access Options for Port B">
+ 	
+ 	
+ 	<!-- 29Aug06 vshanker
+	** When Write Enable is OFF, (Always in wrtie mode)
+	**	Turning on 'NO Read On Write' Option will result in 0. No data is read from RAM and hence can be optimized
+	**	Turning on 'Read After Write' Option will result in a single register and Data is always read on next clock cycle, RAM will be optimized		 	 
+	** 	Therefore options 'NO Read On Write' & 'Read After Write' will be disabled when 'Use Write Enable' option is turned OFF
+	-->
+
+ 	
+             <hline>
+ 	   	 <radio id="READ_MODE_B" text="Read before Write"  enabled_if="Read_Write_B and !SPRAM" checked_if="!ENABLE_WR_PORTB">
+ 	   	      <value>true</value>
+ 	   	      <on_value>READ_MODE_B=1</on_value>  	   	      
+ 	   	 </radio>	          
+ 	   	 
+ 	   	 <radio id="READ_MODE_B" text="Read after Write"  enabled_if="Read_Write_B and !SPRAM and ENABLE_WR_PORTB">
+ 	   	     <value>false</value>
+ 	   	     <on_value>READ_MODE_B=2</on_value> 	   	     
+ 	   	 </radio>
+ 	   	 
+ 	   	 <radio id="READ_MODE_B" text="No Read on Write"  enabled_if="Read_Write_B and !SPRAM and ENABLE_WR_PORTB">
+ 	   	    <value>false</value>
+ 	   	    <on_value> READ_MODE_B=3</on_value>  	   	    
+ 	   	 </radio>	         
+   	    </hline>
+   	    
+   	</group>           
+     	
+     	<line /> <!-- This is to add an line separator -->
+     	
+ </page>  <!-- End of Page 3 -->
+     
+   </hline>
+ </tab>
+
+
+ <tab id="overview" text="Core Overview">      
+      
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synopsys, Inc.</value>
+         </lineedit>
+         
+         <lineedit id="creation_date" text="Creation Date:" readonly="true">
+            <value>April 27, 2005</value>
+         </lineedit>
+         
+         <lineedit id="core_type" text="Core Type:" readonly="true">
+            <value>SYNCORE Parameterizable</value>
+         </lineedit>
+         
+	     <lineedit id="info" readonly="true" stretch="true" src="../../lib/html/doc1.html">
+            <value type="html">
+
+<![CDATA[
+<h2>SYNCORE MEMORY COMPILER</h2>
+The SYNCORE memory compiler helps designers create memory models for their designs.<br>
+These memory models are written out in HDL and can be synthesized as well as simulated.<br>
+A testbench is provided for the RAM models created by the SYNCORE memory compiler.<br><br>
+
+For detailed information on the SYNCORE memory compiler and its various options, click the RAM Info button at the bottom of this window. <br>
+
+If you have any questions or issues, please contact support at www.solvnet.com .
+
+]]>
+         </value>
+         </lineedit>
+</tab>
+
+<!-- Removing the Contact tab untill we get proper information for Documentation Group -->
+<!--    
+<tab id="contact" text="Contact">
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synplicity, Inc.</value>
+         </lineedit>
+         <lineedit id="address" text="Address:" readonly="true">
+            <value>
+600 W.California Ave.
+Sunnyvale, CA 94086
+            </value>
+         </lineedit>
+         <lineedit id="phone" text="Phone:" readonly="true">
+            <value>(U. S.) +1 408 215-6000</value>
+         </lineedit>
+   
+         <lineedit id="Description" readonly="true" stretch="true">
+ <value>
+Synplicity, Inc. is a leading supplier of innovative synthesis, verification, and physical implementation software solutions that enable the rapid and effective design and verification of semiconductors. Synplicity's high-quality, high-performance tools significantly reduce costs and time-to-market for FPGA designers. The company's underlying Behavior Extracting Synthesis Technology (BEST), which is embedded in its logical, physical, and verification tools, is responsible for Synplicity's top position in FPGA synthesis. The company's fast, easy-to-use products support industry standard design languages (VHDL and Verilog) and run on popular platforms. Synplicity employs over 280 people in its 20 facilities worldwide. Synplicity is headquartered in Sunnyvale, California.
+   
+            </value>
+         </lineedit>
+      </tab>
+-->	  
+    <button id="generate" text="&amp;Generate" action="execute" tooltip="Generate Ram Core">
+            <!-- <command>generate_tcl_command</command> -->
+        <command>ram_proc</command> 
+    </button>
+    
+       	<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog" />      	
+       	<button id="RamInfo" text="&amp;RAM Info..." width="700" height="400" action="info" filename="mem_compiler_new.html" tooltip="Display Syncore Ram info" />
+<!-- Commented since all implementations give BlockRAMs 
+	<button id="Table" text="&amp;Table..." action="info" filename="IMPL_Table.htm" tooltip="Display Implementaiton info" />
+
+-->
+<!-- Start of Tcl script  -->
+
+
+<tcl> <![CDATA[
+
+
+proc ram_proc {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20} {
+set COMPONENT 			[lindex [split [lindex $0] =] 1]
+set DIRECTORY 			[lindex [split [lindex $1] =] 1]
+set FILENAME 			[lindex [split [lindex $2] =] 1] 
+#### Extract extension of the the FILENAME #########
+set FNAME_EXT [file extension $FILENAME]  
+
+##### Check if extension of filename is any of {.v,.sv } and if not add ".v" extension #################
+
+if {[string match {.v} $FNAME_EXT  ] ==0  && [string match {.sv} $FNAME_EXT  ] ==0   } {    
+	  set FILENAME "$FILENAME.v"
+   }
+###############################   
+
+set DATAWIDTH 			[lindex [split [lindex $3] =] 1] 
+set ADDRWIDTH 			[lindex [split [lindex $4] =] 1] 
+set SPRAM			[lindex [split [lindex $5] =] 1] 		
+set NO_OF_CLOCKS		[lindex [split [lindex $6] =] 1] 
+set READ_WRITE_A		[lindex [split [lindex $7] =] 1] 
+set ENABLE_WR_PORTA		[lindex [split [lindex $8] =] 1] 
+set REGISTER_RD_ADDR_PORTA	[lindex [split [lindex $9] =] 1] 
+set REGISTER_OUTPUT_PORTA	[lindex [split [lindex $10] =] 1]
+set RESET_OUTPUT_REG_PORTA	[lindex [split [lindex $11] =] 1]
+set ENABLE_OUTPUT_REG_PORTA	[lindex [split [lindex $12] =] 1]
+set READ_MODE_A			[lindex [split [lindex $13] =] 1]
+set READ_WRITE_B		[lindex [split [lindex $14] =] 1]
+set ENABLE_WR_PORTB		[lindex [split [lindex $15] =] 1]
+set REGISTER_RD_ADDR_PORTB	[lindex [split [lindex $16] =] 1]
+set REGISTER_OUTPUT_PORTB	[lindex [split [lindex $17] =] 1]
+set RESET_OUTPUT_REG_PORTB	[lindex [split [lindex $18] =] 1]
+set ENABLE_OUTPUT_REG_PORTB	[lindex [split [lindex $19] =] 1]
+set READ_MODE_B			[lindex [split [lindex $20] =] 1]
+
+
+ set tcl_A_Din          [expr (!($READ_WRITE_A==2))]      
+ set tcl_A_Dout  	[expr (!($READ_WRITE_A==3))] 
+ set tcl_A_Wr_En 	[expr ($ENABLE_WR_PORTA & !($READ_WRITE_A==2))]
+ set tcl_A_Reg_Rd_En  	[expr ($REGISTER_OUTPUT_PORTA & $ENABLE_OUTPUT_REG_PORTA & !($READ_WRITE_A==3))]
+ set tcl_A_Reg_Rd_Rst 	[expr ($REGISTER_OUTPUT_PORTA & $RESET_OUTPUT_REG_PORTA & !($READ_WRITE_A==3))]
+
+if {($READ_WRITE_A==1)} {
+    set tcl_READ_MODE_A $READ_MODE_A   
+  } else {
+    set tcl_READ_MODE_A 1
+  }
+ 
+ 
+ set tcl_B_Clk      	[expr (!$SPRAM & ($NO_OF_CLOCKS==2))]
+ set tcl_B_Din          [expr (!$SPRAM & !($READ_WRITE_B==2))]      
+ set tcl_B_Addr 	[expr (!$SPRAM)]      
+ set tcl_B_Wr_En  	[expr ($ENABLE_WR_PORTB & !($READ_WRITE_B==2) & (!$SPRAM))]
+ set tcl_B_Dout  	[expr (!($READ_WRITE_B==3) & (!$SPRAM))]
+ set tcl_B_Reg_Rd_En  	[expr ($REGISTER_OUTPUT_PORTB & $ENABLE_OUTPUT_REG_PORTB & !($READ_WRITE_B==3) & (!$SPRAM))]
+ set tcl_B_Reg_Rd_Rst 	[expr ($REGISTER_OUTPUT_PORTB & $RESET_OUTPUT_REG_PORTB & !($READ_WRITE_B==3) & (!$SPRAM))] 
+
+if {(($READ_WRITE_B==1) & !$SPRAM)} {
+    set tcl_READ_MODE_B $READ_MODE_B     
+  } else {
+    set tcl_READ_MODE_B 1
+  }
+ 
+
+###set install_dir [pwd]
+global LIB
+set install_dir $LIB/syncore/xml/memories/ram
+
+file mkdir $DIRECTORY
+
+file copy -force $install_dir/../../../models/memories/ram/syncore_ram.v $DIRECTORY/syncore_ram.v
+file copy -force $install_dir/../../../models/memories/ram/readme.txt $DIRECTORY/readme.txt
+
+
+#cd  $DIRECTORY
+## ----------------------------------------------------------------------------------------------
+## Code for  generate options file generation
+## ----------------------------------------------------------------------------------------------
+ set cf [open $DIRECTORY/options.txt w+]
+ puts $cf "$0 \n$1 \n$2 \n$3 \n$4 \n$5 \n$6 \n$7 \n$8 \n$9 \n$10 \n$11 \n$12 \n$13 \n$14 \n$15 \n$16 \n$17 \n$18 \n$19 \n$20"
+ close $cf
+ 
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for Instantiation file generation
+## ----------------------------------------------------------------------------------------------
+
+ set vf [open $DIRECTORY/instantiation_file.vin w+]
+ 
+ puts $vf "     // The following must be inserted into your Verilog file for this"
+ puts $vf "     // core to be instantiated. Change the instance name and port connections"
+ puts $vf "     // (in parentheses) to your own signal names."
+ puts $vf "\n"
+ puts $vf "     //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG"
+ puts $vf "\n"
+ puts $vf "$COMPONENT <InstanceName> ( "
+ puts $vf ".PortAClk(PortAClk)" 
+ puts $vf ", .PortAAddr(PortAAddr)"  		
+   if {$tcl_A_Din == 1} {    
+ 	  puts $vf ", .PortADataIn(PortADataIn)" 
+     }
+  if {$tcl_A_Wr_En == 1} {
+ 	puts $vf ", .PortAWriteEnable(PortAWriteEnable)" 
+    }    
+  if {$tcl_A_Reg_Rd_En == 1} {
+ 	puts $vf ", .PortAReadEnable (PortAReadEnable )" 
+    }   
+  if {$tcl_A_Reg_Rd_Rst== 1} {
+ 	puts $vf ", .PortAReset(PortAReset) " 
+    }
+   if {$tcl_B_Clk == 1} {    
+      puts $vf ", .PortBClk(PortBClk)" 
+    }
+   if {$tcl_B_Din == 1} {       
+      puts $vf ", .PortBDataIn(PortBDataIn) " 
+     }
+   if {$tcl_B_Addr == 1} {       
+      puts $vf ", .PortBAddr(PortBAddr)" 
+     }
+  if {$tcl_B_Wr_En == 1} {
+       puts $vf ", .PortBWriteEnable(PortBWriteEnable)" 
+     } 
+  if {$tcl_B_Reg_Rd_En == 1} {
+      puts $vf ", .PortBReadEnable (PortBReadEnable )" 
+    }
+  if {$tcl_B_Reg_Rd_Rst == 1} {
+      puts $vf ", .PortBReset(PortBReset)" 
+     }
+  if {$tcl_A_Dout == 1} {
+    	  puts $vf ", .PortADataOut(PortADataOut)"	
+     }
+  if {$tcl_B_Dout == 1} {
+   	  puts $vf ", .PortBDataOut(PortBDataOut)" 
+     }     
+puts $vf ");"
+
+puts $vf "\n"
+puts $vf "// INST_TAG_END ------ End INSTANTIATION Template ---------"
+puts $vf "\n\n"
+puts $vf "// You must compile the wrapper file along with the Syncore_ram.v file" 
+puts $vf "// For detailed instructions, please refer to the SynCORE Generator Help."
+
+
+ close $vf
+## ----------------------------------------------------------------------------------------------
+
+## ----------------------------------------------------------------------------------------------
+## Code for wrapper file generation
+## ----------------------------------------------------------------------------------------------
+
+if { [string match [file dirname  $FILENAME] "." ] } { 	    ### The FILENAME has just the file name
+    set WFILENAME "$DIRECTORY/$FILENAME"
+  } else {                                              	### The FILENAME has a directory/filename structure
+	file mkdir [file dirname $FILENAME]
+	set WFILENAME "$FILENAME"
+}
+
+set wf [open $WFILENAME w+ ]
+
+puts $wf "// ----------------------------------------------------------------------------- "
+puts $wf "// --- "
+puts $wf "// ---                 (C) COPYRIGHT 2001-2010 SYNOPSYS, INC. "
+puts $wf "// ---                           ALL RIGHTS RESERVED "
+puts $wf "// --- "
+puts $wf "// --- This software and the associated documentation are confidential and "
+puts $wf "// --- proprietary to Synopsys, Inc.  Your use or disclosure of this "
+puts $wf "// --- software is subject to the terms and conditions of a written "
+puts $wf "// --- license agreement between you, or your company, and Synopsys, Inc. "
+puts $wf "// --- "
+puts $wf "// --- The entire notice above must be reproduced on all authorized copies. "
+puts $wf "// --- "
+puts $wf "// ----------------------------------------------------------------------------- "
+puts $wf "// "
+puts $wf " "
+
+
+
+puts $wf " \n\n // Output ports are always registered to ensure Rams get packed into BlockRAM"
+puts $wf " \n\n"
+puts $wf "`timescale 1ns/100ps"
+puts $wf " `ifdef synthesis "
+puts $wf "     module $COMPONENT "
+puts $wf " `else "
+puts $wf "     module $COMPONENT\_rtl"
+puts $wf " `endif "
+puts $wf "("
+puts $wf "	 PortAClk" 
+puts $wf "	,PortAAddr" 
+
+ if {$tcl_A_Din == 1} {    
+	  puts $wf "	,PortADataIn" 
+    }
+ if {$tcl_A_Wr_En == 1} {
+	puts $wf "	,PortAWriteEnable" 
+   }    
+ if {$tcl_A_Reg_Rd_En == 1} {
+	puts $wf "	,PortAReadEnable " 
+   }   
+ if {$tcl_A_Reg_Rd_Rst== 1} {
+	puts $wf "	,PortAReset" 
+   }
+puts $wf "\n" 	
+
+  if {$tcl_B_Clk == 1} {    
+     puts $wf "	,PortBClk" 
+   }
+   
+  if {$tcl_B_Din == 1} {       
+     puts $wf "	,PortBDataIn" 
+    }
+
+  if {$tcl_B_Addr == 1} {       
+     puts $wf "	,PortBAddr" 
+    }
+
+ if {$tcl_B_Wr_En == 1} {
+      puts $wf "	,PortBWriteEnable" 
+    } 
+ if {$tcl_B_Reg_Rd_En == 1} {
+     puts $wf "	,PortBReadEnable " 
+   }
+   
+ if {$tcl_B_Reg_Rd_Rst == 1} {
+     puts $wf "	,PortBReset" 
+    }
+   
+ puts $wf "\n"	
+ if {$tcl_A_Dout == 1} {
+   	  puts $wf "	,PortADataOut"	
+    }
+ if {$tcl_B_Dout == 1} {
+  	  puts $wf "	,PortBDataOut" 
+    }
+    
+   
+ puts $wf "\n"	
+ 
+puts $wf "	);"
+
+
+
+puts $wf "\n"
+puts $wf "  parameter	 DATAWIDTH = $DATAWIDTH;" 
+puts $wf "  parameter	 ADDRWIDTH = $ADDRWIDTH; " 
+puts $wf "  parameter	 MEMDEPTH = 2**(ADDRWIDTH);" 
+puts $wf "\n"
+
+puts $wf "  parameter 	 SPRAM				= $SPRAM;" 
+
+puts $wf "  parameter 	 READ_MODE_A			= $tcl_READ_MODE_A;" 
+puts $wf "  parameter	 READ_WRITE_A			= $READ_WRITE_A;"
+puts $wf "  parameter	 ENABLE_WR_PORTA	 	= $tcl_A_Wr_En; " 
+
+puts $wf "\n"
+puts $wf "  parameter	 REGISTER_RD_ADDR_PORTA 	= $REGISTER_RD_ADDR_PORTA; " 
+puts $wf "\n"
+puts $wf "  parameter	 REGISTER_OUTPUT_PORTA 		= [expr ($REGISTER_OUTPUT_PORTA & !($READ_WRITE_A==3))]; " 
+puts $wf "  parameter	 ENABLE_OUTPUT_REG_PORTA 	= $tcl_A_Reg_Rd_En; " 
+puts $wf "  parameter	 RESET_OUTPUT_REG_PORTA 	= $tcl_A_Reg_Rd_Rst; "
+puts $wf "\n"
+puts $wf "  parameter 	 READ_MODE_B			= $tcl_READ_MODE_B;" 
+puts $wf "  parameter	 READ_WRITE_B			= $READ_WRITE_B;"
+puts $wf "  parameter	 ENABLE_WR_PORTB	 	= $tcl_B_Wr_En; " 
+puts $wf "\n"
+puts $wf "  parameter	 REGISTER_RD_ADDR_PORTB 	= [expr ($REGISTER_RD_ADDR_PORTB & (!$SPRAM))]; "
+puts $wf "\n" 
+puts $wf "  parameter	 REGISTER_OUTPUT_PORTB 		= [expr ($REGISTER_OUTPUT_PORTB & !($READ_WRITE_B==3) & (!$SPRAM))]; " 
+puts $wf "  parameter	 ENABLE_OUTPUT_REG_PORTB 	= $tcl_B_Reg_Rd_En; " 
+puts $wf "  parameter	 RESET_OUTPUT_REG_PORTB 	= $tcl_B_Reg_Rd_Rst; "
+puts $wf "\n\n"
+
+puts $wf "  input 				PortAClk; " 
+puts $wf "  input  \[ADDRWIDTH-1:0\] 		PortAAddr;" 
+  
+  if {$tcl_A_Din == 1} {       
+	puts $wf "  input  \[DATAWIDTH-1:0\] 		PortADataIn; " 
+   }
+  if {$tcl_A_Wr_En == 1} {
+	puts $wf "  input 				PortAWriteEnable;" 
+    }
+ if {$tcl_A_Reg_Rd_En == 1} {
+	puts $wf "  input 				PortAReadEnable;"
+    }
+ if {$tcl_A_Reg_Rd_Rst== 1} {
+	puts $wf "  input 				PortAReset;" 
+    }
+
+puts $wf "\n"
+
+if {$tcl_B_Clk == 1} { 
+       puts $wf "  input 				PortBClk; " 
+    }
+if {$tcl_B_Din == 1} {       
+     puts $wf "  input  \[DATAWIDTH-1:0\] 		PortBDataIn; " 
+    }
+if {$tcl_B_Wr_En == 1} {
+	puts $wf "  input 				PortBWriteEnable;" 
+    }
+if {$tcl_B_Addr == 1} {           
+	puts $wf "  input  \[ADDRWIDTH-1:0\] 		PortBAddr;" 
+    }
+ if {($tcl_B_Reg_Rd_En == 1)} {    
+	puts $wf "  input 				PortBReadEnable;"
+    }
+
+if {($tcl_B_Reg_Rd_Rst == 1)} {
+	puts $wf "  input 				PortBReset;" 
+    }
+
+puts $wf "\n"
+
+if {$tcl_A_Dout == 1} {       
+	puts $wf "  output \[DATAWIDTH-1:0\] 		PortADataOut;" 
+  }
+if {($tcl_B_Dout == 1)} {    
+	puts $wf "  output \[DATAWIDTH-1:0\] 		PortBDataOut;" 
+   }   
+  
+
+
+puts $wf "\n\n"
+
+puts $wf "  wire 				PortAClk;"
+puts $wf {  wire  [ADDRWIDTH-1:0] 		PortAAddr;}
+puts $wf {  wire  [DATAWIDTH-1:0] 		PortADataIn;}
+puts $wf "\n"  
+puts $wf {  wire [DATAWIDTH-1:0] 		PortADataOut;}
+puts $wf "\n"
+puts $wf "  wire 				PortAWriteEnable;"
+puts $wf "  wire 				PortAReadEnable;"
+puts $wf "  wire 				PortAReset;"
+puts $wf "\n"
+puts $wf "  wire 				PortBClk;"
+puts $wf {  wire  [DATAWIDTH-1:0] 		PortBDataIn;}
+puts $wf "  wire 				PortBWriteEnable;"
+puts $wf {  wire  [ADDRWIDTH-1:0] 		PortBAddr;}
+puts $wf "\n"
+puts $wf {  wire [DATAWIDTH-1:0] 		PortBDataOut;}
+puts $wf "\n"
+puts $wf "  wire 				PortBReadEnable;"
+puts $wf "  wire 				PortBReset;"
+
+puts $wf "\n\n"
+
+
+puts $wf " Syncore_ram"
+puts $wf " #(	"
+puts $wf "				.SPRAM(SPRAM)"
+puts $wf "				,.READ_MODE_A(READ_MODE_A)"
+puts $wf "				,.READ_MODE_B(READ_MODE_B)" 
+##########################################
+## Added by Srikanth Annangi -- 12/06/2008
+## 
+puts $wf "				,.READ_WRITE_A(READ_WRITE_A)"
+puts $wf "				,.READ_WRITE_B(READ_WRITE_B)"
+##
+##
+puts $wf "				,.DATAWIDTH(DATAWIDTH)"
+puts $wf "				,.ADDRWIDTH(ADDRWIDTH)"		
+
+puts $wf "				,.ENABLE_WR_PORTA(ENABLE_WR_PORTA)"				
+puts $wf "				,.REGISTER_RD_ADDR_PORTA(REGISTER_RD_ADDR_PORTA)"				
+puts $wf "				,.REGISTER_OUTPUT_PORTA(REGISTER_OUTPUT_PORTA)"
+puts $wf "				,.ENABLE_OUTPUT_REG_PORTA(ENABLE_OUTPUT_REG_PORTA)"
+puts $wf "				,.RESET_OUTPUT_REG_PORTA(RESET_OUTPUT_REG_PORTA)"				
+
+puts $wf "				,.ENABLE_WR_PORTB(ENABLE_WR_PORTB)"
+puts $wf "				,.REGISTER_RD_ADDR_PORTB(REGISTER_RD_ADDR_PORTB)"			
+puts $wf "				,.REGISTER_OUTPUT_PORTB(REGISTER_OUTPUT_PORTB)"
+puts $wf "				,.ENABLE_OUTPUT_REG_PORTB(ENABLE_OUTPUT_REG_PORTB)"
+puts $wf "				,.RESET_OUTPUT_REG_PORTB(RESET_OUTPUT_REG_PORTB)	"
+puts $wf "				) "
+					
+puts $wf "			U1("
+
+ if {($tcl_B_Clk == 1)} {
+	puts $wf "				.PortClk({PortBClk, PortAClk})"
+   } else {
+ 	puts $wf "				.PortClk({PortAClk, PortAClk})"
+   }
+puts $wf "				,.PortReset({PortBReset, PortAReset})"
+puts $wf "				,.PortWriteEnable({PortBWriteEnable, PortAWriteEnable})"
+puts $wf "				,.PortReadEnable({PortBReadEnable, PortAReadEnable})"
+puts $wf "				,.PortDataIn({PortBDataIn, PortADataIn})"
+puts $wf "				,.PortAddr({PortBAddr, PortAAddr})"    
+puts $wf "				,.PortDataOut({PortBDataOut, PortADataOut})"
+puts $wf "				); "
+
+
+puts $wf "endmodule"
+
+close $wf
+## ----------------------------------------------------------------------------------------------
+
+## ----------------------------------------------------------------------------------------------
+## Code for TestBench Generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "."] } {  
+    ### The FILENAME has just the filename
+	set TBFILE "$DIRECTORY/tb_$FILENAME" 
+} else {
+    ### The FILENAME has a directory/filename structure
+    set FDIR [file dirname $FILENAME]
+    set FNAME [file tail $FILENAME]
+	set TBFILE "$FDIR/tb_$FNAME"
+}
+
+set tf [open $TBFILE w+]
+
+
+puts $tf  "\n\n" 
+puts $tf  "`timescale 1ns / 1ns" 
+puts $tf  "\n" 
+puts $tf  "  `define test1 1" 
+puts $tf  "  `define test2 1" 
+puts $tf  "//  `define test3 1" 
+puts $tf  " `define test4 1" 
+puts $tf  " `define test5 1" 
+puts $tf  "\n" 
+puts $tf  "module tbtest;" 
+puts $tf  "\n\n" 
+puts $tf  "  parameter 	NumberOfReads  = 2;" 
+puts $tf  "  parameter 	NumberOfWrites = 1;" 
+puts $tf  "  parameter	SeparateReadWriteAddress = 0;" 
+puts $tf  "\n" 
+puts $tf  "  parameter	 DATAWIDTH = $DATAWIDTH;" 
+puts $tf  "  parameter	 ADDRWIDTH = $ADDRWIDTH; " 
+puts $tf  "  parameter	 MEMDEPTH = 2**(ADDRWIDTH);" 
+puts $tf  "\n" 
+puts $tf  "  parameter	 PERIOD_A = 50;" 
+puts $tf  "  parameter	 PERIOD_B = 75;" 
+puts $tf  "\n " 
+puts $tf  "  parameter	 LATENCY = 2;" 
+puts $tf  "  parameter	 ITER  = 20;" 
+puts $tf  "  parameter 	 DELAY = 10;" 
+puts $tf  "\n\n" 
+puts $tf  "  wire 				PortAClk; " 
+puts $tf  {  reg  [ADDRWIDTH-1:0] 		PortAAddr;}
+puts $tf  {  reg  [DATAWIDTH-1:0] 		PortADataIn;}
+puts $tf  "\n\n" 
+puts $tf  {  wire [DATAWIDTH-1:0] 		PortADataOut_rtl, PortADataOut_synth;}
+puts $tf  "\n" 
+puts $tf  "  reg 				PortAWriteEnable;" 
+puts $tf  "  reg 				PortAReadEnable;" 
+puts $tf  "  reg 				PortAReset;" 
+puts $tf  "\n\n" 
+puts $tf  "  wire 				PortBClk; " 
+puts $tf  {  reg  [ADDRWIDTH-1:0] 		PortBAddr; }
+puts $tf  {  reg  [DATAWIDTH-1:0] 		PortBDataIn; } 
+puts $tf  "\n" 
+puts $tf  {  wire [DATAWIDTH-1:0] 		PortBDataOut_rtl, PortBDataOut_synth; }
+puts $tf  "\n" 
+puts $tf  "  reg 				PortBWriteEnable;" 
+puts $tf  "  reg 				PortBReadEnable;" 
+puts $tf  "  reg 				PortBReset;" 
+puts $tf  "\n" 
+puts $tf  "  integer tb_log;" 
+puts $tf  "  integer NumOfErrs;" 
+puts $tf  "  integer i, j, k, m, n, p;" 
+puts $tf  "  integer test_probe;" 
+puts $tf  "\n" 
+puts $tf  "  reg clk1;" 
+puts $tf  "  reg clk2;" 
+puts $tf  "\n" 
+puts $tf  {  reg [ADDRWIDTH-1:0] StoreAddrA [ITER:0] ; }
+puts $tf  {  reg [ADDRWIDTH-1:0] StoreAddrB [ITER:0] ; }
+puts $tf  "\n\n" 
+puts $tf  "// task definitions" 
+puts $tf  "\n" 
+puts $tf  "//Compare Data" 
+puts $tf  "\n" 
+puts $tf  " task CompareDataA;  " 
+puts $tf  "   integer m;" 
+puts $tf  "   begin" 
+puts $tf  "\n" 
+puts $tf  "     for (m=0; m < LATENCY; m = m + 1) " 
+puts $tf  "      begin" 
+puts $tf  "         @(negedge PortAClk);" 
+puts $tf  "      end  " 
+puts $tf  "\n" 
+puts $tf  "   #(DELAY);" 
+puts $tf  "\n" 
+puts $tf  "     if(PortADataOut_rtl != PortADataOut_synth)" 
+puts $tf  "        begin" 
+puts $tf  "	  NumOfErrs = NumOfErrs + 1;" 
+puts $tf  {  	  $fdisplay(tb_log, "PortAAddr = %h, PortADataOut_rtl = %h,  PortADataOut_synth = %h, <---- ERROR", }
+puts $tf  {   	       		PortAAddr, PortADataOut_rtl, PortADataOut_synth); } 
+puts $tf  "        end  	" 
+puts $tf  "    end" 
+puts $tf  " endtask  " 
+puts $tf  "\n" 
+puts $tf  " task CompareDataB; " 
+puts $tf  "   integer p;" 
+puts $tf  "  begin" 
+puts $tf  "\n" 
+puts $tf  "    for (p=0; p < LATENCY; p = p + 1)" 
+puts $tf  "      begin" 
+puts $tf  "   	@(negedge PortBClk);" 
+puts $tf  "      end  " 
+puts $tf  "\n" 
+puts $tf  "  #(DELAY);" 
+puts $tf  "\n" 
+puts $tf  "     if(PortBDataOut_rtl != PortBDataOut_synth)" 
+puts $tf  "        begin" 
+puts $tf  "	  NumOfErrs = NumOfErrs + 1;" 
+puts $tf  {  	  $fdisplay(tb_log, "PortBAddr = %h, PortBDataOut_rtl = %h,  PortBDataOut_synth = %h, <---- ERROR", } 
+puts $tf  {   	       		PortBAddr, PortBDataOut_rtl, PortBDataOut_synth); } 
+puts $tf  "        end  	" 
+puts $tf  "    end" 
+puts $tf  " endtask  " 
+puts $tf  "\n\n" 
+puts $tf  "// RTL Instanitation" 
+puts $tf  "\n" 
+
+puts $tf  "$COMPONENT\_rtl DUT_RTL (" 
+puts $tf  "	  .PortAClk(PortAClk)" 
+puts $tf  "	, .PortAAddr(PortAAddr)" 
+
+if {$tcl_A_Din == 1} {
+puts $tf  "	, .PortADataIn(PortADataIn)" 
+  }
+  
+    if {$tcl_A_Dout == 1} {
+puts $tf  "	, .PortADataOut(PortADataOut_rtl)" 
+	}
+
+if {$tcl_A_Wr_En == 1} {
+puts $tf  "	, .PortAWriteEnable(PortAWriteEnable)" 
+   }
+   
+if {$tcl_A_Reg_Rd_En == 1} {
+puts $tf  "	, .PortAReadEnable(PortAReadEnable) " 
+   }
+   
+if {$tcl_A_Reg_Rd_Rst== 1} {
+puts $tf  "	, .PortAReset(PortAReset)" 
+   }
+   
+puts $tf  "\n" 
+
+if {$tcl_B_Clk == 1} { 
+     puts $tf  "	, .PortBClk(PortBClk)" 
+   }
+   
+  if {$tcl_B_Din == 1} {       
+     puts $tf  "	, .PortBDataIn(PortBDataIn)" 
+   }
+   
+    if {$tcl_B_Addr == 1} { 
+puts $tf  "	, .PortBAddr(PortBAddr)" 
+ 	}
+  
+   if {($tcl_B_Wr_En == 1)} {
+puts $tf  "	, .PortBWriteEnable(PortBWriteEnable)" 
+   }
+   
+ 
+ 
+ 
+if {($tcl_B_Dout == 1)} { 
+puts $tf  "	, .PortBDataOut(PortBDataOut_rtl)" 
+  }
+
+  if {($tcl_B_Reg_Rd_En == 1)} { 
+puts $tf  "	, .PortBReadEnable(PortBReadEnable) " 
+     }
+   
+  if {($tcl_B_Reg_Rd_Rst == 1)} {   
+puts $tf  "	, .PortBReset(PortBReset)" 
+     }
+puts $tf  "\n"    
+  
+  
+puts $tf  "	);" 
+puts $tf  "\n\n" 
+
+
+
+puts $tf  "//Netlits Instantiation" 
+puts $tf  "\n" 
+puts $tf  "$COMPONENT	 DUT_synth (" 
+puts $tf  "	  .PortAClk(PortAClk)" 
+puts $tf  "	, .PortAAddr(PortAAddr)" 
+
+  if {$tcl_A_Din == 1} {       
+puts $tf  "	, .PortADataIn(PortADataIn)" 
+   }
+   
+  if {$tcl_A_Dout == 1} {          
+puts $tf  "	, .PortADataOut(PortADataOut_synth)" 
+   }
+
+if {$tcl_A_Wr_En == 1} {
+puts $tf  "	, .PortAWriteEnable(PortAWriteEnable)" 
+   }
+   
+if {$tcl_A_Reg_Rd_En == 1} {
+puts $tf  "	, .PortAReadEnable(PortAReadEnable) " 
+   }
+   
+if {$tcl_A_Reg_Rd_Rst== 1} {
+puts $tf  "	, .PortAReset(PortAReset)" 
+   }
+   
+puts $tf  "\n" 
+
+ if {$tcl_B_Clk == 1} { 
+   puts $tf  "	, .PortBClk(PortBClk)" 
+   }
+   
+  if {$tcl_B_Din == 1} {       
+     puts $tf  "	, .PortBDataIn(PortBDataIn)" 
+   }
+
+  if {$tcl_B_Addr == 1} {          
+     puts $tf  "	, .PortBAddr(PortBAddr)" 
+   }
+  
+   if {($tcl_B_Wr_En == 1)} {
+puts $tf  "	, .PortBWriteEnable(PortBWriteEnable)" 
+   }
+   
+if {($tcl_B_Dout == 1)} { 
+puts $tf  "	, .PortBDataOut(PortBDataOut_synth)" 
+   }
+
+  if {($tcl_B_Reg_Rd_En == 1)} { 
+puts $tf  "	, .PortBReadEnable(PortBReadEnable) " 
+     }
+   
+  if {($tcl_B_Reg_Rd_Rst == 1)} {   
+puts $tf  "	, .PortBReset(PortBReset)" 
+     }
+puts $tf  "\n"      
+  
+puts $tf  "	);" 
+puts $tf  "\n\n" 
+
+puts $tf  " initial clk1 = 1'b1;" 
+puts $tf  " always #(PERIOD_A / 2)  clk1 = ~clk1;" 
+puts $tf  "\n" 
+puts $tf  " initial clk2 = 1'b1;" 
+puts $tf  " always #(PERIOD_B / 2)  clk2 = ~clk2;" 
+puts $tf  "\n" 
+puts $tf  " // If same clock, make it all clk1" 
+puts $tf  "  assign PortAClk = clk1;" 
+puts $tf  "  assign PortBClk = clk1; //clk2" 
+puts $tf  "\n" 
+puts $tf  "  initial " 
+puts $tf  "   begin" 
+puts $tf  { 	tb_log 		 = $fopen("tb.log"); } 
+puts $tf  " 	NumOfErrs	 = 0;" 
+puts $tf  "\n" 
+puts $tf  " // Initialize all the input ports" 
+puts $tf  " 	" 
+puts $tf  " 	PortAAddr 	 = 'd0;" 
+puts $tf  " 	PortADataIn	 = 'd0;" 
+puts $tf  " 	PortAWriteEnable = 1'b0;" 
+puts $tf  " 	PortAReadEnable	 = 1'b0;" 
+puts $tf  " 	PortAReset	 = 1'b0;" 
+puts $tf  "\n" 
+puts $tf  " 	PortBAddr 	 = 'd0;" 
+puts $tf  "	PortBDataIn	 = 'd0;" 
+puts $tf  "	PortBWriteEnable = 1'b0;" 
+puts $tf  "	PortBReadEnable	 = 1'b0;" 
+puts $tf  " 	PortBReset	 = 1'b0;" 
+puts $tf  "\n" 
+puts $tf  "   end 	" 
+puts $tf  "\n\n" 
+
+puts $tf  " initial" 
+puts $tf  "  begin" 
+puts $tf  " \n" 
+puts $tf  "  test_probe = 0;" 
+puts $tf  "  @(negedge PortAClk);	    " 
+puts $tf  "  @(negedge PortAClk);	    " 
+puts $tf  "  @(negedge PortBClk);	    " 
+puts $tf  "  @(negedge PortBClk);	    " 
+puts $tf  " \n" 
+puts $tf  "  `ifdef test1" 
+puts $tf  " \n" 
+puts $tf  "   // Test scenario: 1" 
+puts $tf  "   // Write into ports A & B at random addresses one after the another  " 
+puts $tf  "   // and read back the contents" 
+puts $tf  "\n\n " 
+
+puts $tf  "   // PortA Write" 
+puts $tf  "     for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "	begin" 
+puts $tf  "\n" 
+puts $tf  "	     PortAWriteEnable = 1'b1;" 
+puts $tf  "	     PortAReadEnable  = 1'b0;" 
+puts $tf  {	     PortAAddr  = $random; } 
+puts $tf  {	     PortADataIn = $random; } 
+puts $tf  {	     StoreAddrA[i]  = PortAAddr; } 
+puts $tf  "\n" 
+puts $tf  "	    @(negedge PortAClk);" 
+puts $tf  "	    " 
+puts $tf  "	     PortAWriteEnable = 1'b0;" 
+puts $tf  "    	end" 
+puts $tf  "  " 
+puts $tf  "  	@(negedge PortAClk);" 
+puts $tf  "  	" 
+puts $tf  "     // PortB Write" 
+puts $tf  "       for (j= 0; j < ITER; j = j + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "           " 
+puts $tf  "  	     PortBWriteEnable 	= 1'b1;" 
+puts $tf  "	     PortBReadEnable  	= 1'b0;  	     " 
+puts $tf  {  	     PortBAddr  = $random; } 
+puts $tf  {  	     PortBDataIn = $random; } 
+puts $tf  {  	     StoreAddrB[j]  = PortBAddr; } 
+puts $tf  "  " 
+puts $tf  "  	    @(negedge PortBClk);  // No Latency required I guess " 
+puts $tf  "  	    " 
+puts $tf  "  	    PortBWriteEnable = 1'b0;" 
+puts $tf  "    	end" 
+puts $tf  "\n\n" 
+puts $tf  "  // PortA Read" 
+puts $tf  "       for (k= 0; k < ITER; k = k + 1)" 
+puts $tf  "  	begin     " 
+puts $tf  "  " 
+puts $tf  "  	     PortAWriteEnable 	= 1'b0;" 
+puts $tf  "  	     PortAReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortAAddr  	= StoreAddrA[k]; } 
+puts $tf  "  		" 
+puts $tf  "  	   CompareDataA;" 
+puts $tf  "  	     " 
+puts $tf  "      	end" 
+puts $tf  "    " 
+puts $tf  "    // PortB Read" 
+puts $tf  "       for (n= 0; n < ITER; n = n + 1)" 
+puts $tf  "    	begin       " 
+puts $tf  "    " 
+puts $tf  "    	     PortBWriteEnable 	= 1'b0;" 
+puts $tf  "    	     PortBReadEnable  	= 1'b1;" 
+puts $tf  {    	     PortBAddr 		= StoreAddrB[n]; }
+puts $tf  "    	      " 
+puts $tf  "	    CompareDataB;" 
+puts $tf  "  	       " 
+puts $tf  "  	end" 
+puts $tf  "  " 
+puts $tf  "  test_probe = 1;" 
+puts $tf  "  " 
+puts $tf  " `endif " 
+puts $tf  "" 
+puts $tf  "`ifdef test2" 
+puts $tf  "  " 
+puts $tf  "  // Test scenario: 2 --> Enable this only when Output port is registered" 
+puts $tf  "     // Write into ports A & B at random addresses simultaneously  " 
+puts $tf  "     // and read back the contents" 
+puts $tf  "     " 
+puts $tf  "   fork : test2Write" 
+puts $tf  "    // PortA Write" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "     " 
+puts $tf  " " 
+puts $tf  "  	     PortAWriteEnable 	= 1'b1;" 
+puts $tf  "  	     PortAReadEnable  	= 1'b0;" 
+puts $tf  {  	     PortAAddr  	= $random; } 
+puts $tf  {  	     PortADataIn 	= $random; } 
+puts $tf  {  	     StoreAddrA[i]  	= PortAAddr; } 
+puts $tf  "  " 
+puts $tf  "  	    @(negedge PortAClk);" 
+puts $tf  "      	end" 
+puts $tf  "    " 
+puts $tf  "    // What happens when the address clash ?? " 
+puts $tf  "    " 
+puts $tf  "       // PortB Write" 
+puts $tf  "         for (j= 0; j < ITER; j = j + 1)" 
+puts $tf  "    	begin" 
+puts $tf  "       " 
+puts $tf  "    " 
+puts $tf  "    	     PortBWriteEnable 	= 1'b1;" 
+puts $tf  "    	     PortBReadEnable  	= 1'b0;" 
+puts $tf  {    	     PortBAddr  	= $random; } 
+puts $tf  {    	     PortBDataIn 	= $random; } 
+puts $tf  {    	     StoreAddrB[j]  	= PortBAddr; } 
+puts $tf  "    " 
+puts $tf  "    	    @(negedge PortBClk);  // No Latency required I guess" 
+puts $tf  "      	end" 
+puts $tf  "    " 
+puts $tf  "   join // end test2Write" 
+puts $tf  "   " 
+puts $tf  "   " 
+puts $tf  "   fork : test2Read" 
+puts $tf  "    // PortA Read" 
+puts $tf  "         for (k= 0; k < ITER; k = k + 1)" 
+puts $tf  "    	begin" 
+puts $tf  "       " 
+puts $tf  "   " 
+puts $tf  "  	     PortAWriteEnable 	= 1'b0;" 
+puts $tf  "  	     PortAReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortAAddr  	= StoreAddrA[k]; } 
+puts $tf  "  	     " 
+puts $tf  "		CompareDataA;     	     " 
+puts $tf  "        end" 
+puts $tf  "      " 
+puts $tf  "      " 
+puts $tf  "      // PortB Read" 
+puts $tf  "         for (n= 0; n < ITER; n = n + 1)" 
+puts $tf  "      	begin" 
+puts $tf  "      " 
+puts $tf  "    	     PortBWriteEnable 	= 1'b0;" 
+puts $tf  "    	     PortBReadEnable  	= 1'b1;" 
+puts $tf  {    	     PortBAddr 		= StoreAddrB[n]; } 
+puts $tf  "    	       " 
+puts $tf  "		CompareDataB;" 
+puts $tf  "		" 
+puts $tf  "    	end" 
+puts $tf  "  " 
+puts $tf  "  join // end test2Read" 
+puts $tf  "  " 
+puts $tf  "  test_probe = 2;" 
+puts $tf  "    " 
+puts $tf  " `endif // creating lots of problems with memeory contention in Simulations" 
+puts $tf  "    " 
+puts $tf  "" 
+puts $tf  " `ifdef test3" 
+puts $tf  "    " 
+puts $tf  "  " 
+puts $tf  "  // Test scenario: 3" 
+puts $tf  "    // Write into port A & Read from B at random addresses & vice versa " 
+puts $tf  "      " 
+puts $tf  "   // PortA Write PortB Read" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "     " 
+puts $tf  "  	     PortAWriteEnable = 1'b1;" 
+puts $tf  "  	     PortAReadEnable  = 1'b0;" 
+puts $tf  {  	     PortAAddr  = $random; } 
+puts $tf  {  	     PortADataIn = $random; } 
+puts $tf  {  	     StoreAddrA[i]  = PortAAddr; } 
+puts $tf  "  " 
+puts $tf  "  	    @(negedge PortAClk);  	    " 
+puts $tf  "            @(negedge PortBClk);" 
+puts $tf  "" 
+puts $tf  "	     PortBWriteEnable 	= 1'b0;" 
+puts $tf  "	     PortBReadEnable  	= 1'b1;" 
+puts $tf  {	     PortBAddr 		= StoreAddrA[i]; } 
+puts $tf  "          	       " 
+puts $tf  "       	   CompareDataB;" 
+puts $tf  "      	       " 
+puts $tf  "  	end" 
+puts $tf  "  	" 
+puts $tf  "        " 
+puts $tf  "    // PortB Write PortA Read" 
+puts $tf  "      for (j= 0; j < ITER; j = j + 1)" 
+puts $tf  "    	begin" 
+puts $tf  "       " 
+puts $tf  "    	     PortBWriteEnable = 1'b1;" 
+puts $tf  "    	     PortBReadEnable  	= 1'b0; " 
+puts $tf  {    	     PortBAddr  = $random; } 
+puts $tf  {    	     PortBDataIn = $random; } 
+puts $tf  {    	     StoreAddrB[j]  = PortBAddr; } 
+puts $tf  "    " 
+puts $tf  "    	    @(negedge PortBClk);  // No Latency required I guess" 
+puts $tf  "      	    @(negedge PortAClk);" 
+puts $tf  "    	" 
+puts $tf  "    	     PortAWriteEnable 	= 1'b0;" 
+puts $tf  "    	     PortAReadEnable  	= 1'b1;" 
+puts $tf  {    	     PortAAddr  	= StoreAddrB[j]; } 
+puts $tf  "    	" 
+puts $tf  "	CompareDataA;    	     " 
+puts $tf  "	" 
+puts $tf  "        end" 
+puts $tf  "            " 
+puts $tf  " test_probe = 3;" 
+puts $tf  " " 
+puts $tf  "  `endif" 
+puts $tf  "  " 
+puts $tf  " `ifdef test4" 
+puts $tf  "" 
+puts $tf  "// Test scenario: 4" 
+puts $tf  "    // Read & Write into same port simultaneously (Checking the Write_modes)" 
+puts $tf  "      " 
+puts $tf  "   // PortA Write PortA Read" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "     " 
+puts $tf  "  	     PortAWriteEnable = 1'b1;" 
+puts $tf  "  	     PortAReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortAAddr  = $random; } 
+puts $tf  {  	     PortADataIn = $random; } 
+puts $tf  {  	     StoreAddrA[i]  = PortAAddr; } 
+puts $tf  "  	     " 
+puts $tf  "       	   CompareDataA;" 
+puts $tf  "      	       " 
+puts $tf  "  	end" 
+puts $tf  "  	" 
+puts $tf  "   // PortB Write PortB Read" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "     " 
+puts $tf  "  	     PortBWriteEnable = 1'b1;" 
+puts $tf  "  	     PortBReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortBAddr  = $random; } 
+puts $tf  {  	     PortBDataIn = $random; } 
+puts $tf  {  	     StoreAddrB[i]  = PortBAddr; } 
+puts $tf  "  	     " 
+puts $tf  "       	   CompareDataB;" 
+puts $tf  "      	       " 
+puts $tf  "  	end" 
+puts $tf  "  	" 
+puts $tf  "" 
+puts $tf  "test_probe = 4;" 
+puts $tf  "" 
+puts $tf  " `endif" 
+puts $tf  " " 
+puts $tf  " `ifdef test5" 
+puts $tf  " " 
+puts $tf  "// Test scenario: 5" 
+puts $tf  "    // Test Reset conditions." 
+puts $tf  "    // Read & Write into same port simultaneously (Checking the Write_modes)" 
+puts $tf  "      " 
+puts $tf  "   // PortA Write PortA Read" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "  	" 
+puts $tf  "  	    PortAReset	 = 1'b1;  " 
+puts $tf  "     " 
+puts $tf  "  	     PortAWriteEnable = 1'b1;" 
+puts $tf  "  	     PortAReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortAAddr  = $random; } 
+puts $tf  {  	     PortADataIn = $random; } 
+puts $tf  {  	     StoreAddrA[i]  = PortAAddr; } 
+puts $tf  "  	     " 
+puts $tf  "       	   CompareDataA;" 
+puts $tf  "      	       " 
+puts $tf  "  	end" 
+puts $tf  "  	" 
+puts $tf  "   // PortB Write PortB Read" 
+puts $tf  "       for (i= 0; i < ITER; i = i + 1)" 
+puts $tf  "  	begin" 
+puts $tf  "     " 
+puts $tf  "     	    PortBReset	 = 1'b1;  " 
+puts $tf  "     	    " 
+puts $tf  "  	    @(negedge PortBClk);" 
+puts $tf  "  	    @(negedge PortBClk);" 
+puts $tf  "  " 
+puts $tf  "  	     PortBWriteEnable = 1'b1;" 
+puts $tf  "  	     PortBReadEnable  	= 1'b1;" 
+puts $tf  {  	     PortBAddr  = $random; } 
+puts $tf  {  	     PortBDataIn = $random; } 
+puts $tf  {  	     StoreAddrB[i]  = PortBAddr; }
+puts $tf  "  	     " 
+puts $tf  "       	   CompareDataB;" 
+puts $tf  "      	       " 
+puts $tf  "  	end" 
+puts $tf  "" 
+puts $tf  "" 
+puts $tf  "	PortAReset	 = 1'b0;  " 
+puts $tf  "	PortBReset	 = 1'b0;  " 
+puts $tf  "" 
+puts $tf  "test_probe = 5;" 
+puts $tf  "" 
+puts $tf  " `endif" 
+puts $tf  "" 
+puts $tf  "/// Check for Any Errors" 
+puts $tf  "" 
+puts $tf  "  	if (NumOfErrs == 0)" 
+puts $tf  {	  $display("Simulation Successful !!! "); }
+puts $tf  "   	else       		" 
+puts $tf  {   	 $display("Simulation FAILED !!! "); } 
+puts $tf  "\n\n  	" 
+puts $tf  {		$fclose(tb_log); } 
+puts $tf  "		" 
+puts $tf  {		$finish; }
+puts $tf  "\n\n" 
+puts $tf  "  end //INITIAL" 
+puts $tf  "\n\n" 
+
+puts $tf  " initial " 
+puts $tf  "  begin" 
+puts $tf  {   $dumpfile ("dump.vcd"); } 
+puts $tf  {   $dumpvars (0, tbtest); } 
+puts $tf  "  end" 
+puts $tf  "\n\n" 
+
+puts $tf  "endmodule"
+
+close $tf
+
+## ----------------------------------------------------------------------------------------------
+## Syncore Generated files list
+## ----------------------------------------------------------------------------------------------
+
+## Filelist Generation
+
+ set lf [open $DIRECTORY/filelist.txt w+]
+ puts $lf "filelist.txt  -- Contains list of files written out by SynCore"
+ puts $lf "options.txt -- Contains all the options selected in SynCore"
+ puts $lf "readme.txt -- Contains brief description and known issues"
+ puts $lf "syncore_ram.v -- Verilog library file required to generate RAM model" 
+ if { [ string match [file dirname  $FILENAME] "." ] } {
+ puts $lf "tb_$FILENAME              -- Verilog testbench file to simulate Core Model"
+ } else {
+ puts $lf "$TBFILE                   -- Verilog testbench file to simulate Core Model"
+ }
+ puts $lf "instantiation_file.vin -- Describes how to instantiate wrapper file"
+ puts $lf "$FILENAME -- RAM model wrapper file generated by SynCore"
+ close $lf
+## ----------------------------------------------------------------------------------------------
+ cd $install_dir
+}
+
+}
+   ]]> </tcl>
+
+
+ </dialog>
+   
+</dyndialog>
+
+

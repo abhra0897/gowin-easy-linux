@@ -1,0 +1,73 @@
+# !/bin/bash
+
+
+#~~~~~~~~~~~~~~~~  GoWin SDK All-in-One Launcher ~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~ Written By: Avra Mitra ~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~ Updated: Feb 24, 2020  ~~~~~~~~~~~~~~~~~~~~#
+
+# ---------------------------------------------------------------------------
+# This script is a launcher to automate the process of configuring and running different applications
+# in order to make eveything work perfectly. It does following things:
+#       1) Set IDE and license server executables' directories
+#       2) Set the license directories. If your license is in other location, change them
+#       3) Terminate existing license server process/daemon, and synplify
+#       4) Run Synopsis Synplify Pro License server with the proper synplify license file
+#       5) Export environment variable which will be used by synplify pro
+#       6) Delete log files from previous run to keep things clean
+#       7) Set GoWin IDE's license by editing gwlicense.ini with proper license file path
+#       8) Run the GoWin IDE.
+# ---------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+#-------------------- YOU MAY CHANGE THE BELOW SECTION -------------------------
+#-------------------------------------------------------------------------------
+
+# store current working directory as our base directory
+INIT_DIR=$(pwd);
+# store synopsis synplify license server directory
+LIC_SERVER_DIR=$INIT_DIR/GowinLicenseServerForLinux/SCLPortableVersion/linux64/bin;
+# store gowin IDE directory
+IDE_DIR=$INIT_DIR/IDE/bin;
+
+# I stored synplify pro license in the same directory as license server. You may change it
+SYNPLIFY_LIC_DIR=$LIC_SERVER_DIR;
+# This variable stores Synplify pro's license file's name. Change it if your license file has a different name
+SYNPLIFY_LIC_FILE_NAME=gowin_Synplifypro.lic;
+
+# And the gowin IDE license is stored in thr IDE directory. It also can be changed
+IDE_LIC_DIR=$IDE_DIR;
+# This variable stores GoWin IDE's license file's name. Change it if your license file has a different name
+IDE_LIC_FILE_NAME=gowin.lic;
+
+
+#-------------------------------------------------------------------------------
+#----------------------- DON'T CHANGE ANYTHING BELOW ---------------------------
+#-------------------------------------------------------------------------------
+
+# at first check if any other lmgrd instance is running: ps-ax | grep lmgrd
+# if found, terminate with: kill -15 <PID>
+killall -SIGTERM lmgrd;
+# do same with synplify process
+killall -SIGTERM synplify;
+
+# start license server with proper synopsis synplify pro license file.
+# host ID and host name in the license file must match with your machine.
+# if doesn't match, change machine's mac.
+
+$LIC_SERVER_DIR/lmgrd -l $INIT_DIR/LicenseServer.log -c $SYNPLIFY_LIC_DIR/$SYNPLIFY_LIC_FILE_NAME
+
+#-------------------------------------------------------------------------------
+# Add LM_LICENSE_FILE environment variable. For some reason, adding it to ~/.bashrc doesn't seem to work
+export LM_LICENSE_FILE=27020@localhost;
+
+#delete the stupid stdout.log.bak files from previous run
+rm $INIT_DIR/stdout.log*;
+
+#Set the IDE license. It's different from Synplify Pro license
+echo [license] > $IDE_DIR/gwlicense.ini;
+echo lic=\"$IDE_LIC_DIR/$IDE_LIC_FILE_NAME\" >> $IDE_DIR/gwlicense.ini;
+
+# Now run the main IDE
+$IDE_DIR/gw_ide &
+
+

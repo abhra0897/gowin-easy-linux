@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="PSRAM Memory Interface 2CH" id="psramch" version= "1.0" category="Soft IP Core|Memory Control">PSRAM Memory Interface 2CH</ip>
+    <target module="PSRAM_Memory_Interface_2CH_Top">psram_memory_interface_2ch</target>
+    <docs>
+        <doc type="summary">/doc/psramch.html</doc>
+        <doc type="help">/doc/psramch_help.html</doc>
+    </docs>
+    <devices>
+    </devices>
+</ipcore>

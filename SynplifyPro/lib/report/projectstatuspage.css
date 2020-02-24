@@ -1,0 +1,272 @@
+/* Style sheet for Project Status Page */
+body {
+    font-family: sans-serif,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #F5F5F5;
+}
+
+table.spTop {
+    padding:0px;  
+    margin:0px;       
+    border-right: solid 1px black;
+    border-left: solid 1px black;
+    border-top: solid 1px black;
+    border-bottom: 0px inset #cccccc;
+}
+
+table.spInside {
+    margin:0px;
+    border-right: solid 1px black;
+    border-left: solid 1px black;
+    border-top: 0px inset #cccccc;
+    border-bottom: 1px inset #cccccc;
+}
+
+table.spBottom {
+    margin:0px;
+    border-right: solid 1px black;
+    border-left: solid 1px black;
+    border-top: 0px inset #cccccc;
+    border-bottom: solid 1px black;
+}
+
+table {
+    border: solid 1px black;
+}
+
+
+/* For the outer empty table to minimize resize */
+table td.outline {
+    border: none;
+    padding: 0px ;
+    background-color:#f0f0ff;
+}
+
+table tr {
+
+}
+
+table td {
+    border-bottom: solid 1px gray;
+    border-right: solid 1px gray;
+    font-size: small;
+    padding-left: 6px;
+    background-color: #f7f7fe;
+}
+
+table td.optionTitle {
+    margin: 2px;
+    padding: 2px;
+    /*border: solid 1px black;*/
+    border-bottom: solid 1px gray;
+    border-right: solid 1px gray;
+    font-size: small;
+    background-color: #e0e0ff;
+}
+
+table th.optionTitle {
+    margin: 2px;
+    padding: 2px;
+    /*border: solid 1px black;*/
+    border-bottom: solid 1px gray;
+    border-right: solid 1px gray;
+    font-size: small;
+    background-color: #f7f7fe;
+}
+
+table td.sp {
+    margin: 0px;
+    padding: 2px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    padding-left: 6px;
+    background-color: #FFFFFF;
+}
+
+table td.spTitle {
+    margin: 0px;
+    padding: 2px;
+    /*border: solid 1px black;*/
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #e0e0ff;
+}
+
+table th.spTitleActive {
+    margin: 0px;
+    padding: 2px;
+    /*border: solid 1px black;*/
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    padding-left: 6px;
+    background-color: rgba(135, 206, 250, .5);
+}
+
+table th.summaryTitle {
+    margin: 1px;
+    padding: 2px;
+    /*border: dashed 1px black;*/
+    font-size: small;
+    background-color: #e0e0ff;
+}
+
+table td.lnote {
+    width: 20px;
+    background: #e0e0ff url('log_note.png') no-repeat center;
+}
+
+table td.lwarn {
+    width: 20px;
+    background: #e0e0ff url('log_warn.png') no-repeat center;
+}
+
+table td.lerror {
+    width: 20px;
+    background: #e0e0ff url('log_error.png') no-repeat center;
+}
+
+table td.slnote {
+    width: 30px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;    
+    background: #e0e0ff url('log_note.png') no-repeat center;
+}
+
+table td.slwarn {
+    width: 30px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    background: #e0e0ff url('log_warn.png') no-repeat center;
+}
+
+table td.slerror {
+    width: 30px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    background: #e0e0ff url('log_error.png') no-repeat center;
+}
+
+table td.empty {
+    background-color: #FFFFFF;
+}
+
+table th {
+    margin: 1px;
+    padding: 1px;
+    /*border: solid 1px black; */
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #e0e0ff;
+}
+
+table th.sp {
+    margin: 0px;
+    padding: 2px;
+    /*border: solid 1px black; */
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #cccccc;
+    padding-left: 6px;
+}
+
+thead.tablehead th {
+    padding-left: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+thead.tableheadSP th {
+    padding-left: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #cccccc;
+}
+
+thead.collapse th {
+    padding-left: 20px;
+    padding-bottom: 5px;
+    background: url(extra_minus.png) left no-repeat padding-box;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+thead.expand th {
+    padding-left: 20px;
+    padding-bottom: 2px;
+    background: url(extra_add.png) left no-repeat padding-box;
+    border-bottom: 1px inset #cccccc;
+    border-right: 1px inset #cccccc;
+    border-left: 1px inset #cccccc;
+    border-top: 1px inset #cccccc;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+thead.expandSp th.sp {
+    padding-left: 20px;    
+    padding-bottom: 2px;
+    background: #e0e0ff url(extra_add.png) left no-repeat padding-box;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+thead.collapseSp th.sp {
+    padding-left: 20px;    
+    padding-bottom: 2px;
+    background: #e0e0ff url(extra_minus.png) left no-repeat padding-box;
+    font-size: small;
+}
+
+
+thead.expandSp th.spReport {
+    padding-left: 20px;    
+    padding-bottom: 2px;
+    background: #e0e0ff url(extra_add.png) left no-repeat padding-box;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+thead.collapseSp th.spReport {
+    padding-left: 20px;    
+    padding-bottom: 2px;
+    background: #e0e0ff url(extra_minus.png) left no-repeat padding-box;
+    font-size: small;
+    background-color: #a9a9aa;
+}
+
+.hidden {
+    display: none;
+}

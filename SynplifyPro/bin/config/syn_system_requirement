@@ -1,0 +1,6 @@
+#              This file should only be modified by unix user 
+#              and tested with syn_system_check.pl script. 
+#
+# 1. There are some common patches but should be listed for each  platform. 
+# 2. This file should only be modified from unix platform
+# $Header: //synplicity/ui2019q3p1/unix_scripts/bin/config/syn_system_requirement#1 $

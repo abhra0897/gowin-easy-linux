@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Complex Multiplier" id="complex_multiplier" version= "1.0" category="Soft IP Core|DSP and Mathemathics">Complex Multiplier</ip>
+    <target module="Complex_Multiplier_Top">complex_multiplier</target>
+    <docs>
+        <doc type="summary">/doc/complex_multiplier.html</doc>
+        <doc type="help">/doc/complex_multiplier_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSR-4C-*</device>
+        <device supported="true">GW1NSER-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

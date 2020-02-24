@@ -1,0 +1,791 @@
+{
+  "NAME": "QFN88",
+  "PKG_TYPE": "QUAD",
+  "HEIGHT": 22,
+  "PIN_DATA": [
+    {
+      "INDEX": "1",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "2",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "3",
+      "NAME": "VCCO2/VCCO7",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "4",
+      "NAME": "IOL7A",
+      "TYPE": "I/O",
+      "BANK": 7,
+      "CFG": "LPLL1_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOL7B",
+      "DQS": "DQ0"
+    },
+    {
+      "INDEX": "5",
+      "NAME": "IOR25B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "TMS",
+      "DIFF": "N",
+      "PAIR": "IOR25A",
+      "DQS": "DQ10"
+    },
+    {
+      "INDEX": "6",
+      "NAME": "IOR26A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "TCK",
+      "DIFF": "P",
+      "PAIR": "IOR26B",
+      "DQS": "DQ10",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "7",
+      "NAME": "IOR26B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "TDI",
+      "DIFF": "N",
+      "PAIR": "IOR26A",
+      "DQS": "DQ10",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "8",
+      "NAME": "IOR25A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "TDO",
+      "DIFF": "P",
+      "PAIR": "IOR25B",
+      "DQS": "DQ10"
+    },
+    {
+      "INDEX": "9",
+      "NAME": "IOR31B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "RECONFIG_N",
+      "DIFF": "N",
+      "PAIR": "IOR31A",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "10",
+      "NAME": "IOL29A",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "CFG": "GCLKT_6",
+      "DIFF": "P",
+      "PAIR": "IOL29B",
+      "DQS": "DQ2",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "11",
+      "NAME": "IOL29B",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "CFG": "GCLKC_6",
+      "DIFF": "N",
+      "PAIR": "IOL29A",
+      "DQS": "DQ2",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "12",
+      "NAME": "VCCX/VCCO1/VCCO6",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "13",
+      "NAME": "IOL45A",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "CFG": "LPLL2_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOL45B",
+      "DQS": "DQ2"
+    },
+    {
+      "INDEX": "14",
+      "NAME": "VCCPLLL1",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "15",
+      "NAME": "IOL47A",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "CFG": "LPLL2_T_FB",
+      "DIFF": "P",
+      "PAIR": "IOL47B",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "16",
+      "NAME": "IOL47B",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "CFG": "LPLL2_C_FB",
+      "DIFF": "N",
+      "PAIR": "IOL47A",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "17",
+      "NAME": "IOL49A",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "DIFF": "P",
+      "PAIR": "IOL49B",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "18",
+      "NAME": "IOL49B",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "DIFF": "N",
+      "PAIR": "IOL49A",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "19",
+      "NAME": "IOL51A",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "DIFF": "P",
+      "PAIR": "IOL51B",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "20",
+      "NAME": "IOL51B",
+      "TYPE": "I/O",
+      "BANK": 6,
+      "DIFF": "N",
+      "PAIR": "IOL51A",
+      "DQS": "DQ3",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "21",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "22",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "23",
+      "NAME": "VCCO5",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "24",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "25",
+      "NAME": "IOB6A",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "P",
+      "PAIR": "IOB6B",
+      "DQS": "DQ4",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "26",
+      "NAME": "IOB6B",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "N",
+      "PAIR": "IOB6A",
+      "DQS": "DQ4",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "27",
+      "NAME": "IOB8A",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "P",
+      "PAIR": "IOB8B",
+      "DQS": "DQ4",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "28",
+      "NAME": "IOB8B",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "N",
+      "PAIR": "IOB8A",
+      "DQS": "DQ4",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "29",
+      "NAME": "IOB14A",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "P",
+      "PAIR": "IOB14B",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "30",
+      "NAME": "IOB14B",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "N",
+      "PAIR": "IOB14A",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "31",
+      "NAME": "IOB18A",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "P",
+      "PAIR": "IOB18B",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "32",
+      "NAME": "IOB18B",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "N",
+      "PAIR": "IOB18A",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "33",
+      "NAME": "IOB24A",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "P",
+      "PAIR": "IOB24B",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "34",
+      "NAME": "IOB24B",
+      "TYPE": "I/O",
+      "BANK": 5,
+      "DIFF": "N",
+      "PAIR": "IOB24A",
+      "DQS": "DQ5",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "35",
+      "NAME": "IOB30A",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "CFG": "GCLKT_4",
+      "DIFF": "P",
+      "PAIR": "IOB30B",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "36",
+      "NAME": "IOB30B",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "CFG": "GCLKC_4",
+      "DIFF": "N",
+      "PAIR": "IOB30A",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "37",
+      "NAME": "IOB34A",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "P",
+      "PAIR": "IOB34B",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "38",
+      "NAME": "IOB34B",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "N",
+      "PAIR": "IOB34A",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "39",
+      "NAME": "IOB40A",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "P",
+      "PAIR": "IOB40B",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "40",
+      "NAME": "IOB40B",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "N",
+      "PAIR": "IOB40A",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "41",
+      "NAME": "IOB43A",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "P",
+      "PAIR": "IOB43B",
+      "DQS": "DQ6"
+    },
+    {
+      "INDEX": "42",
+      "NAME": "IOB42B",
+      "TYPE": "I/O",
+      "BANK": 4,
+      "DIFF": "N",
+      "PAIR": "IOB42A",
+      "DQS": "DQ6",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "43",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "44",
+      "NAME": "VCCO4",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "45",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "46",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "47",
+      "NAME": "EXTR",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "48",
+      "NAME": "IOR49B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "DIFF": "N",
+      "PAIR": "IOR49A",
+      "DQS": "DQ8",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "49",
+      "NAME": "IOR49A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "DIFF": "P",
+      "PAIR": "IOR49B",
+      "DQS": "DQ8",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "50",
+      "NAME": "VCCPLLR1",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "51",
+      "NAME": "IOR45A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "RPLL2_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOR45B",
+      "DQS": "DQ9"
+    },
+    {
+      "INDEX": "52",
+      "NAME": "IOR39A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "SCLK",
+      "DIFF": "P",
+      "PAIR": "IOR39B",
+      "DQS": "DQ9"
+    },
+    {
+      "INDEX": "53",
+      "NAME": "IOR38B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "DOUT/WE_N",
+      "DIFF": "N",
+      "PAIR": "IOR38A",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "54",
+      "NAME": "IOR38A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "DIN/CLKHOLD_N",
+      "DIFF": "P",
+      "PAIR": "IOR38B",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "55",
+      "NAME": "IOR36B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "SSPI_CS_N/D0",
+      "DIFF": "N",
+      "PAIR": "IOR36A",
+      "DQS": "DQS9"
+    },
+    {
+      "INDEX": "56",
+      "NAME": "IOR36A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "SO/D1",
+      "DIFF": "P",
+      "PAIR": "IOR36B",
+      "DQS": "DQS9"
+    },
+    {
+      "INDEX": "57",
+      "NAME": "IOR35A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "FASTRD_N/D3",
+      "DIFF": "P",
+      "PAIR": "IOR35B",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "58",
+      "NAME": "VCCO3",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "59",
+      "NAME": "IOR34B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MCLK/D4",
+      "DIFF": "N",
+      "PAIR": "IOR34A",
+      "DQS": "DQ9"
+    },
+    {
+      "INDEX": "60",
+      "NAME": "IOR34A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MCS_N/D5",
+      "DIFF": "P",
+      "PAIR": "IOR34B",
+      "DQS": "DQ9"
+    },
+    {
+      "INDEX": "61",
+      "NAME": "IOR33B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MO/D6",
+      "DIFF": "N",
+      "PAIR": "IOR33A",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "62",
+      "NAME": "IOR33A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MI/D7",
+      "DIFF": "P",
+      "PAIR": "IOR33B",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "63",
+      "NAME": "IOR29A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "GCLKT_3",
+      "DIFF": "P",
+      "PAIR": "IOR29B",
+      "DQS": "DQ9",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "64",
+      "NAME": "VCCO2/VCCO7",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "65",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "66",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "67",
+      "NAME": "VCCX/VCCO1/VCCO6",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "68",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "69",
+      "NAME": "IOT50A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "P",
+      "PAIR": "IOT50B",
+      "DQS": "DQ12",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "70",
+      "NAME": "IOT44B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "N",
+      "PAIR": "IOT44A",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "71",
+      "NAME": "IOT44A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "P",
+      "PAIR": "IOT44B",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "72",
+      "NAME": "IOT40B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "N",
+      "PAIR": "IOT40A",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "73",
+      "NAME": "IOT40A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "P",
+      "PAIR": "IOT40B",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "74",
+      "NAME": "IOT34B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "N",
+      "PAIR": "IOT34A",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "75",
+      "NAME": "IOT34A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "DIFF": "P",
+      "PAIR": "IOT34B",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "76",
+      "NAME": "IOT30B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKC_1",
+      "DIFF": "N",
+      "PAIR": "IOT30A",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "77",
+      "NAME": "IOT30A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_1",
+      "DIFF": "P",
+      "PAIR": "IOT30B",
+      "DQS": "DQ13",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "78",
+      "NAME": "VCCO0",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "79",
+      "NAME": "IOT27B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "GCLKC_0",
+      "DIFF": "N",
+      "PAIR": "IOT27A",
+      "DQS": "DQ14"
+    },
+    {
+      "INDEX": "80",
+      "NAME": "IOT27A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "GCLKT_0",
+      "DIFF": "P",
+      "PAIR": "IOT27B",
+      "DQS": "DQ14"
+    },
+    {
+      "INDEX": "81",
+      "NAME": "IOT17B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT17A",
+      "DQS": "DQ14"
+    },
+    {
+      "INDEX": "82",
+      "NAME": "IOT17A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT17B",
+      "DQS": "DQ14"
+    },
+    {
+      "INDEX": "83",
+      "NAME": "IOT6B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT6A",
+      "DQS": "DQ15",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "84",
+      "NAME": "IOT6A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT6B",
+      "DQS": "DQ15",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "85",
+      "NAME": "IOT4B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT4A",
+      "DQS": "DQ15",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "86",
+      "NAME": "IOT4A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "P",
+      "PAIR": "IOT4B",
+      "DQS": "DQ15",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "87",
+      "NAME": "IOR30B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MODE1",
+      "DIFF": "N",
+      "PAIR": "IOR30A",
+      "DQS": "DQ9"
+    },
+    {
+      "INDEX": "88",
+      "NAME": "IOR30A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "MODE0",
+      "DIFF": "P",
+      "PAIR": "IOR30B",
+      "DQS": "DQ9"
+    }
+  ]
+}

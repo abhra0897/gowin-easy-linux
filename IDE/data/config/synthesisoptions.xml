@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OptionDef>
+    <TextOption id="SYN02" label="Frequency" default="Auto" rule="\d+(\.\d{0,4})?">
+        <Category>Constraints options</Category>
+        <Description>Specify the global design frequency(in MHz). By default auto constraints is enabled.</Description>
+        <Command>set_option -frequency %1</Command>
+        <DefaultCmd>set_option -frequency auto</DefaultCmd>
+    </TextOption>
+    <SingleChoiceOption id="SYN03" label="Use Clock Period for Unconstrainted IO" default="1">
+        <Category>Constraints options</Category>
+        <Description>Determine whether default constraints are used for I/O ports that do not have user-defined constraints.</Description>
+        <Choice label="True" cmd="set_option -auto_constrain_io 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <IntegerOption id="SYN04" label="Fanout Guide" default="10000" min="1">
+        <Category>Device options</Category>
+        <Description>Set the guideline for fanout-based optimizations such as replication.</Description>
+        <Command>set_option -maxfan %1</Command>
+    </IntegerOption>
+    <SingleChoiceOption id="SYN05" label="Disable I/O Insertion" default="1">
+        <Category>Device options</Category>
+        <Description>Enable/disable I/O insertion.</Description>
+        <Choice label="True" cmd="set_option -disable_io_insertion 1"/>
+        <Choice label="False" cmd="set_option -disable_io_insertion 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN06" label="Update Compile Point Timing Data" default="1">
+        <Category>Device options</Category>
+        <Description>Determine whether or not changes inside a compile point can cause the compile point (or top-level) containing it to change accordingly.</Description>
+        <Choice label="True" cmd="set_option -update_models_cp 1"/>
+        <Choice label="False" cmd="set_option -update_models_cp 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN07" label="Read Write Check on RAM" default="0">
+        <Category>Device options</Category>
+        <Description>If read or write conflicts exist for the RAM, enable this option to insert bypass logic around the RAM to prevent simulation mismatch. Disabling this option does not generate bypass logic.</Description>
+        <Choice label="True" cmd="set_option -rw_check_on_ram 1"/>
+        <Choice label="False" cmd="set_option -rw_check_on_ram 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN08" label="Annotated Properties for Analyst" default="0">
+        <Category>Device options</Category>
+        <Description>Enable/disable the annotation of certain generated properties relating to clocks and expansion onto the RTL view.</Description>
+        <Choice label="True" cmd="set_option -run_prop_extract 1"/>
+        <Choice label="False" cmd="set_option -run_prop_extract 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN09" label="Resolve Mixed Drivers" default="1">
+        <Category>Device options</Category>
+        <Description>When a net is driven by a VCC or GND and active drivers, enable this option to connect the net to the VCC or GND driver.</Description>
+        <Choice label="True" cmd="set_option -resolve_multiple_driver 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN10" label="FSM Compiler" default="0">
+        <Category>Other options</Category>
+        <Description>Enable/disable the FSM compiler. Control the use of FSM synthesis for state machines.</Description>
+        <Choice label="True" cmd="set_option -symbolic_fsm_compiler 1"/>
+        <Choice label="False" cmd="set_option -symbolic_fsm_compiler 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN11" label="Resource Sharing" default="0">
+        <Category>Other options</Category>
+        <Description>Use resource sharing during synthesis.</Description>
+        <Choice label="True" cmd="set_option -resource_sharing 1"/>
+        <Choice label="False" cmd="set_option -resource_sharing 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN12" label="Pipelining" default="0">
+        <Category>Other options</Category>
+        <Description>Run designs at a faster frequency by moving registers into the multiplier, creating pipeline stages.</Description>
+        <Choice label="True" cmd="set_option -pipe 1"/>
+        <Choice label="False" cmd="set_option -pipe 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN13" label="Retiming" default="1">
+        <Category>Other options</Category>
+        <Description>When enabled(true), registers may be moved into combinational logic to improve performance.</Description>
+        <Choice label="True" cmd="set_option -retiming 1"/>
+        <Choice label="False" cmd="set_option -retiming 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN14" label="Write Vendor Constraint File" default="0">
+        <Category>Output File options</Category>
+        <Description>Write vendor-specific constraint files.</Description>
+        <Choice label="True" cmd="set_option -write_apr_constraint 1"/>
+        <Choice label="False" cmd="set_option -write_apr_constraint 0"/>
+    </SingleChoiceOption>
+    <TextOption id="SYN15" label="Number of Critical Paths" default="" rule="\d+">
+        <Category>Timing Report options</Category>
+        <Description>Specifiy the number of critical paths to report in the timing report.</Description>
+        <Command>set_option -num_critical_paths %1</Command>
+        <DefaultCmd></DefaultCmd>
+    </TextOption>
+    <TextOption id="SYN16" label="Number of Start/End Points" default="" rule="\d+">
+        <Category>Timing Report options</Category>
+        <Description>Specify the number of start and end points to include when reporting paths with the worst slack in the timing report.</Description>
+        <Command>set_option -num_startend_points %1</Command>
+        <DefaultCmd></DefaultCmd>
+    </TextOption>
+    <SingleChoiceOption id="SYN17" label="Verilog Language" default="0">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Specify Verilog standard.</Description>
+        <Choice label="System Verilog" cmd="set_option -vlog_std sysv"/>
+        <Choice label="Verilog 2001" cmd="set_option -vlog_std v2001"/>
+        <Choice label="Verilog 95" cmd="set_option -vlog_std v95"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN18" label="Push Tristates" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Enable/Disable the push of tristates across process/block boundaries.</Description>
+        <Choice label="False" cmd="set_option -compiler_compatible 1"/>
+        <Choice label="True" cmd="set_option -compiler_compatible 0"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN19" label="Allow Duplicate Modules" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>For Verilog designs, allow the use of duplicate module names. When true, the last definition of the module is used by the software and any previous definitions are ignored.</Description>
+        <Choice label="True" cmd="set_option -allow_duplicate_modules 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN20" label="Multiple File Compilation Unit" default="0">
+        <Category>Verilog/VHDL options</Category>
+        <Description>When you enable the Multiple File Compilation Unit switch, the Verilog compiler uses the compilation unit for modules defined in multiple files.</Description>
+        <Choice label="True" cmd="set_option -multi_file_compilation_unit 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN21" label="Beta Features for Verilog" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Enable/disable the use of Verilog compiler beta features.</Description>
+        <Choice label="True" cmd="set_option -beta_vfeatures 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <IntegerOption id="SYN22" label="Loop Limit" default="2000" min="2000" max="1000000">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Allow you to override the default compiler loop limit value of 2000 in the RTL.</Description>
+        <Command>set_option -looplimit %1</Command>
+    </IntegerOption>
+    <SingleChoiceOption id="SYN23" label="Synthesis On/Off Implemented as Translate On/Off" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Determine whether code between synthesis on/off directives is ignored.</Description>
+        <Choice label="True" cmd="set_option -synthesis_onoff_pragma 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN24" label="VHDL 2008" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Enable the use of VHDL 2008 language standards.</Description>
+        <Choice label="True" cmd="set_option -vhdl2008 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN29" label="VHDL 2019" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Enable the use of VHDL 2019 language standards.</Description>
+        <Choice label="True" cmd="set_option -vhdl2019 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN25" label="Implicit Initial Value Support" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>When enabled, the compiler passes init values through a syn_init property to the mapper.</Description>
+        <Choice label="True" cmd="set_option -supporttypedflt 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN26" label="Beta Features for VHDL" default="1">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Enable/disable the use of VHDL compiler beta features.</Description>
+        <Choice label="True" cmd="set_option -beta_vhfeatures 1"/>
+        <Choice label="False"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN27" label="Default Enum Encoding" default="0">
+        <Category>Verilog/VHDL options</Category>
+        <Description>Set the default for enumerated types.(VHDL only)</Description>
+        <Choice label="default" cmd=""/>
+        <Choice label="onehot" cmd="set_option -default_enum_encoding onehot"/>
+        <Choice label="gray" cmd="set_option -default_enum_encoding gray"/>
+        <Choice label="sequential" cmd="set_option -default_enum_encoding sequential"/>
+    </SingleChoiceOption>
+    <SingleChoiceOption id="SYN28" label="Clock Conversion" default="0">
+        <Category>Other options</Category>
+        <Description>Perform gated and generated clock optimization when enabled.</Description>
+        <Choice label="True" cmd="set_option -fix_gated_and_generated_clocks 1"/>
+        <Choice label="False" cmd="set_option -fix_gated_and_generated_clocks 0"/>
+    </SingleChoiceOption>
+</OptionDef>

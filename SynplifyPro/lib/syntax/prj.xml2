@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/prj.xml2#1 $ -->
+<syntax name="Project Files" extension="prj">
+	<block name="Comment" start="#" fg="#00a000" bg="white"/>
+	
+	<block name="String DQ" start='"' end='"' fg="#ff0000"  bg="white"/>
+	<block name="String SQ" start="'" end="'" fg="#ff0000"  bg="white"/>
+
+	<keyword name="Keywords" fg="#0000ff" bg="white">
+		<item>add_file</item>
+		<item>add_folder</item>
+		<item>authorize_files</item>
+		<item>c_diff</item>
+		<item>c_info</item>
+		<item>c_intersect</item>
+		<item>c_list</item>
+		<item>c_member</item>
+		<item>c_print</item>
+		<item>c_symdiff</item>
+		<item>c_union</item>
+		<item>cancel_job</item>
+		<item>companion_part</item>
+		<item>constraint_file</item>
+		<item>define_coll</item>
+		<item>define_collection</item>
+		<item>define_report_file_link</item>
+		<item>define_report_link</item>
+		<item>delay</item>
+		<item>edit_file</item>
+		<item>expand</item>
+		<item>find</item>
+		<item>fint</item>
+		<item>get_option</item>
+		<item>get_prop</item>
+		<item>hdl_data</item>
+		<item>hdl_define</item>
+		<item>hdl_param</item>
+		<item>heapuse</item>
+		<item>help</item>
+		<item>impl</item>
+		<item>impl_data</item>
+		<item>impl_files</item>
+		<item>impl_filter</item>
+		<item>installinfo</item>
+		<item>is_enabled</item>
+		<item>job</item>
+		<item>log_filter</item>
+		<item>message</item>
+		<item>message_popup</item>
+		<item>open_file</item>
+		<item>partdata</item>
+		<item>product_type</item>
+		<item>program_version</item>
+		<item>project</item>
+		<item>project_attr</item>
+		<item>project_data</item>
+		<item>project_file</item>
+		<item>quartus_version_data</item>
+		<item>recording</item>
+		<item>rtl_view</item>
+		<item>run</item>
+		<item>run_tcl</item>
+		<item>set_option</item>
+		<item>set_prop</item>
+		<item>tail_file</item>
+		<item>technology_alias</item>
+		<item>technology_view</item>
+		<item>warn</item>
+    </keyword>
+</syntax>

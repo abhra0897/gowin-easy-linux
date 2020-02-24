@@ -1,0 +1,96 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>SPDIF TX Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+            .bold { font-weight: bold }
+            .left { text-align: left }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>SPDIF TX</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td class="left">SPDIF TX</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td class="left">GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td class="left">SPDIF TX is a digital audio transmitter supporting the SPIDF(IEC60958) and AES3 standards for stereo PCM audio transmission. The SPDIF is a point-to-point protocol for serial transmission of digital audio through a single transmission line. The transmission medium can be either electrical or optical. It provides two channels for audio data. Supports any sample rate from 8kHz~192kHz.
+                        </td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td class="head">SPDIF_DATA_WIDTH</td>
+                        <td><span class="bold"></span>Input Audio Data Width: 16~24</td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

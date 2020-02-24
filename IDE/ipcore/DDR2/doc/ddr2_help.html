@@ -1,0 +1,285 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>DDR2 Memory Interface Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>DDR2 Memory Interface</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>DDR2 Memory Interface</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>The Gowin DDR2 Memory Interface IP provides a complete solution for customers to use DDR2 Memory. This IP located between the DDR2 Memory and the user logic include with Gowin Memory Controller and Physical interface, reduces the user's effort to deal with the DDR2 Memory command interface by providing a simple generic system interface to the user.</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td colspan="2" class="head">Type</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Memory Type</td>
+                        <td>Choose the type of DDR2 Memory which consumer use.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">CLK Ratio</td>
+                        <td>This is the Memory Controller clock to DDR2 Memory clock ratio.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Memory Clock</td>
+                        <td>The consumer desire DDR2 Memory working frequency.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Reference Clock</td>
+                        <td>PCB input clock.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">DIMM Type</td>
+                        <td>DIMM Type.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Dq Width</td>
+                        <td>This is the memory DQ bus width. This parameter supports DQ width from 8-bit to maximum of 72-bit with an increment of 8. The available maximum DQ width is frequency dependent on the selected memory device.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Dram Width</td>
+                        <td>When Memory Type choose Custom, Dram Width can be modified.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Rank Address</td>
+                        <td>This is the number of bits required to index the RANK bus.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Bank Address</td>
+                        <td>This is the number of memory bank address bits. Memory Type choose Custom, Bank Address can be modified.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Row Address</td>
+                        <td>This is the DRAM component address bus width. Memory Type choose Custom, Row Address can be modified.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Column Address</td>
+                        <td>This is the number of memory column address bits. Memory Type choose Custom, Column Address can be modified.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Addr Width</td>
+                        <td>This is the memory address bus width. It is equal to Rank Width + Bank Width + Row Width+ Column Width.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Data Width</td>
+                        <td>When Ecc choose off, it is equal to 4*Dq Width.<br />When Ecc choose on, it is equal to 4*64.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Mask Width</td>
+                        <td>It is equal to Data Width/Dram Width when Dram Width choose 4 or 8. And it is equal to Data Width/8 when Dram Width choose 16.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Ecc</td>
+                        <td>This is the error correction code, available in 72-bit Dq Width configurations.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Option</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Burst Mode</td>
+                        <td>This is the memory data burst length.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Burst Type</td>
+                        <td>This is an option for the ordering of accesses within a burst.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">User Refresh</td>
+                        <td>This parameter indicates whether the user manages refresh commands. Can be set for either the User or Native interface.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">CAS Latency</td>
+                        <td>This is the read CAS latency.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Additive Latency</td>
+                        <td>This is the additive latency in memory clock cycles.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Write Recovery</td>
+                        <td>This is Write Recovery.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Rtt Nom</td>
+                        <td>This is the nominal ODT value.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Addr Cmd Mode</td>
+                        <td>This parameter is used by the controller to calculate timing on the memory addr/cmd bus.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">OUTPUT DRV</td>
+                        <td>This is the DRAM reduced output drive option.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">DDR2 DQSN Enable</td>
+                        <td>IO_ddr_dqs_n port switch.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Timing</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRTP Period</td>
+                        <td>This is the READ-to-PRECHARGE command delay.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRP Period</td>
+                        <td>This is the PRECHARGE command period.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tWTR Period</td>
+                        <td>This is the WRITE-to-READ command delay.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRC Period</td>
+                        <td>This is the ACTIVE-to-ACTIVE command delay.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRAS Period</td>
+                        <td>This is the minimum ACTIVE-to-PRECHARGE period for memory.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRCD Period</td>
+                        <td>This is the ACTIVE-to-READ or -WRITE command delay.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tFAW Period</td>
+                        <td>This is the minimum interval of four active commands.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRRD Period</td>
+                        <td>This is the ACTIVE-to-ACTIVE minimum command period.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tCKE Period</td>
+                        <td>This is the minimum CKE pulse time.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tREFI Period</td>
+                        <td>This is the average periodic refresh interval for memory.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tRFC Period</td>
+                        <td>This is the REFRESH-to-ACTIVE or REFRESH-to-REFRESH command interval.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">tDLLK</td>
+                        <td>DLLK cycle number.</td> 
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

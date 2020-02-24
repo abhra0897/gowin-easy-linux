@@ -1,0 +1,237 @@
+{
+  "NAME": "QFN32U",
+  "PKG_TYPE": "QUAD",
+  "HEIGHT": 8,
+  "PIN_DATA": [
+    {
+      "INDEX": "1",
+      "NAME": "IOL9A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "DIFF": "P",
+      "PAIR": "IOL9B"
+    },
+    {
+      "INDEX": "2",
+      "NAME": "VCC/VDDPL/VCCPLL",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "3",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "4",
+      "NAME": "IOB11A",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKT_4",
+      "DIFF": "P",
+      "PAIR": "IOB11B",
+      "TRUELVDS": true,
+      "X16": true
+    },
+    {
+      "INDEX": "5",
+      "NAME": "IOB11B",
+      "TYPE": "I/O",
+      "BANK": 2,
+      "CFG": "GCLKC_4",
+      "DIFF": "N",
+      "PAIR": "IOB11A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "6",
+      "NAME": "VCCO2",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "7",
+      "NAME": "VCC/VDDPL/VCCPLL",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "8",
+      "NAME": "DP",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "9",
+      "NAME": "DM",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "10",
+      "NAME": "XIN",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "11",
+      "NAME": "VCCX/VDDAUSB",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "12",
+      "NAME": "XOUT",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "13",
+      "NAME": "IDPAD",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "14",
+      "NAME": "REXT",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "15",
+      "NAME": "VCCX/VCCO1/VBUSPAD/VDDDUSB",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "16",
+      "NAME": "IOR3A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_2/RPLL_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOR3B"
+    },
+    {
+      "INDEX": "17",
+      "NAME": "IOR3B",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKC_2/RPLL_C_IN",
+      "DIFF": "N",
+      "PAIR": "IOR3A"
+    },
+    {
+      "INDEX": "18",
+      "NAME": "VCC/VDDPL/VCCPLL",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "19",
+      "NAME": "VCCO0",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "20",
+      "NAME": "IOT11A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "GCLKT_1",
+      "DIFF": "P",
+      "PAIR": "IOT11B",
+      "X16": true
+    },
+    {
+      "INDEX": "21",
+      "NAME": "IOT6A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "CH4",
+      "DIFF": "P",
+      "PAIR": "IOT6B",
+      "X16": true
+    },
+    {
+      "INDEX": "22",
+      "NAME": "IOT4A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "CH0",
+      "DIFF": "P",
+      "PAIR": "IOT4B",
+      "X16": true
+    },
+    {
+      "INDEX": "23",
+      "NAME": "VDDA/VCCO0",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "24",
+      "NAME": "IOL6A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TMS",
+      "DIFF": "P",
+      "PAIR": "IOL6B"
+    },
+    {
+      "INDEX": "25",
+      "NAME": "IOL6B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TCK",
+      "DIFF": "N",
+      "PAIR": "IOL6A"
+    },
+    {
+      "INDEX": "26",
+      "NAME": "IOL6C",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "SCLK",
+      "DIFF": "P",
+      "PAIR": "IOL6D"
+    },
+    {
+      "INDEX": "27",
+      "NAME": "IOL6D",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TDI",
+      "DIFF": "N",
+      "PAIR": "IOL6C"
+    },
+    {
+      "INDEX": "28",
+      "NAME": "IOL6E",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "TDO",
+      "DIFF": "P",
+      "PAIR": "IOL6F"
+    },
+    {
+      "INDEX": "29",
+      "NAME": "IOL7A",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "GCLKT_6",
+      "DIFF": "P",
+      "PAIR": "IOL7B",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "30",
+      "NAME": "IOL7B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "CFG": "GCLKC_6",
+      "DIFF": "N",
+      "PAIR": "IOL7A",
+      "TRUELVDS": true
+    },
+    {
+      "INDEX": "31",
+      "NAME": "VCCO3",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "32",
+      "NAME": "IOL8B",
+      "TYPE": "I/O",
+      "BANK": 3,
+      "DIFF": "N",
+      "PAIR": "IOL8A"
+    }
+  ]
+}

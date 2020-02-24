@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd"><html>  <head>    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.2.1206">    <meta name="TEMPLATEBASE" content="fpga_ug">    <meta name="LASTUPDATED" content="04/12/12 14:32:03">
+
+<title> Live Demo Examples -- syn_encoding Attribute</title>  </head>
+
+<body><center><font face="Arial, Helvetica, sans-serif" size="2"></center><a name="wp792415"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="5">syn_encoding Attribute</font></div></h1>
+
+<a name="wp792416"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">The <B>syn_encoding</B> attribute specifies the encoding style for an FSM in the design. This attribute takes effect only when the FSM Compiler is enabled and cannot be set at a global level.</p>
+
+<table border="1">
+	<tr><th><span style='font-family:"Arial","sans-serif"'>Value</span></th><th><span style='font-family:"Arial","sans-serif"'>Description</span></th>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>default</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Automatically picks an encoding style that results in optimum performance for the FSM.</span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>onehot</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Implements the FSM using a single flip-flop per state. Only two bits of the state register change, and only one of the bits is hot. The value determines the state.</span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>gray</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Implements the FSM using gray encoding. Only one of the state registers changes at a time, and all the state registers are hot. This value determines the state.</span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>sequential</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Implements the FSM with an unlimited number of bits that can change at one time. all the state registers are hot. This value determines the state.</span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>safe</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Implements the FSM with default encoding. If the state machine reaches an invalid state, reset logic is added to force the state machine to a known state.</span></td>
+  	</tr>
+ 	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif"'><b>original</b></span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif"'>Implements the FSM in the user-specified style and performs reachability analysis.</span></td>
+  	</tr></span></table>
+
+<p><font face="Arial, Helvetica, sans-serif" size="3">For detailed information about this attribute, use the Help button in the attribute Wizard, or the online help in the synthesis tool.</font></p>
+
+
+<a name="wp792073"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For other questions and issues, contact support at http://solvnet.synopsys.com.</font></p>
+<hr>  </body></html>

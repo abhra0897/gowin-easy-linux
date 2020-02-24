@@ -1,0 +1,176 @@
+#!/bin/bash
+PLATFORM="unknown"
+PLATFORM_STATUS="unknown"
+SYN_SUPPORTED_VERSIONS="unknown";
+VERSION=`uname -r`
+# OS enviornment variable is required for TCL
+OS=`uname`
+CPU=`uname -m`
+
+#+-+-+-+-+-+-+-+-    Case statement figures out which platform    +-+-+-+-+-+-+
+#
+#  and sets PLATFORM variables for platforms will intend to support
+# $Header: //synplicity/ui2019q3p1/unix_scripts/bin/config/platform_set#1 $
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+case $OS in
+    Linux)    PLATFORM=linux;
+              SYN_SUPPORTED_VERSIONS="Red Hat Enterprise Linux 5.0 and above";
+              SYN_USER=`/usr/bin/id -un`;
+      
+              #make sure we load libgcc_s.so.1 from our install if necessary 
+              ADDLDPATH="";
+              ADDLDPATH_64=$ADDLDPATH;;
+				  
+    *)        PLATFORM="not supported platform";
+              SYN_SUPPORTED_VERSIONS="unknown";
+              ;;
+esac
+export   OS;
+export   SYN_USER;
+export   PLATFORM;
+export   SYN_SUPPORTED_VERSIONS;
+
+#vsameer: 04/10/2018
+#SuSE 11.4 has a bug where nss library is loaded with RTLD_DEEPBIND, this
+#cause issue with malloc/free overloading and can cause un-expected crash.
+#See 9001325935 
+#This issue is resolved in SuSE 12.x
+#Forcing RTLD_DEEPBIND=0 is still good idea, mapper will not work correctly if RTLD_DEEPBIND=1
+
+RESET_RTLD_DEEPBIND=0
+if [ ! -z "$RTLD_DEEPBIND" ] && [ $RTLD_DEEPBIND -eq 1 ] ; then
+    echo "RTLD_DEEPBIND=1 is not supported by the tool."
+    RESET_RTLD_DEEPBIND=1
+fi
+
+if [ $RESET_RTLD_DEEPBIND -eq 0 ] && [ -f "/etc/SuSE-release" ]; then
+    major=`sed -nr "s,^VERSION[ ]+=[ ]+(.*)[ ]*,\1,p" /etc/SuSE-release`
+    minor=`sed -nr "s,^PATCHLEVEL[ ]+=[ ]+(.*)[ ]*,\1,p" /etc/SuSE-release`
+    if [ $major -eq 11  -a  $minor -eq 4 ]; then
+	RESET_RTLD_DEEPBIND=1
+	#echo "SuSE $major.$minor has bug in glibc, forcing RTLD_DEEPBIND=0 to workaround the issue."
+    fi
+fi
+if [ $RESET_RTLD_DEEPBIND -eq 1 ]; then
+    export RTLD_DEEPBIND=0
+fi
+#add PYTHONHOME and LD_LIBRARY_PATH
+if [ -d "${SYN_HOMEDIR}/lib/cmlp" ]; then
+    export PYTHONHOME="${SYN_HOMEDIR}/lib/cmlp"
+    export LD_LIBRARY_PATH="${SYN_HOMEDIR}/lib/cmlp/lib":${LD_LIBRARY_PATH}
+fi
+
+
+#+-+-+-+-+-+-+-+-+-    CDPL settings         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+#
+# The following env variable(s) are required for CDPL settings
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+CDPL_HOME=$SYN_HOMEDIR/cdpl;                    export CDPL_HOME;
+if [ -z "$CDPL_LOGDIR" ]; then
+    CDPL_LOGDIR=$HOME/.synopsys/fpga/cdpllog;   export CDPL_LOGDIR;
+fi
+#echo "CDPL_LOGDIR=$CDPL_LOGDIR";
+
+#+-+-+-+-+-+-+-+-+-    Zebu settings         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+#
+# The following env variable(s) are required for Zebu settings
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ZEBU_ROOT=$SYN_HOMEDIR/zebu;                                export ZEBU_ROOT;
+ZEBU_LD_LIBRARY_PATH=$ZEBU_ROOT/lib;                        export ZEBU_LD_LIBRARY_PATH;
+ZEBU_TCL_LIBRARY_PATH=$ZEBU_ROOT/tcl;                       export ZEBU_TCL_LIBRARY_PATH;
+#setting TCLLIBPATH break the protocompiler auto completion flow.
+#if [ -z "$TCLLIBPATH" ]; then
+#	TCLLIBPATH=${ZEBU_TCL_LIBRARY_PATH};                   export TCLLIBPATH;
+#else
+#	TCLLIBPATH="${TCLLIBPATH}:${ZEBU_TCL_LIBRARY_PATH}";  export TCLLIBPATH;
+#fi
+
+#+-+-+-+-+-+-+-+-+-    64-bit executable check point    +-+-+-+-+-+-+-+-+-+-+-
+#
+# Following code sets PLATFORM to PLATFORM + "_64"
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+PLATFORM=${PLATFORM}_a_64;        export PLATFORM;
+
+#+-+-+-+-+-+   setting LD_LIBRARY_PATH[_64] and SHLIB_PATH       +-+-+-+-+-+-+-
+#
+# for all platforms. Both variables are not needed for all platforms but this
+# is safe and it doesn't hurt anything.
+#
+# add LD_LIBRARY_PATH_64 for 64-bit run only. When LD_LIBRARY_PATH_64 and 
+# LD_LIBRARY_PATH are present LD_LIBRARY_PATH_64 variable overrides.
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+SYN_BACKUP_LD_LIBRARY_PATH_64="$LD_LIBRARY_PATH_64";
+export SYN_BACKUP_LD_LIBRARY_PATH_64;
+if [ "${LD_LIBRARY_PATH_64:+set}" = "set" ]; then
+	PATH_APPEND=":${LD_LIBRARY_PATH_64}";
+fi
+if [ "${LD_LIBRARY_PATH:+set}" = "set" ]; then
+	PATH_APPEND="${PATH_APPEND}:${LD_LIBRARY_PATH}";
+fi 
+LD_LIBRARY_PATH_64="$SYN_HOMEDIR/$PLATFORM/lib${PATH_APPEND}:${ZEBU_LD_LIBRARY_PATH}";
+export   LD_LIBRARY_PATH_64;
+
+SYN_BACKUP_LD_LIBRARY_PATH="$LD_LIBRARY_PATH";
+export SYN_BACKUP_LD_LIBRARY_PATH;
+LD_LIBRARY_PATH="$SYN_HOMEDIR/$PLATFORM/lib:${ZEBU_LD_LIBRARY_PATH}:/usr/local/lib:${LD_LIBRARY_PATH}";
+export   LD_LIBRARY_PATH;
+QT_PLUGIN_PATH="$SYN_HOMEDIR/$PLATFORM/lib"
+export   QT_PLUGIN_PATH;
+SYN_BACKUP_SHLIB_PATH="$SHLIB_PATH";
+export SYN_BACKUP_SHLIB_PATH;
+SHLIB_PATH="$SYN_HOMEDIR/$PLATFORM/lib:$SHLIB_PATH";
+export   SHLIB_PATH;
+
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-     setting PATH     +-+-+-+-+-+-+-+-+-+-+-+-+
+#
+# Even though in our invocation script we call xset with fully qualified path
+# my guess is that Mainwin calls xset and that is reason we are setting PATH
+# variable for xset.
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+PATH="$SYN_HOMEDIR/$PLATFORM/mbin:${PATH}:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin"; 	export   PATH;
+
+#+-+-+-+-+-+-+-+-    ulimit stack size change    +-+-+-+-+-+-+
+#
+# This is done so programs can use most of memory available, if stack size
+# is set to unlimited then physical memory is split into heap and stack.
+# With this programs will only half of physical memory available. By setting
+# stack size to 16384 will set stack size to 16MB and reset of memory will
+# available for data. Regular user can lower the stack size value down but
+# can't increase from default system value.
+#
+# to turn off following functionality set SYN_MODIFY_STACK_SIZE=false
+#
+# default values for 32 bit run is 16MB and 64 bit is 64MB
+# this values are only changed if default stack size is unlimited.
+#
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+SYN_MODIFY_STACK_SIZE=${SYN_MODIFY_STACK_SIZE:-true}; 
+export   SYN_MODIFY_STACK_SIZE;
+
+if [ $SYN_MODIFY_STACK_SIZE = "true" ]; then
+    ORIGINAL_STACK_SIZE=`ulimit -s`
+    if [ -z $NEW_STACK_SIZE ]; then
+        NEW_STACK_SIZE=$ORIGINAL_STACK_SIZE;
+
+        if [ $ORIGINAL_STACK_SIZE = "unlimited" ] || [ $ORIGINAL_STACK_SIZE -gt 131072 ]; then
+            NEW_STACK_SIZE=131072
+        fi
+    fi
+
+    if [ $ORIGINAL_STACK_SIZE != $NEW_STACK_SIZE ]; then
+        ulimit -s $NEW_STACK_SIZE
+    fi
+fi

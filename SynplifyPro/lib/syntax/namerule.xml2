@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/namerule.xml2#1 $ -->
+<syntax name="Naming Rules" extension="nr">
+	<block name="Line comment" start="//" fg="#00a000" bg="white"/>
+	<block name="Comment" start="/*" end="*/" fg="#008000" bg="white" multi="1" />
+
+	<block name="String DQ" start='"' end='"' fg="#ff0000"  bg="white"/>
+	<block name="String SQ" start="'" end="'" fg="#ff0000"  bg="white"/>
+
+	<keyword name="Keywords" fg="#0000ff" bg="white">
+		<item>verilog</item>
+		<item>Verilog</item>
+		<item>VERILOG</item>
+		<item>vhdl</item>
+		<item>Vhdl</item>
+		<item>VHDL</item>
+		<item>first_allowed_char</item>
+		<item>First_allowed_char</item>
+		<item>First_Allowed_Char</item>
+		<item>FIRST_ALLOWED_CHAR</item>
+		<item>last_allowed_char</item>
+		<item>Last_allowed_char</item>
+		<item>Last_Allowed_Char</item>
+		<item>LAST_ALLOWED_CHAR</item>
+		<item>allowed_char</item>
+		<item>Allowed_char</item>
+		<item>Allowed_Char</item>
+		<item>ALLOWED_CHAR</item>
+		<item>replacement_char</item>
+		<item>Replacement_char</item>
+		<item>Replacement_Char</item>
+		<item>REPLACEMENT_CHAR</item>
+		<item>case_sensitive</item>
+		<item>Case_sensitive</item>
+		<item>Case_Sensitive</item>
+		<item>CASE_SENSITIVE</item>
+		<item>combine_namespace</item>
+		<item>Combine_namespace</item>
+		<item>Combine_Namespace</item>
+		<item>COMBINE_NAMESPACE</item>
+		<item>map_char</item>
+		<item>Map_char</item>
+		<item>Map_Char</item>
+		<item>MAP_CHAR</item>
+		<item>map_string</item>
+		<item>Map_string</item>
+		<item>Map_String</item>
+		<item>MAP_STRING</item>
+		<item>max_length</item>
+		<item>Max_length</item>
+		<item>Max_Length</item>
+		<item>MAX_LENGTH</item>
+		<item>hierarchy_separator</item>
+		<item>Hierarchy_separator</item>
+		<item>Hierarchy_Separator</item>
+		<item>HIERARCHY_SEPARATOR</item>
+		<item>naming_style</item>
+		<item>Naming_style</item>
+		<item>Naming_Style</item>
+		<item>NAMING_STYLE</item>
+		<item>int_param_style</item>
+		<item>Int_param_style</item>
+		<item>Int_Param_Style</item>
+		<item>INT_PARAM_STYLE</item>
+		<item>max_param_len</item>
+		<item>Max_param_len</item>
+		<item>Max_Param_Len</item>
+		<item>MAX_PARAM_LEN</item>
+		<item>single_bit_bus_naming_style</item>
+		<item>Single_bit_bus_naming_style</item>
+		<item>Single_Bit_Bus_Naming_Style</item>
+		<item>SINGLE_BIT_BUS_NAMING_STYLE</item>
+		<item>bus_naming_style</item>
+		<item>Bus_naming_style</item>
+		<item>Bus_Naming_Style</item>
+		<item>BUS_NAMING_STYLE</item>
+		<item>reserved_word</item>
+		<item>Reserved_word</item>
+		<item>Reserved_Word</item>
+		<item>RESERVED_WORD</item>
+		<item>rename_top_level_interface</item>
+		<item>Rename_top_level_interface</item>
+		<item>Rename_Top_Level_Interface</item>
+		<item>RENAME_TOP_LEVEL_INTERFACE</item>
+		<item>net</item>
+		<item>Net</item>
+		<item>NET</item>
+		<item>generated_net</item>
+		<item>Generated_net</item>
+		<item>Generated_Net</item>
+		<item>GENERATED_NET</item>
+		<item>port</item>
+		<item>Port</item>
+		<item>PORT</item>
+		<item>top_level_port</item>
+		<item>Top_level_port</item>
+		<item>Top_Level_Port</item>
+		<item>TOP_LEVEL_PORT</item>
+		<item>instance</item>
+		<item>Instance</item>
+		<item>INSTANCE</item>
+		<item>sequential_instance</item>
+		<item>Sequential_instance</item>
+		<item>Sequential_Instance</item>
+		<item>SEQUENTIAL_INSTANCE</item>
+		<item>module</item>
+		<item>Module</item>
+		<item>MODULE</item>
+		<item>uniquified_module</item>
+		<item>Uniquified_module</item>
+		<item>Uniquified_Module</item>
+		<item>UNIQUIFIED_MODULE</item>
+	</keyword>
+</syntax>

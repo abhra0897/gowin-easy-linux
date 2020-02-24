@@ -1,0 +1,13 @@
+#!/bin/bash
+x=$0
+y=`expr $x : '\(.\)'`
+if [ "$y" != "/" ] ; then
+    x=`pwd`/$x
+fi
+x=`echo $x | sed "s+/\./+/+g" | sed "s/\/\//\//g"`
+SYN_PRGM=`expr $x : ".*/\([^/]*\)"`;                       export   SYN_PRGM;
+SYN_HOMEDIR=`expr $x : "\(.*\)/[^/]*/[^/]*"`;              export   SYN_HOMEDIR;
+
+. $SYN_HOMEDIR/bin/config/platform_set
+. $SYN_HOMEDIR/bin/config/execute
+

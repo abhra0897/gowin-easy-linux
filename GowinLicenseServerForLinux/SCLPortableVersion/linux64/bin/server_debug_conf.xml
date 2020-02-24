@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<CUSTOMLOG version="1.0">
+	<LogFileProperty>
+		<!-- Name of the log file.  Please Make sure that user 
+		     starting Licensing server has write permission on 
+		     this file and directory containing this file. 
+		     Default value is snpslmd.log.
+		 --> 
+		<fileName>snpslmd.log</fileName>
+		<!-- Delimiter between each Property Value.  --> 
+		<delimiter>\t</delimiter>
+		<!-- Custome Log Rotation Type.
+		  Valid Values 
+			(a) size ( Log Rotation Based of File Size, default value is 100 MB).
+			(b) date ( Log Rotation Based on Date ). 
+			(c) None ( Disable Log Rotation).
+		-->
+		<rotate_policy>size</rotate_policy>
+		<!-- Value in MB. Please note maxLogSize can only be interger.  -->
+		<maxLogSize>100</maxLogSize>
+		<!-- Value which will prefix before each ativity entry in Log --> 
+		<prefix>(snpslmd)</prefix>
+	</LogFileProperty>
+	
+	<!-- Type  of Command i.e. OUT,IN -->
+	<Property value="status">
+		<prefix>Command</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="feature">
+		<prefix>Feature Name</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<!-- Time on server when licensing activity occured --> 
+	<Property value="time">
+		<prefix>Time</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="user">
+		<prefix>User Name</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="host">
+		<prefix>Host Name</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="numofkey">
+		<prefix>Number of keys</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="onSupportVersion">
+		<prefix>On Support version</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="display">
+		<prefix>User display</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="flexlmVersion">
+		<prefix>Flexlm Version</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="flexlmRevision">
+		<prefix>Flexlm Revision</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="clientPlatform">
+		<prefix>Client Platform</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="vendorDefinition">
+		<prefix>Vendor definition</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="pidofclient">
+		<prefix>PID of the client</prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<Property value="userProject">
+		<prefix>User Project </prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+	<!-- Date on server when licensing activity occured --> 
+	<Property value="date">
+		<prefix>Date </prefix>
+		<prolog>(</prolog>
+		<epilog>)</epilog>
+	</Property>
+
+</CUSTOMLOG>

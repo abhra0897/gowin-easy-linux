@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="SPMI: SPMI" id="module_spmi" version= "1.0" category="Hard Module|SPMI">SPMI</ip>
+    <target module="GW_SPMI">gw_spmi</target>
+    <docs>
+        <doc type="summary">/doc/spmi.html</doc>
+        <doc type="help">/doc/spmi_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NZ-1-*</device>
+    </devices>
+</ipcore>

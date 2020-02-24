@@ -1,0 +1,85 @@
+//--------------------------------------------------------------------
+
+`timescale 100 ps/100 ps
+module test;
+reg clk, mac, rst;
+wire [7:0] q;
+reg [3:0] a, b;
+
+prep5 inst1 (.CLK(clk),.MAC(mac), .RST( rst),.A(a), .B(b), .Q( q));
+
+parameter numvecs = 6; // actual number of vectors
+reg [1:0] cntl        [0:numvecs-1];
+reg [3:0] ina [0:numvecs-1];
+reg [3:0] inb [0:numvecs-1];
+reg [7:0] outvec [0:numvecs-1];
+integer i;
+integer numerrors;
+
+initial
+begin
+	// sequential test patterns entered at neg edge clk
+	// rst, mac;			a, b         		q just before next pos edge
+	cntl[0] = 	2'b10;	ina[0] = 4'd4;	 inb[0] = 4'd3;		outvec[0] = 8'd0;
+	cntl[1] = 	2'b00;	ina[1] = 4'd4;	 inb[1] = 4'd3;		outvec[1] = 8'd12;
+	cntl[2] = 	2'b00;	ina[2] = 4'd10;	 inb[2] = 4'd3;		outvec[2] = 8'd30;
+	cntl[3] = 	2'b01;	ina[3] = 4'd6;	 inb[3] = 4'd2;		outvec[3] = 8'd42;
+	cntl[4] = 	2'b01;	ina[4] = 4'd11;	 inb[4] = 4'd5;		outvec[4] = 8'd97;
+	cntl[5] = 	2'b11;	ina[5] = 4'd10;	 inb[5] = 4'd3;		outvec[5] = 8'd0;
+		
+end
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+
+reg invec_temp;
+
+initial
+begin
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+
+	//skip first rising edge
+	@(posedge clk);
+	for (i = 0; i <= numvecs-1; i = i + 1)
+	begin
+		@(negedge clk);
+		// apply test pattern at neg edge
+		{rst, mac} = cntl[i];
+		a = ina[i];
+		b = inb[i];
+		@(posedge clk) #4500; //450 ns later
+		// check result at posedge + 450 ns
+		if ( q !== outvec[i] )
+		begin
+		   $display(    
+		"\t\t ERROR pattern#%d t%d: rst, mac=%b a= %d, b= %d Expected q: %d; Actual q: %d", 
+		i, $stime, {rst, mac}, a, b, outvec[i], q);
+			numerrors = numerrors + 1;
+		end
+	end
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+	
+	#1000 $finish; // after 100 ns later
+end
+
+endmodule

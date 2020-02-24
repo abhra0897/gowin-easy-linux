@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>IP Summary</title>
+<style type="text/css">
+/* position set begin */
+html, body { height: 100%; margin: 0; padding: 0; }
+#main_wrapper { min-height: 100%; }
+#main {
+    overflow:auto;
+    padding-bottom: 22px; /* must be same height as the footer */
+}
+#footer_wrapper {
+    position: relative;
+    margin-top: -22px; /* negative value of footer height */
+    height: 22px;
+    clear:both;
+}
+/* position set end */
+
+body {
+    font-family: Verdana, Arial;
+    font-size: 14px;
+}
+
+div#main_wrapper, div#footer_wrapper  {
+    width: 80%;
+    min-width: 600px;
+    max-width: 998px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#footer {
+    background-color: #3091F1;
+    color: white;
+    height: 100%;
+}
+
+p#copyright {
+    padding: 0;
+    margin: 0;
+    line-height: 22px;
+    font-size: 10px;
+}
+
+h2 {
+    text-align: left;
+    color: #3091F1
+}
+
+table#info td{
+    text-align: left;
+    vertical-align: top;
+    line-height: 150%;
+}
+
+</style>
+</head>
+<body>
+
+<div id="main_wrapper">
+<div id="main">
+<h1>Gowin_PicoRV32</h1>
+<hr/>
+<h2>Information</h2>
+
+<table id="info">
+<tr><td>Type:</td><td>Gowin_PicoRV32</td></tr>
+<!--<tr><td>Version:</td><td>1.0</td></tr>-->
+<tr><td>Vendor:</td><td>GOWIN Semiconductor</td></tr>
+<tr>
+<td>Summary:&nbsp;&nbsp;</td>
+<td>Gowin_PicoRV32 is intended for deeply embedded applications, and integrated into GOWIN FPGA. Gowin_PicoRV32 is based on RISC-V Instruction Set Architecture, can be configured as RV32I, RV32IC, RV32IM, RV32IMC MCU, and optionally contains a built-in interrupt controller and timer. Gowin_PicoRV32 can either boot from instruction memory or boot from external SPI flash. The MCU is highly optimizing, which only takes 2K~4K LUTs in GOWIN FPGA. The maximum frequency of system clock is up to 50 MHz, and the average cycle per instruction is around 6, depending on the mix of instructions in the code. Dhrystone benchmark result is 0.516 DMIPS/MHz, for the Dhrystone benchmark the average CPI is 4.10.
+<p>Gowin_PicoRV32 has a standard wishbone bus for extension. The wishbone bus is a small-size high-performance logic bus, which can communicate to other slave devices. There contains a UART, an I2C master, a SPI master and a SPI slave on wishbone bus.</p>
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+
+<div id="footer_wrapper">
+<div id="footer">
+<p id="copyright"></p>
+<script>
+var year = new Date().getFullYear();
+document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+</script>
+</div>
+</div>
+
+</body>
+</html>

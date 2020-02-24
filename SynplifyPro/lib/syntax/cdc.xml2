@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/cdc.xml2#1 $ -->
+<syntax name="Compiler Constraint Files" extension="cdc">
+	<block name="Comment" start="#" fg="#00a000" bg="white"/>
+	
+	<block name="String DQ" start='"' end='"' fg="#ff0000"  bg="white"/>
+	<block name="String SQ" start="'" end="'" fg="#ff0000"  bg="white"/>
+
+	<keyword name="CDCKeywords" fg="#0000ff" bg="white">
+		<item>define_directive</item>
+    <item>syn_connect_hrefs</item>
+    <!-- not supported at this point
+    <item>define_global_directive</item>
+-->
+</keyword>
+
+  <keyword name="CDCKeywordDirective" fg="#808000" bg="white">
+    <item>syn_black_box</item>
+    <item>syn_keep</item>
+    <item>syn_noprune</item>
+    <item>syn_preserve</item>
+    <item>syn_sharing</item>
+    <item>syn_rename_module</item>
+    <item>syn_unique_inst_module</item>
+    <item>readers</item>
+    <item>writer</item>
+  <!--
+    <item>syn_dspstyle </item>
+    <item>syn_multstyle</item>
+    <item>syn_ramstyle </item>
+    <item>syn_resources</item>
+    <item>syn_romstyle </item>
+    <item>syn_srlstyle </item>    
+    -->
+  </keyword>
+
+</syntax>

@@ -1,0 +1,25 @@
+set seqs [get_pins -of_objects [get_cells -hier * -filter {@is_sequential == 1 || @inst_of =~ DCM* || @inst_of =~ PLL* || @inst_of =~ MMCM* || \
+((@inst_of =~ *BUFG* || @inst_of =~ *pll || @inst_of =~ *GTX* || @inst_of =~ *GTP* || @inst_of =~ *GTH*) && (@syn_lib_cell == 1 || @syn_black_box == 1))}] \
+-filter {(@name == C || @name =~ CLKIN? || @name == CLKIN || @name == I || (@name =~ I? && @name != IB) || @name =~ inclk*) && @direction == input}]
+
+if {[sizeof_collection $seqs] == 0} {
+  log_puts "@E: :ERROR:  create_fdc_template, unable to identify any top level clock ports."
+}
+
+set ports [expand -hier -port -to [get_object_name $seqs]]
+set top_ports {}
+foreach c [get_object_name $ports] {
+  if {[regexp {^p:} $c]} {
+    set top_ports [linsert $top_ports end $c]
+  }
+}
+if {$top_ports == {}} {
+  log_puts "@E: :ERROR:  create_fdc_template, unable to identify any top level clock ports."
+}
+foreach c  $top_ports {
+  if {[get_object_name [find -port $c]] eq $c} {
+    create_clock -name [regsub {p:} $c ""] [get_ports $c] -period 100
+    regsub {p:} $c "" c
+    set_clock_groups -asynchronous -name "${c}_group" -group [get_clocks -include_generated_clocks $c]
+  } 
+}

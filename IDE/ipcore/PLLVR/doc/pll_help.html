@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>PLLVR Help</title>
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            .bold { font-weight: bold }
+            .left { text-align: left }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>PLLVR</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td class="left">PLLVR</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td class="left">GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td class="left">Gowin FPGA provides a Phase Locked Loop (PLLVR), which is used to generate multiple clocks with defined phase and frequency relationships to a given input clock.</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td rowspan=6 >General</td>
+                        <td><span class="bold">General Mode</span> - In this mode, entering input clock frequency and expected frequencies, software will automatically calculate divide factors.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">Advanced Mode</span> - This mode is for advanced users. Allows you to enter input clock frequency and divide factors to achieve expected output frequency.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">PLL Phase And Duty Cycle Adjustment</span> - Allows you to select Static Mode or Dynamic Mode.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">PLL Reset</span> - Provides a reset pin to reset the PLL.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">PLL Power Down</span> - Provides a reset_p port to power down the PLL.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">PLL Regulator</span> - Provides a vren port to PLL dynamic power regulation.</td>
+                    </tr>
+
+
+                    <tr>
+                        <td rowspan=3>CLKIN</td>
+                        <td>CLKIN is the input reference clock for the PLL.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">Clock Frequency</span> - Specify its frequency in MHz.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Divide Factor</span> - If in Advanced mode, also choose a divide factor which is from Dynamic or Static mode to achieve the expected output frequency. Static mode means select a static value from the drop-down list as divide factor, while Dynamic mode means that choose the value of port idsel as dynamic divide factor. When the Dynamic mode is selected, the user needs to set an initial value.</td>
+                    </tr>
+                    <tr>
+                        <td rowspan=2>CLKFB</td>
+                        <td><span class="bold">Source</span> - Specify the source of feedback.</td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="bold">Divide Factor</span> - In Advanced mode, the divide factor in the feedback path can be selected from port fbdsel or from the drop-down list. In General mode, the divide factor is shown when the “Calculate” button is clicked. When the Dynamic mode is selected, the user needs to set an initial value.</td>
+                    </tr>
+
+                    <tr>
+                        <td>LOCK</td>
+                        <td><span class="bold">Enable LOCK</span> - Selecting this option will produce the lock port in the generated module.</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan=6>CLKOUT</td>
+                        <td><span class="bold">Bypass</span> - The bypass option means clkout = clkin, it connects the output to the input, bypassing the PLL circuit. Bypassing CLKOUT disables the CLKOUT expected frequency and tolerance fields. If both CLKOUT and CLKOUTP are in Bypass, then everything is disabled except the CLKIN frequency option.</td>
+                    </tr>
+
+                    <tr>
+                        <td>The following options are not available when CLKOUT is in Bypass mode.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">VCO Divide Factor</span> - In General mode, VCO Divide Factors cannot be selected. Clicking the “Calculate” button displays the actual values. In Advanced mode, Dynamic or Static mode can be selected. When the Dynamic mode is selected, the user needs to set an initial value.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Expected Frequency&nbsp;</span>- In General mode, set the output clock frequency.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Tolerance</span> - Set a tolerance for the clkout frequency, as a percentage of requested frequency. Since the divide factors can only take a certain set of values, not all frequencies can be generated. The tolerance value is used to guide the tool to select a suitable divide factor.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Actual Frequency</span> - Clicking the “Calculate” button displays the actual frequency that the PLL can produce.</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan=5>CLKOUTP</td>
+                        <td><span class="bold">Enable CLKOUTP</span> – Selecting this option will produce the clkoutp port in the generated module. Clkoutp has the same frequency as clkout and it has the specified phase relation with clkout.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Bypass</span> – This option will connect the output to the input, bypassing the PLL circuit. Bypassing clkoutp disables its frequency, tolerance, and phase shift fields.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">PLL Phase And Duty Cycle Adjustment(Static)</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Phase</span> - You can select phase shift in 22.5-degree increments from 0 to 360.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Duty Cycle</span> - Allows duty cycle selection in 1/16 increments.</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan=7>CLKOUTD</td>
+                        <td><span class="bold">Enable CLKOUTD&nbsp;</span>- Selecting this option will produces clkoutd port in the generated module. In general mode, select the expected frequency. In advanced mode, select the divide factor for the expected frequency.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Bypass</span> - The bypass option means clkoutd = clkin, it connects the output to the input, bypassing the PLL circuit.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Source</span> - If clkoutd is enabled, you can select CLKOUT or CLKOUTP as the source of clkoutd. If CLKOUTP is not enabled, CLKOUT is used as the source.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Expected Frequency</span> - In General mode, set the CLKOUTD Frequency. This option is disabled in advanced mode.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Divide Factor</span> - In General mode, the divide factor cannot be selected. Clicking the “Calculate” button the tool will automatically displays the actual values. In Advanced mode, select the CLKOUTD divide factor from the drop-down list.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Tolerance</span> - Set a tolerance for the CLKOUTD frequency, as a percentage of requested frequency. Since the divide factors can only take a certain set of values, not all frequencies can be generated. The tolerance value is used to guide the tool to select a suitable divide factor.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Actual Frequency</span> - Clicking the “Calculate” button displays the actual frequency that the PLL can produce.</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan=2>CLKOUTD3</td>
+                        <td><span class="bold">Enable CLKOUTD3</span> - Selecting this option will produces clkoutd3 port in the generated module, and it is equal to clkout/3.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bold">Source</span> - If CLKOUTD3 is enabled, you can select CLKOUT or CLKOUTP as the source of CLKOUTP. If CLKOUTP is not enabled, CLKOUT is used as the source.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Calculate</td>
+                        <td>
+                            <p>General Mode: The tool calculates Divide Factor settings based on input/output frequency.</p>
+                            <p>Advanced Mode: The tool calculates output frequencies based on divide factors.</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

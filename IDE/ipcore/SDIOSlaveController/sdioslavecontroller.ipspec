@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="SDIO Slave Controller" id="sdio_slave_Controller" version= "1.0" category="Soft IP Core|Interface and Interconnect">SDIO Slave Controller</ip>
+    <target module="SDIO_Slave_Controller_Top">sdio_slave_controller</target>
+    <docs>
+        <doc type="summary">/doc/sdioslavecontroller.html</doc>
+        <doc type="help">/doc/sdioslavecontroller_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B-*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-4-*</device>
+        <device supported="true">GW1NR-4B-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW1NS-4-*</device>
+        <device supported="true">GW1NS-4C-*</device>
+        <device supported="true">GW1NSR-4-*</device>
+        <device supported="true">GW1NSER-4C-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

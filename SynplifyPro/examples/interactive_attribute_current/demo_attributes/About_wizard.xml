@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<dyndialog>
+
+
+
+<dialog id="About Wizard" text="About Wizard" width="650" height="280">   
+<line />
+
+	<hline>
+	
+	<hline />
+	
+		<text> To Start, Double-click on the respective Attribute </text>		
+       
+	<hline />	
+	
+	</hline>
+	
+<line />
+
+</dialog>
+   
+</dyndialog>
+
+

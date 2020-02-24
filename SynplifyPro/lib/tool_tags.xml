@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML doc for Vendor tool tags-->
+<!-- Use only one of following to set the application path
+     Based on the platform, only of these apply    
+    <windows_path></windows_path>
+    <linux_path></linux_path>
+    <solaris_path></solaris_path>
+ -->
+<vendor_tools>
+
+	<tool_tag>
+		<tag_name>Vivado</tag_name>
+		<env_var_name>XILINX_VIVADO</env_var_name>
+		<supported_version>2018.1</supported_version>
+		<company_name>Xilinx</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$XILINX_VIVADO/bin/vivado.exe</windows_path>
+		<linux_path>$XILINX_VIVADO/bin/vivado</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+<!--
+	<tool_tag>
+		<tag_name>xilinx_ise</tag_name>
+		<env_var_name>XILINX</env_var_name>
+		<supported_version>14.7</supported_version>
+		<company_name>Xilinx</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$XILINX/bin/nt/ise.exe</windows_path>
+		<linux_path>$XILINX/bin/lin/ise</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+	<tool_tag>
+		<tag_name>Xilinx EDK</tag_name>
+		<tool_id>xilinx_edk</tool_id>
+		<env_var_name>XILINX_EDK</env_var_name>
+		<supported_version>1.0</supported_version>
+		<company_name>Xilinx</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$XILINX_EDK/bin/nt/xps.exe</windows_path>
+		<linux_path>$XILINX_EDK/bin/lin/xps</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+	<tool_tag>
+		<tag_name>Xilinx Coregen</tag_name>
+		<tool_id>xilinx_coregen</tool_id>
+		<env_var_name>XILINX</env_var_name>
+		<supported_version>1.0</supported_version>
+		<company_name>Xilinx</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$XILINX/bin/nt/coregen.exe</windows_path>
+		<linux_path>$XILINX/bin/lin64/coregen</linux_path>
+		<linux_path>$XILINX/bin/lin/coregen</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+-->
+
+
+	<tool_tag>
+		<tag_name>Formality</tag_name>
+		<env_var_name>FORMALITY</env_var_name>
+		<supported_version>2018.06-SP1</supported_version>
+		<company_name>Synopsys</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path></windows_path>
+		<linux_path>$FORMALITY/bin/formality</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+
+	<tool_tag>
+		<tag_name>Verdi</tag_name>
+		<env_var_name>VERDI_HOME</env_var_name>
+		<supported_version>2018.09</supported_version>
+		<company_name>Synopsys</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path></windows_path>
+		<linux_path>$VERDI_HOME/bin/verdi</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+
+	<tool_tag>
+		<tag_name>VC Formal</tag_name>
+		<env_var_name>VC_STATIC_HOME</env_var_name>
+		<supported_version>2018.09</supported_version>
+		<company_name>Synopsys</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<linux_path>$VC_STATIC_HOME/bin/vcf</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+
+
+	<!--
+	<tool_tag>
+		<tag_name>Altera Megawizard</tag_name>
+		<tool_id>altera_megawizard</tool_id>
+		<env_var_name>QUARTUS_ROOTDIR</env_var_name>
+		<supported_version>16_1</supported_version>
+		<company_name>Altera</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$QUARTUS_ROOTDIR/bin/qmegawiz.exe</windows_path>
+		<linux_path>$QUARTUS_ROOTDIR/bin/qmegawiz</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+-->
+
+<!--
+	<tool_tag>
+		<tag_name>quartus</tag_name>
+		<env_var_name>QUARTUS_ROOTDIR</env_var_name>
+		<supported_version>17.1</supported_version>
+		<company_name>Altera</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$QUARTUS_ROOTDIR/bin/quartus.exe</windows_path>
+		<linux_path>$QUARTUS_ROOTDIR/bin/quartus</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+-->
+
+<!--
+	<tool_tag>
+		<tag_name>achronix</tag_name>
+		<env_var_name>ace</env_var_name>
+		<supported_version>6.0.5</supported_version>
+		<company_name>Achronix</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$ace/bin/ace</windows_path>
+		<linux_path>$ace/bin/ace</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+-->
+
+<!--
+	<tool_tag>
+		<tag_name>libero</tag_name>
+		<env_var_name>ALSDIR</env_var_name>
+		<supported_version>11.8.0</supported_version>
+		<company_name>Microsemi</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>ALSDIR/Designer/bin/libero.exe</windows_path>
+		<linux_path>ALSDIR/Libero/bin/libero</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+-->
+
+	<tool_tag>
+		<tag_name>Confpro</tag_name>
+		<env_var_name>HAPS_INSTALL_DIR</env_var_name>
+		<supported_version>2018.09</supported_version>
+		<company_name>ConfPro</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path>$HAPS_INSTALL_DIR/bin/confpro</windows_path>
+		<linux_path>$HAPS_INSTALL_DIR/bin/confpro</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+	<tool_tag>
+		<tag_name>Design Compiler</tag_name>
+		<env_var_name>DC_ROOT</env_var_name>
+		<supported_version>2018.06-SP1</supported_version>
+		<company_name>Synopsys</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path></windows_path>
+		<linux_path>DC_ROOT/bin/dc_shell</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+	</tool_tag>
+
+	<tool_tag>
+		<tag_name>VCS</tag_name>
+		<env_var_name>VCS_HOME</env_var_name>
+		<supported_version>2017.03-SP2-2</supported_version>
+		<company_name>Synopsys</company_name>
+		<invocation_mode>shell</invocation_mode>
+		<windows_path></windows_path>
+		<linux_path>$VCS_HOME/bin/vcs</linux_path>
+		<proc_name></proc_name>
+		<tool_args></tool_args>
+		<extra_message>To run UC with word-level synthesis, contact Synopsys Support for VCS version.</extra_message>
+	</tool_tag>
+
+</vendor_tools>

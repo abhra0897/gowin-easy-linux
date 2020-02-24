@@ -1,0 +1,285 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Gowin_PicoRV32 Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>Gowin_PicoRV32</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>Gowin_PicoRV32</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>Gowin_PicoRV32 is intended for deeply embedded applications, and integrated into GOWIN FPGA. Gowin_PicoRV32 is based on RISC-V Instruction Set Architecture, can be configured as RV32I, RV32IC, RV32IM, RV32IMC MCU, and optionally contains a built-in interrupt controller and timer. Gowin_PicoRV32 can either boot from instruction memory or boot from external SPI flash. The MCU is highly optimizing, which only takes 2K~4K LUTs in GOWIN FPGA. The maximum frequency of system clock is up to 50 MHz, and the average cycle per instruction is around 6, depending on the mix of instructions in the code. Dhrystone benchmark result is 0.516 DMIPS/MHz, for the Dhrystone benchmark the average CPI is 4.10.
+                            <p>Gowin_PicoRV32 has a standard wishbone bus for extension. The wishbone bus is a small-size high-performance logic bus, which can communicate to other slave devices. There contains a UART, an I2C master, a SPI master and a SPI slave on wishbone bus.</p>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2>Gowin_PicoRV32 CORE Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Support RV32C Extends</td>
+                        <td>Select it to support the RISC-V Compressed Instruction Set Extensions.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Support RV32M Extends</td>
+                        <td>Select it to support the MUL[H[SU|U]] and DIV[U]/REM[U] instructions.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Enable Interrupts</td>
+                        <td>Select it to enable interrupt controller.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable Timer</td>
+                        <td>Select it to enable the timer. This item could not be selected if the Enable Interrupt item is not selected.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable Counters</td>
+                        <td>Enable support for the RDCYCLE[H], RDTIME[H], and RDINSTRET[H] instructions. These instructions will cause a hardware trap if Enable Counters is not selected. 
+                        </td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Two Stage Shift</td>
+                        <td>Two stage shift will speed up shift operations, but adds additional hardware. Unselect it would disable the two stage shift to further reduce the size of the core.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Two Cycle Compare</td>
+                        <td>This relaxes the longest data path a bit by adding an additional DFF stage at the cost of adding an additional clock cycle delay to the conditional branch instructions.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Two Cycle ALU</td>
+                        <td>This adds an additional DFF stage in the ALU data path, improving timing at the cost of an additional clock cycle for all instructions the use ALU.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Barrel Shifter</td>
+                        <td>With this option set, a barrel shifter is used instead of the successively shifter.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Catch Misalign</td>
+                        <td>Select this item to catch misaligned memory accesses.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Catch illegal Instruction</td>
+                        <td>Select this item to catch illegal instructions.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 ILM Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">ILM Size</td>
+                        <td>Select the size of the instruction memory.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">MCU boot from external Flash</td>
+                        <td>MCU boot from an external SPI Flash.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">MCU boot from ILM</td>
+                        <td>MCU boot from ILM.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">ILM Initialization File</td>
+                        <td>If select MCU boot from ILM, load ILM initialized file.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 DLM Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">DLM Size</td>
+                        <td>Select the size of the data memory.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 Simple UART Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Enable Simple UART</td>
+                        <td>Enable Simple UART peripheral.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 Wishbone UART Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Enable Wishbone UART</td>
+                        <td>Enable UART peripheral on wishbone bus.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 Wishbone I2C Master Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Enable Wishbone I2C Master</td>
+                        <td>Enable I2C Master peripheral on wishbone bus.</td> 
+                    </tr>
+                </table>
+            <h2>Gowin_PicoRV32 Wishbone SPI Master Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Enable Wishbone SPI Master</td>
+                        <td>Enable SPI Master peripheral on wishbone bus.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Shift direction</td>
+                        <td>Specifies the MSB or LSB as first.<br/>0 : MSB is as first<br/>1 : LSB is as first</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock phase</td>
+                        <td>Specifies the clock phase of SPI instance.<br/>0 : The data is latched on the leading edge of SCLK and data changes on the trailing edge of SCLK.<br/>1 : The data is latched on the trailing edge of SCLK and data changes on the leading edge of SCLK.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock polarity</td>
+                        <td>Specified the Polarity of SPI instance.<br/>0 : The idle state for SCLK is low.<br/>1 : The idle state for SCLK is high.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock count width</td>
+                        <td>Specifies the range limit for the clock counter. The width must be enough to meet the number of bits required for the slave clock.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock sel</td>
+                        <td>Specified the factor for deriving SCLK from the processor clock. SCLK is derived using the following equation:<br/>SCLK = (processor clock) / (2*(CLOCK_SEL+1))</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Data length</td>
+                        <td>Specifies the number of serial data bits.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Slave number</td>
+                        <td>Specifies the number of slave devices supported.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Delay time</td>
+                        <td>Specifies the time delay factor before shifting the first bit of data after SS_N signal is asserted. The start delay time is derived from the following equation:<br/>Delay = DELAY_TIME *(SCLK period / 2)</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Interval length</td>
+                        <td>Specifies the number of SCLK cycles for the SS-N signal is held inactive between SPI transmit requests.</td> 
+                    </tr>
+
+                </table>
+            <h2>Gowin_PicoRV32 Wishbone SPI Slave Options</h2>
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>                    
+                    <tr>
+                        <td class="head">Enable Wishbone SPI Master</td>
+                        <td>Enable SPI Master peripheral on wishbone bus.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Shift direction</td>
+                        <td>Specifies the MSB or LSB as first.<br/>0 : MSB is as first<br/>1 : LSB is as first</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock phase</td>
+                        <td>Specifies the clock phase of SPI instance.<br/>0 : The data is latched on the leading edge of SCLK and data changes on the trailing edge of SCLK.<br/>1 : The data is latched on the trailing edge of SCLK and data changes on the leading edge of SCLK.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock polarity</td>
+                        <td>Specified the Polarity of SPI instance.<br/>0 : The idle state for SCLK is low.<br/>1 : The idle state for SCLK is high.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock count width</td>
+                        <td>Specifies the range limit for the clock counter. The width must be enough to meet the number of bits required for the slave clock.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Clock sel</td>
+                        <td>Specified the factor for deriving SCLK from the processor clock. SCLK is derived using the following equation:<br/>SCLK = (processor clock) / (2*(CLOCK_SEL+1))</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Data length</td>
+                        <td>Specifies the number of serial data bits.</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Delay time</td>
+                        <td>Specifies the time delay factor before shifting the first bit of data after SS_N signal is asserted. The start delay time is derived from the following equation:<br/>Delay = DELAY_TIME *(SCLK period / 2)</td> 
+                    </tr>
+                    <tr>
+                        <td class="head">Interval length</td>
+                        <td>Specifies the number of SCLK cycles for the SS-N signal is held inactive between SPI transmit requests.</td> 
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations>
+    <format_version version="1"/>
+    <configuration name="Perforce Default" path="$INIPATH/scm_perforce.tcl">
+        <command name="Add Files to Repository" confirmation="1" commandLine="scm_add_files $FileList"/>
+        <command name="Check In" confirmation="0" commandLine="scm_check_in $FileList $Message"/>
+        <command name="Check Out" confirmation="0" commandLine="scm_check_out $FileList"/>
+        <command name="Get Latest Revision" confirmation="0" commandLine="scm_get_latest_revision $FileList"/>
+        <command name="Revert Changes" confirmation="1" commandLine="scm_revert_changes $FileList"/>
+        <command name="Refresh File Info" confirmation="0" commandLine="scm_file_status $FileList"/>
+    </configuration>
+    <configuration name="CVS Default" path="$INIPATH/scm_cvs.tcl">
+        <command name="Add Files to Repository" confirmation="1" commandLine="scm_add_files $FileList"/>
+        <command name="Check In" confirmation="0" commandLine="scm_check_in $FileList $Message"/>
+        <command name="Get Latest Revision" confirmation="0" commandLine="scm_get_latest_revision $FileList"/>
+        <command name="Revert Changes" label="Discard Changes" confirmation="1" commandLine="scm_revert_changes $FileList"/>
+        <command name="Refresh File Info" confirmation="0" commandLine="scm_file_status $FileList"/>
+    </configuration>
+    <configuration name="Subversion Default" path="$INIPATH/scm_subversion.tcl">
+      <command name="Add Files to Repository" confirmation="1" commandLine="scm_add_files $FileList"/>
+      <command name="Check In" confirmation="0" commandLine="scm_check_in $FileList $Message"/>
+      <command name="Get Latest Revision" confirmation="0" commandLine="scm_get_latest_revision $FileList"/>
+      <command name="Revert Changes" label="Discard Changes" confirmation="1" commandLine="scm_revert_changes $FileList"/>
+      <command name="Refresh File Info" confirmation="0" commandLine="scm_file_status $FileList"/>
+    </configuration>
+</configurations>

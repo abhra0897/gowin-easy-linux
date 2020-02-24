@@ -1,0 +1,132 @@
+{
+  "NAME": "WLCSP16",
+  "PKG_TYPE": "ARRAY",
+  "ROW_MARK": "A,B,C,D",
+  "ROW_COUNT": 4,
+  "COL_COUNT": 4,
+  "PIN_DATA": [
+    {
+      "INDEX": "A1",
+      "NAME": "VCCX",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "A2",
+      "NAME": "IOT15B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "DIFF": "N",
+      "PAIR": "IOT15A"
+    },
+    {
+      "INDEX": "A3",
+      "NAME": "IOT8B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "TDO",
+      "DIFF": "N",
+      "PAIR": "IOT8A"
+    },
+    {
+      "INDEX": "A4",
+      "NAME": "IOT8A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "TDI/SPMI_SCLK",
+      "DIFF": "P",
+      "PAIR": "IOT8B"
+    },
+    {
+      "INDEX": "B1",
+      "NAME": "IOT9A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "SCLK/SPMI_CLK",
+      "DIFF": "P",
+      "PAIR": "IOT9B"
+    },
+    {
+      "INDEX": "B2",
+      "NAME": "VCCO0",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "B3",
+      "NAME": "IOT14A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "MODE0",
+      "DIFF": "P",
+      "PAIR": "IOT14B"
+    },
+    {
+      "INDEX": "B4",
+      "NAME": "IOT7B",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "TCK/SPMI_EN/VCCEN",
+      "DIFF": "N",
+      "PAIR": "IOT7A"
+    },
+    {
+      "INDEX": "C1",
+      "NAME": "IOR9A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "SI/D2",
+      "DIFF": "P",
+      "PAIR": "IOR9B"
+    },
+    {
+      "INDEX": "C2",
+      "NAME": "VSS",
+      "TYPE": "GROUND"
+    },
+    {
+      "INDEX": "C3",
+      "NAME": "VCCO1",
+      "TYPE": "POWER"
+    },
+    {
+      "INDEX": "C4",
+      "NAME": "IOT7A",
+      "TYPE": "I/O",
+      "BANK": 0,
+      "CFG": "TMS/SPMI_SDATA",
+      "DIFF": "P",
+      "PAIR": "IOT7B"
+    },
+    {
+      "INDEX": "D1",
+      "NAME": "IOR7A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_3/SSPI_CS_N/D0",
+      "DIFF": "P",
+      "PAIR": "IOR7B"
+    },
+    {
+      "INDEX": "D2",
+      "NAME": "IOR8A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "SO/D1",
+      "DIFF": "P",
+      "PAIR": "IOR8B"
+    },
+    {
+      "INDEX": "D3",
+      "NAME": "IOR5A",
+      "TYPE": "I/O",
+      "BANK": 1,
+      "CFG": "GCLKT_2/RPLL_T_IN",
+      "DIFF": "P",
+      "PAIR": "IOR5B"
+    },
+    {
+      "INDEX": "D4",
+      "NAME": "VCC",
+      "TYPE": "POWER"
+    }
+  ]
+}

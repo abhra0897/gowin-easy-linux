@@ -1,0 +1,17 @@
+`ifndef AE250_CONST_VH
+`define AE250_CONST_VH
+
+`ifndef AE250_NCORE
+	`define AE250_NCORE		1
+`endif
+
+`define AE250_PRODUCT_ID	32'h41452500
+`define AE250_BOARD_ID		32'h0174b010
+
+
+`define AE250_HWINT_NUM		32
+
+`define AE250_HADDR_MSB		31
+`define AE250_PADDR_MSB		31
+
+`endif

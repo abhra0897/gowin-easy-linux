@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="CAN" id="CAN" version= "1.1" category="Soft IP Core|Interface and Interconnect">CAN</ip>
+    <target module="CAN_Top">can</target>
+    <docs>
+        <doc type="summary">/doc/can.html</doc>
+        <doc type="help">/doc/can_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-9-*</device>
+        <device supported="true">GW1NR-9-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

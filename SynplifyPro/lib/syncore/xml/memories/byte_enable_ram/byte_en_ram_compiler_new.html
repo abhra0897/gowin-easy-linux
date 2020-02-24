@@ -1,0 +1,1031 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.2.1206">
+    <meta name="TEMPLATEBASE" content="syncore2.0">
+    <meta name="LASTUPDATED" content="10/27/09 13:50:02">
+    <title>Specifying Byte-Enable RAMs with SYNCore </title>
+  </head>
+
+  <body>
+  
+<a name="wp998202"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+Specifying Byte-Enable RAMs with SYNCore 
+</font></h3>
+<a name="wp998203"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore IP wizard helps you generate SystemVerilog code for your byte-enable RAM implementation requirements.
+</font></p>
+
+<a name="wp998204"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure shows you how to generate SystemVerilog code for a byte-enable RAM using the SYNCore IP wizard. Note that the SYNCore byte-enable RAM model uses SystemVerilog. When adding a byte-enable RAM to your design, be sure to enable the <b>System Verilog</b> check box on the Verilog tab of the Implementation Options dialog box or include a <b>set_option -vlog_std sysv</b> statement in your project file to prevent a syntax error.
+</font></p>
+<ol type="1">
+
+<a name="wp998205"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the wizard.</font></li>
+<ul>
+
+<a name="wp998206"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">From the FPGA synthesis tool GUI, select <b>Run-&gt;Launch SYNCore</b> or click the <b>Launch SYNCore</b> icon <img src="syncore_icon_qt.png" border="0" hspace="0" vspace="0"> to start the SYNCore IP wizard.</font></li>
+<a name="wp998213"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_mainwin2.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998214"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">In the window that opens, select <b>byte_en_ram</b> and click <b>Ok</b> to open the first page (page1) of the wizard.</font></li>
+<a name="wp1001076"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+<br>
+<img src="syncore_byte_en_pg1_help.png" border="0" hspace="0" vspace="0"><br>
+
+</font></p>
+<p>&nbsp;</p></ul>
+
+<a name="wp999296"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify the parameters you need in the wizard. For details about the parameters, see <a  href="byte_en_ram_compiler_new.html#wp998318"><i>Specifying Byte-Enable RAM Parameters</i></a>. The BYTE ENABLE RAM symbol on the left reflects any parameters you set.</font></li>
+
+<a name="wp998223"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">After you have specified all the parameters you need, click the <b>Generate</b> button in the lower left corner. The tool displays a confirmation message (<b>TCL execution successful!</b>) and writes the required files to the directory you specified on page 1 of the wizard. The HDL code is in SystemVerilog. </font></li>
+
+<a name="wp998224"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+SYNCore also generates a test bench for the byte-enable RAM component. The test bench covers a limited set of vectors. You can now close the SYNCore byte-enable RAM compiler.
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998225"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the generated files for the byte-enable RAM component if necessary. </font></li>
+
+<a name="wp998226"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Add the byte-enable RAM that you generated to your design.</font></li>
+<ul>
+
+<a name="wp998227"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">On the Verilog tab of the Implementation Options dialog box, make sure that SystemVerilog is enabled.</font></li>
+<a name="wp998228"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use the <b>Add File</b> command to add the Verilog design file that was generated (the filename entered on page 1 of the wizard) and the <b>syncore_*.v</b> file to your project. These files are in the directory for output files that you specified on page 1 of the wizard.</font></li>
+<a name="wp998229"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Use a text editor to open the <b>instantiation_file.vin</b> template file. This file is located in the same output files directory. Copy the lines that define the byte-enable RAM and paste them into your top-level module. </font></li>
+<a name="wp998230"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Edit the template port connections so that they agree with the port definitions in the top-level module; also change the instantiation name to agree with the component name entered on page 1. The following figure shows a template file inserted into a top-level module with the updated component name and port connections in red.</font></li>
+<a name="wp998231"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+module top <br>
+&nbsp;&nbsp;&nbsp;(input ClockA,<br>
+&nbsp;&nbsp;&nbsp; input [3:0] AddA<br>
+&nbsp;&nbsp;&nbsp; input [31:0] DataIn<br>
+&nbsp;&nbsp;&nbsp; input WrEnA,<br>
+&nbsp;&nbsp;&nbsp; input Reset<br>
+&nbsp;&nbsp;&nbsp; output [31:0] DataOut<br>
+&nbsp;&nbsp;&nbsp;)
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp998232"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+INST_TAG
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp998233"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+SP_RAM #<br>
+&nbsp;&nbsp;&nbsp;(.ADD_WIDTH(4),<br>
+&nbsp;&nbsp;&nbsp; .WE_WIDTH(2),<br>
+&nbsp;&nbsp;&nbsp; .RADDR_LTNCY_A(1), // 0 - No Latency , 1 - 1 Cycle Latency<br>
+&nbsp;&nbsp;&nbsp; .RDATA_LTNCY_A(1), // 0 - No Latency , 1 - 1 Cycle Latency<br>
+&nbsp;&nbsp;&nbsp; .RST_TYPE_A(1), // 0 - No Reset , 1 synchronous<br>
+&nbsp;&nbsp;&nbsp; .RST_RDATA_A({32{1'b1}}),<br>
+&nbsp;&nbsp;&nbsp; .DATA_WIDTH(32)<br>
+&nbsp;&nbsp;&nbsp;) 
+
+</font></code>
+<p>&nbsp;</p>
+<a name="wp998234"> </a><code><font color="#000000" face="Courier New, Courier, mono" size="3">
+4x32spram<br>
+&nbsp;&nbsp;&nbsp;(// Output Ports <br>
+&nbsp;&nbsp;&nbsp; .RdDataA(DataIn), <br>
+&nbsp;&nbsp;&nbsp; // Input  Ports <br>
+&nbsp;&nbsp;&nbsp; .WrDataA(DataOut), <br>
+&nbsp;&nbsp;&nbsp; .WenA(WeEnA), <br>
+&nbsp;&nbsp;&nbsp; .AddrA(AddA), <br>
+&nbsp;&nbsp;&nbsp; .ResetA(Reset), <br>
+&nbsp;&nbsp;&nbsp; .ClkA(ClockA) <br>
+&nbsp;&nbsp;&nbsp;); 
+
+</font></code>
+<p>&nbsp;</p></ul>
+</ol>
+
+<a name="wp998235"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Port List
+</b></font></h5>
+
+<a name="wp998236"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Port A interface signals are applicable for both single-port and dual-port configurations; Port B signals are applicable for dual-port configuration only. 
+</font></p>
+
+<a name="wp998316"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp998239"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+ Name
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp998241"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Type
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp998243"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998245"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ClkA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998247"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998249"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock input for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998251"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>WenA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998253"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998255"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write enable for Port A; present when Port A is in write mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998257"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>AddrA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998259"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998261"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Memory access address for Port A
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998263"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ResetA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998265"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998267"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset for memory and all registers in core; present with registered read data when Reset is enabled; active low (cannot be changed)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998269"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>WrDataA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998271"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998273"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write data to memory for Port A; present when Port A is in write mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998275"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RdDataA</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998277"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Output
+</font></div>
+</td>
+    <td>
+<a name="wp998279"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read data output for Port A; present when Port A is in read or read/write mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998281"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ClkB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998283"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998285"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Clock input for Port B; present in dual-port mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998287"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>WenB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998289"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998291"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write enable for Port B; present in dual-port mode when Port B is in write mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998293"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>AddrB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998295"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998297"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Memory access address for Port B; present in dual-port mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998299"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ResetB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998301"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998303"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Reset for memory and all registers in core; present in dual-port mode when read data is registered and Reset is enabled; active low (cannot be changed)
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998305"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>WrDataB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998307"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Input
+</font></div>
+</td>
+    <td>
+<a name="wp998309"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write data to memory for Port B; present in dual-port mode when Port B is in write mode
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998311"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>RdDataB</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998313"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Output
+</font></div>
+</td>
+    <td>
+<a name="wp998315"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Read data output for Port B; present in dual-port mode when Port B is in read or read/write mode
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998318"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Specifying Byte-Enable RAM Parameters
+</b></font></h5>
+
+<a name="wp998319"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When creating a single-port, byte-enable RAM with the SYNCore IP wizard, you must specify a single read address and a single clock; you only need to configure the Port A parameters on page 2 of the wizard.
+</font></p>
+
+<a name="wp998320"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+When creating a dual-port, byte-enable RAM, you must additionally configure the Port B parameters on page 3 of the wizard. 
+</font></p>
+
+<a name="wp998321"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following procedure lists the parameters you need to specify. For descriptions of each parameter, refer to SYNCore Byte Enable RAM Wizard, on page 3-107 in the reference manual.
+</font></p>
+<ol type="1">
+
+<a name="wp998324"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Start the SYNCore byte-enable RAM wizard as described in <a  href="byte_en_ram_compiler_new.html#wp998202"><i>Specifying Byte-Enable RAMs with SYNCore</i></a>.</font></li>
+
+<a name="wp998326"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">On page 1 of the byte-enable RAM wizard:</font></li>
+<ul>
+
+<a name="wp998327"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify a name for the memory in the Component Name field; do not use spaces.</font></li>
+<a name="wp998328"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify a directory name in the Directory field where you want the output files to be written; do not use spaces.</font></li>
+<a name="wp998329"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Specify a name in the File Name field for the SystemVerilog file to be generated with the byte-enable RAM specifications; do not use spaces.</font></li>
+<a name="wp998330"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter a value for the address width of the byte-enable RAM; the maximum depth of memory is limited to 2^256.</font></li>
+<a name="wp998331"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter a value for the data width for the byte-enable RAM; data width values range from 2 to 256.</font></li>
+<a name="wp998332"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Enter a value for the write enable width; write-enable width values range from 1 to 4.</font></li>
+<a name="wp998333"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select Single Port to generate a single-port, byte-enable RAM or select Dual Port to generate a dual-port, byte-enable RAM.</font></li>
+<a name="wp998334"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Click <b>Next</b> to open page 2 of the wizard.</font></li><hr>
+NOTE:
+
+<a name="wp998335"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The Byte Enable RAM symbol dynamically updates to reflect the parameters that you set.
+</font></p>
+<hr>
+</ul>
+
+<a name="wp998336"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">On page 2 (configuring Port A) of the wizard:</font></li>
+<ul>
+
+<a name="wp998337"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Select the Port A configuration. Only Read and Write Access mode is valid for single-port configurations; this mode is selected by default.</font></li>
+<a name="wp998338"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set Pipelining Address Bus and Output Data according to your application. By default, read data is registered; you can register both the address and data registers.</font></li>
+<a name="wp998339"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set the Configure Reset Options. Enabling the checkbox enables the synchronous reset for read data. This option is enabled only when the read data is registered. Reset is active low and cannot be changed.</font></li>
+<a name="wp998340"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Configure output reset data value options under Specify output data on reset; reset data can be set to default value of all &#39;1&#39; s or to a user-defined decimal value. Reset data value options are disabled when the reset is not enabled for Port A.</font></li>
+<a name="wp998341"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Set Write Enable for Port A value; default for the write-enable level is active high.</font></li></ul>
+
+<a name="wp998342"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">If you are generating a dual-port, byte-enable RAM, set the Port B parameters on page 3 (note that the Port B parameters are only enabled when Dual Port is selected on page 1).</font></li>
+
+<a name="wp998343"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The Port B parameters are identical to the Port A parameters on page 2. When using the dual-port configuration, when one port is configured for read access, the other port can only be configured for read/write access or write access. 
+</font></p>
+<p>&nbsp;</p>
+<a name="wp999021"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Generate the byte-enable RAM by clicking <b>Generate</b>. Add the file to your project and edit the template file as described in <a  href="byte_en_ram_compiler_new.html#wp998202"><i>Specifying Byte-Enable RAMs with SYNCore</i></a>. For read/write timing diagrams, see <a  href="byte_en_ram_compiler_new.html#wp998846"><i>Read/Write Timing Sequences</i></a>.</font></li>
+</ol>
+
+<a name="wp998506"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Byte-Enable RAM Wizard Parameters
+</font></h3>
+<a name="wp998507"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following describes the parameters you can set in the byte-enable RAM wizard, which opens when you select <b>byte_en_ram</b>.
+</font></p>
+<ul>
+
+<a name="wp998511"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="byte_en_ram_compiler_new.html#wp998517"><i>SYNCore Byte-Enable RAM Parameters Page 1</i></a></font></li>
+
+<a name="wp998515"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="byte_en_ram_compiler_new.html#wp998566"><i>SYNCore Byte-Enable RAM Parameters Pages 2 and 3</i></a></font></li>
+</ul>
+
+<a name="wp998517"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Byte-Enable RAM Parameters Page 1
+</b></font></h5>
+
+<a name="wp1001098"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_byte_en_pg1params_help.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998564"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp998524"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Component Name</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998526"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the component. This is the name that you instantiate in your design file to create an instance of the SYNCore byte-enable RAM in your design. Do not use spaces. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998528"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Directory</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998530"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the directory where the generated files are stored. Do not use spaces. The following files are created:
+</font></div>
+<ul>
+
+<a name="wp998531"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>filelist.txt</b> - lists files written out by SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998532"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>options.txt</b> - lists the options selected in SYNCore</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998533"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>readme.txt</b> - contains a brief description and known issues</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998534"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>syncore_be_ram_sdp.v </b>- SystemVerilog library file required to generate single or simple dual-port, byte-enable RAM model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998535"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>syncore_be_ram_tdp.v </b>- SystemVerilog library file required to generate true dual-port byte-enable RAM model</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998536"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>testbench.v</b> - Verilog testbench file for testing the byte-enable RAM model </font></li>
+<p>&nbsp;</p>
+
+<a name="wp998537"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>instantiation_file.vin</b> - describes how to instantiate the wrapper file</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998538"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><i>component</i><b>.v</b> - Byte-enable RAM model wrapper file generated by SYNCore</font></li>
+<p>&nbsp;</p>
+</ul>
+
+<a name="wp998539"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Note that running the byte-enable RAM wizard in the same directory overwrites the existing files.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998541"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Filename</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998543"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the name of the generated file containing the HDL description of the compiled byte-enable RAM. Do not use spaces.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998545"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Address Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998547"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the address depth for Ports A and B. The unit used is the number of bits; the default is 2
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998549"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Data Width</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998551"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the width of the data for Ports A and B. The unit used is the number of bits; the default is 2
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998553"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write Enable Width
+</font></div>
+</td>
+    <td>
+<a name="wp998555"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the write enable width for Ports A and B. The unit used is the number of byte enables; the dafault is 2, the maximum is 4.
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998557"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Single Port</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998559"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a single-port, byte-enable RAM (automatically enables single clock). 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998561"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Dual Port</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998563"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+When enabled, generates a dual-port, byte-enable RAM (automatically enables separate clocks for each port). 
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998566"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+SYNCore Byte-Enable RAM Parameters Pages 2 and 3
+</b></font></h5>
+
+<a name="wp998567"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The port implementation parameters on pages 2 and 3 are identical, but page 2 applies to Port A (single- and dual-port configurations), and page 3 applies to Port B (dual-port configurations only). The following figure shows the parameters on page 2 for Port A.
+</font></p>
+
+<a name="wp1001123"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="syncore_byte_en_pg2params_help.png" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998609"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp998574"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read and Write Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998576"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can be accessed by both read and write operations (only mode allowed for single-port configurations).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998578"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Read Only Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998580"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can only be accessed by read operations (dual-port mode only).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998582"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Write Only Access</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998584"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies that the port can only be accessed by write operations (dual-port mode only).
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998586"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register address bus AddrA/B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998588"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Adds registers to the read address lines. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998590"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Register output data bus RdDataA/B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998592"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Adds registers to the read data lines. By default, the read data register is enabled. 
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998594"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Reset for RdDataA/B</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998596"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the reset type for registered read data: 
+</font></div>
+<ul>
+
+<a name="wp998597"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Reset type is synchronous when Reset for RdDataA/B is enabled</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998598"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Reset type is no reset when Reset for RdDataA/B is disabled</font></li>
+<p>&nbsp;</p>
+</ul>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998600"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>Specify output data on reset</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998602"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies reset value for registered read data (applies only when RdDataA/B is enabled):
+</font></div>
+<ul>
+
+<a name="wp998603"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>Default value of `1' for all bits</b> - sets read data to all 1's on reset</font></li>
+<p>&nbsp;</p>
+
+<a name="wp998604"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><b>Specify Reset value for RdDataA/B </b>- specifies reset value for read data; when enabled, value is entered in adjacent field.</font></li>
+<p>&nbsp;</p>
+</ul>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998606"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write Enable for Port A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998608"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Specifies the write enable level for Port A/B. Default is Active High.
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998648"> </a><h3><font color="Black" face="Arial, Helvetica, sans-serif" size="4">
+SYNCore Byte-Enable RAM Compiler 
+</font></h3>
+<a name="wp998649"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore byte-enable RAM compiler generates SystemVerilog code describing byte-enabled RAMs. The data width of each byte is calculated by dividing the total data width by the write enable width. The byte-enable RAM compiler supports both single- and dual-port configurations.
+</font></p>
+
+<a name="wp998650"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+This section describes the following:
+</font></p>
+<ul>
+
+<a name="wp998651"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Functional Overview, on page </font></li>
+
+<a name="wp998652"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Write Operation, on page </font></li>
+
+<a name="wp998653"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Read Operation, on page </font></li>
+
+<a name="wp998654"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Parameter List, on page </font></li>
+</ul>
+
+<a name="wp998655"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For further information, refer to the following:
+</font></p>
+<ul>
+
+<a name="wp998659"> </a><li><font face="Arial, Helvetica, sans-serif" size="3"><a  href="byte_en_ram_compiler_new.html#wp998202"><i>Specifying Byte-Enable RAMs with SYNCore</i></a> for information on using the wizard to generate single- or dual-port, byte-enable RAM configurations.</font></li>
+</ul>
+
+<a name="wp998664"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Functional Overview
+</b></font></h5>
+
+<a name="wp998665"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The SYNCore byte-enable RAM component supports bit/byte-enable RAM implementations using blockRAM and distributed memory. For each configuration, design optimizations are made for optimum use of core resources. The timing diagram that follow illustrate the supported signals for byte-enable RAM configurations.
+</font></p>
+
+<a name="wp998666"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Byte-enable RAM can be configured in both single- and dual-port configurations. In the dual-port configuration, each port is controlled by different clock, enable, and control signals. User configuration controls include selecting the enable level, reset type, and register type for the read data outputs and address inputs.
+</font></p>
+
+<a name="wp998667"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+Reset applies only to the output read data registers; default value of read data on reset can be changed by user while generating core. Reset option is inactive when output read data is not registered.
+</font></p>
+
+<a name="wp998846"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Read/Write Timing Sequences 
+</b></font></h5>
+
+<a name="wp998847"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The waveforms in this section describe the behavior of the byte-enable RAM for both read and write operations. 
+</font></p>
+
+<a name="wp998848"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Read Operation
+</b></font></h5>
+
+<a name="wp998849"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+On each active edge of the clock when there is a change in address, data is valid on the same clock or next clock (depending on latency parameter values for read address and read data ports). Active reset ignores any change in input address, and data and output data are initialized to user-defined values set by parameters RST_RDATA_A and RST_RDATA_B for port A and port B, respectively.
+</font></p>
+
+<a name="wp998850"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following waveform shows the read sequence of the byte-enable RAM component with read data registered in single-port mode. 
+</font></p>
+
+<a name="wp998854"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="Syncore_byte_enable_html_source6.png" height="227" width="624" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998855"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+As shown in the above waveform, output read data changes on the same clock following the input address changed. When the address changes from &#39;h00 to &#39;h01, read data changes to 50 on the same clock, and data will be valid on the next clock edge.
+</font></p>
+
+<a name="wp998856"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following waveform shows the read sequence with both the read data and address registered in single-port mode.
+</font></p>
+
+<a name="wp998860"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="Syncore_byte_enable_html_source7.png" height="232" width="624" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998861"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+As shown in the above waveform, output read data changes on the next clock edge after the input address changes. When the address changes from &#39;h00 to &#39;h01, read data changes to 50 on the next clock, and data is valid on the next clock edge.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp998862"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The read sequence for dual-port mode is the same as single port; read/write conflicts occurring due to accessing the same location from both ports are the user's responsibility.
+</font></p>
+<hr>
+
+<a name="wp998863"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="2"><b>
+Write Operation
+</b></font></h5>
+
+<a name="wp998864"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following waveform shows a write sequence with read-afterwrite in single-port mode.
+</font></p>
+
+<a name="wp998868"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left"><img src="Syncore_byte_enable_html_source8.png" height="216" width="624" border="0" hspace="0" vspace="0"></div><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998869"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+On each active edge of the clock when there is a change in address with an active enable, data is written into memory on the same clock. When enable is not active, any change in address or data is ignored. Active reset ignores any change in input address and data.
+</font></p>
+
+<a name="wp998870"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The width of the write enable is controlled by the WE_WIDTH parameter. Input data is symmetrically divided and controlled by each write enable. For example, with a data width of 32 and a write enable width of 4, each bit of the write enable controls 8 bits of data (32/4=8). The byte-enable RAM compiler will error for wrong combination data width and write enable values.
+</font></p>
+
+<a name="wp998871"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The above waveform shows a write sequence with all possible values for write enable followed by a read: 
+</font></p>
+<ul>
+
+<a name="wp998872"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">Value for parameter WE_WIDTH is 2 and DATA_WIDTH is 8 so each write enable controls 4 bits of input data.</font></li>
+
+<a name="wp998873"> </a><li><font face="Arial, Helvetica, sans-serif" size="3">WenA value changes from 1 to 2, 2 to 0, and 0 to 3 which toggles all possible combinations of write enable.</font></li>
+</ul>
+
+<a name="wp998874"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The first sequence of address, write enable changes to perform a write sequence and the data patterns written to memory are 00, aa, ff. The read data pattern reflects the current content of memory before the write.
+</font></p>
+
+<a name="wp998875"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The second address sequence is a read (WenA is always zero). As shown in the read pattern, only the respective bits of data are written according to the write enable value.
+</font></p>
+<hr>
+NOTE:
+
+<a name="wp998876"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The write sequence for dual-port mode is the same as single port; conflicts occurring due to writing the same location from both ports are the user's responsibility.
+</font></p>
+<hr>
+
+<a name="wp998877"> </a><h5><font color="Black" face="Arial, Helvetica, sans-serif" size="3"><b>
+Parameter List
+</b></font></h5>
+
+<a name="wp998878"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+The following table lists the file entries corresponding to the byte-enable RAM wizard parameters.
+</font></p>
+
+<a name="wp998960"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p><div align="left">
+<table border="1">
+  <caption></caption>
+  <tr align="left">    <td>
+<a name="wp998881"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+ Name
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp998883"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Description
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp998885"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Default Value
+</b></font></div></div>
+</td>
+    <td>
+<a name="wp998887"> </a><div><div align="center"><font face="Arial, Helvetica, sans-serif" size="3"><b>
+Range
+</b></font></div></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998889"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>ADDR_WIDTH</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998891"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Bit/byte enable RAM address width
+</font></div>
+</td>
+    <td>
+<a name="wp998893"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2
+</font></div>
+</td>
+    <td>
+<a name="wp998895"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+multiples of 2
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998897"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>DATA_WIDTH</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998899"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Data width for input and output data, common to both Port A and Port B
+</font></div>
+</td>
+    <td>
+<a name="wp998901"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+8
+</font></div>
+</td>
+    <td>
+<a name="wp998903"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2 to 256
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998905"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+<b>WE_WIDTH</b>
+</font></div>
+</td>
+    <td>
+<a name="wp998907"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Write enable width, common to both Port A and Port B
+</font></div>
+</td>
+    <td>
+<a name="wp998909"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+2
+</font></div>
+</td>
+    <td>
+<a name="wp998911"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+&#160;
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998913"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+CONFIG_PORT
+</font></div>
+</td>
+    <td>
+<a name="wp998915"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Selects single/dual port configuration
+</font></div>
+</td>
+    <td>
+<a name="wp998917"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 (single port)
+</font></div>
+</td>
+    <td>
+<a name="wp998919"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = dual-port<br>1 = single-port
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998921"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+RST_TYPE_A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998923"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port A/B reset type selection
+</font></div>
+</td>
+    <td>
+<a name="wp998925"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 (synchronous)
+</font></div>
+</td>
+    <td>
+<a name="wp998927"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = no reset<br>1 = synchronous
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998929"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+RST_RDATA_A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998931"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Default data value for Port A/B on active reset
+</font></div>
+</td>
+    <td>
+<a name="wp998933"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+All 1's
+</font></div>
+</td>
+    <td>
+<a name="wp998935"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+decimal value
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998937"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+WEN_SENSE_A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998939"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Port A/B write enable sense
+</font></div>
+</td>
+    <td>
+<a name="wp998941"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 (active high)
+</font></div>
+</td>
+    <td>
+<a name="wp998943"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = active low<br>1 = active high
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998945"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+RADDR_LTNCY_A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998947"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional read address register select Port A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998949"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 
+</font></div>
+</td>
+    <td>
+<a name="wp998951"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = no latency<br>1 = one cycle latency
+</font></div>
+</td>
+</tr>
+  <tr align="left">    <td>
+<a name="wp998953"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+RDATA_LTNCY_A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998955"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+Optional read data register select Port A/B
+</font></div>
+</td>
+    <td>
+<a name="wp998957"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+1 
+</font></div>
+</td>
+    <td>
+<a name="wp998959"> </a><div><font face="Arial, Helvetica, sans-serif" size="3">
+0 = no latency<br>1 = one cycle latency
+</font></div>
+</td>
+</tr>
+</table>
+</div>
+<p><font face="Arial, Helvetica, sans-serif" size="3">
+</font></p>
+<p>&nbsp;</p>
+<a name="wp998197"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+
+</font></p>
+    
+    <hr>
+<p><b>Copyright &copy; 2009 Synopsys, Inc. All rights reserved.<br></b>
+  </body>
+</html>

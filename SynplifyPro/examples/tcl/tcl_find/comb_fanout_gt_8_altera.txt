@@ -1,0 +1,10 @@
+
+************* Sample TCL FIND command **********************
+
+Open the prep2_2.prj file under <install>/examples/verilog/altera
+Change the implementation to Stratix.
+Run.
+Open the technology view.
+To find all combinatorial outputs with fanout greater than or equal 8 in the mapped netlist, you can use the following TCL command in the TCl window:
+
+c_print [find -pin *.*comb* -in [expand -hier -to [find -hier -net * -filter @fanout >= 8]] -filter @fanout >= 8] -prop fanout

@@ -1,0 +1,12 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>4</Version>
+    <Device>gw2a55-001</Device>
+    <FileList>
+        <File type="file.source" enable="1" path="src/ram_1.v"/>
+        <File type="file.cst" enable="1" path="src/memory.cst"/>
+        <File type="file.sdc" enable="1" path="src/memory.sdc"/>
+    </FileList>
+</Project>

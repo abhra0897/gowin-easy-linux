@@ -1,0 +1,27 @@
+10-26 16:29:36 loading license...
+               tool: gowin, limit: 10, expired date: 2016-05-25
+10-26 16:29:36 starting server...
+               Host-id: F8BC12552E8C
+               IP Address: 192.168.30.60
+               Listening Port: 10559
+               server started, waiting for connection...
+               
+10-26 16:29:39 ---------------------------------------------
+               checkout request 
+               User: jinfeng@JINAN9105
+               Addr: 192.168.30.60:47683
+               PID: 32631
+               Tool: gowin
+               ---------------------------------------------
+               request granted.
+               tool: gowin, total: 10, remain: 9, used: 1
+               
+10-26 16:29:39 ---------------------------------------------
+               license checkin 
+               User: jinfeng@JINAN9105
+               Addr: 192.168.30.60:47683
+               PID: 32631
+               Tool: gowin
+               ---------------------------------------------
+               tool: gowin, total: 10, remain: 10, used: 0
+               

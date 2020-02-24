@@ -1,0 +1,200 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>IP MIPI_RX Help</title>
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+            
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+    
+    <body>            
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>MIPI RX</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>MIPI RX</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>The Mobile Industry Processor Interface (MIPI) is a specification standard used for interfaces to mobile application processors. MIPI D-PHY is a bus which provides a physical layer definition to implement high speed connectivity. The MIPI D-PHY is typically used for camera and display interfacing. The advanced FPGA can receive data which respects to the MIPI D-PHY specification through the Gowin MIPI D-PHY RX IP. Furthermore, the IP can be used as the physical layer for higher level protocols such as the MIPI Camera Serial Interface (CSI-2) and Display Serial Interface (DSI).</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+    
+                <table class="summary_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td class="label">MIPI D-PHY Mode</td>
+                        <td>
+                            <p>1:8  : Data conversion ratio is 1:8 in HS Mode</p>
+                            <p>1:16 : Data conversion ratio is 1:16 in HS Mode</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">IO TYPE</td>
+                        <td>
+                            <p>TLVDS:  TLVDS OBUFs were chosen for HS data lanes</p>
+                            <p>ELVDS:  ELVDS OBUFs were chosen for HS data lanes</p>
+                            <p>MIPI IO: MIPI OBUFs were chosen for HS/LP data lanes</P>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">D-PHY lanes 1</td>
+                        <td>The amount of HS data lanes(and LP data Lanes in MIPI IO), there is one lane. </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">D-PHY lanes 2</td>
+                        <td>The amount of HS data lanes(and LP data Lanes in MIPI IO), there are two lanes.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">D-PHY lanes 3</td>
+                        <td>The amount of HS data lanes(and LP data Lanes in MIPI IO), there are three lanes.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">D-PHY lanes 4</td>
+                        <td>The amount of HS data lanes(and LP data Lanes in MIPI IO), there are four lanes.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LP mode on clock lane</td>
+                        <td>Generates IO for LP mode on clock lane; The IOs are lp_clk_in [1:0] and LP_CLK[1:0]</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LP mode on data lane 0</td>
+                        <td>Generates IO for LP mode on data lane0; The IOs are lp_data0_in [1:0] and LP_DATA0[1:0]</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LP mode on data lane 1</td>
+                        <td>Generates IO for LP mode on data lane1; The IOs are lp_data1_in[1:0] and LP_DATA1[1:0]</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LP mode on data lane 2</td>
+                        <td>Generates IO for LP mode on data lane2; The IOs are lp_data2_in[1:0] and LP_DATA2[1:0]</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">LP mode on data lane 3</td>
+                        <td>Generates IO for LP mode on data lane3; The IOs are lp_data3_in[1:0] and LP_DATA3[1:0]</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Turns on byte alignment</td>
+                        <td>In this mode, will enable byte alignment module，it is used to align the byte after deserializing in one lane.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">Turns on lane alignment</td>
+                        <td>In this mode, will enable lane alignment module，it is used to align different lanes.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="label">D-PHY RX using external Clock</td>
+                        <td>In this mode, RX module will use a external clock (clk_byte). The data of data_in0/1/2/3 will align at clk_byte.</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">Data3 Before Lane Alignment</td>
+                        <td>Output datas before Lane Alignment in HS data lane3;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">Data2 Before Lane Alignment</td>
+                        <td>Output datas before Lane Alignment in HS data lane2;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">Data1 Before Lane Alignment</td>
+                        <td>Output datas before Lane Alignment in HS data lane1;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">Data0 Before Lane Alignment</td>
+                        <td>Output datas before Lane Alignment in HS data lane0;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">HS DATA3 IO Delay Value</td>
+                        <td>Configurate input IO delay value in HS data lane3;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">HS DATA2 IO Delay Value</td>
+                        <td>Configurate input IO delay value in HS data lane2;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">HS DATA1 IO Delay Value</td>
+                        <td>Configurate input IO delay value in HS data lane1;</td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">HS DATA0 IO Delay Value</td>
+                        <td>Configurate input IO delay value in HS data lane0;</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

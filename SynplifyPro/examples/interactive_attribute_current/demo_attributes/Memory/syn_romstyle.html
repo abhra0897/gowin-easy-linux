@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd"><html>  <head>    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.2.1206">    <meta name="TEMPLATEBASE" content="fpga_ug">    <meta name="LASTUPDATED" content="04/12/12 14:32:03">    <title> Live Demo Example -- syn_romstyle Attribute </title>  </head>  <body><center><font face="Arial, Helvetica, sans-serif" size="2"></center><a name="wp792415"> </a><h1><div align="center"><font color="Black" face="Arial, Helvetica, sans-serif" size="5">syn_romstyle Attribute</font></div></h1><a name="wp792416"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">The <B>syn_romstyle</B> attribute specifies the implementation to use for an inferred ROM. You can apply <B>syn_romstyle</B> globally, to a module, or to a ROM instance. To infer a ROM architecture, use <B>case</B> statements in your code. For the synthesis tool to implement a ROM, at least half of the available addresses in the <B>case</B> statement must be assigned a value.</p>
+
+<table border="1">
+	<tr><th><span style='font-family:"Arial","sans-serif", size="3"'>Value</span></th><th><span style='font-family:"Arial","sans-serif"'>Description</span></th>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'><b>block_rom</b> </span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'>Maps inferred ROM to the appropriate vendor-specific memory, using the dedicated memory resources on the FPGA.</span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'><b>logic</b> </span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'>Maps inferred ROMs to registers. </span></td>
+  	</tr>
+	<tr>
+		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'><b>select_rom</b> </span></td>
+  		<td class="info"><span style='font-family:"Arial","sans-serif", size="3"'>Implements RAM using the distributed RAM resources.</span></td>
+  	</tr>
+</span></table>
+
+<a name="wp792073"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">For detailed information about this attribute, use the Help button in the attribute wizard or the online help in the synthesis tool.</font>
+
+<a name="wp792073"> </a><p><font face="Arial, Helvetica, sans-serif" size="3">
+For other questions and issues, contact support at http://solvnet.synopsys.com.</font></p>
+<hr>  </body></html>

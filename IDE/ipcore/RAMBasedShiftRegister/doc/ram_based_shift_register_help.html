@@ -1,0 +1,167 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>RAM Based Shift Register Help</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css">
+            /* position set begin */
+            html, body { height: 100%; margin: 0; padding: 0; font-family: Verdana, Arial, sans-serif; font-size: 12px; }
+            #main_wrapper { min-height: 100%; }
+            #main { overflow:auto; padding-bottom: 22px; /* must be same height as the footer */ }
+            #footer_wrapper { position: relative; margin-top: -22px; /* negative value of footer height */ height: 22px; clear:both; }
+            /* position set end */
+
+            div#main_wrapper, div#footer_wrapper  { width: 80%; min-width: 600px; max-width: 998px; text-align: center; margin-left: auto;margin-right: auto; }
+            div#footer { background-color: #3091F1; color: white; height: 100%; }
+            h2 { text-align: left; color: #3091F1 }
+
+            div#content { margin-left: auto; margin-right: auto; min-width: 700px; width: 80%; }
+            div#catalog_wrapper { position: fixed; top: 20px; left: 0; width: 300px; }
+            div#catalog li { text-align: left; list-style-type:circle; color: #0084ff; margin-top: 3px; margin-bottom: 3px; }
+            div#catalog a { display:inline-block; text-decoration: none; color: #0084ff; font-weight: bold; padding: 5px; }
+            div#catalog a:visited { color: #0084ff; }
+            div#catalog a:hover { color: #fff; background: #0084ff; }
+            hr { margin-top: 30px; margin-bottom: 30px; }
+            h1, h3 { text-align: center; }
+            h1 {margin-top: 50px; }
+            table, th, td { border: 1px solid #aaa; }
+            table { border-collapse:collapse; margin-top: 10px; margin-bottom: 20px; width: 100%; }
+            th, td { padding: 5px 5px 5px 5px; }
+            th { color: #fff; font-weight: bold; background-color: #0084ff; }
+            table.summary_table td.label { width: 24%; min-width: 200px; background-color: #dee8f4; }
+            table.summary_table td { text-align: left; }
+            table.detail_table th.label {  min-width: 8%; width: 8%; }
+            table.detail_table td { text-align: left; }
+            table.detail_table td.head { width: 24%; text-align: left; text-indent: 1em; }
+
+            p#copyright { padding: 0;margin: 0;line-height: 22px;font-size: 10px; }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_wrapper">
+            <div id="main">
+                <h1>RAM Based Shift Register</h1>
+                <hr/>
+                <h2>Information</h2>
+
+                <table class="summary_table">
+                    <tr>
+                        <td class="label">Type:</td>
+                        <td>RAM Based Shift Register</td>
+                    </tr>
+                    <!--<tr>
+                        <td class="label">Version:</td>
+                        <td>1.0</td>
+                    </tr>-->
+                    <tr>
+                        <td class="label">Vendor:</td>
+                        <td>GOWIN Semiconductor</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Summary:</td>
+                        <td>Gowin RAM Based Shift Register core provides a very efficient multi-bit wide shift register for use in FIFO-like applications or as a delay line. Fixed-length shift registers and variable-length shift registers can be created.</td>
+                    </tr>
+                </table>
+
+                <h2>Options</h2>
+
+                <table class="detail_table">
+                    <th>Option</th>
+                    <th>Description</th>
+
+                    <tr>
+                        <td colspan="2" class="head">Data Width</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">Width</td>
+                        <td>Specify the width of the data.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Ram Type</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">LUT Based</td>
+                        <td>Contains LUTs and logic implementation.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">BSRAM Based</td>
+                        <td>Contains Block RAM implementation.</td> 
+                    </tr>
+                    
+                    <tr>
+                        <td class="head">SSRAM Based</td>
+                        <td>Contains Distributed RAM implementation.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Shift Register Type</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Fixed Shift</td>
+                        <td>The shift is fixed and is always equal to the number of shifts.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Variable Shift Lossy</td>
+                        <td>The shift is controlled by the Addr input. When the “Addr” changes, the current input data will appear at the output Addr cycles later.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Variable Shift LossLess</td>
+                        <td>The shift is controlled by the Addr input. When the “Addr” changes, the current output data is what was at the input Addr cycles earlier.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Number of Shifts</td>
+                        <td>Specify the number of shifts for a fixed-length shift register.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Max Number of Shifts</td>
+                        <td>Specify the maximum number of shifts for a variable length shift register. This will determine the size of the “Addr” input.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">Output Register</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">Enable Output Register</td>
+                        <td>Specify that registers are used for the output data. This will produce an additional clock cycle delay for the output.</td> 
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" class="head">SET/CLEAR</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">SET</td>
+                        <td>When SET is high, the output data are high.</td> 
+                    </tr>
+
+                    <tr>
+                        <td class="head">CLEAR</td>
+                        <td>When CLEAR is high, the output data are low.</td> 
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_wrapper">
+            <div id="footer">
+                <p id="copyright"></p>
+				<script>
+				var year = new Date().getFullYear();
+				document.getElementById("copyright").innerHTML='Copyright(C) 2014-' + year + ' GOWIN Semiconductor Corporation. All Rights Reserved.';
+				</script>
+            </div>
+        </div>
+    </body>
+</html>

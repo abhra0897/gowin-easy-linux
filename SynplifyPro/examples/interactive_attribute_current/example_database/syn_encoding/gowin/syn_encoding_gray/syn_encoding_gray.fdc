@@ -1,0 +1,42 @@
+
+###==== BEGIN Header
+
+# Synopsys, Inc. constraint file
+# D:/Live_demo/syn201209_143R/examples/Interactive_attribute_example/syn_encoding_gray/syn_encoding_gray.fdc
+# Written on Thu Aug 09 15:59:03 2012
+# by Synplify Premier, G-2012.09 FDC Constraint Editor
+
+# Custom constraint commands may be added outside of the SCOPE tab sections bounded with BEGIN/END.
+# These sections are generated from SCOPE spreadsheet tabs.
+
+###==== END Header
+
+###==== BEGIN Collections - (Populated from tab in SCOPE, do not edit)
+###==== END Collections
+
+###==== BEGIN Clocks - (Populated from tab in SCOPE, do not edit)
+create_clock  {clk} -period {10}
+
+###==== END Clocks
+
+###==== BEGIN "Generated Clocks" - (Populated from tab in SCOPE, do not edit)
+###==== END "Generated Clocks"
+
+###==== BEGIN Inputs/Outputs - (Populated from tab in SCOPE, do not edit)
+###==== END Inputs/Outputs
+
+###==== BEGIN "Delay Paths" - (Populated from tab in SCOPE, do not edit)
+###==== END "Delay Paths"
+
+###==== BEGIN Attributes - (Populated from tab in SCOPE, do not edit)
+define_attribute  {i:state[3:0]} {syn_encoding} {gray}
+###==== END Attributes
+
+###==== BEGIN "I/O Standards" - (Populated from tab in SCOPE, do not edit)
+###==== END "I/O Standards"
+
+###==== BEGIN "Compile Points" - (Populated from tab in SCOPE, do not edit)
+###==== END "Compile Points"
+
+
+

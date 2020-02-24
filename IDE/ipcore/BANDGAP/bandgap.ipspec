@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="BandGap" id="module_bandgap" version= "1.0" category="Hard Module|BandGap">BandGap</ip>
+    <target module="Gowin_BANDGAP">gowin_bandgap</target>
+    <docs>
+        <doc type="summary">/doc/bandgap.html</doc>
+        <doc type="help">/doc/bandgap_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NZ-1-*</device>
+    </devices>
+</ipcore>

@@ -1,0 +1,1357 @@
+<?xml version="1.0"?>
+
+<dyndialog>
+
+<dialog id="ipdesign_rom" text="Rom Wizard" width="850" height="650">
+
+    <graph_def id="graph_def1" fgcolor="white" bgcolor="#909090"> 
+   	     <text x="60" y="180">ROM</text>
+
+	<in name="ClkA"  	width="2" color="blue" enabled_if="X10_ADDR_LTNCY_A or X11_DATA_LTNCY_A" />
+	<in name="EnA"  	width="2" color="blue" enabled_if="X15_ENABLEA and X10_ADDR_LTNCY_A or X15_ENABLEA and X11_DATA_LTNCY_A"/>
+	<in name="AddrA" 	width="6" color="blue" />
+   	<in name="ResetA" 	width="2" color="blue" enabled_if="X12_RESET_A" />	
+
+
+	<in name="" width="0" color="#909090" />  <!-- Add a blank line between PortA & PortB -->
+	
+	<in name="ClkB"  	width="2" color="green" enabled_if="X21_ADDR_LTNCY_B or X22_DATA_LTNCY_B" />
+	<in name="EnB"  	width="2" color="green" enabled_if="!X6_SPROM and X26_ENABLEB and X21_ADDR_LTNCY_B or X26_ENABLEB and X22_DATA_LTNCY_B"/>
+	<in name="AddrB" 	width="6" color="green" enabled_if="!X6_SPROM" />
+   	<in name="ResetB" 	width="2" color="green" enabled_if="!X6_SPROM and X23_RESET_B" />	
+
+	<out name="DataA"	width="4" color="blue" />
+	<out name="DataB"	width="4" color="green" enabled_if="!X6_SPROM" />
+	
+</graph_def>
+
+
+   
+      <!-- GUI Design -->
+<tab id="parameters" text="ROM Parameters">
+
+  <hline>
+
+      <graph id="graph1" def="graph_def1" text="SynCore ROM"  width="300" height="550">
+                 
+      </graph>     
+       
+  <!-- Start of Page 1 -->
+      
+  <page id="page1" text="Rom Compiler">
+  
+  <!-- Componenet feild -->
+  
+  <lineedit id="X1_COMPONENT" text="Component Name" required="true">
+  </lineedit>        
+  
+  <line /> <!-- This is to add an line separator -->
+ 
+  <!-- Directory feild -->
+ 
+     <lineedit id="X2_DIRECTORY" type="directory" text="Directory" required="true" tooltip="Spaces in Directory path not supported">   
+      </lineedit>	
+  
+  <line />   <!-- This is to add an line separator -->
+
+ <!-- Filename feild -->
+  
+    <lineedit id="X3_FILENAME" type="save_file" text="File Name" required="true" tooltip="Filename should not be with .v extension"> 
+    </lineedit>	
+
+  <line />   <!-- This is to add an line separator -->
+ <!-- Memory Size Feild -->
+
+	<group text="ROM Size">
+               <lineedit id="X4_DATA_WIDTH" text="Read Data width" type="int" posttext="Valid Range 1..256" required="true" tooltip="Common for both Ports">
+                  <value>8</value>
+                  <min_value>1</min_value>
+                  <max_value>256</max_value>
+               </lineedit>
+               
+               <lineedit id="X5_ADD_WIDTH" text="ROM address width" type="int" posttext="Valid Range 2..20" required="true">
+                  <value>10</value>
+                  <min_value>2</min_value>
+                  <max_value>20</max_value>
+               </lineedit>
+              
+          </group>
+            
+  <line /> 
+  
+  
+<group text="Configuring the ROM">      	
+          <hline>
+  				 <radio id="X6_SPROM" text="Single Port Rom">	
+	     			<value>true</value>	     
+ 	     			<on_value>CONFIG_PORT=1</on_value>
+	 			</radio> 
+	
+				<radio id="X7_DPROM" text="Dual Port Rom">	   	
+	     		<value>false</value>	      	 
+				<on_value>CONFIG_PORT=0</on_value> 
+	     		</radio> 	          
+        </hline> 	
+     
+</group>   
+     
+ 
+</page> <!-- End of Page 1 -->
+   
+   
+   
+ <!-- Start of Page 2 -->
+
+         			
+<page id="page2">
+
+<group text="Configuring Port A" >
+ 
+ 	<line /> <!-- This is to add an line separator -->
+
+       <group text="Pipelining Address Bus and Output Data ">
+       
+       			<check id="X10_ADDR_LTNCY_A" text="Register address bus AddrA" level="1" >
+         		<value>false</value>
+         		<on_value>ADDR_LTNCY_A=1</on_value>
+            	<off_value>ADDR_LTNCY_A=0</off_value>
+            	</check>
+            	
+            	<check id="X11_DATA_LTNCY_A" text="Register output data bus DataA" level="1" >
+         		<value>false</value>
+         		<on_value>DATA_LTNCY_A=1</on_value>
+            	<off_value>DATA_LTNCY_A=0</off_value>
+            	</check>
+        </group>    
+        
+       <group text="Configure Reset Options" >
+                 
+                  <check id="X12_RESET_A" text="Reset for PORTA" level="1" >
+                  <value>false</value>
+         		  <on_value>RESET_A=1</on_value>
+            	  <off_value>RESET_A=0</off_value>
+            	  </check>
+            	  <hline >
+               	           <radio id="X13_RST_TYPE_A" text="Asynchronous Reset" level="2" enabled_if="X12_RESET_A and X10_ADDR_LTNCY_A or X12_RESET_A and X11_DATA_LTNCY_A" >
+            	           <on_value>RST_TYPE_A=1</on_value>
+            	           </radio>
+ 
+            	           <radio id="X14_RST_TYPE_A" text="Synchronous Reset" level="2" enabled_if="X12_RESET_A and X10_ADDR_LTNCY_A or X12_RESET_A and X11_DATA_LTNCY_A" >
+            	           <on_value>RST_TYPE_A=0</on_value>
+            	           </radio>
+           	     </hline>
+           	     
+       </group>
+       
+       <group text="Configure Enable" >
+                 
+                  <check id="X15_ENABLEA" text="Enable for PORTA" level="1" enabled_if="X10_ADDR_LTNCY_A or X11_DATA_LTNCY_A" unchecked_if="!X10_ADDR_LTNCY_A and !X11_DATA_LTNCY_A">
+                  <value>false</value>
+         		  <on_value>ENABLE_A=1</on_value>
+            	  <off_value>ENABLE_A=0</off_value>
+            	  </check>
+            	  <hline >
+            	           <radio id="X16_EN_SENSE_A" text="Active High Enable" level="2" enabled_if="X15_ENABLEA and X10_ADDR_LTNCY_A or X15_ENABLEA and X11_DATA_LTNCY_A" >
+            	           <on_value>EN_SENSE_A=1</on_value>
+            	           </radio>
+            	           
+            	           <radio id="X17_EN_SENSE_A" text="Active Low Enable" level="2" enabled_if="X15_ENABLEA and X10_ADDR_LTNCY_A or X15_ENABLEA and X11_DATA_LTNCY_A">
+            	           <on_value>EN_SENSE_A=0</on_value>
+            	           </radio>
+            	  </hline>
+       </group>
+       
+
+       <group text="Specify output data on reset" >
+                   <hline>
+                   <check id="X18_RST_A_DFLT"  level="1" checked_if="X12_RESET_A and !X19_RST_A_NDFLT" unchecked_if="!X12_RESET_A or X12_RESET_A and X19_RST_A_NDFLT" enabled_if="X12_RESET_A" >
+                     <value>true</value>
+                     <on_value>RST_A_DFLT=1</on_value>
+                     <off_value>RST_A_DFLT=0</off_value>
+                   </check>  
+				   <text>Default value of '1' for all bits</text>
+				   </hline>
+                    
+                   <hline>                  
+                   <check id="X19_RST_A_NDFLT" level="1" checked_if="X12_RESET_A and !X18_RST_A_DFLT" unchecked_if="!X12_RESET_A or X12_RESET_A and X18_RST_A_DFLT" enabled_if="X12_RESET_A" >
+                   <value>false</value> 
+                   <on_value>RST_A_NDFLT=1</on_value>
+                   <off_value>RST_A_NDFLT=0</off_value>
+                    </check>
+                                                        
+                   <lineedit id="X20_RST_DATA_A" text="Specify Reset value for DataA" type="int" posttext="Valid Range 0...2^DATA_WIDTH" enabled_if="X19_RST_A_NDFLT" required_if="X19_RST_A_NDFLT" >
+				   </lineedit>
+                   </hline>
+       </group>        	 
+            	           
+</group>            	
+            	  
+
+
+   	
+ </page>  <!-- End of Page 2 -->
+
+ 
+<page id="page3">
+
+<group text="Configuring Port B" >
+ 
+ 	<line /> <!-- This is to add an line separator -->
+
+       <group text="Pipelining Address Bus and Output Data ">
+       
+       			<check id="X21_ADDR_LTNCY_B" text="Register address bus AddrB" level="1" enabled_if="!X6_SPROM" unchecked_if="!X7_DPROM" >
+         		<value>false</value>
+         		<on_value>ADDR_LTNCY_B=1</on_value>
+            	<off_value>ADDR_LTNCY_B=0</off_value>
+            	</check>
+            	
+            	<check id="X22_DATA_LTNCY_B" text="Register output data bus DataB" level="1" enabled_if="!X6_SPROM" unchecked_if="!X7_DPROM">
+         		<value>false</value>
+         		<on_value>DATA_LTNCY_B=1</on_value>
+            	<off_value>DATA_LTNCY_B=0</off_value>
+            	</check>
+        </group>    
+        
+       <group text="Configure Reset" >
+                 
+                  <check id="X23_RESET_B" text="Reset for PORTB" level="1" enabled_if="!X6_SPROM" unchecked_if="!X7_DPROM" >
+                  <value>false</value>
+         		  <on_value>RESET_B=1</on_value>
+            	  <off_value>RESET_B=0</off_value>
+            	  </check>
+            	  <hline >
+               	           <radio id="X24_RST_TYPE_B" text="Asynchronous Reset" level="2" enabled_if="X23_RESET_B and X21_ADDR_LTNCY_B or X23_RESET_B and X22_DATA_LTNCY_B" >
+            	           <on_value>RST_TYPE_B=1</on_value>
+            	           </radio>
+ 
+            	           <radio id="X25_RST_TYPE_B" text="Synchronous Reset" level="2" enabled_if="X23_RESET_B and X21_ADDR_LTNCY_B or X23_RESET_B and X22_DATA_LTNCY_B"  >
+            	           <on_value>RST_TYPE_B=0</on_value>
+            	           </radio>
+      	           
+           	  </hline>
+       </group>
+       
+       <group text="Configure Enable" >
+                 
+                  <check id="X26_ENABLEB" text="Enable for PORTB" level="1" enabled_if="X21_ADDR_LTNCY_B or X22_DATA_LTNCY_B" unchecked_if="!X21_ADDR_LTNCY_B and !X22_DATA_LTNCY_B">
+                  <value>false</value>
+         		  <on_value>ENABLE_B=1</on_value>
+            	  <off_value>ENABLE_B=0</off_value>
+            	  </check>
+            	  <hline >
+            	           <radio id="X27_EN_SENSE_B" text="Active High Enable" level="2" enabled_if="X26_ENABLEB and X21_ADDR_LTNCY_B or X26_ENABLEB and X22_DATA_LTNCY_B" >
+            	           <on_value>EN_SENSE_B=1</on_value>
+            	           </radio>
+            	           
+            	           <radio id="X28_EN_SENSE_B" text="Active Low Enable" level="2" enabled_if="X26_ENABLEB and X21_ADDR_LTNCY_B or X26_ENABLEB and X22_DATA_LTNCY_B">
+            	           <on_value>EN_SENSE_B=0</on_value>
+            	           </radio>
+            	  </hline>
+       </group>
+       
+       <group text="Specify output data on reset" >
+                   <hline>
+                   <check id="X29_RST_B_DFLT" text="" level="1" checked_if="X23_RESET_B and !X30_RST_B_NDFLT" unchecked_if="!X23_RESET_B or X23_RESET_B and X30_RST_B_NDFLT" enabled_if="X23_RESET_B" >
+                     <value>true</value>
+                     <on_value>RST_B_DFLT=1</on_value>
+                     <off_value>RST_B_DFLT=0</off_value>
+                   </check>
+                   <text>Default value of '1' for all bits</text>
+                   </hline>				   
+                    
+                   <hline>                  
+                   <check id="X30_RST_B_NDFLT" text="" level="1" checked_if="X23_RESET_B and !X29_RST_B_DFLT" unchecked_if="!X23_RESET_B or X23_RESET_B and X29_RST_B_DFLT"  enabled_if="X23_RESET_B" >
+                   <value>false</value> 
+                   <on_value>RST_B_NDFLT=1</on_value>
+                   <off_value>RST_B_NDFLT=0</off_value>
+                    </check>
+                                                        
+                   <lineedit id="X31_RST_DATA_B"  text="Specify Reset value for DataB" posttext="Valid Range 0...2^DATA_WIDTH"  enabled_if="X30_RST_B_NDFLT" required_if="X30_RST_B_NDFLT" >
+                   </lineedit>
+                   </hline>
+       </group>        	 
+             	 
+            	           
+</group>            	
+            	  
+
+   
+
+   	
+ </page>  <!-- End of Page 3 -->
+     	
+
+<page id="page4" >
+ <group text="Intialization of ROM" >
+  	<line /> <!-- This is to add an line separator -->
+  	<group text="Select the type of the Intial Values" >
+  	    <hline>
+  	            <radio id="X32_INIT_TYPE" text="Binary" >
+  	            <on_value>INIT_TYPE=1</on_value>
+  	            </radio>
+  	  
+  	            <radio id="X33_INIT_TYPE" text="Hexadecimal" >
+  	            <on_value>INIT_TYPE=0</on_value>
+  	            </radio>
+  	   </hline>
+
+  	</group>
+       	<lineedit id="X34_INIT_FILE" type="open_file" text="Intialization File" required="true" tooltip="Spaces in Directory path not supported">   
+  	      <value></value>
+  	    </lineedit>
+   </group>
+  
+   
+    
+</page>	  
+     
+   </hline>
+   
+ </tab>
+
+
+ <tab id="overview" text="Core Overview">      
+      
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synopsys, Inc.</value>
+         </lineedit>
+         
+         <lineedit id="creation_date" text="Creation Date:" readonly="true">
+            <value>May 6, 2008</value>
+         </lineedit>
+         
+         <lineedit id="core_type" text="Core Type:" readonly="true">
+            <value>SYNCORE Parameterizable</value>
+         </lineedit>
+         
+	    <lineedit id="info" readonly="true" stretch="true" src="../../lib/html/doc1.html">
+            <value type="html">
+
+<![CDATA[
+<h2>SYNCORE ROM COMPILER</h2>
+The SYNCORE Rom compiler helps designers create rom models for their designs.<br>
+These Rom models are written out in HDL and can be synthesized as well as simulated.<br>
+A testbench is provided for the Rom models created by the SYNCORE Rom compiler.<br><br>
+
+For detailed information on the SYNCORE Rom compiler and its various options, click the ROM Info button at the bottom of this window. <br>
+f you have any questions or issues, please contact support at www.solvnet.com .
+
+
+]]>
+         </value>
+         </lineedit>
+</tab>
+
+<!-- Removing the Contact tab untill we get proper information for Documentation Group -->
+<!--    
+    <tab id="contact" text="Contact">
+         <lineedit id="version" text="Version:" readonly="true">
+            <value>1.0</value>
+         </lineedit>
+         <lineedit id="company_name" text="Company Name:" readonly="true">
+            <value>Synplicity, Inc.</value>
+         </lineedit>
+         <lineedit id="address" text="Address:" readonly="true">
+            <value>
+600 W.California Ave.
+Sunnyvale, CA 94086
+            </value>
+         </lineedit>
+         <lineedit id="phone" text="Phone:" readonly="true">
+            <value>(408) 215-0000</value>
+         </lineedit>
+   
+         <lineedit id="Description" readonly="true" stretch="true">
+ <value>
+Synplicity, Inc. is a leading supplier of innovative synthesis, verification, and physical implementation software solutions that enable the rapid and effective design and verification of semiconductors. Synplicity's high-quality, high-performance tools significantly reduce costs and time-to-market for FPGA designers. The company's underlying Behavior Extracting Synthesis Technology (BEST), which is embedded in its logical, physical, and verification tools, is responsible for Synplicity's top position in FPGA synthesis. The company's fast, easy-to-use products support industry standard design languages (VHDL and Verilog) and run on popular platforms. Synplicity employs over 280 people in its 20 facilities worldwide. Synplicity is headquartered in Sunnyvale, California.
+   
+            </value>
+         </lineedit>
+      </tab>
+-->	  
+    <button id="generate" text="&amp;Generate" action="execute" tooltip="Generate Rom Core ">
+            <!-- <command>generate_tcl_command</command> -->
+        <command>rom_proc</command> 
+    </button>
+    
+       	<button id="cancel" text="&amp;Cancel" action="cancel" tooltip="Cancel and close dialog" />      	
+       	<button id="RomInfo" text="&amp;ROM Info..." width="700" height="400" action="info" filename="rom_compiler_new.html" tooltip="Display Syncore Rom info" />
+-->      	
+<!-- Start of Tcl script  -->
+
+
+<tcl> <![CDATA[
+
+proc rom_proc {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25} {
+set COMPONENT                 [lindex [split $0 = ] 1 ]
+set DIRECTORY                 [lindex [split $1 = ] 1 ]
+set FILENAME                  [lindex [split $2 = ] 1 ]
+
+#### Extract extension of the the FILENAME #########
+set FNAME_EXT [file extension $FILENAME]  
+
+##### Check if extension of filename is any of {.v,.sv } and if not add ".v" extension #################
+
+if {[string match {.v} $FNAME_EXT  ] ==0  && [string match {.sv} $FNAME_EXT  ] ==0   } {    
+	  set FILENAME "$FILENAME.v"
+   }
+############################### 
+
+
+set DATA_WIDTH                [lindex [split $3 = ] 1 ]
+set ADD_WIDTH                 [lindex [split $4 = ] 1 ]
+set CONFIG_PORT               [lindex [split $5 = ] 1 ]
+set ADDR_LTNCY_A              [lindex [split $6 = ] 1 ]
+set DATA_LTNCY_A              [lindex [split $7 = ] 1 ]
+set RESET_A                   [lindex [split $8 = ] 1 ]
+set RST_TYPE_A                [lindex [split $9 = ] 1 ]
+set ENABLE_A                  [lindex [split $10 = ] 1 ]
+set EN_SENSE_A                [lindex [split $11 = ] 1 ]
+set RST_A_DFLT                [lindex [split $12 = ] 1 ]
+set RST_A_NDFLT               [lindex [split $13 = ] 1 ]
+set RST_DATA_A                [lindex [split $14 = ] 1 ]
+set ADDR_LTNCY_B              [lindex [split $15 = ] 1 ]
+set DATA_LTNCY_B              [lindex [split $16 = ] 1 ]
+set RESET_B                   [lindex [split $17 = ] 1 ]
+set RST_TYPE_B                [lindex [split $18 = ] 1 ]
+set ENABLE_B                  [lindex [split $19 = ] 1 ]
+set EN_SENSE_B                [lindex [split $20 = ] 1 ]
+set RST_B_DFLT                [lindex [split $21 = ] 1 ]
+set RST_B_NDFLT               [lindex [split $22 = ] 1 ]
+set RST_DATA_B                [lindex [split $23 = ] 1 ]
+set INIT_TYPE                 [lindex [split $24 = ] 1 ]
+set INIT_FILE                 [lindex [split $25 = ] 1 ]
+
+##### Check if file exists #######
+ if { [string match [file dirname  $INIT_FILE] "." ] } { 	    ### The FILENAME has just the file name
+        if {[file exists $DIRECTORY/$INIT_FILE] != 1 } {
+	        error "The Intialization File $DIRECTORY/$INIT_FILE does not exist. Please provide a valid file."
+             }
+    } else {                                              	    ### The FILENAME has a directory/filename structure
+	     if {[file exists $INIT_FILE] != 1 } {
+	        error "The Intialization File $INIT_FILE does not exist. Please provide a valid file."
+            }
+    }
+
+            
+#### install_dir will be path to the XML
+
+global LIB
+
+set install_dir $LIB/syncore/xml/memories/rom
+
+file mkdir $DIRECTORY
+
+if { $INIT_TYPE == 1 } {  ###  Binary init file
+      file copy -force $install_dir/../../../models/memories/rom/syncore_romb.v $DIRECTORY/syncore_rom.v 
+} elseif { $INIT_TYPE == 0 } {  ### Hexadecimal init file
+     file copy -force $install_dir/../../../models/memories/rom/syncore_romh.v $DIRECTORY/syncore_rom.v 
+}
+
+ 
+file copy -force $install_dir/../../../models/memories/rom/readme.txt $DIRECTORY/readme.txt
+
+###################################################################################################
+####   Common Variables for checking if the PORTA/B are registered either at address or at Output
+####   Use the variables  PORTA_REG & PORTB_REG to check the above conditions
+###################################################################################################
+
+if { ($ADDR_LTNCY_A == 1) || ( $DATA_LTNCY_A ==1 ) } {
+	   set PORTA_REG 1
+} else {
+	   set PORTA_REG 0
+}
+
+if { ($CONFIG_PORT == 0) && ( ($ADDR_LTNCY_B == 1) || ( $DATA_LTNCY_B ==1 )) } {
+	set PORTB_REG 1
+} else {
+	set PORTB_REG 0
+}
+
+
+
+
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for  generate options file generation
+## ----------------------------------------------------------------------------------------------
+
+set cf [open $DIRECTORY/options.txt w+]
+ 
+puts $cf "COMPONENT        =   $COMPONENT"
+puts $cf "DIRECTORY        =   $DIRECTORY"
+puts $cf "FILENAME        =   $FILENAME"
+
+puts $cf "DATA_WIDTH        =   $DATA_WIDTH"
+puts $cf "ADD_WIDTH        =   $ADD_WIDTH"
+
+if { $CONFIG_PORT == 1 } {
+    puts $cf "CONFIG_PORT        =   \"single\""
+  } else {
+	puts $cf "CONFIG_PORT        =   \"dual\""      
+  }
+  
+if { $ADDR_LTNCY_A == 1 } {
+   puts $cf "ADDR_LTNCY_A        =   $ADDR_LTNCY_A"
+  }
+if {$DATA_LTNCY_A == 1 } {
+  puts $cf "DATA_LTNCY_A        =   $DATA_LTNCY_A"
+  }
+
+if {$RESET_A == 1 } {
+   puts $cf "RESET_A        =   $RESET_A"
+       if { $PORTA_REG == 1  } {
+	       puts $cf "RST_TYPE_A        =   $RST_TYPE_A"
+          }
+   
+      if {$RST_A_DFLT == 1 } {
+	      puts $cf "RST_A_DFLT        =   $RST_A_DFLT"
+        } elseif { $RST_A_NDFLT == 1 } {
+	      puts $cf "RST_A_NDFLT        =   $RST_A_NDFLT"
+          puts $cf "RST_DATA_A        =   $RST_DATA_A"
+        }
+  }
+  
+if {($PORTA_REG ==1 )&& ($ENABLE_A == 1) } {
+   puts $cf "ENABLE_A        =   $ENABLE_A"
+   puts $cf "EN_SENSE_A        =   $EN_SENSE_A"
+  }
+  
+if { $CONFIG_PORT == 1 } {
+	
+  if { $ADDR_LTNCY_B == 1 } {
+      puts $cf "ADDR_LTNCY_B        =   $ADDR_LTNCY_B"
+     }
+  if {$DATA_LTNCY_B == 1 } {
+      puts $cf "DATA_LTNCY_B        =   $DATA_LTNCY_B"
+     }
+
+
+     if { $RESET_B == 1 } {
+      puts $cf "RESET_B        =   $RESET_B"
+          if { $PORTB_REG == 1 } {
+	          puts $cf "RST_TYPE_B        =   $RST_TYPE_B"
+            }
+    
+          if { $RST_B_DFLT == 1 } {
+	          puts $cf "RST_B_DFLT        =   $RST_B_DFLT"
+          } elseif { $RST_B_NDFLT == 1 } {
+              puts $cf "RST_B_NDFLT        =   $RST_B_NDFLT"
+              puts $cf "RST_DATA_B        =   $RST_DATA_B"
+          }
+     }
+
+  if  {($PORTB_REG == 1) && ($ENABLE_B == 1) } {
+       puts $cf "ENABLE_B        =   $ENABLE_B"
+       puts $cf "EN_SENSE_B        =   $EN_SENSE_B"
+      }
+
+}
+puts $cf "INIT_TYPE        =   $INIT_TYPE"
+puts $cf "INIT_FILE        =   $INIT_FILE"
+ 
+close $cf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Code for Instantiation file generation
+## ----------------------------------------------------------------------------------------------
+
+set vf [open $DIRECTORY/instantiation_file.vin w+]
+ 
+   puts $vf "// The following must be inserted into your Verilog file for this"
+   puts $vf "// core to be instantiated. Change the instance name and port connections"
+   puts $vf "// (in parentheses) to your own signal names."
+   puts $vf "\n"
+   puts $vf "//----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG"
+   puts $vf "\n"
+   
+   puts $vf "$COMPONENT   <InstanceName> ( "
+   puts $vf "                             // Output Ports"
+   puts $vf "                             .DataA(DataA),"
+   if { $CONFIG_PORT == 0 } {
+	puts $vf "                             .DataB(DataB)," 
+	 }
+   
+   puts $vf "                         // Input  Ports"
+  ######### PORTA ports instantiation #########
+   if { $PORTA_REG == 1 } {
+   puts $vf "                             .ClkA(ClkA),"
+      
+       if { $ENABLE_A == 1 } {
+            puts $vf "                             .EnA(EnA),"
+         } 
+   }
+   if { $RESET_A == 1 } {
+	   puts $vf "                             .ResetA(ResetA),"
+   } 
+   
+   if { $CONFIG_PORT == 1 } {
+	      puts $vf "                             .AddrA(AddrA)"      
+   } else {
+	      puts $vf "                             .AddrA(AddrA),"      
+   }
+	    
+  ######### PORTB ports instantiation #########
+   if { $CONFIG_PORT == 0 } {
+	  if { $PORTB_REG ==1  } {	   
+	       puts $vf "                             .ClkB(ClkB),"
+        
+           if  { $ENABLE_B == 1 } {
+	            puts $vf "                             .EnB(EnB),"
+           } 
+        }
+      
+      if { $RESET_B == 1 } {
+	      puts $vf "                             .ResetB(ResetB),"
+         }
+     puts $vf "                             .AddrB(AddrB)" 
+   }
+   
+   puts $vf "	                          ); "
+
+   
+close $vf
+## ----------------------------------------------------------------------------------------------
+
+   
+## ----------------------------------------------------------------------------------------------
+## Code for wrapper file generation
+## ----------------------------------------------------------------------------------------------
+
+if { [string match [file dirname  $FILENAME] "." ] } { 	    ### The FILENAME has just the file name
+    set WFILENAME "$DIRECTORY/$FILENAME"
+  } else {                                              	### The FILENAME has a directory/filename structure
+	file mkdir [file dirname $FILENAME]
+	set WFILENAME "$FILENAME"
+}
+
+set wf [open $WFILENAME w+ ]
+
+  puts $wf "// ----------------------------------------------------------------------------- "
+  puts $wf "// --- "
+  puts $wf "// ---                 (C) COPYRIGHT 2001-2010 SYNOPSYS, INC. "
+  puts $wf "// ---                           ALL RIGHTS RESERVED "
+  puts $wf "// --- "
+  puts $wf "// --- This software and the associated documentation are confidential and "
+  puts $wf "// --- proprietary to Synopsys, Inc.  Your use or disclosure of this "
+  puts $wf "// --- software is subject to the terms and conditions of a written "
+  puts $wf "// --- license agreement between you, or your company, and Synopsys, Inc. "
+  puts $wf "// --- "
+  puts $wf "// --- The entire notice above must be reproduced on all authorized copies. "
+  puts $wf "// --- "
+  puts $wf "// ----------------------------------------------------------------------------- "
+  puts $wf "// "
+  puts $wf " "
+
+  puts $wf "`timescale 1ns/100ps"
+  puts $wf "\n"
+  puts $wf "module    $COMPONENT #( "
+  
+  puts $wf "                         parameter DATA_WIDTH = $DATA_WIDTH,"
+  puts $wf "                         parameter ADD_WIDTH = $ADD_WIDTH,"
+  
+  if { $CONFIG_PORT == 1 } {
+         puts $wf "                         parameter CONFIG_PORT = \"single\","
+    } else {
+         puts $wf "                         parameter CONFIG_PORT = \"dual\","
+    }
+   ############ PORT A PARAMETERS #######################   
+  puts $wf "                         parameter ADDR_LTNCY_A = $ADDR_LTNCY_A,"  
+  puts $wf "                         parameter DATA_LTNCY_A = $DATA_LTNCY_A,"
+  
+  if { $RESET_A == 1 } {
+	  if { $PORTA_REG == 1 } {
+  	        puts $wf "                         parameter RST_TYPE_A = $RST_TYPE_A,"
+	     }
+	     
+     
+      if {$RST_A_DFLT == 1 } {
+  	    puts $wf "                         parameter RST_DATA_A = { $DATA_WIDTH {1'b1} },"
+      } else {
+  	     puts $wf "                         parameter RST_DATA_A = $RST_DATA_A,"
+      }
+    }
+  if { ($PORTA_REG ==1 ) && ( $ENABLE_A == 1) } {
+  	puts $wf "                         parameter EN_SENSE_A = $EN_SENSE_A,"
+     }
+  ############ PORT B PARAMETERS #######################   
+  if { $CONFIG_PORT == 0 } {
+  	puts $wf "                         parameter ADDR_LTNCY_B = $ADDR_LTNCY_B,"
+  	puts $wf "                         parameter DATA_LTNCY_B = $DATA_LTNCY_B,"
+  	
+  	if { $RESET_B == 1 } {
+	  	 if {$PORTB_REG == 1 } {
+  		   puts $wf "                         parameter RST_TYPE_B = $RST_TYPE_B,"
+		 }
+  		 if {$RST_B_DFLT == 1 } {
+  	        puts $wf "                         parameter RST_DATA_B = { $DATA_WIDTH {1'b1} },"
+            } else {
+  	        puts $wf "                         parameter RST_DATA_B = $RST_DATA_B,"
+  		  }
+	   }	  
+  if {($PORTB_REG == 1) && ($ENABLE_B == 1 ) } {
+  	puts $wf "                         parameter EN_SENSE_B = $EN_SENSE_B,"
+     }
+  }
+         
+  puts $wf "                         parameter INIT_FILE = \"$INIT_FILE\""
+  
+  puts $wf "	                  ) "
+  puts $wf "	                  ( "
+  
+  puts $wf {                       // Output Ports}
+  puts $wf "                         output \[DATA_WIDTH-1 : 0\] DataA,"
+  if { $CONFIG_PORT == 0 } {
+  		puts $wf "                         output \[DATA_WIDTH-1 : 0\] DataB,"
+     }
+     
+  puts $wf {                       // Input  Ports}
+  
+ ##### PORT A Input PORTS #########  
+  if { $PORTA_REG == 1 } {      
+      puts $wf "                         input             ClkA,"
+      if { $ENABLE_A == 1 } {
+        puts $wf "                         input              EnA,"
+      }
+   }
+  if { $RESET_A == 1 } {
+        puts $wf "                         input              ResetA,"
+     }
+  
+  if { $CONFIG_PORT == 1 } {
+	  puts $wf "                         input  \[ADD_WIDTH-1 : 0\]  AddrA"
+  } else { 
+	  puts $wf "                         input  \[ADD_WIDTH-1 : 0\]  AddrA,"
+  }	  
+    
+  
+
+  ##### PORT B Input PORTS #########   
+  if { $CONFIG_PORT == 0 } {
+     if { $PORTB_REG == 1 } {
+  		   puts $wf "                         input              ClkB,"
+  	       	
+  	       if { $ENABLE_B == 1 } {
+  		       puts $wf "                         input               EnB,"
+  	        }
+	    }
+	    
+  	  
+  	  if  { $RESET_B == 1 } {
+  		  puts $wf "                         input              ResetB,"
+  	     }
+   	puts $wf "                         input  \[ADD_WIDTH-1 : 0\]  AddrB"  	     
+   }	     
+  
+  
+  puts $wf {	                  ); }  
+  
+  puts $wf ""
+  #Instantiating the Rom
+
+  puts $wf "syncorerom             #( "
+  puts $wf "                            .DATA_WIDTH(DATA_WIDTH),"
+  puts $wf "                            .ADD_WIDTH(ADD_WIDTH),"
+  puts $wf "                            .CONFIG_PORT(CONFIG_PORT),"
+  
+  puts $wf "                            .ADDR_LTNCY_A(ADDR_LTNCY_A),"
+  puts $wf "                            .DATA_LTNCY_A(DATA_LTNCY_A),"
+  
+  if { $RESET_A == 1 } {
+      if { $PORTA_REG == 1 } {
+	      puts $wf "                            .RST_TYPE_A(RST_TYPE_A),"
+       }
+      puts $wf "                            .RST_DATA_A(RST_DATA_A),"
+     }
+     
+  if { $PORTA_REG == 1 } {
+	  if { $ENABLE_A == 1 } {
+  	      puts $wf "                            .EN_SENSE_A(EN_SENSE_A),"
+       } else {
+	      puts $wf "                            .EN_SENSE_A(1),"
+       }
+     }
+     
+     
+  if { $CONFIG_PORT  == 0 } {
+  	  puts $wf "                            .ADDR_LTNCY_B(ADDR_LTNCY_B),"
+      puts $wf "                            .DATA_LTNCY_B(DATA_LTNCY_B),"
+  	
+  	if { $RESET_B == 1 } {
+	  	if { $PORTB_REG == 1 } {
+		  	  puts $wf "                            .RST_TYPE_B(RST_TYPE_B),"
+	  	   }
+  		puts $wf "                            .RST_DATA_B(RST_DATA_B),"
+         }
+      
+      if { $PORTB_REG == 1 } {      
+            if { $ENABLE_B == 1 } {
+  	             puts $wf "                            .EN_SENSE_B(EN_SENSE_B),"
+            } else {
+	             puts $wf "                            .EN_SENSE_B(1),"
+            }
+         }
+     } 
+  puts $wf "                            .INIT_FILE(INIT_FILE)"
+  
+  puts $wf "                          ) "
+   
+  puts $wf "syncorerom_ins1         ( "
+  puts $wf "                         // Output Ports"
+  puts $wf "                         .DataA(DataA),"
+  if { $CONFIG_PORT == 0 } {
+	    puts $wf "                         .DataB(DataB)," 
+     }
+  
+  puts $wf "                         // Input  Ports"
+  
+  ######### PORTA ports instantiation #########
+  if { $PORTA_REG == 1 } {
+     puts $wf "                         .ClkA(ClkA),"
+    
+     if { $ENABLE_A == 1 } {
+         puts $wf "                         .EnA(EnA),"
+     } else {
+	     puts $wf "                         .EnA(1'b1),"
+     }
+  }
+
+  if { $RESET_A == 1 } {
+	   puts $wf "                         .ResetA(ResetA),"
+          
+  } else {
+	    puts $wf "                         .ResetA(1'b0),"    
+    
+  }
+  
+  if { $CONFIG_PORT == 1 } {  
+       puts $wf "                         .AddrA(AddrA)"
+     } else {
+	   puts $wf "                         .AddrA(AddrA),"  
+     }
+
+  ######### PORTB ports instantiation #########
+  if { $CONFIG_PORT == 0 } {
+	  if { $PORTB_REG == 1 } {	   
+	       puts $wf "                         .ClkB(ClkB),"
+             
+           if  { $ENABLE_B == 1 } {
+	            puts $wf "                         .EnB(EnB),"
+           } else {
+	            puts $wf "                         .EnB(1'b1),"
+           }
+        }
+      
+      if { $RESET_B == 1 } {
+	      puts $wf "                         .ResetB(ResetB),"
+      } else { 
+	      puts $wf "                         .ResetB(1'b0),"
+      }
+      puts $wf "                         .AddrB(AddrB)"
+  }      
+      
+  puts $wf "                          ); "
+  
+  puts $wf "endmodule "
+  
+  
+close $wf
+
+## ----------------------------------------------------------------------------------------------
+
+  
+## ----------------------------------------------------------------------------------------------
+## Code for TestBench Generation
+## ----------------------------------------------------------------------------------------------
+if { [string match [file dirname  $FILENAME] "."] } {  ### The FILENAME has just the filename
+	set TBFILE "$DIRECTORY/tb_$FILENAME" 
+} else {                                               ### The FILENAME has a directory/filename structure
+    set FDIR [file dirname $FILENAME]
+    set FNAME [file tail $FILENAME]
+	set TBFILE "$FDIR/tb_$FNAME"
+}
+
+set tf [open $TBFILE w+]
+
+
+  puts $tf " `timescale 1ns/1ps " 
+  puts $tf " \n " 
+  puts $tf " module tb_syncore_rom (); " 
+  puts $tf " \n " 
+  puts $tf " //UUT parameters " 
+  puts $tf "parameter DATA_WIDTH = $DATA_WIDTH;"
+  puts $tf "parameter ADD_WIDTH = $ADD_WIDTH;"
+  
+  if { $CONFIG_PORT == 1 } {
+         puts $tf "parameter CONFIG_PORT = \"single\";"
+    } else {
+         puts $tf "parameter CONFIG_PORT = \"dual\";"
+    }
+   ############ PORT A PARAMETERS #######################   
+  puts $tf "parameter ADDR_LTNCY_A = $ADDR_LTNCY_A;"  
+  puts $tf "parameter DATA_LTNCY_A = $DATA_LTNCY_A;"
+  
+  if { $RESET_A == 1 } {
+	  if { $PORTA_REG == 1 } {
+  	        puts $tf "parameter RST_TYPE_A = $RST_TYPE_A;"
+	     }
+     
+      if {$RST_A_DFLT == 1 } {
+  	    puts $tf "parameter RST_DATA_A = { $DATA_WIDTH {1'b1} };"
+      } else {
+  	     puts $tf "parameter RST_DATA_A = $RST_DATA_A;"
+      }
+    }
+  if {( $PORTA_REG == 1 ) && ( $ENABLE_A == 1 ) } {
+  	    puts $tf "parameter EN_SENSE_A = $EN_SENSE_A;"
+     }
+  ############ PORT B PARAMETERS #######################   
+  if { $CONFIG_PORT == 0 } {
+  	puts $tf "parameter ADDR_LTNCY_B = $ADDR_LTNCY_B;"
+  	puts $tf "parameter DATA_LTNCY_B = $DATA_LTNCY_B;"
+  	
+  	if { $RESET_B == 1 } {
+  		 if { $PORTB_REG ==1 } {
+	  		 puts $tf "parameter RST_TYPE_B = $RST_TYPE_B;"
+  		   }
+  		
+  		 if {$RST_B_DFLT == 1 } {
+  	        puts $tf "parameter RST_DATA_B = { $DATA_WIDTH {1'b1} };"
+            } else {
+  	        puts $tf "parameter RST_DATA_B = $RST_DATA_B;"
+  		  }
+	   }	  
+  if { ( $PORTB_REG == 1 ) && ($ENABLE_B == 1) } {
+  	puts $tf "parameter EN_SENSE_B = $EN_SENSE_B;"
+     }
+  }
+         
+  puts $tf "parameter INIT_FILE = \"$INIT_FILE\" ;" 
+    
+  puts $tf " \n " 
+  puts $tf " //UUT signals " 
+  ##### PORT A #########        
+  if { $PORTA_REG == 1 } {
+      puts $tf "reg ClkA ;"
+  }
+  
+  if { ($PORTA_REG == 1) && ( $ENABLE_A == 1) } {
+        puts $tf "reg  EnA ;"
+    }
+  if { $RESET_A == 1 } {
+        puts $tf "reg  ResetA ;"
+     }
+  
+  puts $tf "reg \[ADD_WIDTH-1 : 0\]  AddrA ;"
+
+ ##### PORT B #########   
+  if { $CONFIG_PORT == 0 } {
+     if { $PORTB_REG == 1 } {
+  		   puts $tf "reg  ClkB ;"
+  	      	
+  	       if { $ENABLE_B == 1 } {
+  		      puts $tf "reg   EnB ;"
+  	        }
+	    }
+  	  
+  	  if  { $RESET_B == 1 } {
+  		  puts $tf "reg  ResetB ;"
+  	     }
+   	puts $tf "reg \[ADD_WIDTH-1 : 0\]  AddrB ;"  	     
+   }	     
+   
+  puts $tf "\n"
+ ######### OUTPUT ###########  
+  puts $tf "wire \[DATA_WIDTH-1 : 0\] DataA ;"
+  if { $CONFIG_PORT == 0 } {
+  		puts $tf "wire \[DATA_WIDTH-1 : 0\] DataB ;"
+     }  
+  
+  
+  ######## CLOCK PERIOD Definations ######
+  
+  puts $tf " //TB parameters " 
+  
+  if { $PORTA_REG == 1 } {
+  puts $tf "parameter CLOCK_A_PERIOD = 20 ;"
+  }
+  
+  if { ($CONFIG_PORT == 0) && ($PORTB_REG == 1) } {
+	  puts $tf "parameter CLOCK_B_PERIOD = 10 ;"
+  }
+  
+  
+  puts $tf " //TB signals " 
+
+  puts $tf " \n " 
+  puts $tf " \n " 
+
+  puts $tf " $COMPONENT         #( "
+  puts $tf "                            .DATA_WIDTH(DATA_WIDTH),"
+  puts $tf "                            .ADD_WIDTH(ADD_WIDTH),"
+  puts $tf "                            .CONFIG_PORT(CONFIG_PORT),"
+  
+  puts $tf "                            .ADDR_LTNCY_A(ADDR_LTNCY_A),"
+  puts $tf "                            .DATA_LTNCY_A(DATA_LTNCY_A),"
+  
+  if { $RESET_A == 1 } {
+	  if { $PORTA_REG == 1 } {
+          puts $tf "                            .RST_TYPE_A(RST_TYPE_A),"
+       }
+      puts $tf "                            .RST_DATA_A(RST_DATA_A),"
+     }
+     
+  if { ( $PORTA_REG == 1 ) && ($ENABLE_A == 1) } {
+  	 puts $tf "                            .EN_SENSE_A(EN_SENSE_A),"
+     }
+     
+  if { $CONFIG_PORT  == 0 } {
+  	  puts $tf "                            .ADDR_LTNCY_B(ADDR_LTNCY_B),"
+      puts $tf "                            .DATA_LTNCY_B(DATA_LTNCY_B),"
+  	
+  	if { $RESET_B == 1 } {
+	  	if { $PORTB_REG == 1 } {
+  		    puts $tf "                            .RST_TYPE_B(RST_TYPE_B),"
+		 }
+  		puts $tf "                            .RST_DATA_B(RST_DATA_B),"
+       }
+       
+    if { ( $PORTB_REG == 1 ) && ($ENABLE_B == 1) } {
+  	    puts $tf "                            .EN_SENSE_B(EN_SENSE_B),"
+         }
+     } 
+  puts $tf "                            .INIT_FILE(INIT_FILE)"
+  
+  puts $tf "                          ) "
+   
+  puts $tf "                     uut ( "
+  puts $tf "                         // Output Ports"
+  puts $tf "                         .DataA(DataA),"
+  if { $CONFIG_PORT == 0 } {
+	    puts $tf "                         .DataB(DataB)," 
+     }
+  
+  puts $tf "                         // Input  Ports"
+  
+  ######### PORTA ports instantiation #########
+  if { $PORTA_REG == 1 } {
+      puts $tf "                         .ClkA(ClkA),"
+
+      if { $ENABLE_A == 1 } {
+          puts $tf "                         .EnA(EnA),"
+      }
+    }
+
+  if { $RESET_A == 1 } {
+	   puts $tf "                         .ResetA(ResetA),"
+          
+  }   
+  if { $CONFIG_PORT == 1 } {  
+       puts $tf "                         .AddrA(AddrA)"
+     } else {
+	   puts $tf "                         .AddrA(AddrA),"  
+     }
+
+  ######### PORTB ports instantiation #########
+  if { $CONFIG_PORT == 0 } {
+	  if { $PORTB_REG == 1  } {	   
+	       puts $tf "                         .ClkB(ClkB),"
+        
+         if  { $ENABLE_B == 1 } {
+	          puts $tf "                         .EnB(EnB),"
+         } 
+      }
+      
+      if { $RESET_B == 1 } {
+	      puts $tf "                         .ResetB(ResetB),"
+      } 
+      puts $tf "                         .AddrB(AddrB)"
+  }     
+      
+  puts $tf "                     );" 
+  
+  puts $tf "\n"
+  
+  if { $PORTA_REG == 1 } {
+        puts $tf "//ClockA generation " 
+        puts $tf "always @ (*) begin " 
+        puts $tf "   ClkA <= #(CLOCK_A_PERIOD/2) ~ClkA; " 
+        puts $tf "end " 
+        puts $tf "\n " 
+    }
+  
+  if { ($CONFIG_PORT == 0) && ($PORTB_REG == 1 )} {
+      puts $tf "//ClockB generation " 
+      puts $tf "always @ (*) begin " 
+      puts $tf "   ClkB <= #(CLOCK_B_PERIOD/2) ~ClkB; " 
+      puts $tf "end " 
+      puts $tf "\n " 
+   }
+
+  puts $tf " //Initilization " 
+  puts $tf " initial begin " 
+  if { $PORTA_REG == 1 } {
+        puts $tf "   ClkA     <= 0; " 
+     }
+     
+  if { ($CONFIG_PORT == 0) && ($PORTB_REG == 1 )} {
+	  puts $tf "   ClkB     <= 0; " 
+	 }    
+  
+  #### PORTA Signals Intialization ####
+   if { $RESET_A == 1} {
+	   puts $tf "   ResetA    <= 0;"
+      }
+      
+   if { ($PORTA_REG == 1) && ($ENABLE_A == 1) } {
+	   if { $EN_SENSE_A == 1 } {
+		   puts $tf "   EnA    <= 0;"
+	      } else {
+		   puts $tf "   EnA    <= 1;"
+         }
+      }   
+      
+   puts $tf "   AddrA    <= 0;"
+   
+ ### PORTB Signals Intialization ######
+ if {$CONFIG_PORT == 0 } {
+	 
+	   if { $RESET_B == 1 } {
+	       puts $tf "   ResetB  <= 0;"
+        }
+     
+       if { ($PORTB_REG == 1) && ($ENABLE_B == 1) } {
+	       if { $EN_SENSE_B == 1 } {
+		      puts $tf "   EnB <= 0;"
+	       } else {
+		       puts $tf "   EnB <= 1;"
+	       }
+	     } 
+     puts $tf "   AddrB    <= 0;"
+ }
+ 
+  puts $tf "   #100; " 
+  if { $RESET_A == 1} {
+	   puts $tf "   ResetA    <= 1;"
+      }
+  if {$CONFIG_PORT == 0 } {
+	 
+	   if { $RESET_B == 1 } {
+	       puts $tf "   ResetB  <= 1;"
+        }
+    }
+   if { ($RESET_A == 1) || ( ( $CONFIG_PORT == 0 ) && ( $RESET_B == 1) ) } {  
+       puts $tf "   #100; "
+      }
+   if { $RESET_A == 1} {
+	   puts $tf "   ResetA    <= 0;"
+      }
+  if {$CONFIG_PORT == 0 } {
+	 
+	   if { $RESET_B == 1 } {
+	       puts $tf "   ResetB  <= 0;"
+	       }
+    } 
+    
+  puts $tf "   Generate_Input; " 
+  puts $tf {   $stop ; }
+  puts $tf "" 
+  puts $tf " end " 
+  
+  puts $tf " " 
+  puts $tf " " 
+  puts $tf " task Generate_Input; " 
+  puts $tf " begin " 
+  if { $PORTA_REG == 1 } {  ###### Use ClkA as reference   
+     
+     if { $ENABLE_A == 1 } {
+   	   if { $EN_SENSE_A == 1 } {
+   		   puts $tf "    EnA    <= 1;"
+   	      } else {
+   		   puts $tf "    EnA    <= 0;"
+            }
+         }   
+     if {$CONFIG_PORT == 0 } {
+   	  if { ($PORTB_REG == 1) && ($ENABLE_B == 1) } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 1;"
+   	       } else {
+   		       puts $tf "    EnB <= 0;"
+   	       }
+   	     }
+        } 
+     
+     puts $tf "        repeat(10) "
+     puts $tf "           begin "
+     puts $tf "             AddrA    <= \$random ;"
+     if { $CONFIG_PORT == 0 } {
+   	  puts $tf "             AddrB    <= \$random ;"
+       }
+     puts $tf "             @(negedge ClkA) ;"
+     puts $tf "           end "
+     
+     if { $ENABLE_A == 1 } {
+   	   if { $EN_SENSE_A == 1 } {
+   		   puts $tf "    EnA    <= 0;"
+   	      } else {
+   		   puts $tf "    EnA    <= 1;"
+            }
+         }   
+     if {$CONFIG_PORT == 0 } {
+   	  if { ($PORTB_REG == 1) && ($ENABLE_B == 1) } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 0;"
+   	       } else {
+   		       puts $tf "    EnB <= 1;"
+   	       }
+   	     }
+        } 
+     if { ($ENABLE_A ==1 ) || ( ($CONFIG_PORT == 0) && ($PORTB_REG == 1) && ($ENABLE_B == 1) ) } {
+        puts $tf "        repeat(10) "
+        puts $tf "           begin "
+        puts $tf "           @(negedge ClkA) ;"
+        puts $tf "           end "
+     }
+     
+     if { $ENABLE_A == 1 } {
+   	   if { $EN_SENSE_A == 1 } {
+   		   puts $tf "    EnA    <= 1;"
+   	      } else {
+   		   puts $tf "    EnA    <= 0;"
+            }
+         }   
+     if {$CONFIG_PORT == 0 } {
+   	  if { ($PORTB_REG == 1) && ($ENABLE_B == 1) } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 1;"
+   	       } else {
+   		       puts $tf "    EnB <= 0;"
+   	       }
+   	     }
+        } 
+     if { ($ENABLE_A ==1 ) || ( ($CONFIG_PORT == 0) && ($PORTB_REG == 1) && ($ENABLE_B == 1) ) } {
+         puts $tf "        repeat(10) "
+         puts $tf "           begin "
+         puts $tf "             AddrA    <= \$random ;"
+         if { $CONFIG_PORT == 0 } {
+   	     puts $tf "             AddrB    <= \$random ;"
+         }
+         puts $tf "             @(negedge ClkA) ;"
+         puts $tf "             end "  
+    }
+  } elseif { ($PORTA_REG == 0) && ( $PORTB_REG == 1 ) } {   ### PORT A is unregistered and PORT B is registered so use ClkB as reference
+    
+     
+   	  if {$ENABLE_B == 1 } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 1;"
+   	       } else {
+   		       puts $tf "    EnB <= 0;"
+   	       }
+   	     }
+     
+     
+     puts $tf "        repeat(10) "
+     puts $tf "           begin "
+     puts $tf "             AddrA    <= \$random ;"
+     puts $tf "             AddrB    <= \$random ;"
+     puts $tf "             @(negedge ClkB) ;"
+     puts $tf "           end "
+     
+     if { $ENABLE_B == 1 } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 0;"
+   	       } else {
+   		       puts $tf "    EnB <= 1;"
+   	       }
+   	     
+        puts $tf "        repeat(10) "
+        puts $tf "           begin "
+        puts $tf "           @(negedge ClkB) ;"
+        puts $tf "           end "
+     }
+     
+     if { $ENABLE_B == 1 } {
+   	       if { $EN_SENSE_B == 1 } {
+   		       puts $tf "    EnB <= 1;"
+   	       } else {
+   		       puts $tf "    EnB <= 0;"
+   	       }
+   	  
+          puts $tf "        repeat(10) "
+          puts $tf "           begin "
+          puts $tf "             AddrA    <= \$random ;"
+          puts $tf "             AddrB    <= \$random ;"
+          puts $tf "             @(negedge ClkB) ;"
+          puts $tf "             end "  
+       }
+     
+  } elseif { ($PORTA_REG == 0) && ( $PORTB_REG == 0 ) } {   ### PORT A is unregistered and PORT B is also registered 
+    puts  $tf "        repeat(10) "
+    puts  $tf "           begin "            
+    puts  $tf "           #100;"
+    puts  $tf "           AddrA    <= \$random ;"
+    
+    if { $CONFIG_PORT == 0 } {
+	    puts  $tf "           AddrB    <= \$random ;"
+	    }
+    puts  $tf "           end "            
+  }    
+  
+
+  
+  
+  puts $tf " end " 
+  puts $tf " endtask " 
+  puts $tf " \n " 
+  puts $tf " endmodule " 
+
+close $tf
+
+## ----------------------------------------------------------------------------------------------
+
+
+## ----------------------------------------------------------------------------------------------
+## Syncore Generated files list
+## ----------------------------------------------------------------------------------------------
+
+## Filelist Generation
+
+set lf [open $DIRECTORY/filelist.txt w+]
+ puts $lf "filelist.txt             -- Contains list of files written out by SynCore"
+ puts $lf "options.txt              -- Contains all the options selected in SynCore"
+ puts $lf "readme.txt               -- Contains brief description and known issues"
+ puts $lf "syncore_rom.v            -- Verilog library file required to generate Core Model" 
+ 
+ if { [ string match [file dirname  $FILENAME] "." ] } {
+	 puts $lf "tb_$FILENAME       -- Verilog testbench file to simulate Core Model"
+ } else {
+     puts $lf "$TBFILE            -- Verilog testbench file to simulate Core Model"
+ }
+
+ puts $lf "$FILENAME		        -- Core Model wrapper file"
+ puts $lf "instantiation_file.vin 	-- Core Model wrapper instantiation information"
+close $lf
+
+## ----------------------------------------------------------------------------------------------
+
+ cd $install_dir
+}
+
+   ]]> </tcl>
+
+
+ </dialog>
+   
+</dyndialog>
+
+

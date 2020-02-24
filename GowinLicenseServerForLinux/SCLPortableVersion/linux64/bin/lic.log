@@ -1,0 +1,100 @@
+14:06:17 (lmgrd) -----------------------------------------------
+14:06:17 (lmgrd)   Please Note:
+14:06:17 (lmgrd) 
+14:06:17 (lmgrd)   This log is intended for debug purposes only.
+14:06:17 (lmgrd)   In order to capture accurate license
+14:06:17 (lmgrd)   usage data into an organized repository,
+14:06:17 (lmgrd)   please enable report logging. Use Flexera Software LLC's
+14:06:17 (lmgrd)   software license administration  solution,
+14:06:17 (lmgrd)   FlexNet Manager, to  readily gain visibility
+14:06:17 (lmgrd)   into license usage data and to create
+14:06:17 (lmgrd)   insightful reports on critical information like
+14:06:17 (lmgrd)   license availability and usage. FlexNet Manager
+14:06:17 (lmgrd)   can be fully automated to run these reports on
+14:06:17 (lmgrd)   schedule and can be used to track license
+14:06:17 (lmgrd)   servers and usage across a heterogeneous
+14:06:17 (lmgrd)   network of servers including Windows NT, Linux
+14:06:17 (lmgrd)   and UNIX.
+14:06:17 (lmgrd) 
+14:06:17 (lmgrd) -----------------------------------------------
+14:06:17 (lmgrd) 
+14:06:17 (lmgrd) 
+14:06:17 (lmgrd) Server's System Date and Time: Thu Sep 26 2019 14:06:17 CST
+14:06:17 (lmgrd) SLOG: Summary LOG statistics is enabled.
+14:06:17 (lmgrd) The license server manager (lmgrd) running as root:
+14:06:17 (lmgrd) 	This is a potential security problem
+14:06:17 (lmgrd) 	and is not recommended.
+14:06:17 (lmgrd) FlexNet Licensing (v11.14.1.3 build 212549 x64_lsb) started on boxun (linux) (9/26/2019)
+14:06:17 (lmgrd) Copyright (c) 1988-2017 Flexera Software LLC. All Rights Reserved.
+14:06:17 (lmgrd) World Wide Web:  http://www.flexerasoftware.com
+14:06:17 (lmgrd) License file(s): license.lic
+14:06:17 (lmgrd) lmgrd tcp-port 27020
+14:06:17 (lmgrd) (@lmgrd-SLOG@) ===============================================
+14:06:17 (lmgrd) (@lmgrd-SLOG@) === LMGRD ===
+14:06:17 (lmgrd) (@lmgrd-SLOG@) Start-Date: Thu Sep 26 2019 14:06:17 CST
+14:06:17 (lmgrd) (@lmgrd-SLOG@) PID: 1861
+14:06:17 (lmgrd) (@lmgrd-SLOG@) LMGRD Version: v11.14.1.3 build 212549 x64_lsb ( build 212549 (ipv6))
+14:06:17 (lmgrd) (@lmgrd-SLOG@) 
+14:06:17 (lmgrd) (@lmgrd-SLOG@) === Network Info ===
+14:06:17 (lmgrd) (@lmgrd-SLOG@) Listening port: 27020
+14:06:17 (lmgrd) (@lmgrd-SLOG@) 
+14:06:17 (lmgrd) (@lmgrd-SLOG@) === Startup Info ===
+14:06:17 (lmgrd) (@lmgrd-SLOG@) Server Configuration: Single Server
+14:06:17 (lmgrd) (@lmgrd-SLOG@) Command-line options used at LS startup: -c license.lic -l lic.log 
+14:06:17 (lmgrd) (@lmgrd-SLOG@) License file(s) used:  license.lic
+14:06:17 (lmgrd) (@lmgrd-SLOG@) ===============================================
+14:06:17 (lmgrd) Starting vendor daemons ... 
+14:06:17 (lmgrd) Started snpslmd (internet tcp_port 45809 pid 1862)
+14:06:17 (snpslmd) FlexNet Licensing version v11.14.1.3 build 212549 x64_lsb
+09/26/2019 14:06:17 (snpslmd) INFO: Pooling on VENDOR_STRING is Disabled (to enable, set SCL_POOL_VS=1)
+09/26/2019 14:06:17 (snpslmd) Synopsys Corporate Licensing (SCL) Release: version SCL_2018.06
+09/26/2019 14:06:18 (snpslmd) [SCL] File descriptor limit (soft, hard) for snpslmd: 4096, 4096
+09/26/2019 14:06:18 (snpslmd) INFO: [SCL] TCP - tcp_keepalive_time - 7200 | tcp_keepalive_intvl - 75 | tcp_keepalive_probes - 9 | tcp_fin_timeout - 60
+
+14:06:18 (snpslmd) SLOG: Summary LOG statistics is enabled.
+14:06:18 (snpslmd) SLOG: FNPLS-INTERNAL-CKPT1
+14:06:18 (snpslmd) SLOG: VM Status: 0
+14:06:18 (snpslmd) Server started on boxun for:	SSST		
+14:06:18 (snpslmd) synplifypro_gowin 
+14:06:18 (snpslmd) 
+14:06:18 (snpslmd) Licenses are case sensitive for TE_CATS
+14:06:18 (snpslmd) 
+14:06:18 (snpslmd) EXTERNAL FILTERS are OFF
+14:06:18 (lmgrd) snpslmd using TCP-port 45809
+14:06:18 (snpslmd) Serving features for the following vendor names:
+ snpslmd  ACAD  adalmd  anagram  arcd  atrenta  avantd  CADABRA  chrysalisd  cowared  EPIC  eved  extremed  hscd  innologd  ISE-TCADd  knights  magma  metasoftd  mwflexd  nassd  nsysnvs  numeritchd  pdld  perflmd  riod  saber_dmn  sandwork  sclmgrd  sigmacd  SIINT  simple  snpsOEM1  snslmgrd  ssilmd  synforad  synopsysd  synplctyd  targetld  TAVEREN  TE_CATS  tmald  vastlmd  vcsd  wlld  
+09/26/2019 14:06:18 (snpslmd) ------------------------------------------------------------------
+09/26/2019 14:06:18 (snpslmd) Checking the integrity of the license file...
+09/26/2019 14:06:18 (snpslmd) Valid SSST feature found.
+09/26/2019 14:06:18 (snpslmd) Licensed to Melody Semiconductor LLC
+09/26/2019 14:06:18 (snpslmd) Siteid: 29247, Server Hostid: 8cec4b5d40ea, Issued on: 9/4/2019
+09/26/2019 14:06:18 (snpslmd) ------------------------------------------------------------------
+14:06:18 (snpslmd) SLOG: Statistics Log Frequency is 240 minute(s).
+14:06:18 (snpslmd) SLOG: TS update poll interval is 0. TS update is detected by midnight reread only.
+14:06:18 (snpslmd) SLOG: Activation borrow reclaim percentage is 0.
+14:06:18 (snpslmd) (@snpslmd-SLOG@) ===============================================
+14:06:18 (snpslmd) (@snpslmd-SLOG@) === Vendor Daemon ===
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Vendor daemon: snpslmd
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Start-Date: Thu Sep 26 2019 14:06:18 CST
+14:06:18 (snpslmd) (@snpslmd-SLOG@) PID: 1862
+14:06:18 (snpslmd) (@snpslmd-SLOG@) VD Version: v11.14.1.3 build 212549 x64_lsb ( build 212549 (ipv6))
+14:06:18 (snpslmd) (@snpslmd-SLOG@) 
+14:06:18 (snpslmd) (@snpslmd-SLOG@) === Startup/Restart Info ===
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Options file used: None
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Is vendor daemon a CVD: Yes
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Is TS accessed: No
+14:06:18 (snpslmd) (@snpslmd-SLOG@) TS accessed for feature load: -NA-
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Number of VD restarts since LS startup: 0
+14:06:18 (snpslmd) (@snpslmd-SLOG@) 
+14:06:18 (snpslmd) (@snpslmd-SLOG@) === Network Info ===
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Listening port: 45809
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Daemon select timeout (in seconds): 1
+14:06:18 (snpslmd) (@snpslmd-SLOG@) 
+14:06:18 (snpslmd) (@snpslmd-SLOG@) === Host Info ===
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Host used in license file: boxun
+14:06:18 (snpslmd) (@snpslmd-SLOG@) Running on Hypervisor: Not determined - treat as Physical
+14:06:18 (snpslmd) (@snpslmd-SLOG@) ===============================================
+14:23:54 (snpslmd) TCP_NODELAY NOT enabled
+14:23:54 (snpslmd) UNSUPPORTED: "synplifypro" (PORT_AT_HOST_PLUS   ) root@boxun  (No such feature exists. (-5,346))
+14:23:54 (snpslmd) OUT: "synplifypro_gowin" root@boxun  
+14:24:01 (snpslmd) IN: "synplifypro_gowin" root@boxun  

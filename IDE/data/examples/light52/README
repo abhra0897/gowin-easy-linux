@@ -1,0 +1,5 @@
+light52 -- MCU/SoC built around light52 CPU.
+
+The MCU is a minimalistic SoC built around the light52 core mostly for demonstration purposes. It has more or less the same features as a plain old i8051: an UART, a timer and a bunch of i/o.
+While it can be used as it stands, it is meant to be modified to suit each particular application of the core. Thus, no effort has been made to provide a variety of general purpose peripherals. You are supposed to supply them yourself.
+A complete explanation of all the peripherals and their SFRs can be found in the core datasheet.

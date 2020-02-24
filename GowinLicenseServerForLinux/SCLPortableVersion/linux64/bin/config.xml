@@ -1,0 +1,137 @@
+<!-- 
+
+		**************************************
+		SSDM Collect Module Configuration File
+		**************************************
+
+XML Config file used to specify the parameters to be captured by SSDM collect module.
+
+Config Parameters are divided into 3 main categories.
+	1. Generic
+	2. System
+	3. Periodic
+
+Generic
+	1. polling_frequency - Time interval in seconds at which periodic data has to be captured. 
+	2. logfile - location & file name of logfile.
+	3. debug_level - takes value from 1 - 5. 1 being minimal & 5 log everythingo.
+	4. file_rotate_size -max size of logfile, after which it has to be rotated
+
+
+System
+
+One time system parameters that are to be captures. Categorized into 3 types.
+
+To enable or disable capturing of these parameters use '1' or '0' as value of attribute
+"value" to the tag <param>
+
+	1. host - list of host params to be captured. Supported params are
+
+		* ipaddress 	-	IP Address of active adapter in the machine. 
+		* mtu 			- 	MTU size set for active adapter
+		* macaddress 	- 	MAC Address of active adapter
+		* architecture 	- 	Machine Architecture.
+		* osplatform 	- 	OS Platform
+		* hostname 		- 	Host name of the machine
+		* osversion 	- 	Version of OS running
+		* fdlimit 		- 	File descriptor limit set for the machine. 
+		* fsizelimit 	- 	Max File size limit set. 
+		* stacklimit 	- 	Max Stack limit set. 
+		* keepalive  	-	Keep alive time set for the machine 
+		* featcount		-	Total number of feature count present in the server. 
+
+	2. cpu - List of CPU parameters to capture. Supported params are
+
+		* cores 	-	Number of CPU Cores present. 
+		* vendorid	-	Vendor ID of CPU
+		* speed		-	Speed of CPU in MHz
+		* family	- 	CPU Family
+		* modelname	- 	CPU Model Name
+		* cachesize - 	CPU Cache size
+
+	3. memory - Memory related parameters. Supported params are
+
+		* totalmemory -	Total physical memory installed in the machine. in MBs
+		* swapmemory  -	Total swapmemory present in machine, in MBs
+
+periodic
+
+List of periodic parameters which will be captured by collected module at regular interval. 
+Interval is specified by polling_interval value. 
+
+To enable or disable capturing of these parameters use '1' or '0' as value of attribute
+"value" to the tag <param>
+
+	* fdopen -	# of File descriptors open by license server.
+	* fdsock -	# of socket connections opened by license server
+	* rxpacket	- 	# of packets transmitted from the machine. Its the difference between current & last packet count. 
+	* txpacket	-	# of packets recieved by the machine. Its the difference between current & last packet count.  
+	* rxdrop	- 	# of network recieve packet drops
+	* txdrop	-	# of network transmit packet drops
+	* rxerr		- 	# of packet recieve errors
+	* txerr		-	# of packet transmit errors
+	* tcpactiveopens	- 	# of Active open TCP connections. Active open means "A client process using TCP takes the active role
+							and initiates the connection by actually sending a TCP message to start the connection (a SYN message)"
+
+	* tcppassiveopens 	- 	# of Passive open TCP connections. Passive open means "A server process designed to use TCP, however, 
+							takes a more laid-back approach. It performs a passive OPEN by contacting TCP and saying “I am here,
+							and I am waiting for clients that may wish to talk to me to send me a message on the following port number."
+
+	* systemcpuusage	-	% machine wide CPU Usage ( CPU usage of all the process )
+	* snpslmdcpuusage	-	% CPU Usage by License server. 
+	* memusage			-	% Memory usage by license server.
+
+-->
+<SSDM version="1.0">
+	<generic>
+		<polling_frequency>5</polling_frequency>
+		<logfile>output.log</logfile>
+		<dbfile_path>.</dbfile_path>
+		<debug_level>5</debug_level>
+		<file_rotate_size>1000</file_rotate_size>
+	</generic>
+	<system>
+		<host>
+			<param value="1">ipaddress</param>
+			<param value="1">mtu</param>
+			<param value="1">macaddress</param>
+			<param value="1">architecture</param>
+			<param value="1">osplatform</param>
+			<param value="1">hostname</param>
+			<param value="1">osversion</param>
+			<param value="1">fdlimit</param>
+			<param value="1">fsizelimit</param>
+			<param value="1">stacklimit</param>
+			<param value="1">keepalive</param>
+			<param value="1">featcount</param>
+		</host>
+		<cpu>
+			<param value="1">cores</param>
+			<param value="1">vendorid</param>
+			<param value="1">speed</param>
+			<param value="1">family</param>
+			<param value="1">modelname</param>
+			<param value="1">cachesize</param>
+		</cpu>
+		<memory>
+			<param value="1">totalmemory</param>
+			<param value="1">swapmemory</param>
+		</memory>
+	</system>
+	<periodic>
+			<param value="1">fdopen</param>
+			<param value="1">fdsock</param>
+			<param value="1">fdfile</param>
+			<param value="1">rxpacket</param>
+			<param value="1">rxdrop</param>
+			<param value="1">rxerror</param>
+			<param value="1">txpacket</param>
+			<param value="1">txdrop</param>
+			<param value="1">txerror</param>
+			<param value="1">tcpactiveopens</param>
+			<param value="1">tcppassiveopens</param>
+			<param value="1">systemcpuusage</param>
+			<param value="1">snpslmdcpuusage</param>
+			<param value="1">memoryusage</param>
+	</periodic>
+</SSDM>

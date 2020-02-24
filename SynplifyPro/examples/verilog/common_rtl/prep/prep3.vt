@@ -1,0 +1,103 @@
+//----------------------------------------------------------
+// Benchmark Circuit #3: Memory Map (one instance)
+//
+`timescale 100 ps/100 ps
+module test;
+
+reg clk, rst;
+reg [7:0] in;
+wire [7:0] out;
+
+prep3 inst1 (.CLK(clk), .RST(rst), .IN(in), .OUT(out)) ;
+
+parameter numvecs =19; // actual number of vectors
+
+reg [7:0]  invec  [0:numvecs-1];  // inputs (cond)
+reg [7:0]   outvec [0:numvecs-1]; // outputs
+integer i;
+integer numerrors;
+
+initial
+begin
+	// sequential test patterns entered at neg edge clk
+	// inputs;		 	outputs before next test pattern applied;
+	invec[0] =8'h3a;     		 outvec[0] = 8'h00; // START -> START
+	invec[1] =8'ha1;       	 	 outvec[1] = 8'h00; // START -> START
+	invec[2] =8'h3c;       		 outvec[2] = 8'h82; // START -> SA
+	invec[3] =8'hAB;       	 	 outvec[3] = 8'h04; // SA -> SA
+	invec[4] =8'h1f;      	 	 outvec[4] = 8'h20;  // SA -> SB
+	invec[5] =8'hAA;       		 outvec[5] = 8'h11;  // SB -> SE
+	invec[6] =8'h11;      	 	 outvec[6] = 8'h40;  // SE -> START
+	invec[7] =8'h3C;      	 	 outvec[7] = 8'h82;   // START -> SA
+	invec[8] =8'h1F;     		 outvec[8] = 8'h20;   // SA -> SB
+	invec[9] =8'h12;    		 outvec[9] = 8'h30;  //  SB -> SF
+	invec[10] =8'h34;	      	 outvec[10] = 8'h02;  // SF -> SG
+	invec[11] =8'h88;      		 outvec[11] = 8'h01; // SG -> START
+	invec[12] =8'h3c;      		 outvec[12] = 8'h82; // START -> SA
+	invec[13] =8'h2A;      	 	 outvec[13] = 8'h40;  // SA -> SC
+	invec[14] =8'h55;      		 outvec[14] = 8'h08; // SC -> SD
+	invec[15] =8'h66;   	   	 outvec[15] = 8'h80;  // SD -> SG
+	invec[16] =8'h77;      		 outvec[16] = 8'h01;  // SG -> START
+	invec[17] =8'h3B;      	 	 outvec[17] = 8'h00;  // START -> START
+	invec[18] =8'h3C;	  	 outvec[18] = 8'h82;  // START -> SA  
+	
+end
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+initial
+begin
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+
+	// test asynchronous reset
+	#500 rst = 1; // assert reset at 50 ns
+	#500 if (out !== 8'h00)	// check outputs 50 ns later
+		begin 
+			$display("Error. Asynchronous reset is not working. Output should be 0. Actual:  %h", out);
+			numerrors = numerrors + 1;
+		end
+	rst = 0;
+
+	//skip first rising edge
+	// @(posedge clk);
+	for (i = 0; i <= numvecs-1; i = i + 1)
+	begin
+		@(negedge clk);
+		// apply test pattern at neg edge
+		in = invec[i];
+		@(posedge clk) #4500; //450 ns later
+		// check result at posedge + 450 ns
+		if ( out !== outvec[i] )
+		begin
+		   $display(    
+		"\t\t ERROR pattern#%d t%d: inputs = %h  Expected outputs: %h;  Actual outputs %h", 
+		i, $stime, invec[i], outvec[i], out);
+			numerrors = numerrors + 1;
+		end
+	end
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+	
+	#1000 $finish; // after 100 ns later
+end
+
+endmodule

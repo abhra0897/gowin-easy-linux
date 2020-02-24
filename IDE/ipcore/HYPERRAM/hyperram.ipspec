@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="HyperRAM Memory Interface" id="hyperram" version= "1.0" category="Soft IP Core|Memory Control">HyperRAM Memory Interface</ip>
+    <target module="HyperRAM_Memory_Interface_Top">hyperram_memory_interface</target>
+    <docs>
+        <doc type="summary">/doc/hyperram.html</doc>
+        <doc type="help">/doc/hyperram_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

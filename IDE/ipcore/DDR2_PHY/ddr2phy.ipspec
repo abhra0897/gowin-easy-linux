@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="DDR2 PHY Interface" id="ddr2phy" version= "1.2" category="Soft IP Core|Memory Control">DDR2 PHY Interface</ip>
+    <target module="DDR2_PHY_Interface_Top">ddr2_phy_interface</target>
+    <docs>
+        <doc type="summary">/doc/ddr2phy.html</doc>
+        <doc type="help">/doc/ddr2phy_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+    </devices>
+</ipcore>

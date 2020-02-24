@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- $Header: //synplicity/ui2019q3p1/misc/syntax/c.xml2#1 $ -->
+<syntax name="C" extension="c">
+	<block name="Comment" start="/*" end="*/" fg="#008000" multi="1" bg="white"/>
+
+	<block name="String" start='"' end='"' fg="#ff0000" bg="white"/>
+	<block name="Char" start="'" end="'" fg="#ff0000" bg="white"/>
+
+	<keyword name="Keywords" fg="#0000ff" bg="white">
+		<item>break</item>
+		<item>case</item>
+		<item>continue</item>
+		<item>default</item>
+		<item>do</item>
+		<item>else</item>
+		<item>enum</item>
+		<item>extern</item>
+		<item>for</item>
+		<item>goto</item>
+		<item>if</item>
+		<item>inline</item>
+		<item>return</item>
+		<item>sizeof</item>
+		<item>struct</item>
+		<item>switch</item>
+		<item>typedef</item>
+		<item>union</item>
+		<item>while</item>
+    </keyword>
+
+	<keyword name="Preprocessor" fg="#00a000" bg="white">
+		<item>#define</item>
+		<item>#else</item>
+		<item>#endif</item>
+		<item>#ifdef</item>
+		<item>#ifndef</item>
+		<item>#include</item>
+		<item>#pragma</item>
+		<item>#undef</item>
+    </keyword>
+
+	<keyword name="Types" fg="#00ffff" bg="white">
+		<item>auto</item>
+		<item>char</item>
+		<item>const</item>
+		<item>double</item>
+		<item>float</item>
+		<item>int</item>
+		<item>long</item>
+		<item>register</item>
+		<item>restrict</item>
+		<item>short</item>
+		<item>signed</item>
+		<item>static</item>
+		<item>unsigned</item>
+		<item>void</item>
+		<item>volatile</item>
+		<item>_Imaginary</item>
+		<item>_Complex</item>
+		<item>_Bool</item>
+    </keyword>
+</syntax>

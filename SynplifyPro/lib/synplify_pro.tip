@@ -1,0 +1,29 @@
+To display the Online Help, select Help->Help Topics. For easy access, click a topic of interest from the Quick Access navigation feature.
+You can get help on many of the error messages and warnings. Click a message in the Message Viewer or log file to go directly to the explanation. Select Help->Error Messages for details about using the Message Viewer. 
+From the Message Viewer, select the TCL Script tab to enter commands. Select the Messages tab to view notes, warnings, and errors. 
+The log file has an HTML viewer with a table of contents for easy navigation. To display the log file in HTML format, select Options->Project View Options->View log file in HTML.
+Press F1 in a window or dialog box to display context-sensitive Online Help.
+For easy access to PDF versions of the product documentation, select Help->PDF Documents.
+The documentation contains code examples for supported SystemVerilog and VHDL 2008 constructs that you can display through the Online Help system. They can then be copied and pasted into an editor and run in the tool. 
+Use the SYNCore wizard to help you build IPs. For example, the wizard can compile a RAM, ROM, or FIFO.
+The TCL expand command provides a way to generate a connectivity-based collection of objects to explicitly expand by specifying from, to, and optional through points, or implicitly expand without specifying these points.
+Try the Auto Constrain feature to get the fastest design performance. Edit the results and resynthesize.
+Retiming can increase design performance by up to 20%. Retiming is the process of automatically moving registers (register balancing) across combinatorial gates/LUTs to improve timing while ensuring identical logic behavior.
+You can specify the number of critical paths and the number of start/end points for paths to be reported in the log file. Select Implementation Options and set these options on the Timing Report tab.
+One-hot implementations are not always the best choice for state machines, even in FPGAs and CPLDs. For example, one-hot state machines might result in higher speeds in CPLDs, but cause fitting problems because of the larger number of global signals.
+Specify syn_useioff=1 as a global attribute to force flip-flops to be packed in I/O pads. 
+When a schematic is too large for a single sheet, the software automatically partitions the design and displays it on multiple sheets. To control the amount of logic displayed on a single sheet, select Options->HDL Analyst Options and set the partition size.
+For faster debugging, you can display cell (LUT or logic cell) interiors in the Technology view. To enable this option, select Options->HDL Analyst Options and set the Show Cell Interior option. 
+You can drag and drop modules and instances from the RTL and Technology views into the SCOPE interface to set constraints.
+You can highlight all instances between two or more selected instances with the HDL Analyst Expand Path command. 
+Define related or unrelated clocks using the Clock Group column of the SCOPE Clocks tab. You do not have to specify false path timing exceptions between asynchronous clocks if you assign them to different clock groups.
+Double-click a module, instance, or port in the RTL or Technology view to open the corresponding code in the source file.
+Click the FSM Compiler checkbox in Project view to enable FSM Compiler for the entire design. When enabled, the FSM compiler automatically recognizes and extracts state machines without any changes to the source code.
+Use syn_hier "firm" to preserve a level of hierarchy during optimization. You can use the SCOPE interface to set this attribute. 
+The software ignores state machine implementations defined with syn_enum_encoding if FSM Compiler is enabled.
+If your Verilog design has an empty module (no logic), the software automatically infers a black box and gives you a warning message. 
+You can specify the top-level Verilog module or VHDL entity either on the Implementation Options dialog box or by making sure that the top-level module or entity is the last file in the project source file list.
+You can use different text editors. Select Options->Editor Options. Turn on External Editor and type in the editor. On PC platforms, point to the editor executable. For Linux, type the appropriate command. For example: xterm -e vi or gnome-terminal -x emacs.
+You can use the editor to comment out large blocks of HDL source code. To do this, select the logic you want to comment, then select Edit->Advanced->Comment Code. 
+If you run multiple implementations of a design, the Log Watch window is useful for quick side-by-side comparisons of area and performance results for different implementations. Enable View->Output Windows to display this Log Watch window. 
+When you remove an implementation in the Project view, the implementation directory remains on the disk unless you select Remove Impl and Delete Directory.

@@ -1,0 +1,15 @@
+
+************* Sample TCL FIND command **********************
+
+Open the prep2_2.prj file under <install>/examples/verilog/altera
+Change the implementation to Stratix.
+Run.
+Open the technology view.
+To find all the "feedthrough" cells in the mapped netlist, you can use the following TCL command in the TCl window:
+
+c_print [find -inst * -in [find -hier -inst * -filter @is_combinational == 1] -filter @view == *AAAA] -prop view
+
+or
+
+set test [find -hier -inst * -filter @is_combinational == 1]
+c_print [find -inst * -in $test -filter @view == *AAAA] -prop view

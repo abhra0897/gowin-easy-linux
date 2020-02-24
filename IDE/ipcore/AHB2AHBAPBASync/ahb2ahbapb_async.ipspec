@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="AHB to AHB APB Async" id="ahb_to_ahb_apb_async" version= "1.0" category="Soft IP Core|Microprocessor System|Bus Bridge">AHB to AHB APB Async</ip>
+    <target module="AHB_to_AHB_APB_Async_Top">ahb_to_ahb_apb_async</target>
+    <docs>
+        <doc type="summary">/doc/ahb2ahbapb_async.html</doc>
+        <doc type="help">/doc/ahb2ahbapb_async_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW*</device>
+    </devices>
+</ipcore>

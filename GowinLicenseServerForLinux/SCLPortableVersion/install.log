@@ -1,0 +1,64 @@
+Licensed Products communicate with Synopsys servers for the purpose of providing software updates,
+detecting software piracy and verifying that customers are using Licensed Products in conformity with
+the applicable License Key for such Licensed Products. Synopsys will use information gathered in
+connection with this process to deliver software updates and pursue software pirates and infringers.
+
+STANDALONE : scl
+INSTALLING scl product, common package, 2018.06 version.
+/bin/tar (tar (GNU tar) 1.23)
+./
+./admin/
+./admin/license/
+./admin/logs/
+./doc/
+./doc/lmadmin_migration_faq.pdf
+./doc/FLEXnet_ID_Dongle_Drivers.pdf
+./doc/FlexNetLicensingEndUserGuide.pdf
+./doc/DONGLE_README.TXT
+./doc/foss/
+./doc/foss/SCL_20171204_FOSS.pdf
+./doc/SCL_2018.06_Administration_Guide.pdf
+./doc/SCL_2018.06_Release_Notes.pdf
+./doc/SCL_2018.06_Install.pdf
+./examples/
+./examples/scl_boot.sh
+./examples/rotate_lic_server.sh
+./examples/sysmon.README
+./examples/watchlog.c
+./examples/sysmon.sh
+./LICENSE.TXT
+INSTALLING scl product, linux64 package, 2018.06 version.
+/bin/tar (tar (GNU tar) 1.23)
+./
+./linux64/
+./linux64/drivers/
+./linux64/drivers/libhasp_linux_x86_64.so
+./linux64/drivers/aksusbd-redhat-suse-7.54.tar.gz
+./linux64/drivers/WkRt-Lin-6.40.2402-500.x86_64.rpm
+./linux64/bin/
+./linux64/bin/sssverify
+./linux64/bin/server_debug_conf.xml
+./linux64/bin/lmgrd
+./linux64/bin/ssdm_admin
+./linux64/bin/lmdiag
+./linux64/bin/install_fnp.sh
+./linux64/bin/lmhostid
+./linux64/bin/FNPLicensingService/
+./linux64/bin/FNPLicensingService/FNPLicensingService
+./linux64/bin/README.TXT
+./linux64/bin/lmstat
+./linux64/bin/watchlog
+./linux64/bin/snpslmd
+./linux64/bin/config.xml
+./linux64/bin/lmver
+./linux64/bin/ssdm_collect
+./linux64/bin/lmutil
+./linux64/bin/lmdown
+./linux64/bin/lmreread
+./linux64/bin/whatscl
+./linux64/bin/sshostid
+./linux64/bin/sssverify-trl
+./linux64/bin/watchlog.conf
+./linux64/bin/sclsort
+./linux64/bin/sclsh
+

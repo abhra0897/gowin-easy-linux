@@ -1,0 +1,115 @@
+#!/bin/bash
+x=$0
+y=`expr $x : '\(.\)'`
+if [ "$y" != "/" ] ; then
+    x=`pwd`/$x
+fi
+x=`echo $x | sed "s+/\./+/+g" | sed "s/\/\//\//g"`
+SYN_PRGM=`expr $x : ".*/\([^/]*\)"`;                       export   SYN_PRGM;
+SYN_HOMEDIR=`expr $x : "\(.*\)/[^/]*/[^/]*"`;              export   SYN_HOMEDIR;
+
+echo "X settings:"
+xset q
+
+VERSION=`uname -r`
+
+case `uname` in
+    Linux)    case $VERSION in
+                  3.* | 2.*)          PLATFORM=linux;
+                                ;;
+              esac;;
+    *)                          PLATFORM="not_supported";;
+esac
+                                                           export   PLATFORM;
+
+# MWHOME=$SYN_HOMEDIR/$PLATFORM/mfw;                         export   MWHOME;
+MWHOME=$SYN_HOMEDIR/mfw/mw;                         export   MWHOME;
+
+# Added automatic check for different versions of perl. If local perl
+# is available we will use that instead of mwperl ( Mainwin perl )
+# Also added SYN_PERL variable so user have control on setting perl locations
+# if not found at default locations.
+ if [ "x${SYN_PERL}"  = "x" ]; then
+    if [ -f "/usr/bin/perl" ]; then
+        if [ -x "/usr/bin/perl" -a  `/usr/bin/perl -v | grep -v grep | grep -ic 'version 5.6' `  -eq 0 ]; then
+            SYN_PERL=${SYN_PERL:-"/usr/bin/perl"};
+        fi
+    elif [ -f "/usr/local/bin/perl" ]; then
+        if [ -x "/usr/local/bin/perl" -a  `/usr/local/bin/perl -v | grep -v grep | grep -ic 'version 5.0' `  -eq 0 ]; then
+            SYN_PERL=${SYN_PERL:-"/usr/local/bin/perl"};
+        fi
+    fi
+    if [ "x${SYN_PERL}"  = "x" ]; then
+        if [ -r $MWHOME/setmwruntime ]; then
+            . $MWHOME/setmwruntime
+        else
+            echo " ";
+            echo "****************************************************************";
+            echo " ";
+            echo "Error: Could not find $MWHOME/setmwruntime";
+            echo "       Please check your installation, Can't proceed ";
+            echo " ";
+            echo "****************************************************************";
+            echo " ";
+            exit 1 ;
+        fi
+        if [ -x "$SYN_HOMEDIR/mfw/mw/bin-${MWARCH}_${MWOS}/mwperl" ]; then
+            SYN_PERL=${SYN_PERL:-"$SYN_HOMEDIR/mfw/mw/bin-${MWARCH}_${MWOS}/mwperl"};
+        else
+            echo " ";
+            echo "****************************************************************";
+            echo " ";
+            echo "Error: Could not find local of perl executable";
+            echo "       Tried to look for perl at ";
+            echo "           /usr/bin/perl "
+            echo "           /usr/local/bin/perl "
+            echo "           $SYN_HOMEDIR/mfw/mw/bin-${MWARCH}_${MWOS}/mwperl "
+            echo " ";
+            echo "       Please set SYN_PERL evironmnet variable to perl location and ";
+            echo "         run this script again " ;
+            echo " ";
+            echo "****************************************************************";
+            echo " ";
+            exit 1 ;
+        fi        
+    fi
+ fi
+
+if [ -r $SYN_HOMEDIR/bin/config/$SYN_PRGM.pl ]; then
+    if [ -x "$SYN_PERL" ]; then
+        if [ ` echo "$SYN_PERL" | grep -v grep | grep -ic 'mwperl' `  -eq 0 ]; then
+            if [ ` "$SYN_PERL" -v | grep -v grep | grep -ic 'version 5.0' `  -gt 0 ]; then
+                echo "****************************************************************";
+                echo " ";
+                echo "Warning: $SYN_PERL version is older, please use perl 5.6.1 or higher.";
+                echo "       current version is ' `$SYN_PERL -v` ' ";
+                echo " ";
+                echo " ";
+                echo "****************************************************************";
+                echo " ";
+            fi
+        fi
+        cd $SYN_HOMEDIR/bin/config;
+        exec $SYN_PERL $SYN_HOMEDIR/bin/config/$SYN_PRGM.pl
+    else
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+        echo "Error: can't find $SYN_PERL ";
+        echo "       check for execute permissions on '$SYN_PERL' executable";
+        echo " ";
+        echo "****************************************************************";
+        echo " ";
+        exit 2;
+    fi
+else
+    echo " ";
+    echo "****************************************************************";
+    echo " ";
+    echo "Error: can't find $SYN_HOMEDIR/bin/config/$SYN_PRGM.pl ";
+    echo "       exiting . . ."; 
+    echo " ";
+    echo "****************************************************************";
+    echo " ";
+fi
+

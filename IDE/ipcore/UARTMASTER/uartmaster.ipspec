@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="UART MASTER" id="uart_master" version= "1.0" category="Soft IP Core|Interface and Interconnect">UART MASTER</ip>
+    <target module="UART_MASTER_Top">uart_master</target>
+    <docs>
+        <doc type="summary">/doc/uartmaster.html</doc>
+        <doc type="help">/doc/uartmaster_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NZ-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>
+

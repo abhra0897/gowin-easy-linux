@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- XML doc for Impact Report-->
+<!-- 
+-->
+<impact_report >
+
+  <state_tag name="compile">
+    
+    <state_query>
+      <query_name>compile_bboxes</query_name>
+      <desciption>Black Boxes</desciption>
+      <query>design_info.number_of_black_boxes</query>
+      <job_name>global_optimizer</job_name>
+      <message>
+        Check the linker log file to understand why the black boxes were created. If black box content is only provided during place and route, allocate timing and area resources for them.
+        Refer to the "Defining Clocks for Gated Clock Conversion" and "Defining Black Boxes for Synthesis" sections in online help.
+      </message>
+      <value>1</value>
+      <condition_limit>1</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Post compilation optimization Log</report_file>
+      <report_title>BlackBox Details</report_title>
+      <resason>Black boxes can either be created by the user or automatically created because of missing module definitions.</resason>
+      <impact_on_design>
+        Not allocating resources(LUTs, registers, RAMs) for black boxes results in sub-optimal partitioning, routing, and time budgeting, and possible place-and-route failures.&lt;br&gt;
+        Additionally, not defining clock and timing information for black boxes can prevent gated clock coversion(GCC), which can cause hold violations during place and route.
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>run_time</query_name>
+      <desciption>RunTime</desciption>
+      <query>runtime.realtime</query>
+      <message>
+        * Check that distributed compile is enabled("database query_state -option distributed_compile" command)&lt;br&gt;
+        * Check the number of parallel jobs("database query_state -option max_parallel_jobs" command). More parallel jobs mean better
+        runtimes in distributed compile mode.Refer to the "Setting Options to Run Distributed Processing" section in online help.
+      </message>
+      <value>1</value>
+      <condition_limit>3600</condition_limit>
+      <condition_type></condition_type>
+      <resason>
+        Design size and complexity can cause long runtimes.
+      </resason>
+      <impact_on_design>Long runtimes increase overall turnaround time (TAT).</impact_on_design>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <desciption>Idelay control</desciption>
+      <query_name>idelayctrl</query_name>
+      <query>design_info.idelayctrl</query>
+      <message>Ensure that the IDELAY/IDELAYCTRL pair are partitioned to the same FPGA. Constrained IDELAYCTRL.</message>
+      <job_name>global_optimizer</job_name>
+      <value>1</value>
+      <condition_limit>1</condition_limit>
+      <condition_type>INT</condition_type>
+      <resason>IDELAY and IDELAYCTRL are used for delaying any input signal except clocks.</resason>
+      <impact_on_design>If IDELAY is specified, IDELAYCTRL must be defined for it. Unhandled IDELAY or unplaced IDELAY/IDELAYCTRL can cause functional and flow issues during place and route.</impact_on_design>
+      <format_type></format_type>
+    </state_query>
+  </state_tag>
+
+  <state_tag name="pre_partition">
+
+    <state_query>
+      <query_name>design_info.number_of_inferred_clocks</query_name>
+      <query>design_info.number_of_inferred_clocks</query>
+      <desciption>Inferred Clocks</desciption>
+      <job_name>partition_premap</job_name>
+      <message>
+        Declare clocks, using the "create_clock" constraint for primary clocks and the "create_generate" constraint for derived clocks. Use the "report constraint_check" command to
+        validate the constraints. Refer to the "Defining Clocks for Gated Clock Conversion" and "report constraint_check" sections in online help.
+      </message>
+      <value>1</value>
+      <condition_limit>1</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Pre-partition Log| Clock Summary</report_file>
+      <report_title>Clock Details</report_title>
+      <resason>The tool infers clocks when there is no FDC constraint file, or when the FDC file does not include clock constraints.</resason>
+      <impact_on_design>
+        Undeclared clocks can lead to multiple issues :&lt;br&gt;
+        1. It prevents gated/generated clock conversion.&lt;br&gt;
+        2. The frequency for undeclared clocks is set to 1 MHz by default, which may not match design requirements. This could cause functional issues on the hardware.&lt;br&gt;
+        3. Undeclared clocks are treated as asynchronous clocks, which may not match design requirements. This could cause functional issues on the hardware.
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>num_issues</query_name>
+      <desciption>Constraints Issue</desciption>
+      <query>constraints.num_issues</query>
+      <job_name>partition_premap</job_name>
+      <message>Use the "report constraint_check" command to review constraint issues. Fix the reported issues. Refer to the "report constraint_check" section in online help.</message>
+      <value>0</value>
+      <condition_limit>1</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Pre-partition Log</report_file>
+      <report_title>Constraint Issues</report_title>
+      <resason>Constraint checker warnings indicate improperly applied or unapplied constraints.</resason>
+      <impact_on_design>
+        Constraint issues can potentially affect the performance of the design. Unapplied constraints cause problems like the following :&lt;br&gt;
+        1. Long synthesis and place-and-route runtimes&lt;br&gt;
+        2. Design timing violations&lt;br&gt;
+        3. Functional issues on hardware
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+
+  </state_tag>
+
+  <state_tag name="partition">
+    <state_query>
+      <query_name>unrouted_nets</query_name>
+      <desciption>Global Route failed(Unrouted)</desciption>
+      <query>router.unrouted_nets</query>
+      <job_name>auto_partitioner</job_name>
+      <message>
+        Check top-level port assignments, clock constraints, and cell assignment constraints. Use PCF constraints to fix any unrouted nets reported
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Partition Log</report_file>
+      <report_title>Global Route Details</report_title>
+      <resason>
+        Global routing failure indicates the design may not get routed completely. This is typically seen when clock or reset is not routed
+        and if there are large number of feedthroughs or bi-directional nets.
+      </resason>
+      <impact_on_design>If these issues are not fixed, system route will fail.</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>clkcross.partition</query_name>
+      <desciption>Cut Clocks</desciption>
+      <query>clkcross.partition</query>
+      <job_name>auto_partitioner</job_name>
+      <message>
+        Replicate the clock tree and insert clock buffers in the different FPGAs. For automatic clock tree replication, set "clock_gate_replication=1" and rerun partition.&lt;br&gt;
+        Refer to the "Partitioning Clocks" section in online help
+      </message>
+      <value>0</value>
+      <condition_limit>2</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Partition Log|Global Routing</report_file>
+      <report_title>Cut Clock Details</report_title>
+      <resason>Cut clocks are clocks that cross FPGA boundaries. This indicates the design has more than two cut clocks.</resason>
+      <impact_on_design>Cut clocks cause clock skew, which can degrade performance and cause the design to fail on the board.</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>channel.feedthru</query_name>
+      <desciption>FeedThrough</desciption>
+      <query>channel.feedthru</query>
+      <job_name>auto_partitioner</job_name>
+      <message>
+        Repartition or force more replication. Guide the partitioner to avoid feedthroughs. Review cable connections to check if the feedthroughs are
+        caused because of an insufficient number of cables between FPGAs. Refer to "Methodology for Analyzing Partitioning at Different Stages" section in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>100</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Partition Log|Global Routing</report_file>
+      <report_title>FeedThrough Details</report_title>
+      <resason>Feedthroughs are nets that pass through an intermediate FPGA to reach the destination FPGA.</resason>
+      <impact_on_design>
+        Feedthrough can cause some problems :&lt;br&gt;
+        1. Impact timing negatively&lt;br&gt;
+        2. Increase the number of interconnects&lt;br&gt;
+        3. Degrade performance
+      </impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>hops.maxhops</query_name>
+      <desciption>MaxHop Paths</desciption>
+      <query>hops.maxhops</query>
+      <job_name>auto_partitioner</job_name>
+      <message>
+        Try partitioning with "-optimization_priority multi_hop_path" or "-optimization_priority slack."&lt;br&gt;Optionally increase the effort spent on hop optimization
+        to high ("-effort high"). Refer to the "Optimizing Multi-Hop Paths" and "Methodology for Analyzing Partitioning at Different Stages" sections in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>5</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Partition Log|Global Routing</report_file>
+      <report_title>MaxHop Path Details</report_title>
+      <resason>When logic for a path is partitioned between FPGAs, the path from one FPGA to another is defined as a hop. A multi-hop path goes through multiple FPGAs.</resason>
+      <impact_on_design>Multi-hop paths are important because they can significantly affect timing, based on the interconnectivity between clock domain to which the signals belong and the TDM ratio defined between FPGAs.</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>channel.maxratio</query_name>
+      <desciption>TDM Ratio</desciption>
+      <query>channel.maxratio</query>
+      <job_name>auto_partitioner</job_name>
+      <message>
+        * Review the cables between systems.&lt;br&gt;
+        * Keep the TDM ratio low for performance-critical signals. Less critical signals can have higher TDM ratios.&lt;br&gt;
+        * Partition with the "-optimization_priority slack" option to improve performance, or with "-optimization_priority tdm_ratio" to reduce the TDM ratio.&lt;br&gt;
+        Refer to "Methodology for Analyzing Partitioning at Different Stages" section in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>32</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Partition Log|Global Routing</report_file>
+      <report_title>Global Route Summary</report_title>
+      <resason>Higher TDM ratios indicate more interconnect between FPGAs.</resason>
+      <impact_on_design>Higher TDM ratios can negatively impact timing and degrade performance.</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+  </state_tag>
+
+  <state_tag name="system_route">
+
+    <state_query>
+      <query_name>unrouted_nets</query_name>
+      <desciption>Global Route failed(Unrouted)</desciption>
+      <query>router.unrouted_nets</query>
+      <job_name>system_router</job_name>
+      <message>
+        Check the unrounted nets, find the reason for the failure and fix the reported nets using PCF.
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>System Route Log</report_file>
+      <report_title>Global Route Details</report_title>
+      <resason>Global routing failure indicates the design may not be get routed completely. This is typcially seen when clock or reset is not routed</resason>
+      <impact_on_design>This can cause the system_route to fail unless fixed</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+  </state_tag>
+
+  <state_tag name="system_generate">
+   
+    <state_query>
+      <query_name>timing.worst_slack</query_name>
+      <desciption>Negative Slack</desciption>
+      <query>timing.Worst Slack</query>
+      <job_name>estimate_timing_job</job_name>
+      <message>
+        * Review constraints and make sure not to overconstrain the clocks.&lt;br&gt;
+        * Review the clock constraints and clock groups.Define unrelated clocks with set_clock_groups -asynchronous.&lt;br&gt;
+        * Check the constraint checker report to identify missing or unapplied constraints.&lt;br&gt;
+        * After system route, check that timing has been met. If it has not, review results from the partition and system route stages to identify where improvements can be made.&lt;br&gt;
+        * To improve performance, set the synthesis_strategy option to routability or advanced.&lt;br&gt;
+        Refer to the "report constraint_check", "Defining Clocks", and "Defining Clock Groups" sections in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>FLOAT</condition_type>
+      <report_file>Timing Budgets Generation Log</report_file>
+      <report_title>Worst Slack Details</report_title>
+      <resason>Worst slack indicates that the timing requirement of the design is not met. Negative slack is caused by high TDM ratios or multi-hop paths.</resason>
+      <impact_on_design>
+        If the worst slack is negative, the design may not meet timing, and this can cause functional issues on the hardware. Negative slack imposes higher requirements at different
+        stages, especially during mapping and place and route. This significantly increases runtime and the overall turnaround time(TaT).
+      </impact_on_design>
+      <format_type>FLOAT</format_type>
+    </state_query>
+  </state_tag>
+
+  <state_tag name="pre_map">
+
+    <state_query>
+      <query_name>design_info.number_of_inferred_clocks</query_name>
+      <desciption>Inferred Clocks</desciption>
+      <query>design_info.number_of_inferred_clocks</query>
+      <job_name>global_prep</job_name>
+      <message>
+        Declare clocks, using the "create_clock" constraint for primary clocks and the "create_generate" constraint for derived clocks.
+        Use the "report constraint_check" command to validate the constraints. Refer to the "Defining Clocks for Gated Clock Conversion" and "report constraint_check" sections in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Pre-map Log| Clock Summary</report_file>
+      <report_title>Clock Details</report_title>
+      <resason>The tool infers clocks when there is no FDC constraint file, or when the FDC file does not include clock constraints.</resason>
+      <impact_on_design>
+        Undeclared clocks can lead to multiple issues:&lt;br&gt;
+        1. It prevents gated/generated clock conversion.&lt;br&gt;
+        2. The frequency for undeclared clocks is set to 1 MHz by default, which may not match design requirements. This could cause functional issues on the hardware.&lt;br&gt;
+        3. Undeclared clocks are treated as asynchronous clocks, which may not match design requirements. This could cause functional issues on the hardware.
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>clock_conversion.gated_clock_trees</query_name>
+      <desciption>Gated clock conversion(GCC)</desciption>
+      <query>clock_conversion.gated_clock_trees</query>
+      <job_name>global_prep</job_name>
+      <message>
+        Primary clocks and derived clocks must be constrained for GCC.&lt;br&gt;
+        1. Check that the fix_gated_and_generated_clocks option is enabled.&lt;br&gt;
+        2. Check that primary clocks and derived clocks are declared correctly.&lt;br&gt;
+        3. Check for syn_keep and syn_hier attributes, as they can prevent GCC.&lt;br&gt;
+        4. Check that "no_sequential_opt" is enabled. Disabling sequential optimizations can prevent ICG latch removal, which can prevent GCC later.&lt;br&gt;
+        Refer to the "Defining Clocks for Gated Clock Conversion" and "Overview of Clock Conversion" sections in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Pre-map Log|Clock Optimization Summary</report_file>
+      <report_title>GCC Clock</report_title>
+      <resason>The design contains gated or generated clocks.</resason>
+      <impact_on_design>
+        FPGA designs must not contain gated/generated clocks because they can cause problems :&lt;br&gt;
+        1. Hold time issues during place and route, causing longer runtimes&lt;br&gt;
+        2. Timing degradation&lt;br&gt;
+        3. Functional issues because of timing violations
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+  </state_tag>
+
+
+  <state_tag name="map">
+    
+    <state_query>
+      <query_name>run_time</query_name>
+      <query>runtime.realtime</query>
+      <desciption>RunTime</desciption>
+      <job_name></job_name>
+      <message>
+        * Check that the distributed synthesis option is enabled("database query_state -option distributed_synthesis" command).&lt;br&gt;
+        * Check the number of jobs running in parallel("database query_state -option max_parallel_jobs" command). The more distributed synthesis jobs that run in parallel the better the runtime.&lt;br&gt;
+        Refer to the "Setting Options to Run Distributed Processing" section in online help.
+      </message>
+      <value>1</value>
+      <condition_limit>3600</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file></report_file>
+      <report_title></report_title>
+      <resason>Design size and complexity can cause long runtimes.</resason>
+      <impact_on_design>"Long runtimes increase overall turnaround time (TAT).</impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>timing.worst_slack</query_name>
+      <desciption>Negative Slack</desciption>
+      <query>timing.Worst Slack</query>
+      <job_name>fpga_mapper</job_name>
+      <message>
+        * Review constraints and make sure not to overconstrain the clocks.&lt;br&gt;
+        * Review the clock constraints and clock groups.Define unrelated clocks with set_clock_groups -asynchronous.&lt;br&gt;
+        * Check the constraint checker report to identify missing or unapplied constraints.&lt;br&gt;
+        * After system route, check that timing has been met. If it has not, review results from the partition and system route stages to identify where improvements can be made.&lt;br&gt;
+        * To improve performance, set the synthesis_strategy option to routability or advanced.&lt;br&gt;
+        Refer to the "report constraint_check", "Defining Clocks", and "Defining Clock Groups" sections in online help.
+      </message>
+      <value>0</value>
+      <condition_limit>0</condition_limit>
+      <condition_type>FLOAT</condition_type>
+      <report_file>Synthesis Log| 0 START OF TIMING REPORT</report_file>
+      <report_title>Timing Report</report_title>
+      <resason>Negative slack indicates that the timing requirement of the design has not been met.</resason>
+      <impact_on_design>
+        Negative slack imposes higher requirements at different stages, especially during mapping and place and route. This significantly increases runtime and the &lt;br&gt;
+        overall turnaround time(TaT). With negative slack, the design might not meet timing; this can cause functional issues on the hardware.
+      </impact_on_design>
+      <format_type>FLOAT</format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>utilization.registers_used</query_name>
+      <desciption>Area Utilization: Registers</desciption>
+      <query>utilization.registers_used</query>
+      <job_name>fpga_mapper</job_name>
+      <message>
+        Try these options to reduce register utilization. Then rerun pre-partition.&lt;br&gt;
+        1. Pack registers into the I/O buffer.&lt;br&gt;
+        2. Pack registers inside the DSP.&lt;br&gt;
+        3. Map register memory to block RAM or select RAM.
+      </message>
+      <value>0</value>
+      <condition_limit>0.90</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Hierarchical Area Report</report_file>
+      <report_title>Register Details</report_title>
+      <resason>
+        1. Sequential shifters mapped to registers. &lt;br&gt;
+        2. RAM mapped to registers.&lt;br&gt;
+        3. Registers not packed into DSP.&lt;br&gt;
+        4. Retiming or pipelining.&lt;br&gt;
+        5. Registers not packed into I/Os.&lt;br&gt;
+        6. Registers with init values not packed into DSPs, RAMs, or I/Os.
+      </resason>
+      <impact_on_design>
+        1. Reduce the number of control signals. More control signals cause greater congestion.&lt;br&gt;2. Increases place-and-route runtime
+      </impact_on_design>
+      <sub_query>utilization.registers_on_device</sub_query>
+      <format_type></format_type>
+    </state_query>
+
+    <state_query>
+      <query_name>utilization.brams_used</query_name>
+      <desciption>Area Utilization: Block RAMs</desciption>
+      <query>utilization.brams_used</query>
+      <job_name>fpga_mapper</job_name>
+      <message>
+        Map memory modules to registers or select RAM to reduce block RAM utilization.
+      </message>
+      <value>0</value>
+      <condition_limit>0.90</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Synthesis Log</report_file>
+      <report_title>Register Details</report_title>
+      <resason>
+        1. Sequential shifters mapped to block RAM.&lt;br&gt;
+        2. ROM/RAM mapped to block RAM.
+      </resason>
+      <impact_on_design>
+        1. Designs with high block RAM utilization tend to have placement and congestion issues.&lt;br&gt;
+        2. Increases place-and-route runtime.
+      </impact_on_design>
+      <sub_query>utilization.brams_on_device</sub_query>
+      <format_type></format_type>
+    </state_query>
+    
+    <state_query>
+      <query_name>utilization.luts_used</query_name>
+      <desciption>Area Utilization: LUTs</desciption>
+      <query>utilization.luts_used</query>
+      <job_name>fpga_mapper</job_name>
+      <message>
+        Try these options to reduce LUT utilization:&lt;br&gt;
+        1. Map multipliers/adders to DSP&lt;br&gt;
+        2. Map RAM/ROM into block RAM.&lt;br&gt;
+        3. Map sequential shifters to block RAM.&lt;br&gt;
+        4. Set advanced synthesis as the synthesis strategy.
+      </message>
+      <value>0</value>
+      <condition_limit>0.90</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>Hierarchical Area Report</report_file>
+      <report_title>LUTs Details</report_title>
+      <resason>
+        1. ROM mapped to logic.&lt;br&gt;
+        2. Sequential shifters mapped to select RAM.&lt;br&gt;
+        3. Multipliers or adders mapped to logic.&lt;br&gt;
+        4. Accumulators not packed into DSP.&lt;br&gt;
+        5. Carry chain/cascade chain not inferred in DSP.&lt;br&gt;
+        6. RAMs not cascaded.
+      </resason>
+      <impact_on_design>
+        1. Designs with large LUTs or a high utilization rate of LUTs can cause congestion.&lt;br&gt;
+        2. Designs with high LUT utilization rates have an increased number of logic levels, and this affects timing.&lt;br&gt;
+        3. Using more LUTs can result in timing degradation or nets that cannot route completely.&lt;br&gt;
+        4. Increases runtime during place and route.
+      </impact_on_design>
+      <sub_query>utilization.luts_on_device</sub_query>
+      <format_type></format_type>
+    </state_query>
+    
+    <state_query>
+      <query_name>utilization.unique_control_sets</query_name>
+      <desciption>Unique control sets</desciption>
+      <query>utilization.unique_control_sets</query>
+      <job_name>fpga_mapper</job_name>
+      <message>
+        To control resource usage, use syn_reduce_controlset_size to specify the minimum size for a unique control set.
+      </message>
+      <value>0</value>
+      <condition_limit>20000</condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file>The design contains multiple control sets, which are unique combinations of clock, clock-enable, and synchronous reset/set signals.</report_file>
+      <report_title>BlackBox Details</report_title>
+      <resason>Black boxes can either be created by the user or automatically created because of missing module definitions.</resason>
+      <impact_on_design>
+        1. Area utilization might increase, because registers with different control sets cannot be packed into the same slice.&lt;br&gt;
+        2. As the number of unique control sets increases, it becomes more difficult to fit the design.&lt;br&gt;
+        3. A large number of unique control sets causes routing congestion, which can result in timing degradation or nets that cannot route completely
+      </impact_on_design>
+      <format_type></format_type>
+    </state_query>
+    
+  </state_tag>
+
+</impact_report>
+
+
+
+
+<!---// create the state queries to get info from dump metrics
+<state_query>
+      <query_name></query_name>      
+      <desciption></desciption>
+      <query></query>
+      <job_name></job_name>
+      <message>
+      </message>
+      <value></value>
+      <condition_limit></condition_limit>
+      <condition_type>INT</condition_type>
+      <report_file></report_file>
+      <report_title></report_title>
+      <resason></resason>
+      <impact_on_design></impact_on_design>
+      <sub_query></sub_query>
+      <format_type></format_type>
+    </state_query>
+
+  -->

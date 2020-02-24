@@ -1,0 +1,25 @@
+.treeview ul{ /*CSS for Report Log Top level*/
+margin: 0;
+padding: 0;
+}
+
+.treeview li{ /*Style for LI elements in general (excludes an LI that contains sub lists)*/
+background:#e0e0ff url(list.png) no-repeat top left;
+list-style-type: none;
+padding-left: 20px;
+}
+
+.treeview li.submenu{ /* Style for LI that contains sub lists (other ULs). */
+background:#e0e0ff url(closed.png) no-repeat top left ;
+cursor: hand !important;
+cursor: pointer !important;
+}
+
+
+.treeview li.submenu ul{ /*Style for ULs that are children of LIs (submenu) */
+display: none; /*Hide them by default. Don't delete. */
+}
+
+.treeview .submenu ul li{ /*Style for LIs of ULs that are children of LIs (submenu) */
+cursor: default;
+}

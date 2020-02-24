@@ -1,0 +1,115 @@
+//----------------------------------------------------------
+// Benchmark Circuit #9: Memory Map (one instance)
+//
+`timescale 100 ps/100 ps
+module test;
+
+reg [15:0] addr;
+reg as, clk, rst;
+
+wire [7:0] q;
+wire be;
+
+prep9 inst1 (.CLK(clk),.RST( rst),.AS(as),.AL(addr[7:0]),
+	.AH(addr[15:8]), .BE(be),  
+	.H(q[7]), .G(q[6]), .F(q[5]),.E(q[4]),.D(q[3]),
+	.C(q[2]),.B(q[1]),.A(q[0]));
+
+parameter numvecs =30; // actual number of vectors
+reg [1:0]   cntl [0:numvecs-1];   // {rst, as} inputs
+reg [15:0] invec  [0:numvecs-1]; // addr input
+reg [8:0]   outvec [0:numvecs-1]; // {be, q} outputs - expected
+integer i;
+integer numerrors;
+
+initial
+begin
+	// sequential test patterns entered at neg edge clk
+	// {rst, as} inputs;		addr input;          	  {be,q} before next test pattern applied;
+	cntl[0] = 	2'b10;		invec[0] =16'hx;     		 outvec[0] = 9'h0;
+	cntl[1] = 	2'b01;		invec[1] =16'h0000;       	 outvec[1] = 9'h100;
+	cntl[2] = 	2'b01;		invec[2] =16'h00a0;       	 outvec[2] = 9'h100; 
+	cntl[3] = 	2'b01;		invec[3] =16'he2aa;       	 outvec[3] = 9'h100;
+	cntl[4] = 	2'b01;		invec[4] =16'hE2AB;      	 outvec[4] = 9'h080;  
+	cntl[5] = 	2'b01;		invec[5] =16'hE2AC;       	 outvec[5] = 9'h040;  
+	cntl[6] = 	2'b01;		invec[6] =16'hE2AE;       	 outvec[6] = 9'h040;  
+	cntl[7] = 	2'b01;		invec[7] =16'hE2AF;       	 outvec[7] = 9'h040;   
+	cntl[8] = 	2'b01;		invec[8] =16'hE2B0;     	 outvec[8] = 9'h020;   
+	cntl[9] = 	2'b01;		invec[9] =16'hE2BE;    	 outvec[9] = 9'h020;  
+	cntl[10] = 	2'b01;		invec[10] =16'hE2BF;      	 outvec[10] = 9'h020;  
+	cntl[11] = 	2'b01;		invec[11] =16'hE2C0;      	 outvec[11] = 9'h010; 
+	cntl[12] = 	2'b01;		invec[12] =16'hE2D2;      	 outvec[12] = 9'h010; 
+	cntl[13] = 	2'b01;		invec[13] =16'hE2FF;      	 outvec[13] = 9'h010;  
+	cntl[14] = 	2'b01;		invec[14] =16'hE300;      	 outvec[14] = 9'h008; 
+	cntl[15] = 	2'b01;		invec[15] =16'hE3F0;      	 outvec[15] = 9'h008;  
+	cntl[16] = 	2'b01;		invec[16] =16'hE3FF;      	 outvec[16] = 9'h008;  
+	cntl[17] = 	2'b01;		invec[17] =16'hE400;      	 outvec[17] = 9'h004;  
+	cntl[18] = 	2'b01;		invec[18] =16'hE7F3;      	 outvec[18] = 9'h004;  
+	cntl[19] = 	2'b01;		invec[19] =16'hE7FF;      	 outvec[19] = 9'h004; 
+	cntl[20] = 	2'b01;		invec[20] =16'hE800;      	 outvec[20] = 9'h002;  
+	cntl[21] = 	2'b01;		invec[21] =16'hEAAA;      	 outvec[21] = 9'h002;  
+	cntl[22] = 	2'b01;		invec[22] =16'hEFFF;      	 outvec[22] = 9'h002; 
+	cntl[23] = 	2'b01;		invec[23] =16'hF000;      	 outvec[23] = 9'h001;  
+	cntl[24] = 	2'b01;		invec[24] =16'hFABC;      	 outvec[24] = 9'h001;  
+	cntl[25] = 	2'b01;		invec[25] =16'hFFFF;      	 outvec[25] = 9'h001; 
+	cntl[26] = 	2'b00;		invec[26] =16'hFFFF;      	 outvec[26] = 9'h000;  // as = 0
+	cntl[27] = 	2'b01;		invec[27] =16'h0002;      	 outvec[27] = 9'h100;  // as = 1
+	cntl[28] = 	2'b00;		invec[28] =16'hFFFF;      	 outvec[28] = 9'h100;  // as = 0
+	cntl[29] = 	2'b11;		invec[29] =16'hFFFF;      	 outvec[29] = 9'h000;  // rst = 0
+
+	
+end
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+
+reg invec_temp;
+
+initial
+begin
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+
+	//skip first rising edge
+	@(posedge clk);
+	for (i = 0; i <= numvecs-1; i = i + 1)
+	begin
+		@(negedge clk);
+		// apply test pattern at neg edge
+		{rst, as} = cntl[i];
+		addr = invec[i];
+		@(posedge clk) #4500; //450 ns later
+		// check result at posedge + 450 ns
+		if ( {be,q} !== outvec[i] )
+		begin
+		   $display(    
+		"\t\t ERROR pattern#%d t%d:  rst, as = %b,%b addr = %h Expected {be, q}: %h;  Actual be, q:  %h", 
+		i, $stime,rst, as, addr,outvec[i], {be,q});
+			numerrors = numerrors + 1;
+		end
+	end
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+	
+	#1000 $finish; // after 100 ns later
+end
+
+endmodule

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin_configuration>
+	<plugin name="leda_config">
+		<title>LEDA Configuration</title>	
+
+		<filelist label="File List">
+			<command>$value</command>
+		</filelist>
+		
+		<param label="Project Name">
+			<command>-project $value</command>
+		</param>
+		<param label="Work Library">
+			<command>-work $value</command>
+		</param>
+		<param label="Top Module Name">
+			<command>-top $value</command>
+		</param>
+
+		<line/>
+
+		<fileselection label="Configuration File">
+			<command>-config $value</command>
+		</fileselection>
+		<fileselection label="Additional TCL File">
+			<command>+tcl $value</command>
+		</fileselection>
+		
+		<line/>
+
+		<bool name="system_verilog" label="System Verilog">
+			<command>+sysv</command>
+		</bool>
+		<bool name="verilog_2001" label="Verilog 2001">
+			<command>+v2k</command>
+		</bool>
+	</plugin>
+</plugin_configuration>

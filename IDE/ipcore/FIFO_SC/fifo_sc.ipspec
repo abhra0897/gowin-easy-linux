@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="FIFO SC" id="fifo_sc" version= "1.0" category="Soft IP Core|Memory Control">FIFO SC</ip>
+    <target module="fifo_sc_top">fifo_sc_top</target>
+    <docs>
+        <doc type="summary">/doc/fifo_sc.html</doc>
+        <doc type="help">/doc/ip_fifo_sc_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1NZ-1-*</device>
+        <device supported="true">GW1N-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NS-*</device>
+        <device supported="true">GW1NSR-*</device>
+        <device supported="true">GW1NSER-*</device>
+        <device supported="true">GW1NSE-2C-*</device>
+        <device supported="true">GW1NRF-4B-*</device>
+    </devices>
+</ipcore>

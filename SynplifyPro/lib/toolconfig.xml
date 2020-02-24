@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Product Integration  Configuration File Example -->
+<!-- This is an example of a product configuration file-->
+<!-- Product name is "VCS"-->
+<!--Program arguemnt string is given by tag "arg"-->
+<toolconfig>
+  <version number="1.0"/>
+  <home
+    xilinx="XILINX"
+    altera="QUARTUS_ROOTDIR"
+    vcs="VCS_HOME"
+  />
+  <vcs
+    sourcefilter ="Verilog Library Files (*.v *.vm *.vo);;VHDL Library Files (*.vhd *.vhm *.vho);;Other Library Files (*.vdbx *.vdbl);;All Files (*.*)"
+    testbenchfilter="Verilog Files (*.v *.vt *.sv);;VHDL Files (*.vhd *.vht);;All Files (*.*)"
+    postPRNetlistFilter="Verilog Netlist Files (*.v *.vo);;VHDL Netlist Files (*.vhd *.vhdl *.vho);;All Files (*.*)"
+    >
+    <vlogan options=""/>
+    <vhdlan options=""/>
+    <vcs options=""/>
+    <simv options=""/>
+  </vcs>
+</toolconfig>

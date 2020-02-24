@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipcore>
+    <ip label="Advanced FIR Filter" id="ad_fir" version= "1.0" category="Soft IP Core|DSP and Mathemathics">Advanced FIR Filter</ip>
+    <target module="Advanced_FIR_Filter_Top">advanced_fir_filter</target>
+    <docs>
+        <doc type="summary">/doc/ad_fir.html</doc>
+        <doc type="help">/doc/ad_fir_help.html</doc>
+    </docs>
+    <devices>
+        <device supported="true">GW1N-2-*</device>
+        <device supported="true">GW1N-2B-*</device>
+        <device supported="true">GW1N-4-*</device>
+        <device supported="true">GW1N-4B*</device>
+        <device supported="true">GW1N-6-*</device>
+        <device supported="true">GW1N-9-*</device> 
+        <device supported="true">GW1NR-*</device>
+        <device supported="true">GW2A-*</device>
+        <device supported="true">GW2AR-*</device>
+        <device supported="true">GW1NS-4-*</device>
+    </devices>
+</ipcore>

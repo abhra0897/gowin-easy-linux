@@ -1,0 +1,190 @@
+ 2:59:04 (lmgrd) -----------------------------------------------
+ 2:59:04 (lmgrd)   Please Note:
+ 2:59:04 (lmgrd) 
+ 2:59:04 (lmgrd)   This log is intended for debug purposes only.
+ 2:59:04 (lmgrd)   In order to capture accurate license
+ 2:59:04 (lmgrd)   usage data into an organized repository,
+ 2:59:04 (lmgrd)   please enable report logging. Use Flexera Software LLC's
+ 2:59:04 (lmgrd)   software license administration  solution,
+ 2:59:04 (lmgrd)   FlexNet Manager, to  readily gain visibility
+ 2:59:04 (lmgrd)   into license usage data and to create
+ 2:59:04 (lmgrd)   insightful reports on critical information like
+ 2:59:04 (lmgrd)   license availability and usage. FlexNet Manager
+ 2:59:04 (lmgrd)   can be fully automated to run these reports on
+ 2:59:04 (lmgrd)   schedule and can be used to track license
+ 2:59:04 (lmgrd)   servers and usage across a heterogeneous
+ 2:59:04 (lmgrd)   network of servers including Windows NT, Linux
+ 2:59:04 (lmgrd)   and UNIX.
+ 2:59:04 (lmgrd) 
+ 2:59:04 (lmgrd) -----------------------------------------------
+ 2:59:04 (lmgrd) 
+ 2:59:04 (lmgrd) 
+ 2:59:04 (lmgrd) Server's System Date and Time: Sat Feb 15 2020 02:59:04 IST
+ 2:59:04 (lmgrd) SLOG: Summary LOG statistics is enabled.
+ 2:59:04 (lmgrd) The license server manager (lmgrd) running as root:
+ 2:59:04 (lmgrd) 	This is a potential security problem
+ 2:59:04 (lmgrd) 	and is not recommended.
+ 2:59:04 (lmgrd) FlexNet Licensing (v11.14.1.3 build 212549 x64_lsb) started on ideapad (linux) (2/15/2020)
+ 2:59:04 (lmgrd) Copyright (c) 1988-2017 Flexera Software LLC. All Rights Reserved.
+ 2:59:04 (lmgrd) World Wide Web:  http://www.flexerasoftware.com
+ 2:59:04 (lmgrd) License file(s): gowin_Synplifypro.lic
+ 2:59:04 (lmgrd) lmgrd tcp-port 27020
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) ===============================================
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) === LMGRD ===
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) Start-Date: Sat Feb 15 2020 02:59:04 IST
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) PID: 26456
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) LMGRD Version: v11.14.1.3 build 212549 x64_lsb ( build 212549 (ipv6))
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) 
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) === Network Info ===
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) Listening port: 27020
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) 
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) === Startup Info ===
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) Server Configuration: Single Server
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) Command-line options used at LS startup: -c gowin_Synplifypro.lic -l server.log 
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) License file(s) used:  gowin_Synplifypro.lic
+ 2:59:04 (lmgrd) (@lmgrd-SLOG@) ===============================================
+ 2:59:04 (lmgrd) Starting vendor daemons ... 
+ 2:59:04 (lmgrd) Started snpslmd (internet tcp_port 44389 pid 26457)
+ 2:59:04 (snpslmd) FlexNet Licensing version v11.14.1.3 build 212549 x64_lsb
+02/15/2020 02:59:04 (snpslmd) INFO: Pooling on VENDOR_STRING is Disabled (to enable, set SCL_POOL_VS=1)
+02/15/2020 02:59:04 (snpslmd) Synopsys Corporate Licensing (SCL) Release: version SCL_2018.06
+02/15/2020 02:59:05 (snpslmd) [SCL] File descriptor limit (soft, hard) for snpslmd: 4096, 4096
+02/15/2020 02:59:05 (snpslmd) INFO: [SCL] TCP - tcp_keepalive_time - 7200 | tcp_keepalive_intvl - 75 | tcp_keepalive_probes - 9 | tcp_fin_timeout - 60
+
+ 2:59:05 (snpslmd) SLOG: Summary LOG statistics is enabled.
+ 2:59:05 (snpslmd) SLOG: FNPLS-INTERNAL-CKPT1
+ 2:59:05 (snpslmd) SLOG: VM Status: 0
+ 2:59:05 (snpslmd) Server started on ideapad for:	SSST		
+ 2:59:05 (snpslmd) synplifypro_gowin 
+ 2:59:05 (snpslmd) 
+ 2:59:05 (snpslmd) Licenses are case sensitive for TE_CATS
+ 2:59:05 (snpslmd) 
+ 2:59:05 (snpslmd) EXTERNAL FILTERS are OFF
+ 2:59:05 (lmgrd) snpslmd using TCP-port 44389
+ 2:59:05 (snpslmd) Serving features for the following vendor names:
+ snpslmd  ACAD  adalmd  anagram  arcd  atrenta  avantd  CADABRA  chrysalisd  cowared  EPIC  eved  extremed  hscd  innologd  ISE-TCADd  knights  magma  metasoftd  mwflexd  nassd  nsysnvs  numeritchd  pdld  perflmd  riod  saber_dmn  sandwork  sclmgrd  sigmacd  SIINT  simple  snpsOEM1  snslmgrd  ssilmd  synforad  synopsysd  synplctyd  targetld  TAVEREN  TE_CATS  tmald  vastlmd  vcsd  wlld  
+02/15/2020 02:59:05 (snpslmd) ------------------------------------------------------------------
+02/15/2020 02:59:05 (snpslmd) Checking the integrity of the license file...
+02/15/2020 02:59:05 (snpslmd) Valid SSST feature found.
+02/15/2020 02:59:05 (snpslmd) Licensed to Melody Semiconductor LLC
+02/15/2020 02:59:05 (snpslmd) Siteid: 29247, Server Hostid: 94C691A91EB6, Issued on: 8/7/2019
+02/15/2020 02:59:05 (snpslmd) ------------------------------------------------------------------
+ 2:59:05 (snpslmd) SLOG: Statistics Log Frequency is 240 minute(s).
+ 2:59:05 (snpslmd) SLOG: TS update poll interval is 0. TS update is detected by midnight reread only.
+ 2:59:05 (snpslmd) SLOG: Activation borrow reclaim percentage is 0.
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) === Vendor Daemon ===
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Vendor daemon: snpslmd
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Start-Date: Sat Feb 15 2020 02:59:05 IST
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) PID: 26457
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) VD Version: v11.14.1.3 build 212549 x64_lsb ( build 212549 (ipv6))
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) 
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) === Startup/Restart Info ===
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Options file used: None
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Is vendor daemon a CVD: Yes
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Is TS accessed: No
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) TS accessed for feature load: -NA-
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Number of VD restarts since LS startup: 0
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) 
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) === Network Info ===
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Listening port: 44389
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Daemon select timeout (in seconds): 1
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) 
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) === Host Info ===
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Host used in license file: ideapad
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) Running on Hypervisor: Not determined - treat as Physical
+ 2:59:05 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 3:09:14 (snpslmd) TCP_NODELAY NOT enabled
+ 3:09:14 (snpslmd) OUT: "synplifypro_gowin" rik@ideapad  
+ 3:09:40 (snpslmd) IN: "synplifypro_gowin" rik@ideapad  
+ 3:09:44 (snpslmd) UNSUPPORTED: "synplifypro" (PORT_AT_HOST_PLUS   ) rik@ideapad  (No such feature exists. (-5,346))
+ 3:09:44 (snpslmd) OUT: "synplifypro_gowin" rik@ideapad  
+ 3:10:01 (snpslmd) IN: "synplifypro_gowin" rik@ideapad  
+ 3:17:25 (snpslmd) UNSUPPORTED: "synplifypro" (PORT_AT_HOST_PLUS   ) rik@ideapad  (No such feature exists. (-5,346))
+ 3:17:25 (snpslmd) OUT: "synplifypro_gowin" rik@ideapad  
+ 3:17:41 (snpslmd) IN: "synplifypro_gowin" rik@ideapad  
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) === Last 10 Client Requests Processing Time (in ms) ===
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 06:59:08 IST
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Request processing time, when, #concurrent clients, client info (user, node, FD)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:17:41 IST,#4,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) === Top 10 Peak Client Requests Processing Time (in ms) ===
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 06:59:08 IST
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Request processing time, when, #concurrent clients, client info (user, node, FD)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#3,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#3,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#4,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:40 IST,#4,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:45 IST,#4,(rik,ideapad,66)
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) === Top 10 Peak In-house Operations time (in ms) ===
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) NOTE: Peak times greater than 4 seconds get recorded.
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 06:59:08 IST
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) In-house operation time, when, #concurrent clients
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) === Active Connections Info ===
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) Peak active connections #4 attempted at Sat Feb 15 2020 03:09:14 IST
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) 
+ 6:59:08 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 8:59:04 (lmgrd) TIMESTAMP 2/15/2020
+ 9:04:06 (snpslmd) TIMESTAMP 2/15/2020
+ 9:56:00 (lmgrd) lmgrd will now shut down all the vendor daemons
+
+ 9:56:00 (lmgrd) Shutting down snpslmd pid=26457 because of signal 15
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) === Last 10 Client Requests Processing Time (in ms) ===
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 09:56:00 IST
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Request processing time, when, #concurrent clients, client info (user, node, FD)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 09:56:00 IST,#3,(root,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:17:41 IST,#4,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:26 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000000 ms at Sat Feb 15 2020 03:17:25 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) === Top 10 Peak Client Requests Processing Time (in ms) ===
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 09:56:00 IST
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Request processing time, when, #concurrent clients, client info (user, node, FD)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#3,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#3,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:14 IST,#4,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:40 IST,#4,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#3,(rik,ideapad,65)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:44 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 00000001 ms at Sat Feb 15 2020 03:09:45 IST,#4,(rik,ideapad,66)
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) === Top 10 Peak In-house Operations time (in ms) ===
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) NOTE: Peak times greater than 4 seconds get recorded.
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Time: Sat Feb 15 2020 09:56:00 IST
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) In-house operation time, when, #concurrent clients
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) === Active Connections Info ===
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) Peak active connections #4 attempted at Sat Feb 15 2020 03:09:14 IST
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) 
+ 9:56:00 (snpslmd) (@snpslmd-SLOG@) ===============================================
+ 9:56:00 (snpslmd) Shutdown requested.
+ 9:56:00 (lmgrd) Shut down FlexNet snpslmd license server system on machine ideapad
+ 9:56:00 (snpslmd) daemon shutdown requested - shutting down
+ 9:56:00 (lmgrd) EXITING DUE TO SIGNAL 15

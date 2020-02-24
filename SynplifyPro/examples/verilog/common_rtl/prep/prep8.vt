@@ -1,0 +1,127 @@
+//--------------------------------------------------------------------
+
+`timescale 100 ps/100 ps
+module test;
+
+reg [15:0] data;
+reg reset, clk, load, count_enable;
+wire [15:0] count;
+
+prep8 inst1 (.CLK(clk), .RST(reset), .LD(load), .CE(count_enable), .D(data), .Q(count)) ;
+
+integer i;
+integer numerrors;
+
+// set up clk with 1000 ns period
+parameter clkper = 10000; //10000 = 1000 100ps units = 1000 ns period
+initial clk = 1;
+always 
+begin
+	#(clkper / 2)  clk = ~clk;
+end
+	
+initial
+begin
+	load = 0;
+	data = 0;
+	count_enable = 0;
+	
+	numerrors = 0;
+	$display("\nBeginning Simulation..."); 
+
+	#300; // at 30 ns
+	// reset output
+	reset = 1;
+	#5000;  // 500 ns
+	if (count !== 0)
+		begin
+			$display(    
+			"\t\t ERROR on reset: t%0d: Expected:0;  Actual: %d", 
+			$time, count);
+			numerrors = numerrors + 1;
+		end
+	// turn off reset
+	reset = 0; 
+	
+	@(negedge clk);
+	// check loading value 20
+	data = 20; load = 1;
+	@(negedge clk) load = 0;  // turn off load
+	if (count !== 20)
+		begin
+			$display(    
+			"\t\t ERROR on load: t%0d: Expected: 20;  Actual: %d", 
+			$time, count);
+			numerrors = numerrors + 1;
+		end
+	// check counting 21 - 35
+	count_enable = 1;
+	for (i = 1; i <= 15; i = i + 1)
+	begin
+		@(negedge clk)
+		if ( count !== (i + 20) )
+		begin
+		   $display(    
+			"\t\t ERROR counting at t%0d: Expected: %h;  Actual: %h", 
+			$time,  i+20, count);
+			numerrors = numerrors + 1;
+		end
+	end
+	count_enable = 0;
+	repeat (2) @(negedge clk)
+		if ( count !== (35) )
+		begin
+		   $display(    
+			"\t\t ERROR. still counting when !count_enable at t%0d: Expected: %h;  Actual: %h", 
+			$time,  35, count);
+			numerrors = numerrors + 1;
+		end
+	
+	data = 16'hfff1; load = 1; count_enable = 1;
+	// check going back from fff0 to 0
+	@(negedge clk) if (count !== 16'hfff1) 
+		begin
+			$display(    
+			"\t\t ERROR on load: t%0d: Expected: fff1;  Actual: %h", 
+			$time, count);
+			numerrors = numerrors + 1;
+		end
+	load = 0; // turn load off!
+	for (i = 1; i <= 14; i = i + 1)
+	begin
+		@(negedge clk)
+		if ( count !== (i + 16'hfff1) )
+		begin
+		   $display(    
+			"\t\t ERROR counting at t%0d: Expected: %h;  Actual: %h", 
+			$time,  i+16'hfff1, count);
+			numerrors = numerrors + 1;
+		end
+	end
+	
+	@(negedge clk) 
+	if (count != 0 )
+		begin
+			$display(    
+			"\t\t ERROR on going back to 0: t%0d: Expected count=0 Actual count: %h",
+			$time, count);
+			numerrors = numerrors + 1;
+		end
+	
+	if (numerrors == 0)
+	   
+		$display(
+			  "Good!  End of Good Simulation.");
+	else
+		if (numerrors > 1)
+	      
+			$display(
+			  "%0d ERRORS!  End of Faulty Simulation.",numerrors);
+		else
+			$display(
+			 "1 ERROR!  End of Faulty Simulation."); 
+
+	$finish;
+end
+
+endmodule
