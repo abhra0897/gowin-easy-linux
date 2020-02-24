@@ -1,0 +1,19 @@
+
+Starting:    /home/rik/Works/Embedded/GowinFPGA/Gowin_V1.9.3.01Beta_linux/SynplifyPro/linux_a_64/mbin/synplify
+Install:     /home/rik/Works/Embedded/GowinFPGA/Gowin_V1.9.3.01Beta_linux/SynplifyPro
+Hostname:    ideapad
+Date:        Mon Feb 24 21:49:10 2020
+Version:     P-2019.09G-Beta2
+
+Arguments:   -product synplify_pro
+ProductType: synplify_pro
+
+License checkout: synplifypro_gowin
+License: synplifypro_gowin node-locked 
+Licensed Vendor: gowin
+
+
+
+NOTE:  This version of the software is not a production release. No warranty is made as to the general availability of features and functionality included in this version or described in the accompanying documentation. The final contents of a production release and its timing remain at the sole discretion of Synopsys.
+exit status=0
+License checkin: synplifypro_gowin
