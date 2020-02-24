@@ -1,3 +1,5 @@
+**Important: This repository uses Git Large File Storage (LFS) because some files are more than 100MB in size. Follow [these simple steps](https://git-lfs.github.com/) to install git lfs extension prior to cloning/downloading this repo**
+
 ## About
 
 This is my development environment for GoWin FPGA on Linux (Arch). Setting up the GoWin IDE is not trivial and takes some trial-and-error steps to make it work. At least that's my experience on Linux. 
