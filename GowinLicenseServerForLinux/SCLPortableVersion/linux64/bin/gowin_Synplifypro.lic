@@ -40,7 +40,7 @@
 #
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Synopsys License file created by CVDKIF 5.4 on August 07, 2019 at 20:30:02 for daemon snpslmd
-SERVER ideapad 94C691A91EB6 27020
+SERVER acernitro 94C691A91EB6 27020
 VENDOR snpslmd ./snpslmd
 USE_SERVER
 INCREMENT SSST snpslmd 1.0 06-Aug-2020 uncounted 6E3EEE278426228E2183 \

@@ -50,6 +50,24 @@ killall -SIGTERM lmgrd;
 # do same with synplify process
 killall -SIGTERM synplify;
 
+
+# Add host name in synplify pro's license file (at line 43)
+# If used with diff version lic file, the line number may be required to be changed
+# Find the line number of "SERVER <hostname> 94C691A91EB6 27020" line in the license file
+# Put the number in place of 43 in the if statement
+line_cnt=1
+while IFS= read -r line
+do
+	if((line_cnt==43)); then
+		echo 'SERVER '$HOSTNAME' 94C691A91EB6 27020'
+	else
+		echo "$line"
+	fi
+	((line_cnt++))
+done<$SYNPLIFY_LIC_DIR/$SYNPLIFY_LIC_FILE_NAME>$SYNPLIFY_LIC_DIR/new_$SYNPLIFY_LIC_FILE_NAME
+cp $SYNPLIFY_LIC_DIR/$SYNPLIFY_LIC_FILE_NAME $SYNPLIFY_LIC_DIR/old_$SYNPLIFY_LIC_FILE_NAME
+mv $SYNPLIFY_LIC_DIR/new_$SYNPLIFY_LIC_FILE_NAME $SYNPLIFY_LIC_DIR/$SYNPLIFY_LIC_FILE_NAME 
+
 # start license server with proper synopsis synplify pro license file.
 # host ID and host name in the license file must match with your machine.
 # if doesn't match, change machine's mac.
