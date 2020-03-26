@@ -10,7 +10,7 @@ To solve this problem, I've written a script that automates all those critical s
 #### 1. Download
 
 Download this repository in you PC either by downloading the .zip file or using following command:
-`git clone https://github.com/abhra0897/<repo_name>`
+`git clone --recurse-submodules https://github.com/abhra0897/gowin-easy-linux.git`
 Then go to the downloaded folder.
 
 #### 2.A. Set up with own License files acquired officialy
@@ -34,9 +34,9 @@ If you don't have your own license files already, then follow this step to use t
 		- `sudo ifconfig <interface_name> hw ether 94:C6:91:A9:1E:B6`
 		- `sudo ifconfig <interface_name> up`
 	- **Using `ip`** :
-		- `ip link set dev <interface_name> down`
-		- `ip link set dev <interface_name> 94:C6:91:A9:1E:B6`
-		- `ip link set dev <interface_name> up`
+		- `sudo ip link set dev <interface_name> down`
+		- `sudo ip link set dev <interface_name> address 94:C6:91:A9:1E:B6`
+		- `sudo ip link set dev <interface_name> up`
 
 *[**Note:** This change is temporary. After every reboot you need to change your MAC using the above commands. Either make the change permanent by editing /etc/network/interface file or get your own license files from [GoWin](https://www.gowinsemi.com/en/support/license/ "GoWin") and follow Step 2.A]*
 
