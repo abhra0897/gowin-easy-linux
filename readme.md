@@ -1,4 +1,9 @@
-**Important: This repository uses Git Large File Storage (LFS) because some files are more than 100MB in size. Follow [these simple steps](https://git-lfs.github.com/) to install git lfs extension prior to cloning/downloading this repo**
+## IMPORTANT NOTE
+
+GoWin Programmer is not working with linux kernel version >=5.4 (gcc >=9.3). Showing error `libftd2xx.so: undefined symbol: stime`. Check your kernel version with `cat /proc/version` command. If it's less than 5.4 only then go ahead and install it. Tested and working on Ubuntu 18.04, Ubuntu 19.10. Not working on Ubuntu 20.04 and the latest Manjaro (arch). 
+
+One good news: You can still upload code using an open source programmer OpenFPGALoader (provided with this repo).
+
 
 ## About
 
@@ -8,6 +13,8 @@ To solve this problem, I've written a script that automates all those critical s
 ## Steps
 
 #### 1. Download
+
+**Important: This repository uses Git Large File Storage (LFS) because some files are more than 100MB in size. Follow [these simple steps](https://git-lfs.github.com/) to install git lfs extension prior to cloning/downloading this repo**
 
 Download this repository in you PC either by downloading the .zip file or using following command:
 `git clone --recurse-submodules https://github.com/abhra0897/gowin-easy-linux.git`
